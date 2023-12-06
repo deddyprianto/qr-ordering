@@ -1,3 +1,3 @@
-# qr_ordering_web
+# qr-ordering-web
 
 QR Online Ordering web application using ReactJS.
