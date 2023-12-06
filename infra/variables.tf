@@ -5,11 +5,11 @@ variable "VERSION" {
 
 variable "ENV" {
   type        = string
-  description = "dev, training or prod"
+  description = "dev, testing or prod"
 }
 
 variable "SSL_CERT_ARN" {
   type        = string
-  default     = "arn:aws:acm:us-east-1:977902117142:certificate/72dc4d0c-da52-477e-bece-ba556c5f79fd"
-  description = "*.equipweb.biz certificate"
+  default     = "arn:aws:acm:us-east-1:738652141857:certificate/10ccd767-842a-4c43-a656-7337200d2af5"
+  description = "*.qr-ordering.equipweb.biz certificate"
 }

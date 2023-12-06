@@ -1,7 +1,17 @@
 terraform {
   required_version = ">= 0.11.5"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
 }
 
+provider "aws" {
+  region = "ap-southeast-1"
+}
 
 ###################################
 # CloudFront Origin Access Identity
