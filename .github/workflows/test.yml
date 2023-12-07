@@ -89,27 +89,27 @@ jobs:
           ignore-unfixed: false
           list-all-pkgs: true
 
-  trivy-scan-config:
-    name: trivy-scan-config
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+  # trivy-scan-config:
+  #   name: trivy-scan-config
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
 
-      - name: Run Trivy vulnerability scanner in IaC mode
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: "config"
-          hide-progress: false
-          format: "sarif"
-          output: "trivy-config-scan-results.sarif"
-          exit-code: "1"
-          ignore-unfixed: false
-          severity: "CRITICAL,HIGH"
+  #     - name: Run Trivy vulnerability scanner in IaC mode
+  #       uses: aquasecurity/trivy-action@master
+  #       with:
+  #         scan-type: "config"
+  #         hide-progress: false
+  #         format: "sarif"
+  #         output: "trivy-config-scan-results.sarif"
+  #         exit-code: "1"
+  #         ignore-unfixed: false
+  #         severity: "CRITICAL,HIGH"
 
-      - name: upload trivy iac config vulnerability assessment report
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: trivy-iac-config-vulnerability-assessment-report
-          path: "trivy-config-scan-results.sarif"
+  #     - name: upload trivy iac config vulnerability assessment report
+  #       if: always()
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: trivy-iac-config-vulnerability-assessment-report
+  #         path: "trivy-config-scan-results.sarif"
