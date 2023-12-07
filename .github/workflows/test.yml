@@ -85,7 +85,7 @@ jobs:
           scan-type: "fs"
           format: "json"
           exit-code: "1"
-          scan-ref: "./requirements.txt"
+          scan-ref: "./package-lock.json"
           ignore-unfixed: false
           list-all-pkgs: true
 
