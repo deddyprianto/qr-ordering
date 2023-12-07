@@ -1,6 +1,7 @@
 import Layout from "./containers/Layout";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Loading from "./components/Loading";
+import "./scss/App.scss";
 
 const router = createBrowserRouter([
   {
