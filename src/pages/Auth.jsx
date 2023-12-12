@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { LoginIcon } from "../assets/svgIcon";
 import RenderLabel from "../components/Auth/RenderLabel";
+import { useNavigate } from "react-router-dom";
 
 export function Component() {
+  const navigate = useNavigate();
   const [tabScreen, setTabScreen] = useState("mobile");
 
   const renderDivider = () => {
@@ -296,6 +298,7 @@ export function Component() {
         }}
       >
         <div
+          onClick={() => navigate("/otp")}
           style={{
             color: "var(--button-color-standby, #FFF)",
             letterSpacing: "0.28px",

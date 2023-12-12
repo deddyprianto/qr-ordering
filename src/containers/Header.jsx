@@ -1,18 +1,42 @@
 import {
   HamburgerIcon,
+  LoginIcon,
   LogoIcon,
   SearchIcon,
   TaskListIcon,
 } from "../assets/svgIcon";
 import { useNavigate, useLocation } from "react-router-dom";
+import Drawer from "react-modern-drawer";
+import "react-modern-drawer/dist/index.css";
+import { useState } from "react";
 
 export default function Header() {
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleDrawer = () => {
+    setIsOpen((prevState) => !prevState);
+  };
   const navigate = useNavigate();
   const location = useLocation();
   const pathname = location.pathname;
 
+  const renderMenuDrawer = () => {
+    return (
+      <div
+        onClick={() => navigate("/auth")}
+        style={{
+          width: "100%",
+          padding: "16px",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <LoginIcon />
+        <div style={{ marginLeft: "10px" }}>Login</div>
+      </div>
+    );
+  };
   const renderMain = () => {
-    if (pathname === "/auth") {
+    if (pathname === "/auth" || pathname === "/otp") {
       return (
         <div
           style={{
@@ -40,7 +64,9 @@ export default function Header() {
             alignItems: "center",
           }}
         >
-          <HamburgerIcon />
+          <div onClick={toggleDrawer}>
+            <HamburgerIcon />
+          </div>
           <div onClick={() => navigate("/auth")}>
             <img
               loading="lazy"
@@ -70,6 +96,10 @@ export default function Header() {
             <TaskListIcon />
             <SearchIcon />
           </div>
+
+          <Drawer open={isOpen} onClose={toggleDrawer} direction="left">
+            {renderMenuDrawer()}
+          </Drawer>
         </div>
       );
     }
