@@ -23,6 +23,12 @@ export default function Header() {
     return (
       <div
         onClick={() => navigate("/auth")}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            navigate("/auth");
+          }
+        }}
+        tabIndex={0}
         style={{
           width: "100%",
           padding: "16px",
@@ -64,10 +70,26 @@ export default function Header() {
             alignItems: "center",
           }}
         >
-          <div onClick={toggleDrawer}>
+          <div
+            onClick={toggleDrawer}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                toggleDrawer();
+              }
+            }}
+            tabIndex={0}
+          >
             <HamburgerIcon />
           </div>
-          <div onClick={() => navigate("/auth")}>
+          <div
+            onClick={() => navigate("/auth")}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                navigate("/auth");
+              }
+            }}
+            tabIndex={0}
+          >
             <img
               loading="lazy"
               srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/53d8af31e6ef65393d12fb910d1a94d2038972ee16066326db946515a4806c5f?apiKey=7ef2d401d2464e0bb0e4708e7eee43f9&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/53d8af31e6ef65393d12fb910d1a94d2038972ee16066326db946515a4806c5f?apiKey=7ef2d401d2464e0bb0e4708e7eee43f9&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/53d8af31e6ef65393d12fb910d1a94d2038972ee16066326db946515a4806c5f?apiKey=7ef2d401d2464e0bb0e4708e7eee43f9&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/53d8af31e6ef65393d12fb910d1a94d2038972ee16066326db946515a4806c5f?apiKey=7ef2d401d2464e0bb0e4708e7eee43f9&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/53d8af31e6ef65393d12fb910d1a94d2038972ee16066326db946515a4806c5f?apiKey=7ef2d401d2464e0bb0e4708e7eee43f9&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/53d8af31e6ef65393d12fb910d1a94d2038972ee16066326db946515a4806c5f?apiKey=7ef2d401d2464e0bb0e4708e7eee43f9&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/53d8af31e6ef65393d12fb910d1a94d2038972ee16066326db946515a4806c5f?apiKey=7ef2d401d2464e0bb0e4708e7eee43f9&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/53d8af31e6ef65393d12fb910d1a94d2038972ee16066326db946515a4806c5f?apiKey=7ef2d401d2464e0bb0e4708e7eee43f9&"

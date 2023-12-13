@@ -73,6 +73,12 @@ const Footer = () => {
                 flexDirection: "column",
               }}
               onClick={() => navigate("/")}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  navigate("/");
+                }
+              }}
+              tabIndex={0}
             >
               <HomeIcon />
               <div
@@ -99,6 +105,12 @@ const Footer = () => {
                 padding: "2px 0",
               }}
               onClick={() => navigate("/cart")}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  navigate("/cart");
+                }
+              }}
+              tabIndex={0}
             >
               <TaskListIcon />
               <div
@@ -125,6 +137,12 @@ const Footer = () => {
                 flexDirection: "column",
               }}
               onClick={() => navigate("/profile")}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  navigate("/profile");
+                }
+              }}
+              tabIndex={0}
             >
               <ProfileIcon />
               <div
