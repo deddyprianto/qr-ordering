@@ -28,7 +28,6 @@ export default function Header() {
             navigate("/auth");
           }
         }}
-        tabIndex={0}
         style={{
           width: "100%",
           padding: "16px",
@@ -77,7 +76,6 @@ export default function Header() {
                 toggleDrawer();
               }
             }}
-            tabIndex={0}
           >
             <HamburgerIcon />
           </div>
@@ -88,7 +86,6 @@ export default function Header() {
                 navigate("/auth");
               }
             }}
-            tabIndex={0}
           >
             <img
               loading="lazy"

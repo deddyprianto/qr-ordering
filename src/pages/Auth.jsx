@@ -91,6 +91,11 @@ export function Component() {
       >
         <div
           onClick={() => setTabScreen("mobile")}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              setTabScreen("mobile")
+            }
+          }}
           style={{
             color:
               tabScreen === "mobile" && "var(--brand-color-primary, #00524C)",
@@ -110,6 +115,11 @@ export function Component() {
         </div>
         <div
           onClick={() => setTabScreen("email")}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              setTabScreen("email")
+            }
+          }}
           style={{
             color:
               tabScreen === "email" && "var(--brand-color-primary, #00524C)",
@@ -299,6 +309,11 @@ export function Component() {
       >
         <div
           onClick={() => navigate("/otp")}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              navigate("/otp")
+            }
+          }}
           style={{
             color: "var(--button-color-standby, #FFF)",
             letterSpacing: "0.28px",
