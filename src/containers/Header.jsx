@@ -1,42 +1,38 @@
-import {
-  HamburgerIcon,
-  LoginIcon,
-  LogoIcon,
-  SearchIcon,
-  TaskListIcon,
-} from "../assets/svgIcon";
-import { useNavigate, useLocation } from "react-router-dom";
-import Drawer from "react-modern-drawer";
+import { IconTable, LogoIcon, SearchIcon } from "../assets/svgIcon";
+import { useLocation } from "react-router-dom";
 import "react-modern-drawer/dist/index.css";
-import { useState } from "react";
-
+import logo from "../assets/logo.png";
 export default function Header() {
-  const [isOpen, setIsOpen] = useState(false);
-  const toggleDrawer = () => {
-    setIsOpen((prevState) => !prevState);
-  };
-  const navigate = useNavigate();
   const location = useLocation();
   const pathname = location.pathname;
 
-  const renderMenuDrawer = () => {
+  const renderLabelTableNo = () => {
     return (
-      <div
-        onClick={() => navigate("/auth")}
-        onKeyDown={(event) => {
-          if (event.key === "Enter" || event.key === " ") {
-            navigate("/auth");
-          }
-        }}
-        style={{
-          width: "100%",
-          padding: "16px",
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        <LoginIcon />
-        <div style={{ marginLeft: "10px" }}>Login</div>
+      <div className="justify-center items-center border-b-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] bg-[#00524C] flex max-w-[430px] flex-col px-16 border-b border-solid">
+        <div className="flex items-stretch gap-2 my-1">
+          <IconTable />
+          <div className="text-white text-center text-sm font-medium leading-5 tracking-wide my-auto">
+            You are at table
+          </div>
+          <div className="text-white text-center text-sm font-medium leading-5 tracking-wide self-center whitespace-nowrap my-auto">
+            999
+          </div>
+        </div>
+      </div>
+    );
+  };
+  const renderMainHeader = () => {
+    return (
+      <div className="justify-between items-stretch border-b-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] bg-[#00524C] flex max-w-[430px] gap-5 px-4 py-2.5 border-b border-solid">
+        <div className="flex grow basis-[0%] flex-col items-start">
+          <img loading="lazy" src={logo} width={43} height={24} />
+          <div className="text-stone-50 text-sm font-medium leading-5 tracking-wide self-stretch">
+            Fusionopolis
+          </div>
+        </div>
+        <div className="justify-center items-center bg-rose-600 flex aspect-square flex-col w-[46px] h-[46px] px-3 rounded-[1000px]">
+          <SearchIcon />
+        </div>
       </div>
     );
   };
@@ -54,71 +50,9 @@ export default function Header() {
       );
     } else {
       return (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 100px 1fr",
-            gridTemplateRows: "1fr",
-            gap: "0px 0px",
-            gridAutoFlow: "row",
-            gridTemplateAreas: '". . ."',
-            borderBottom:
-              "1px solid var(--grey-scale-color-grey-scale-4, #F9F9F9)",
-            backgroundColor: "var(--brand-color-tertiary, #FFF)",
-            padding: "10px 16px",
-            alignItems: "center",
-          }}
-        >
-          <div
-            onClick={toggleDrawer}
-            onKeyDown={(event) => {
-              if (event.key === "Enter" || event.key === " ") {
-                toggleDrawer();
-              }
-            }}
-          >
-            <HamburgerIcon />
-          </div>
-          <div
-            onClick={() => navigate("/auth")}
-            onKeyDown={(event) => {
-              if (event.key === "Enter" || event.key === " ") {
-                navigate("/auth");
-              }
-            }}
-          >
-            <img
-              loading="lazy"
-              srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/53d8af31e6ef65393d12fb910d1a94d2038972ee16066326db946515a4806c5f?apiKey=7ef2d401d2464e0bb0e4708e7eee43f9&width=100 100w,"
-              style={{
-                aspectRatio: "4.18",
-                objectFit: "contain",
-                objectPosition: "center",
-                width: "117px",
-                overflow: "hidden",
-                maxWidth: "100%",
-                margin: "auto 0",
-              }}
-              alt="Image 1"
-            />
-          </div>
-          <div
-            style={{
-              alignItems: "center",
-              alignSelf: "stretch",
-              display: "flex",
-              paddingLeft: "6px",
-              justifyContent: "flex-end",
-              gap: "14px",
-            }}
-          >
-            <TaskListIcon />
-            <SearchIcon />
-          </div>
-
-          <Drawer open={isOpen} onClose={toggleDrawer} direction="left">
-            {renderMenuDrawer()}
-          </Drawer>
+        <div>
+          {renderLabelTableNo()}
+          {renderMainHeader()}
         </div>
       );
     }
