@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
-export const RenderItemProduct = ({ isPromo = false }) => {
+
+export const RenderItemProduct = ({ isPromo = false, imageProduct }) => {
   return (
     <div
       style={{
@@ -13,7 +14,10 @@ export const RenderItemProduct = ({ isPromo = false }) => {
     >
       <header
         style={{
-          backgroundColor: "var(--button-color-disable, #B7B7B7)",
+          backgroundImage: `url(${imageProduct})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          width: "100%",
           display: "flex",
           flexDirection: "column",
           borderTopLeftRadius: "16px",
@@ -39,7 +43,7 @@ export const RenderItemProduct = ({ isPromo = false }) => {
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/0200fde884bae5562d40614d6872d03030fe87b9b6ec5d2848f9055618292e31?apiKey=7ef2d401d2464e0bb0e4708e7eee43f9&"
               alt="Promo"
             />
-            <div
+            <div9
               style={{
                 color: "var(--text-color-secondary, #FFF)",
                 textAlign: "center",
@@ -51,7 +55,7 @@ export const RenderItemProduct = ({ isPromo = false }) => {
               }}
             >
               Promo
-            </div>
+            </div9>
           </div>
         )}
       </header>
@@ -83,6 +87,7 @@ export const RenderItemProduct = ({ isPromo = false }) => {
           }}
         >
           <div
+            className="line-through"
             style={{
               color: "var(--text-color-tertiary, #9D9D9D)",
               textAlign: "center",
@@ -110,7 +115,7 @@ export const RenderItemProduct = ({ isPromo = false }) => {
             display: "flex",
             justifyContent: "center",
             borderRadius: "8px",
-            backgroundColor: "var(--button-color-active, #E91254)",
+            backgroundColor: "var(--button-color-active, #FF4782)",
             marginTop: "8px",
             gap: "5px",
             padding: "5px 16px",

@@ -168,6 +168,7 @@ export function Component() {
               font: "500 14px/20px Helvetica Neue, sans-serif ",
             }}
           >
+            {/* LOL */}
             Phone Number
           </div>
           <div
@@ -304,14 +305,14 @@ export function Component() {
           alignSelf: "stretch",
           display: "flex",
           flexDirection: "column",
-          marginTop: "16px",
+          marginTop: "24px",
         }}
       >
         <div
           onClick={() => navigate("/otp")}
           onKeyDown={(event) => {
             if (event.key === "Enter" || event.key === " ") {
-              navigate("/otp")
+              navigate("/otp");
             }
           }}
           style={{
@@ -473,6 +474,7 @@ export function Component() {
       {renderButtonLogin()}
       <hr
         style={{
+          marginTop: "24px",
           width: "100%",
           borderTop: "1px solid gray",
         }}
