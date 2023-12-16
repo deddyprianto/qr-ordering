@@ -147,4 +147,5 @@ export const RenderItemProduct = ({ isPromo = false, imageProduct }) => {
 
 RenderItemProduct.propTypes = {
   isPromo: PropTypes.bool,
+  imageProduct: PropTypes.string,
 };
