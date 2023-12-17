@@ -74,18 +74,6 @@ export function Component() {
             flexDirection: "column",
           }}
         />
-        <div
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            borderRadius: "12px",
-            backgroundColor: "var(--grey-scale-color-grey-scale-4, #F9F9F9)",
-            display: "flex",
-            width: "54px",
-            height: "72px",
-            flexDirection: "column",
-          }}
-        />
       </div>
 
       <div

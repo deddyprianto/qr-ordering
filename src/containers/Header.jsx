@@ -68,7 +68,6 @@ export default function Header() {
   const renderMainHeader = () => {
     return (
       <div className="justify-between items-stretch border-b-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] bg-[#00524C] flex w-full gap-5 px-4 py-2.5 border-b border-solid">
-        {/* LOL */}
         {renderConditionally()}
         <div
           onClick={() => setSearchItem(true)}
