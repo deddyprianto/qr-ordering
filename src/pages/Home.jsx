@@ -166,6 +166,11 @@ export function Component() {
           </div>
           <div
             onClick={() => setHighlights(false)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                setHighlights(false);
+              }
+            }}
             className="justify-center items-center bg-[#FF4782] self-stretch flex aspect-square flex-col w-7 h-7 px-1 rounded-[1000px]"
           >
             <IconClose />
@@ -226,25 +231,6 @@ export function Component() {
             </div>
           );
         })}
-
-        {/* <div
-          style={{
-            flex: "0 0 auto",
-            width: "150px",
-          }}
-          className="text-gray-700 flex text-sm font-medium whitespace-nowrap justify-center items-center border border-[color:var(--Grey-Scale-color-Grey-Scale-1,#343A4A)] grow px-4 py-2 rounded-full border-solid"
-        >
-          Homemade Drinks
-        </div>
-        <div
-          style={{
-            flex: "0 0 auto",
-            width: "150px",
-          }}
-          className="flex text-gray-700 text-sm font-medium justify-center items-center border border-[color:var(--Grey-Scale-color-Grey-Scale-1,#343A4A)] grow pl-4 py-2 rounded-full border-solid"
-        >
-          Canned Drinks
-        </div> */}
       </div>
     );
   };

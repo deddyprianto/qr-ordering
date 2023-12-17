@@ -1,4 +1,4 @@
-import { Outlet, useNavigation } from "react-router-dom";
+import { Outlet, useNavigation, useLocation } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import React from "react";
@@ -6,6 +6,9 @@ import screen from "../../hooks/useWindowSize";
 
 export default function Layout() {
   let navigation = useNavigation();
+  const location = useLocation();
+  const pathname = location.pathname;
+
   const { width } = screen();
   const gadgetScreen = width < 980;
   const renderResponsiveDesign = () => {
@@ -17,7 +20,10 @@ export default function Layout() {
             width: "100vw",
             display: "grid",
             gridTemplateColumns: "1fr",
-            gridTemplateRows: "70px 1fr 50px",
+            gridTemplateRows:
+              pathname === "/auth" || pathname === "/otp"
+                ? "70px 1fr 50px"
+                : "100px 1fr 80px",
             gap: "0px 0px",
             gridAutoFlow: "row",
             gridTemplateAreas: '"."\n    "."\n    "."',

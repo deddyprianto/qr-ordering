@@ -2,6 +2,7 @@ import { useState } from "react";
 import { LoginIcon } from "../assets/svgIcon";
 import RenderLabel from "../components/Auth/RenderLabel";
 import { useNavigate } from "react-router-dom";
+import DropDown from "../components/Auth/DropDown";
 
 export function Component() {
   const navigate = useNavigate();
@@ -93,7 +94,7 @@ export function Component() {
           onClick={() => setTabScreen("mobile")}
           onKeyDown={(event) => {
             if (event.key === "Enter" || event.key === " ") {
-              setTabScreen("mobile")
+              setTabScreen("mobile");
             }
           }}
           style={{
@@ -117,7 +118,7 @@ export function Component() {
           onClick={() => setTabScreen("email")}
           onKeyDown={(event) => {
             if (event.key === "Enter" || event.key === " ") {
-              setTabScreen("email")
+              setTabScreen("email");
             }
           }}
           style={{
@@ -168,7 +169,6 @@ export function Component() {
               font: "500 14px/20px Helvetica Neue, sans-serif ",
             }}
           >
-            {/* LOL */}
             Phone Number
           </div>
           <div
@@ -202,42 +202,10 @@ export function Component() {
             style={{
               display: "flex",
               gap: "16px",
+              position: "relative",
             }}
           >
-            <div
-              style={{
-                justifyContent: "space-between",
-                alignItems: "center",
-                display: "flex",
-                gap: "4px",
-              }}
-            >
-              <div
-                style={{
-                  color: "var(--text-color-primary, #343A4A)",
-                  letterSpacing: "0.28px",
-                  flexGrow: "1",
-                  whiteSpace: "nowrap",
-                  margin: "auto 0",
-                  font: "500 14px/20px Helvetica Neue, sans-serif ",
-                }}
-              >
-                +65
-              </div>
-              <img
-                loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/ab5b2e840056d69bbc51fd9e0f14d422a048bcc7862dce4761d855fa7ffd66e1?apiKey=7ef2d401d2464e0bb0e4708e7eee43f9&"
-                style={{
-                  aspectRatio: "1",
-                  objectFit: "contain",
-                  objectPosition: "center",
-                  width: "24px",
-                  overflow: "hidden",
-                  alignSelf: "stretch",
-                  maxWidth: "100%",
-                }}
-              />
-            </div>
+            <DropDown />
             <div
               style={{
                 color: "var(--text-color-tertiary, #888787)",

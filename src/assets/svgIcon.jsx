@@ -225,3 +225,22 @@ export const IconArrowLeft = () => {
     </svg>
   );
 };
+export const IconArrowBottom = () => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M6 9L12 15L18 9"
+        stroke="#343A4A"
+        strokeWidth="2"
+        strokeLinecap="rounds"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
