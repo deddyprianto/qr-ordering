@@ -1,3 +1,17 @@
+import { useNavigate } from "react-router-dom";
+
 export function Component() {
-  return <h1>Profile</h1>;
+  const navigate = useNavigate();
+  return (
+    <div
+      onClick={() => navigate("/auth")}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          navigate("/auth");
+        }
+      }}
+    >
+      Login
+    </div>
+  );
 }

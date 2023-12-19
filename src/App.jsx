@@ -25,6 +25,10 @@ const router = createBrowserRouter([
         lazy: () => import("./pages/Profile"),
       },
       {
+        path: "otp",
+        lazy: () => import("./pages/AuthOtp"),
+      },
+      {
         path: "*",
         lazy: () => import("./pages/NotFound"),
       },
