@@ -39,7 +39,6 @@ export default function Header() {
       }
 
       tempSearchItemObj.doSearch = true;
-      console.log(tempSearchItemObj)
       dispatch(setSearchItemObj(tempSearchItemObj));
       dispatch(setEnableSearchUsingScroll(true))
     }

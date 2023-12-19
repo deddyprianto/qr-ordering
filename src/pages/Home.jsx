@@ -9,13 +9,11 @@ import image5 from "../assets/image5.png";
 import image6 from "../assets/image6.png";
 import { IconClose } from "../assets/svgIcon";
 import { RenderItemSearch } from "../components/Home/RenderItemSearch";
-import { apiProduct } from "../services/Product";
 
 export function Component() {
   const [summaryTabMenu, setSummaryTabMenu] = useState("Local Beverages");
   const [isSelectedItem, setIsSelectedItem] = useState("Christmas Menu 2023");
   const [highlights, setHighlights] = useState(true);
-  const [searchItemList, setSearchItemList] = useState([]);
   const [isFirstOpenSearchBar, setIsFirstOpenSearchBar] = useState(true);
 
   const dispatch = useDispatch();
@@ -39,44 +37,18 @@ export function Component() {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log(searchItemObj)
     if(searchItemObj?.doSearch){
-      handleSearchItems();
       setIsFirstOpenSearchBar(false);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchItemObj]);
 
   useEffect(()=>{
     if(!isSearchItem) {
-      setSearchItemList([]);
       dispatch(setEnableSearchUsingScroll(false));
       setIsFirstOpenSearchBar(true);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSearchItem]);
-
-  const handleSearchItems = async() => {
-    let params = {
-      search: searchItemObj?.searchText,
-      skip: searchItemObj?.isResetList?0:searchItemList.length,
-      take: 10,
-      sortBy: "buttonTitle",
-      isDescending: false
-    }
-    try {
-      const result = await apiProduct('GET', "BUGIS/ALL", params);
-      if(result.resultCode == 200){
-        let newSearchItemList = [];
-        if(searchItemObj?.isResetList) newSearchItemList = result.data;
-        else newSearchItemList = searchItemList.concat(result.data)
-        setSearchItemList(newSearchItemList);
-        setEnableSearchUsingScroll(newSearchItemList.length>0);
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  };
 
   const renderSplashScreen = () => {
     return (
@@ -334,7 +306,7 @@ export function Component() {
       return renderSplashScreen();
     } else {
       if(isFirstOpenSearchBar) return renderMenu();
-      else return <RenderItemSearch itemList={searchItemList} searchText={searchItemObj?.searchText}/>;
+      else return <RenderItemSearch searchText={searchItemObj?.searchText}/>;
     }
   };
 
