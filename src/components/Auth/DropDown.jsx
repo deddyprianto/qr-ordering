@@ -1,14 +1,40 @@
 import { Menu, Transition } from "@headlessui/react";
-import { Fragment } from "react";
-import { IconArrowBottom } from "../../assets/svgIcon";
+import { Fragment, useState } from "react";
+import { IconArrowBottom, SearchIcon } from "../../assets/svgIcon";
+import SearchInput, { createFilter } from "react-search-input";
+import countryCodes from "country-codes-list";
 
-export default function Example() {
+export default function Dropdown() {
+  const [phoneCountryCode, setPhoneCountryCode] = useState("+65");
+  const [valueSearchCode, setValueSearchCode] = useState("");
+  const myCountryCodesObject = countryCodes.customList(
+    "countryCode",
+    "{countryNameEn}: +{countryCallingCode}",
+  );
+
+  const optionCodePhone = Object.keys(myCountryCodesObject).map(
+    (key) => myCountryCodesObject[key],
+  );
+
+  optionCodePhone.sort((a) => {
+    let item = a.substring(a.indexOf(":") + 2);
+    if (item === phoneCountryCode) {
+      return -1;
+    } else {
+      return 1;
+    }
+  });
+
+  const filteredPhoneCode = optionCodePhone.filter(
+    createFilter(valueSearchCode),
+  );
+
   return (
     <div className="text-right">
       <Menu as="div" className="relative inline-block text-left">
         <div>
           <Menu.Button className="flex w-full justify-center rounded-md gap-3">
-            <div className="text-center">+ 65</div>
+            <div className="text-center">{phoneCountryCode}</div>
             <IconArrowBottom />
           </Menu.Button>
         </div>
@@ -22,122 +48,102 @@ export default function Example() {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute p-0 m-0 mt-4 w-[85vw] divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
-            <div className="px-1 py-1 ">
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    className={`${
-                      active ? "bg-violet-500 text-white" : "text-gray-900"
-                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                  >
-                    {active ? (
-                      <EditActiveIcon
-                        className="mr-2 h-5 w-5"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <EditInactiveIcon
-                        className="mr-2 h-5 w-5"
-                        aria-hidden="true"
-                      />
-                    )}
-                    Edit
-                  </button>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    className={`${
-                      active ? "bg-violet-500 text-white" : "text-gray-900"
-                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                  >
-                    {active ? (
-                      <DuplicateActiveIcon
-                        className="mr-2 h-5 w-5"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <DuplicateInactiveIcon
-                        className="mr-2 h-5 w-5"
-                        aria-hidden="true"
-                      />
-                    )}
-                    Duplicate
-                  </button>
-                )}
-              </Menu.Item>
+          <Menu.Items className="absolute p-0 m-0 mt-4 w-[85vw] lg:w-[40vw] divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none ">
+            <div
+              style={{
+                width: "95%",
+                display: "flex",
+                alignItems: "center",
+                border: "1px solid #ddd",
+                borderRadius: "10px",
+                justifyContent: "space-between",
+                margin: "5px",
+              }}
+            >
+              <div style={{ width: "100%" }}>
+                <SearchInput
+                  id="search-country-code-input"
+                  placeholder="Search for country code"
+                  style={{
+                    width: "100%",
+                    padding: "10px",
+                    marginLeft: "5px",
+                    border: "none",
+                    outline: "none",
+                  }}
+                  onChange={(e) => setValueSearchCode(e)}
+                />
+              </div>
+              <div className="mr-[10px]">
+                <SearchIcon color="#000" />
+              </div>
             </div>
-            <div className="px-1 py-1">
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    className={`${
-                      active ? "bg-violet-500 text-white" : "text-gray-900"
-                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                  >
-                    {active ? (
-                      <ArchiveActiveIcon
-                        className="mr-2 h-5 w-5"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <ArchiveInactiveIcon
-                        className="mr-2 h-5 w-5"
-                        aria-hidden="true"
-                      />
-                    )}
-                    Archive
-                  </button>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    className={`${
-                      active ? "bg-violet-500 text-white" : "text-gray-900"
-                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                  >
-                    {active ? (
-                      <MoveActiveIcon
-                        className="mr-2 h-5 w-5"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <MoveInactiveIcon
-                        className="mr-2 h-5 w-5"
-                        aria-hidden="true"
-                      />
-                    )}
-                    Move
-                  </button>
-                )}
-              </Menu.Item>
-            </div>
-            <div className="px-1 py-1">
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    className={`${
-                      active ? "bg-violet-500 text-white" : "text-gray-900"
-                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                  >
-                    {active ? (
-                      <DeleteActiveIcon
-                        className="mr-2 h-5 w-5 text-violet-400"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <DeleteInactiveIcon
-                        className="mr-2 h-5 w-5 text-violet-400"
-                        aria-hidden="true"
-                      />
-                    )}
-                    Delete
-                  </button>
-                )}
-              </Menu.Item>
+
+            <div className="px-2 py-2 h-[200px] overflow-y-auto">
+              {filteredPhoneCode.map((item, i) => {
+                const getPhoneCodeFromStr = item.substring(
+                  item.indexOf(":") + 1,
+                );
+                let countryCodeOption = "";
+
+                const phoneCode = getPhoneCodeFromStr.split(" ")[1];
+                if (phoneCode === "+65") {
+                  countryCodeOption = "country-code-singapore-option";
+                } else if (phoneCode === "+62") {
+                  countryCodeOption = "country-code-indonesia-option";
+                }
+                let colorPhoneSelected;
+
+                if (valueSearchCode) {
+                  colorPhoneSelected = "black";
+                } else if (i === 0) {
+                  colorPhoneSelected = "#FF4782";
+                } else {
+                  colorPhoneSelected = "black";
+                }
+                return (
+                  <Menu.Item key={item}>
+                    <div
+                      style={{
+                        font: "500 16px Helvetica Neue, sans-serif ",
+                        cursor: "pointer",
+                        color: "black",
+                        padding: "10px",
+                        margin: 0,
+                        opacity: 0.9,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      <p
+                        id={countryCodeOption}
+                        style={{
+                          padding: "0px 0px 7px 0px",
+                          margin: 0,
+                          cursor: "pointer",
+                          color: colorPhoneSelected,
+                        }}
+                        onClick={() => {
+                          setPhoneCountryCode(
+                            getPhoneCodeFromStr.split(" ")[1],
+                          );
+                        }}
+                        onKeyDown={(event) => {
+                          if (event.key === "Enter" || event.key === " ") {
+                            setPhoneCountryCode(
+                              getPhoneCodeFromStr.split(" ")[1],
+                            );
+                          }
+                        }}
+                      >
+                        {item}
+                      </p>
+                      <hr style={{ width: "95%" }} />
+                    </div>
+                  </Menu.Item>
+                );
+              })}
             </div>
           </Menu.Items>
         </Transition>
@@ -146,224 +152,3 @@ export default function Example() {
   );
 }
 
-function EditInactiveIcon(props) {
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M4 13V16H7L16 7L13 4L4 13Z"
-        fill="#EDE9FE"
-        stroke="#A78BFA"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
-
-function EditActiveIcon(props) {
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M4 13V16H7L16 7L13 4L4 13Z"
-        fill="#8B5CF6"
-        stroke="#C4B5FD"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
-
-function DuplicateInactiveIcon(props) {
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M4 4H12V12H4V4Z"
-        fill="#EDE9FE"
-        stroke="#A78BFA"
-        strokeWidth="2"
-      />
-      <path
-        d="M8 8H16V16H8V8Z"
-        fill="#EDE9FE"
-        stroke="#A78BFA"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
-
-function DuplicateActiveIcon(props) {
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M4 4H12V12H4V4Z"
-        fill="#8B5CF6"
-        stroke="#C4B5FD"
-        strokeWidth="2"
-      />
-      <path
-        d="M8 8H16V16H8V8Z"
-        fill="#8B5CF6"
-        stroke="#C4B5FD"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
-
-function ArchiveInactiveIcon(props) {
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect
-        x="5"
-        y="8"
-        width="10"
-        height="8"
-        fill="#EDE9FE"
-        stroke="#A78BFA"
-        strokeWidth="2"
-      />
-      <rect
-        x="4"
-        y="4"
-        width="12"
-        height="4"
-        fill="#EDE9FE"
-        stroke="#A78BFA"
-        strokeWidth="2"
-      />
-      <path d="M8 12H12" stroke="#A78BFA" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function ArchiveActiveIcon(props) {
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect
-        x="5"
-        y="8"
-        width="10"
-        height="8"
-        fill="#8B5CF6"
-        stroke="#C4B5FD"
-        strokeWidth="2"
-      />
-      <rect
-        x="4"
-        y="4"
-        width="12"
-        height="4"
-        fill="#8B5CF6"
-        stroke="#C4B5FD"
-        strokeWidth="2"
-      />
-      <path d="M8 12H12" stroke="#A78BFA" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function MoveInactiveIcon(props) {
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path d="M10 4H16V10" stroke="#A78BFA" strokeWidth="2" />
-      <path d="M16 4L8 12" stroke="#A78BFA" strokeWidth="2" />
-      <path d="M8 6H4V16H14V12" stroke="#A78BFA" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function MoveActiveIcon(props) {
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path d="M10 4H16V10" stroke="#C4B5FD" strokeWidth="2" />
-      <path d="M16 4L8 12" stroke="#C4B5FD" strokeWidth="2" />
-      <path d="M8 6H4V16H14V12" stroke="#C4B5FD" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function DeleteInactiveIcon(props) {
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect
-        x="5"
-        y="6"
-        width="10"
-        height="10"
-        fill="#EDE9FE"
-        stroke="#A78BFA"
-        strokeWidth="2"
-      />
-      <path d="M3 6H17" stroke="#A78BFA" strokeWidth="2" />
-      <path d="M8 6V4H12V6" stroke="#A78BFA" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function DeleteActiveIcon(props) {
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect
-        x="5"
-        y="6"
-        width="10"
-        height="10"
-        fill="#8B5CF6"
-        stroke="#C4B5FD"
-        strokeWidth="2"
-      />
-      <path d="M3 6H17" stroke="#C4B5FD" strokeWidth="2" />
-      <path d="M8 6V4H12V6" stroke="#C4B5FD" strokeWidth="2" />
-    </svg>
-  );
-}

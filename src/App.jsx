@@ -29,6 +29,10 @@ const router = createBrowserRouter([
         lazy: () => import("./pages/AuthOtp"),
       },
       {
+        path: "register",
+        lazy: () => import("./pages/AuthRegister"),
+      },
+      {
         path: "*",
         lazy: () => import("./pages/NotFound"),
       },

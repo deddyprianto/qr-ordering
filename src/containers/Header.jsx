@@ -84,7 +84,11 @@ export default function Header() {
     );
   };
   const renderMain = () => {
-    if (pathname === "/auth" || pathname === "/otp") {
+    if (
+      pathname === "/auth" ||
+      pathname === "/otp" ||
+      pathname === "/register"
+    ) {
       return (
         <div
           style={{

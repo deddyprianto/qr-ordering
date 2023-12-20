@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 export const LoginIcon = () => {
   return (
     <svg
@@ -133,7 +135,7 @@ export const TaskListIcon = () => {
   );
 };
 
-export const SearchIcon = () => {
+export const SearchIcon = ({ color = "#fff" }) => {
   return (
     <svg
       width="24"
@@ -142,10 +144,10 @@ export const SearchIcon = () => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <circle cx="15" cy="15" r="10.5" stroke="#fff" strokeWidth="3" />
+      <circle cx="15" cy="15" r="10.5" stroke={color} strokeWidth="3" />
       <path
         d="M22.5 22.5L31.5 31.5"
-        stroke="#fff"
+        stroke={color}
         strokeWidth="3"
         strokeLinecap="round"
       />
@@ -243,4 +245,8 @@ export const IconArrowBottom = () => {
       />
     </svg>
   );
+};
+
+SearchIcon.propTypes = {
+  color: PropTypes.string,
 };
