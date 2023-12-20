@@ -1,9 +1,8 @@
 import axios from 'axios';
-import { config } from "../helper/config";
 
 export const apiProduct = async (method, path, body) => {
   try {
-    let url = `${config.API_URL}/${path}`;
+    let url = `${import.meta.env.VITE_API_URL}/Products/${path}`;
     const axiosConfig = {
       method,
       headers: {
