@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { apiProduct } from "../../services/Product";
 import { setEnableSearchUsingScroll } from "../../app/dataSlicePersisted";
+import Loader from "../Loader";
 
 export const RenderItemSearch = ({ searchText="" }) => {
   const [searchItemList, setSearchItemList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const searchItemObj = useSelector(
     (state) => state.dataSlicePersisted.searchItemObj,
   );
@@ -26,6 +28,7 @@ export const RenderItemSearch = ({ searchText="" }) => {
       isDescending: false
     }
     try {
+      setIsLoading(true);
       const result = await apiProduct('GET', "BUGIS/ALL", params);
       if(result.resultCode == 200){
         let newSearchItemList = [];
@@ -34,8 +37,11 @@ export const RenderItemSearch = ({ searchText="" }) => {
         setSearchItemList(newSearchItemList);
         setEnableSearchUsingScroll(newSearchItemList.length>0);
       }
+      else setSearchItemList([]);
+      setIsLoading(false);
     } catch (error) {
-      console.log(error)
+      setIsLoading(false);
+      console.log(error);
     }
   };
 
@@ -175,7 +181,8 @@ export const RenderItemSearch = ({ searchText="" }) => {
     );
   }
 
-  if(searchItemList.length>0) return renderItemList();
+  if(isLoading) return <Loader/>
+  else if(searchItemList.length>0) return renderItemList();
   else return renderItemNotFound();
 };
 
