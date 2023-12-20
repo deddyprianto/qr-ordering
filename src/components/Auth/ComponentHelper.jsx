@@ -2,6 +2,22 @@ import React from "react";
 import DropDown from "./DropDown";
 import PropTypes from "prop-types";
 
+
+const renderFlagMandatory = () => {
+  return (
+    <div
+      style={{
+        color: "var(--badge-color-badge, #CE1111)",
+        alignSelf: "stretch",
+        whiteSpace: "nowrap",
+        font: "500 14px Poppins, sans-serif ",
+      }}
+    >
+      *
+    </div>
+  );
+};
+
 export const RenderTermAndCondition = ({ isChecked, handleCheckboxChange }) => {
   return (
     <div
@@ -132,6 +148,8 @@ RenderButton.propTypes = {
   handleButton: PropTypes.func.isRequired,
 };
 
+
+
 export const RenderEmailRegister = ({ setEmailField, pathname }) => {
   if (pathname === "/register") {
     return (
@@ -162,16 +180,7 @@ export const RenderEmailRegister = ({ setEmailField, pathname }) => {
             >
               Email
             </div>
-            <div
-              style={{
-                font: "500 14px Poppins, sans-serif ",
-                alignSelf: "stretch",
-                whiteSpace: "nowrap",
-                color: "var(--badge-color-badge, #CE1111)",
-              }}
-            >
-              *
-            </div>
+            {renderFlagMandatory()}
           </div>
           <div
             style={{
@@ -227,16 +236,7 @@ export const RenderEmailRegister = ({ setEmailField, pathname }) => {
             >
               Name
             </div>
-            <div
-              style={{
-                font: "500 14px Poppins, sans-serif ",
-                color: "var(--badge-color-badge, #CE1111)",
-                alignSelf: "stretch",
-                whiteSpace: "nowrap",
-              }}
-            >
-              *
-            </div>
+            {renderFlagMandatory()}
           </div>
           <div
             style={{
@@ -295,16 +295,7 @@ export const RenderEmailRegister = ({ setEmailField, pathname }) => {
         >
           Email
         </div>
-        <div
-          style={{
-            font: "500 14px Poppins, sans-serif ",
-            color: "var(--badge-color-badge, #CE1111)",
-            alignSelf: "stretch",
-            whiteSpace: "nowrap",
-          }}
-        >
-          *
-        </div>
+        {renderFlagMandatory()}
       </div>
       <div
         style={{
@@ -373,16 +364,7 @@ export const RenderMobileRegister = ({ pathname }) => {
             >
               Phone Number
             </div>
-            <div
-              style={{
-                color: "var(--badge-color-badge, #CE1111)",
-                alignSelf: "stretch",
-                whiteSpace: "nowrap",
-                font: "500 14px Poppins, sans-serif ",
-              }}
-            >
-              *
-            </div>
+            {renderFlagMandatory()}
           </div>
           <div
             style={{
@@ -448,16 +430,7 @@ export const RenderMobileRegister = ({ pathname }) => {
             >
               Name
             </div>
-            <div
-              style={{
-                color: "var(--badge-color-badge, #CE1111)",
-                alignSelf: "stretch",
-                whiteSpace: "nowrap",
-                font: "500 14px Poppins, sans-serif ",
-              }}
-            >
-              *
-            </div>
+            {renderFlagMandatory()}
           </div>
           <div
             style={{
@@ -518,16 +491,7 @@ export const RenderMobileRegister = ({ pathname }) => {
           >
             Phone Number
           </div>
-          <div
-            style={{
-              color: "var(--badge-color-badge, #CE1111)",
-              alignSelf: "stretch",
-              whiteSpace: "nowrap",
-              font: "500 14px Poppins, sans-serif ",
-            }}
-          >
-            *
-          </div>
+          {renderFlagMandatory()}
         </div>
         <div
           style={{
