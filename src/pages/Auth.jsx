@@ -17,7 +17,8 @@ export function Component() {
   const pathname = location.pathname;
   const [isChecked, setIsChecked] = useState(false);
   const [emailField, setEmailField] = useState("");
-
+  const [nameField, setNameField] = useState("");
+  console.log(nameField);
   const handleCheckboxChange = (e) => {
     setIsChecked(e.target.checked);
   };
@@ -62,7 +63,9 @@ export function Component() {
 
   const renderRootComponentTab = () => {
     if (tabScreen === "mobile") {
-      return <RenderMobileRegister pathname={pathname} />;
+      return (
+        <RenderMobileRegister pathname={pathname} setNameField={setNameField} />
+      );
     } else {
       return (
         <RenderEmailRegister

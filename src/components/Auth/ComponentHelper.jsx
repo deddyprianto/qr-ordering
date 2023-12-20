@@ -18,6 +18,39 @@ const renderFlagMandatory = () => {
   );
 };
 
+const renderInputFieldCustom = ({ label, type, setEmailField }) => {
+  return (
+    <div
+      style={{
+        color: "var(--text-color-tertiary, #888787)",
+        whiteSpace: "nowrap",
+        alignItems: "start",
+        alignSelf: "stretch",
+        borderRadius: "8px",
+        border: "1px solid var(--text-color-tertiary, #888787)",
+        boxShadow: "0px 0px 0px 3px rgba(159, 135, 255, 0.20)",
+        backgroundColor: "var(--brand-color-secondary, #FFF)",
+        marginTop: "4px",
+        width: "100%",
+        justifyContent: "center",
+        padding: "14px 60px 14px 16px",
+        font: "500 14px Poppins, sans-serif ",
+      }}
+    >
+      <input
+        onChange={(e) => setEmailField(e.target.value)}
+        style={{
+          outline: "none",
+          width: "100%",
+          font: "500 14px/20px Helvetica Neue, sans-serif ",
+        }}
+        type={type === "email" ? "email" : "text"}
+        placeholder={`Enter your ${label}`}
+      />
+    </div>
+  );
+};
+
 export const RenderTermAndCondition = ({ isChecked, handleCheckboxChange }) => {
   return (
     <div
@@ -148,8 +181,6 @@ RenderButton.propTypes = {
   handleButton: PropTypes.func.isRequired,
 };
 
-
-
 export const RenderEmailRegister = ({ setEmailField, pathname }) => {
   if (pathname === "/register") {
     return (
@@ -182,33 +213,11 @@ export const RenderEmailRegister = ({ setEmailField, pathname }) => {
             </div>
             {renderFlagMandatory()}
           </div>
-          <div
-            style={{
-              color: "var(--text-color-tertiary, #888787)",
-              whiteSpace: "nowrap",
-              alignItems: "start",
-              alignSelf: "stretch",
-              borderRadius: "8px",
-              border: "1px solid var(--text-color-tertiary, #888787)",
-              boxShadow: "0px 0px 0px 3px rgba(159, 135, 255, 0.20)",
-              backgroundColor: "var(--brand-color-secondary, #FFF)",
-              marginTop: "4px",
-              width: "100%",
-              justifyContent: "center",
-              padding: "14px 60px 14px 16px",
-              font: "500 14px Poppins, sans-serif ",
-            }}
-          >
-            <input
-              style={{
-                outline: "none",
-                width: "100%",
-                font: "500 14px/20px Helvetica Neue, sans-serif ",
-              }}
-              type="email"
-              placeholder="Enter your Email"
-            />
-          </div>
+          {renderInputFieldCustom({
+            label: "Email",
+            type: "email",
+            setEmailField,
+          })}
         </div>
         <div
           style={{
@@ -238,32 +247,11 @@ export const RenderEmailRegister = ({ setEmailField, pathname }) => {
             </div>
             {renderFlagMandatory()}
           </div>
-          <div
-            style={{
-              font: "500 14px Poppins, sans-serif ",
-              color: "var(--text-color-tertiary, #888787)",
-              whiteSpace: "nowrap",
-              alignItems: "start",
-              borderRadius: "8px",
-              border: "1px solid var(--text-color-tertiary, #888787)",
-              boxShadow: "0px 0px 0px 3px rgba(159, 135, 255, 0.20)",
-              backgroundColor: "var(--brand-color-secondary, #FFF)",
-              marginTop: "4px",
-              width: "100%",
-              justifyContent: "center",
-              padding: "14px 60px 14px 16px",
-            }}
-          >
-            <input
-              style={{
-                font: "500 14px/20px Helvetica Neue, sans-serif ",
-                outline: "none",
-                width: "100%",
-              }}
-              type="text"
-              placeholder="Enter your Name"
-            />
-          </div>
+          {renderInputFieldCustom({
+            label: "Name",
+            type: "text",
+            setEmailField,
+          })}
         </div>
       </React.Fragment>
     );
@@ -297,34 +285,7 @@ export const RenderEmailRegister = ({ setEmailField, pathname }) => {
         </div>
         {renderFlagMandatory()}
       </div>
-      <div
-        style={{
-          color: "var(--text-color-tertiary, #888787)",
-          whiteSpace: "nowrap",
-          alignItems: "start",
-          alignSelf: "stretch",
-          borderRadius: "8px",
-          border: "1px solid var(--text-color-tertiary, #888787)",
-          boxShadow: "0px 0px 0px 3px rgba(159, 135, 255, 0.20)",
-          backgroundColor: "var(--brand-color-secondary, #FFF)",
-          marginTop: "4px",
-          width: "100%",
-          justifyContent: "center",
-          padding: "14px 60px 14px 16px",
-          font: "500 14px Poppins, sans-serif ",
-        }}
-      >
-        <input
-          onChange={(e) => setEmailField(e.target.value)}
-          style={{
-            font: "500 14px/20px Helvetica Neue, sans-serif ",
-            outline: "none",
-            width: "100%",
-          }}
-          type="email"
-          placeholder="Enter your Email"
-        />
-      </div>
+      {renderInputFieldCustom({ label: "Email", type: "email", setEmailField })}
     </div>
   );
 };
@@ -333,7 +294,7 @@ RenderEmailRegister.propTypes = {
   pathname: PropTypes.string.isRequired,
 };
 
-export const RenderMobileRegister = ({ pathname }) => {
+export const RenderMobileRegister = ({ pathname, setNameField }) => {
   if (pathname === "/register") {
     return (
       <React.Fragment>
@@ -368,13 +329,12 @@ export const RenderMobileRegister = ({ pathname }) => {
           </div>
           <div
             style={{
+              display: "flex",
               alignItems: "start",
-              alignSelf: "stretch",
               borderRadius: "8px",
               border: "1px solid var(--text-color-tertiary, #888787)",
               boxShadow: "0px 0px 0px 3px rgba(159, 135, 255, 0.20)",
               backgroundColor: "var(--brand-color-secondary, #FFF)",
-              display: "flex",
               marginTop: "4px",
               width: "100%",
               flexDirection: "column",
@@ -384,18 +344,18 @@ export const RenderMobileRegister = ({ pathname }) => {
           >
             <div
               style={{
+                width: "100%",
                 display: "flex",
                 gap: "10px",
                 position: "relative",
-                width: "100%",
               }}
             >
               <DropDown />
               <input
                 style={{
-                  outline: "none",
                   width: "100%",
                   font: "500 14px/20px Helvetica Neue, sans-serif ",
+                  outline: "none",
                 }}
                 type="number"
                 placeholder="Enter your phone number"
@@ -432,33 +392,11 @@ export const RenderMobileRegister = ({ pathname }) => {
             </div>
             {renderFlagMandatory()}
           </div>
-          <div
-            style={{
-              color: "var(--text-color-tertiary, #888787)",
-              whiteSpace: "nowrap",
-              alignItems: "start",
-              alignSelf: "stretch",
-              borderRadius: "8px",
-              border: "1px solid var(--text-color-tertiary, #888787)",
-              boxShadow: "0px 0px 0px 3px rgba(159, 135, 255, 0.20)",
-              backgroundColor: "var(--brand-color-secondary, #FFF)",
-              marginTop: "4px",
-              width: "100%",
-              justifyContent: "center",
-              padding: "14px 60px 14px 16px",
-              font: "500 14px Poppins, sans-serif ",
-            }}
-          >
-            <input
-              style={{
-                outline: "none",
-                width: "100%",
-                font: "500 14px/20px Helvetica Neue, sans-serif ",
-              }}
-              type="email"
-              placeholder="Enter your Email"
-            />
-          </div>
+          {renderInputFieldCustom({
+            label: "Name",
+            type: "text",
+            setNameField,
+          })}
         </div>
       </React.Fragment>
     );
@@ -535,6 +473,7 @@ export const RenderMobileRegister = ({ pathname }) => {
 };
 RenderMobileRegister.propTypes = {
   pathname: PropTypes.string.isRequired,
+  setNameField: PropTypes.func,
 };
 
 export const RenderLabel = ({ label = "", subLabel = "" }) => {
