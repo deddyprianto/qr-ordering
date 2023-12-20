@@ -40,7 +40,7 @@ export default function Header() {
 
       tempSearchItemObj.doSearch = true;
       dispatch(setSearchItemObj(tempSearchItemObj));
-      dispatch(setEnableSearchUsingScroll(true))
+      dispatch(setEnableSearchUsingScroll(true));
     }
     else {
       dispatch(setSearchItemObj({

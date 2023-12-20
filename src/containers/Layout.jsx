@@ -82,7 +82,7 @@ export default function Layout() {
             {navigation.state !== "idle" && <p>Navigation in progress...</p>}
           </div>
           <Header />
-          <div className="h-full overflow-x-auto">
+          <div className="h-full overflow-x-auto"  ref={childRef} onScroll={handleParentScroll}>
             <Outlet />
           </div>
           <Footer />

@@ -20,6 +20,7 @@ export const RenderItemSearch = ({ searchText="" }) => {
   }, [searchItemObj]);
 
   const handleSearchItems = async() => {
+    if(isLoading) return;
     let params = {
       search: searchItemObj?.searchText,
       skip: searchItemObj?.isResetList?0:searchItemList.length,
