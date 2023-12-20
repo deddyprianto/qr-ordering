@@ -138,37 +138,36 @@ export const RenderEmailRegister = ({ setEmailField, pathname }) => {
       <React.Fragment>
         <div
           style={{
-            alignItems: "start",
-            alignSelf: "stretch",
             display: "flex",
+            alignItems: "start",
             flexDirection: "column",
             marginTop: "16px",
           }}
         >
           <div
             style={{
-              alignItems: "start",
               display: "flex",
+              alignItems: "start",
               gap: "4px",
               padding: "0px",
             }}
           >
             <div
               style={{
-                color: "var(--text-color-primary, #343A4A)",
+                font: "500 14px/20px Helvetica Neue, sans-serif ",
                 letterSpacing: "0.28px",
                 whiteSpace: "nowrap",
-                font: "500 14px/20px Helvetica Neue, sans-serif ",
+                color: "var(--text-color-primary, #343A4A)",
               }}
             >
               Email
             </div>
             <div
               style={{
-                color: "var(--badge-color-badge, #CE1111)",
+                font: "500 14px Poppins, sans-serif ",
                 alignSelf: "stretch",
                 whiteSpace: "nowrap",
-                font: "500 14px Poppins, sans-serif ",
+                color: "var(--badge-color-badge, #CE1111)",
               }}
             >
               *
@@ -204,37 +203,36 @@ export const RenderEmailRegister = ({ setEmailField, pathname }) => {
         </div>
         <div
           style={{
-            alignItems: "start",
-            alignSelf: "stretch",
             display: "flex",
+            alignItems: "start",
             flexDirection: "column",
             marginTop: "16px",
           }}
         >
           <div
             style={{
-              alignItems: "start",
               display: "flex",
+              alignItems: "start",
               gap: "4px",
               padding: "0px",
             }}
           >
             <div
               style={{
+                font: "500 14px/20px Helvetica Neue, sans-serif ",
                 color: "var(--text-color-primary, #343A4A)",
                 letterSpacing: "0.28px",
                 whiteSpace: "nowrap",
-                font: "500 14px/20px Helvetica Neue, sans-serif ",
               }}
             >
               Name
             </div>
             <div
               style={{
+                font: "500 14px Poppins, sans-serif ",
                 color: "var(--badge-color-badge, #CE1111)",
                 alignSelf: "stretch",
                 whiteSpace: "nowrap",
-                font: "500 14px Poppins, sans-serif ",
               }}
             >
               *
@@ -242,10 +240,10 @@ export const RenderEmailRegister = ({ setEmailField, pathname }) => {
           </div>
           <div
             style={{
+              font: "500 14px Poppins, sans-serif ",
               color: "var(--text-color-tertiary, #888787)",
               whiteSpace: "nowrap",
               alignItems: "start",
-              alignSelf: "stretch",
               borderRadius: "8px",
               border: "1px solid var(--text-color-tertiary, #888787)",
               boxShadow: "0px 0px 0px 3px rgba(159, 135, 255, 0.20)",
@@ -254,14 +252,13 @@ export const RenderEmailRegister = ({ setEmailField, pathname }) => {
               width: "100%",
               justifyContent: "center",
               padding: "14px 60px 14px 16px",
-              font: "500 14px Poppins, sans-serif ",
             }}
           >
             <input
               style={{
+                font: "500 14px/20px Helvetica Neue, sans-serif ",
                 outline: "none",
                 width: "100%",
-                font: "500 14px/20px Helvetica Neue, sans-serif ",
               }}
               type="text"
               placeholder="Enter your Name"
@@ -274,37 +271,36 @@ export const RenderEmailRegister = ({ setEmailField, pathname }) => {
   return (
     <div
       style={{
-        alignItems: "start",
-        alignSelf: "stretch",
         display: "flex",
+        alignItems: "start",
         flexDirection: "column",
         marginTop: "16px",
       }}
     >
       <div
         style={{
-          alignItems: "start",
           display: "flex",
+          alignItems: "start",
           gap: "4px",
           padding: "0px",
         }}
       >
         <div
           style={{
+            font: "500 14px/20px Helvetica Neue, sans-serif ",
             color: "var(--text-color-primary, #343A4A)",
             letterSpacing: "0.28px",
             whiteSpace: "nowrap",
-            font: "500 14px/20px Helvetica Neue, sans-serif ",
           }}
         >
           Email
         </div>
         <div
           style={{
+            font: "500 14px Poppins, sans-serif ",
             color: "var(--badge-color-badge, #CE1111)",
             alignSelf: "stretch",
             whiteSpace: "nowrap",
-            font: "500 14px Poppins, sans-serif ",
           }}
         >
           *
@@ -330,9 +326,9 @@ export const RenderEmailRegister = ({ setEmailField, pathname }) => {
         <input
           onChange={(e) => setEmailField(e.target.value)}
           style={{
+            font: "500 14px/20px Helvetica Neue, sans-serif ",
             outline: "none",
             width: "100%",
-            font: "500 14px/20px Helvetica Neue, sans-serif ",
           }}
           type="email"
           placeholder="Enter your Email"
