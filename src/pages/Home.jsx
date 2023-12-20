@@ -8,11 +8,13 @@ import image4 from "../assets/image4.png";
 import image5 from "../assets/image5.png";
 import image6 from "../assets/image6.png";
 import { IconClose } from "../assets/svgIcon";
+import { GETRequest } from "../services/Product";
 
 export function Component() {
   const [summaryTabMenu, setSummaryTabMenu] = useState("Local Beverages");
   const [isSelectedItem, setIsSelectedItem] = useState("Christmas Menu 2023");
   const [highlights, setHighlights] = useState(true);
+  const [dataCategory,setDataCategory] = useState([])
   const dispatch = useDispatch();
   const isSplashScreen = useSelector(
     (state) => state.dataSlicePersisted.isSplashScreenShow,
@@ -21,6 +23,12 @@ export function Component() {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       dispatch(setShowSplashScreen(false));
+      let obj = {
+        skip : 0,
+        take : 5
+      }
+      
+      GETRequest('products/edge cafe', obj).then((x) => {setDataCategory(x.data)});
     }, 2000); // 5000 milliseconds = 5 seconds
 
     return () => {
@@ -83,44 +91,19 @@ export function Component() {
     );
   };
   const renderNavbarMenu = () => {
-    const data = [
+
+    let data = [];
+    dataCategory.map((x) => {      
+      if(x.buttonType.toLowerCase() == 'category' || x.buttonType.toLowerCase() == 'folder')
       {
-        name: "Christmas Menu 2023",
-        img: image1,
-      },
-      {
-        name: "Christmas Menu 20",
-        img: image1,
-      },
-      {
-        name: "Snacks",
-        img: image4,
-      },
-      {
-        name: "Side Dishes",
-        img: image5,
-      },
-      {
-        name: "Beverages",
-        img: image6,
-      },
-      {
-        name: "Christmas Menu 202",
-        img: image1,
-      },
-      {
-        name: "Snacks",
-        img: image4,
-      },
-      {
-        name: "Side Dishes",
-        img: image5,
-      },
-      {
-        name: "Beverages",
-        img: image6,
-      },
-    ];
+        let imageDefault = image1;
+        data.push({
+          name : x.buttonTitle,
+          img: x.imageURL ? x.imageURL : imageDefault
+        })
+      }
+
+    });
     return (
       <div className="overflow-x-auto flex border-t-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] bg-[#00524C] rounded-b-lg pl-[16px] pr-[16px]">
         {data.map((item) => {
