@@ -3,6 +3,10 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Loading from "./components/Loading";
 import "./scss/App.scss";
 
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setIsSearchItem, setSearchItemObj, setEnableSearchUsingScroll } from "./app/dataSlicePersisted";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -36,6 +40,18 @@ const router = createBrowserRouter([
   },
 ]);
 
+
 export default function App() {
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(setIsSearchItem(false)); 
+    dispatch(setSearchItemObj({
+      doSearch: false,
+      searchText: "",
+      isResetList: true
+    })); 
+    dispatch(setEnableSearchUsingScroll(false)); 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
   return <RouterProvider router={router} fallbackElement={<Loading />} />;
 }
