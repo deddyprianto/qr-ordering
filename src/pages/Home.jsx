@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { RenderItemProduct } from "../components/RenderItemProduct";
 import { useSelector, useDispatch } from "react-redux";
-import { setShowSplashScreen, setEnableSearchUsingScroll } from "../app/dataSlicePersisted";
+import {
+  setShowSplashScreen,
+  setEnableSearchUsingScroll,
+} from "../app/dataSlicePersisted";
 import image1 from "../assets/image1.png";
 import image3 from "../assets/image3.png";
 import { IconClose } from "../assets/svgIcon";
@@ -9,7 +12,6 @@ import { IconClose } from "../assets/svgIcon";
 import { GET } from "../utilities/services";
 
 import { RenderItemSearch } from "../components/Home/RenderItemSearch";
-
 
 export function Component() {
   const [summaryTabMenu, setSummaryTabMenu] = useState("Local Beverages");
@@ -27,7 +29,7 @@ export function Component() {
   );
   const isSearchItem = useSelector(
     (state) => state.dataSlicePersisted.isSearchItem,
-  ); 
+  );
   const searchItemObj = useSelector(
     (state) => state.dataSlicePersisted.searchItemObj,
   );
@@ -50,17 +52,17 @@ export function Component() {
   }, [dispatch]);
 
   useEffect(() => {
-    if(searchItemObj?.doSearch){
+    if (searchItemObj?.doSearch) {
       setIsFirstOpenSearchBar(false);
     }
   }, [searchItemObj]);
 
-  useEffect(()=>{
-    if(!isSearchItem) {
+  useEffect(() => {
+    if (!isSearchItem) {
       dispatch(setEnableSearchUsingScroll(false));
       setIsFirstOpenSearchBar(true);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSearchItem]);
 
   const renderSplashScreen = () => {
@@ -80,13 +82,12 @@ export function Component() {
   };
 
   const renderItemScroll = ({ label, imageItem, refNo, type }) => {
-    const fetchButtonTypeFolder = () => {
+    const fetchButton = () => {
       let obj = {
         skip: 0,
         take: 5,
       };
       GET(`products/edge cafe/${type}/${refNo}`, obj).then((x) => {
-        console.log(x);
         let tempSummaryTabMenu = [];
         let tempItem = [];
         x.data.map((prop) => {
@@ -96,46 +97,21 @@ export function Component() {
             tempItem.push(prop);
           }
         });
-        // setdataItem(dataItem);
-        setdataItem(tempItem);
-        setdataSummaryTabMenu(tempSummaryTabMenu);
-        setisShowSummaryTabMenu(true);
-      });
-    };
 
-    const fetchButtonTypeCategory = () => {
-      let obj = {
-        skip: 0,
-        take: 5,
-      };
-      GET(`products/edge cafe/${type}/${refNo}`, obj).then((x) => {
-        console.log(x);
-        let tempSummaryTabMenu = [];
-        let tempItem = [];
-        x.data.map((prop) => {
-          if (prop.buttonType.toLowerCase() == "item") {
-            tempItem.push(prop);
-          }
-        });
-        // setdataItem(dataItem);
         setdataItem(tempItem);
         setdataSummaryTabMenu(tempSummaryTabMenu);
-        setisShowSummaryTabMenu(true);
+        if (type.toLowerCase() == "folder") {
+          setisShowSummaryTabMenu(true);
+        } else {
+          setisShowSummaryTabMenu(false);
+        }
       });
-      setisShowSummaryTabMenu(false);
     };
 
     const handleClick = () => {
       setIsSelectedItem(label);
-      if (type.toLowerCase() == "folder") {
-        fetchButtonTypeFolder();
-      } else {
-        fetchButtonTypeCategory();
-      }
+      fetchButton();
     };
-
-
-
 
     return (
       <div
@@ -320,50 +296,55 @@ export function Component() {
   };
 
   const renderMenu = () => {
-    return <div className="relative">
-          {renderNavbarMenu()}
-          <div style={{ padding: "16px" }}>
-            {highlights && renderInsight()}
-            {isShowSummaryTabMenu && renderSummaryTabMenu()}
-            <p
-              style={{
-                fontWeight: "700",
-                fontSize: "22px",
-                margin: "16px 0px",
-              }}
-            >
-              You Might Like This!
-            </p>
-            <div
-              style={{
-                width: "100%",
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gridTemplateRows: "1fr",
-                gap: "16px",
-                gridAutoFlow: "row",
-                gridTemplateAreas: '". ."',
-              }}
-            >
-              {dataItem.map((x,index) => {
-                return (
-                  <RenderItemProduct key={`${x.productInfo?.itemName}_${index}`}
-                    isPromo={x.productInfo.promotions.length == 0 ? false : true}
-                    imageProduct={image3}
-                    productInfo={x.productInfo}
-                  />
-                );
-              })}
-            </div>
+    return (
+      <div className="relative">
+        {renderNavbarMenu()}
+        <div style={{ padding: "16px" }}>
+          {highlights && renderInsight()}
+          {isShowSummaryTabMenu && renderSummaryTabMenu()}
+          <p
+            style={{
+              fontWeight: "700",
+              fontSize: "22px",
+              margin: "16px 0px",
+            }}
+          >
+            You Might Like This!
+          </p>
+          <div
+            style={{
+              width: "100%",
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gridTemplateRows: "1fr",
+              gap: "16px",
+              gridAutoFlow: "row",
+              gridTemplateAreas: '". ."',
+            }}
+          >
+            {dataItem.map((x, index) => {
+              return (
+                <RenderItemProduct
+                  key={`${x.productInfo?.itemName}_${index}`}
+                  isPromo={x.productInfo.promotions.length == 0 ? false : true}
+                  imageProduct={image3}
+                  productInfo={x.productInfo}
+                />
+              );
+            })}
           </div>
-          {isSearchItem && <div className="absolute inset-0 backdrop-filter backdrop-blur-lg z-0"></div>}
         </div>
+        {isSearchItem && (
+          <div className="absolute inset-0 backdrop-filter backdrop-blur-lg z-0"></div>
+        )}
+      </div>
+    );
   };
 
   const renderMain = () => {
     if (isSplashScreen) return renderSplashScreen();
-    else if(isFirstOpenSearchBar) return renderMenu();
-    else return <RenderItemSearch searchText={searchItemObj?.searchText}/>;
+    else if (isFirstOpenSearchBar) return renderMenu();
+    else return <RenderItemSearch searchText={searchItemObj?.searchText} />;
   };
 
   return <React.Fragment>{renderMain()}</React.Fragment>;
