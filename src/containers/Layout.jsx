@@ -33,7 +33,7 @@ export default function Layout() {
     const childBottom = childElement.scrollHeight - childElement.scrollTop === childElement.clientHeight;
 
     if (childBottom) {
-      var tempSearchItemObj = JSON.parse(JSON.stringify(searchItemObj));
+      let tempSearchItemObj = JSON.parse(JSON.stringify(searchItemObj));
       tempSearchItemObj.doSearch = true;
       tempSearchItemObj.isResetList = false;
       dispatch(setSearchItemObj(tempSearchItemObj));

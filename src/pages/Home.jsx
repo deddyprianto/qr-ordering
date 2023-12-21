@@ -302,12 +302,9 @@ export function Component() {
   };
 
   const renderMain = () => {
-    if (isSplashScreen) {
-      return renderSplashScreen();
-    } else {
-      if(isFirstOpenSearchBar) return renderMenu();
-      else return <RenderItemSearch searchText={searchItemObj?.searchText}/>;
-    }
+    if (isSplashScreen) return renderSplashScreen();
+    else if(isFirstOpenSearchBar) return renderMenu();
+    else return <RenderItemSearch searchText={searchItemObj?.searchText}/>;
   };
 
   return <React.Fragment>{renderMain()}</React.Fragment>;

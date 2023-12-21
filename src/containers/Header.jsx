@@ -31,9 +31,9 @@ export default function Header() {
 
   const openSearchBar = () => {
     if(isSearchItem){ 
-      var tempSearchItemObj = JSON.parse(JSON.stringify(searchItemObj));
+      let tempSearchItemObj = JSON.parse(JSON.stringify(searchItemObj));
       if(enableSearchUsingScroll){
-        var inputElement = document.getElementById('input-search');
+        let inputElement = document.getElementById('input-search');
         tempSearchItemObj.searchText = inputElement.value;
         tempSearchItemObj.isResetList = true;
       }
