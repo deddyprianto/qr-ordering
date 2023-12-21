@@ -15,7 +15,7 @@ import { RenderItemSearch } from "../components/Home/RenderItemSearch";
 
 export function Component() {
   const [summaryTabMenu, setSummaryTabMenu] = useState("Local Beverages");
-  const [isShowSummaryTabMenu, setisShowSummaryTabMenu] = useState(false);
+  const [isShowSummaryTabMenu, setIsShowSummaryTabMenu] = useState(false);
   const [isSelectedItem, setIsSelectedItem] = useState("Christmas Menu 2023");
   const [highlights, setHighlights] = useState(true);
   const [dataCategory, setDataCategory] = useState([]);
@@ -101,9 +101,9 @@ export function Component() {
         setDataItem(tempItem);
         setDataSummaryTabMenu(tempSummaryTabMenu);
         if (type.toLowerCase() == "folder") {
-          setisShowSummaryTabMenu(true);
+          setIsShowSummaryTabMenu(true);
         } else {
-          setisShowSummaryTabMenu(false);
+          setIsShowSummaryTabMenu(false);
         }
       });
     };
@@ -325,8 +325,8 @@ export function Component() {
             {dataItem.map((x, index) => {
               return (
                 <RenderItemProduct
-                  key={`${x.productInfo?.itemName}_${index}`}
-                  isPromo={x.productInfo.promotions.length == 0 ? false : true}
+                  key={`${x.buttonType}_${x.buttonTitle}`}
+                  isPromo={x.productInfo?.promotions.length > 0 }
                   imageProduct={image3}
                   productInfo={x.productInfo}
                 />
