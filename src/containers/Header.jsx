@@ -1,18 +1,10 @@
-import {
-  IconArrowLeft,
-  IconTable,
-  LogoIcon,
-  SearchIcon,
-} from "../assets/svgIcon";
-import { useLocation } from "react-router-dom";
+import { IconArrowLeft, IconTable, SearchIcon } from "../assets/svgIcon";
 import "react-modern-drawer/dist/index.css";
 import logo from "../assets/logo.png";
 import { useState } from "react";
 
 export default function Header() {
   const [searchItem, setSearchItem] = useState(false);
-  const location = useLocation();
-  const pathname = location.pathname;
 
   const renderLabelTableNo = () => {
     return (
@@ -84,29 +76,12 @@ export default function Header() {
     );
   };
   const renderMain = () => {
-    if (
-      pathname === "/auth" ||
-      pathname === "/otp" ||
-      pathname === "/register"
-    ) {
-      return (
-        <div
-          style={{
-            padding: "16px",
-          }}
-        >
-          <LogoIcon />
-          <p>[store location]</p>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          {renderLabelTableNo()}
-          {renderMainHeader()}
-        </div>
-      );
-    }
+    return (
+      <div>
+        {renderLabelTableNo()}
+        {renderMainHeader()}
+      </div>
+    );
   };
 
   return <>{renderMain()}</>;

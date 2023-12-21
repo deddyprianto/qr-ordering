@@ -8,15 +8,21 @@ import image4 from "../assets/image4.png";
 import image5 from "../assets/image5.png";
 import image6 from "../assets/image6.png";
 import { IconClose } from "../assets/svgIcon";
+import { ModalAuth } from "../components/Auth/ModalAuth";
+import { setIsOpenModalAuth } from "../app/dataSlice";
 
 export function Component() {
   const [summaryTabMenu, setSummaryTabMenu] = useState("Local Beverages");
   const [isSelectedItem, setIsSelectedItem] = useState("Christmas Menu 2023");
   const [highlights, setHighlights] = useState(true);
   const dispatch = useDispatch();
+
   const isSplashScreen = useSelector(
     (state) => state.dataSlicePersisted.isSplashScreenShow,
   );
+  useEffect(() => {
+    dispatch(setIsOpenModalAuth(true));
+  }, [dispatch]);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -281,5 +287,10 @@ export function Component() {
     }
   };
 
-  return <React.Fragment>{renderMain()}</React.Fragment>;
+  return (
+    <React.Fragment>
+      {renderMain()}
+      <ModalAuth />
+    </React.Fragment>
+  );
 }

@@ -13,10 +13,6 @@ const router = createBrowserRouter([
         lazy: () => import("./pages/Home"),
       },
       {
-        path: "auth",
-        lazy: () => import("./pages/Auth"),
-      },
-      {
         path: "cart",
         lazy: () => import("./pages/Cart"),
       },

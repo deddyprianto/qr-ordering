@@ -1,7 +1,8 @@
 import React from "react";
 import DropDown from "./DropDown";
 import PropTypes from "prop-types";
-
+import { IconCloseTransparent, IconFaceBook } from "../../assets/svgIcon";
+import { setIsOpenModalAuth } from "../../app/dataSlice";
 
 const renderFlagMandatory = () => {
   return (
@@ -136,13 +137,13 @@ export const RenderButton = ({
           display: "flex",
           marginTop: "16px",
           gap: "8px",
-          padding: "0 80px",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
         <div
           style={{
             color: "var(--text-color-primary, #343A4A)",
-            textAlign: "center",
             letterSpacing: "0.28px",
             whiteSpace: "nowrap",
             font: "500 14px/20px Helvetica Neue, sans-serif ",
@@ -476,7 +477,7 @@ RenderMobileRegister.propTypes = {
   setNameField: PropTypes.func,
 };
 
-export const RenderLabel = ({ label = "", subLabel = "" }) => {
+export const RenderLabel = ({ label = "", subLabel = "", dispatchAction }) => {
   return (
     <div
       style={{
@@ -487,12 +488,30 @@ export const RenderLabel = ({ label = "", subLabel = "" }) => {
     >
       <div
         style={{
-          color: "var(--text-color-primary, #343A4A)",
-          width: "100%",
-          font: "700 22px/31px Helvetica Neue, sans-serif ",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
         }}
       >
-        {label}
+        <div
+          style={{
+            color: "var(--text-color-primary, #343A4A)",
+            width: "100%",
+            font: "700 16px Helvetica Neue, sans-serif ",
+          }}
+        >
+          {label}
+        </div>
+        <div
+          onClick={() => dispatchAction(setIsOpenModalAuth(false))}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              dispatchAction(setIsOpenModalAuth(false));
+            }
+          }}
+        >
+          <IconCloseTransparent />
+        </div>
       </div>
       <div
         style={{
@@ -500,7 +519,7 @@ export const RenderLabel = ({ label = "", subLabel = "" }) => {
           letterSpacing: "0.28px",
           marginTop: "4px",
           width: "100%",
-          font: "500 14px/20px Helvetica Neue, sans-serif ",
+          font: "400 14px/20px Helvetica Neue, sans-serif ",
         }}
       >
         {subLabel}
@@ -511,6 +530,7 @@ export const RenderLabel = ({ label = "", subLabel = "" }) => {
 RenderLabel.propTypes = {
   label: PropTypes.string.isRequired,
   subLabel: PropTypes.string.isRequired,
+  dispatchAction: PropTypes.func,
 };
 
 export const RenderTab = ({ setIsChecked, tabScreen, setTabScreen }) => {
@@ -538,16 +558,13 @@ export const RenderTab = ({ setIsChecked, tabScreen, setTabScreen }) => {
         style={{
           color:
             tabScreen === "mobile" && "var(--brand-color-primary, #00524C)",
-          textAlign: "center",
           letterSpacing: "0.28px",
           whiteSpace: "nowrap",
-          justifyContent: "center",
           borderBottom:
             tabScreen === "mobile" &&
             "2px solid var(--brand-color-primary, #00524C)",
-          flexGrow: "1",
-          padding: "8px 10px",
           font: "700 14px/20px Helvetica Neue, sans-serif ",
+          paddingBottom: "5px",
         }}
       >
         Login with Phone Number
@@ -564,16 +581,13 @@ export const RenderTab = ({ setIsChecked, tabScreen, setTabScreen }) => {
         }}
         style={{
           color: tabScreen === "email" && "var(--brand-color-primary, #00524C)",
-          textAlign: "center",
           letterSpacing: "0.28px",
           whiteSpace: "nowrap",
-          justifyContent: "center",
           borderBottom:
             tabScreen === "email" &&
             "2px solid var(--brand-color-primary, #00524C)",
-          flexGrow: "1",
-          padding: "8px 10px",
           font: "700 14px/20px Helvetica Neue, sans-serif ",
+          paddingBottom: "5px",
         }}
       >
         Login with Email
@@ -589,18 +603,25 @@ RenderTab.propTypes = {
 
 export const RenderDivider = () => {
   return (
-    <div style={{ display: "flex", alignItems: "center", marginTop: "16px" }}>
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        marginTop: "16px",
+        marginBottom: "24px",
+      }}
+    >
       <hr
         style={{
           width: "100%",
-          borderTop: "1px solid gray",
+          borderTop: "1px solid #D6D6D6",
         }}
       />
-      <span style={{ padding: "0 20px" }}>or</span>
+      <span style={{ padding: "0 20px", color: "#D6D6D6" }}>or</span>
       <hr
         style={{
           width: "100%",
-          borderTop: "1px solid gray",
+          borderTop: "1px solid #D6D6D6",
         }}
       />
     </div>
@@ -617,7 +638,7 @@ export const RenderButtonSocialMedia = () => {
         backgroundColor: "#425893",
         display: "flex",
         flexDirection: "column",
-        padding: "12px 16px",
+        padding: "10px",
       }}
     >
       <div
@@ -626,18 +647,7 @@ export const RenderButtonSocialMedia = () => {
           gap: "10px",
         }}
       >
-        <img
-          loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/d5807d19e3f86363c5e47b44f844b443692639e259e6d70dba7837133b0f0c03?apiKey=7ef2d401d2464e0bb0e4708e7eee43f9&"
-          style={{
-            aspectRatio: "1",
-            objectFit: "contain",
-            objectPosition: "center",
-            width: "24px",
-            overflow: "hidden",
-            maxWidth: "100%",
-          }}
-        />
+        <IconFaceBook />
         <div
           style={{
             color: "var(--button-color-standby, #FFF)",
