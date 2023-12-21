@@ -4,17 +4,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { setShowSplashScreen } from "../app/dataSlicePersisted";
 import image1 from "../assets/image1.png";
 import image3 from "../assets/image3.png";
-import image4 from "../assets/image4.png";
-import image5 from "../assets/image5.png";
-import image6 from "../assets/image6.png";
 import { IconClose } from "../assets/svgIcon";
-import { GETRequest } from "../services/Product";
+import { GET } from "../utilities/services";
 
 export function Component() {
   const [summaryTabMenu, setSummaryTabMenu] = useState("Local Beverages");
+  const [isShowSummaryTabMenu, setisShowSummaryTabMenu] = useState(false);
   const [isSelectedItem, setIsSelectedItem] = useState("Christmas Menu 2023");
   const [highlights, setHighlights] = useState(true);
-  const [dataCategory,setDataCategory] = useState([])
+  const [dataCategory, setDataCategory] = useState([]);
+  const [dataSummaryTabMenu, setdataSummaryTabMenu] = useState([]);
+  const [dataItem, setdataItem] = useState([]);
   const dispatch = useDispatch();
   const isSplashScreen = useSelector(
     (state) => state.dataSlicePersisted.isSplashScreenShow,
@@ -24,11 +24,13 @@ export function Component() {
     const timeoutId = setTimeout(() => {
       dispatch(setShowSplashScreen(false));
       let obj = {
-        skip : 0,
-        take : 5
-      }
-      
-      GETRequest('products/edge cafe', obj).then((x) => {setDataCategory(x.data)});
+        skip: 0,
+        take: 5,
+      };
+
+      GET("products/edge cafe", obj).then((x) => {
+        setDataCategory(x.data);
+      });
     }, 2000); // 5000 milliseconds = 5 seconds
 
     return () => {
@@ -51,10 +53,64 @@ export function Component() {
       />
     );
   };
-  const renderItemScroll = ({ label, imageItem }) => {
+  const renderItemScroll = ({ label, imageItem, refNo, type }) => {
+    const fetchButtonTypeFolder = () => {
+      let obj = {
+        skip: 0,
+        take: 5,
+      };
+      GET(`products/edge cafe/${type}/${refNo}`, obj).then((x) => {
+        console.log(x);
+        let tempSummaryTabMenu = [];
+        let tempItem = [];
+        x.data.map((prop) => {
+          if (prop.buttonType.toLowerCase() == "folder") {
+            tempSummaryTabMenu.push(prop);
+          } else if (prop.buttonType.toLowerCase() == "item") {
+            tempItem.push(prop);
+          }
+        });
+        // setdataItem(dataItem);
+        setdataItem(tempItem);
+        setdataSummaryTabMenu(tempSummaryTabMenu);
+        setisShowSummaryTabMenu(true);
+      });
+    };
+
+    const fetchButtonTypeCategory = () => {
+      let obj = {
+        skip: 0,
+        take: 5,
+      };
+      GET(`products/edge cafe/${type}/${refNo}`, obj).then((x) => {
+        console.log(x);
+        let tempSummaryTabMenu = [];
+        let tempItem = [];
+        x.data.map((prop) => {
+          if (prop.buttonType.toLowerCase() == "item") {
+            tempItem.push(prop);
+          }
+        });
+        // setdataItem(dataItem);
+        setdataItem(tempItem);
+        setdataSummaryTabMenu(tempSummaryTabMenu);
+        setisShowSummaryTabMenu(true);
+      });
+      setisShowSummaryTabMenu(false);
+    };
+
+    const handleClick = () => {
+      setIsSelectedItem(label);
+      if (type.toLowerCase() == "folder") {
+        fetchButtonTypeFolder();
+      } else {
+        fetchButtonTypeCategory();
+      }
+    };
+
     return (
       <div
-        onClick={() => setIsSelectedItem(label)}
+        onClick={() => handleClick()}
         onKeyDown={(event) => {
           if (event.key === "Enter" || event.key === " ") {
             setIsSelectedItem(label);
@@ -91,18 +147,20 @@ export function Component() {
     );
   };
   const renderNavbarMenu = () => {
-
     let data = [];
-    dataCategory.map((x) => {      
-      if(x.buttonType.toLowerCase() == 'category' || x.buttonType.toLowerCase() == 'folder')
-      {
+    dataCategory.map((x) => {
+      if (
+        x.buttonType.toLowerCase() == "category" ||
+        x.buttonType.toLowerCase() == "folder"
+      ) {
         let imageDefault = image1;
         data.push({
-          name : x.buttonTitle,
-          img: x.imageURL ? x.imageURL : imageDefault
-        })
+          name: x.buttonTitle,
+          img: x.imageURL ? x.imageURL : imageDefault,
+          refNo: x.refNo,
+          type: x.buttonType,
+        });
       }
-
     });
     return (
       <div className="overflow-x-auto flex border-t-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] bg-[#00524C] rounded-b-lg pl-[16px] pr-[16px]">
@@ -110,6 +168,8 @@ export function Component() {
           return renderItemScroll({
             label: item.name,
             imageItem: item.img,
+            refNo: item.refNo,
+            type: item.type,
           });
         })}
       </div>
@@ -187,30 +247,41 @@ export function Component() {
   };
 
   const renderSummaryTabMenu = () => {
-    const data = ["Local Beverages", "Homemade Drinks", "Canned Drinks"];
+    const data = [];
+    dataSummaryTabMenu.map((x) => {
+      if (x.buttonType.toLowerCase() == "folder") {
+        data.push({
+          label: x.buttonTitle,
+          refNo: x.refNo,
+          buttonType: x.buttonType,
+          priority: x.priority,
+        });
+      }
+    });
+
     return (
       <div className="flex overflow-x-auto mt-[24px] mb-[24px] gap-[8px]">
         {data.map((item) => {
           return (
             <div
-              onClick={() => setSummaryTabMenu(item)}
+              onClick={() => setSummaryTabMenu(item.label)}
               onKeyDown={(event) => {
                 if (event.key === "Enter" || event.key === " ") {
-                  setSummaryTabMenu(item);
+                  setSummaryTabMenu(item.label);
                 }
               }}
-              key={item}
+              key={item.label}
               style={{
                 flex: "0 0 auto",
                 width: "150px",
               }}
               className={`flex items-center text-sm tracking-wide  justify-center py-2 rounded-full ${
-                item === summaryTabMenu
+                item.label === summaryTabMenu
                   ? "text-white bg-[#FF4782] font-bold"
                   : "text-gray-700 border border-[color:var(--Grey-Scale-color-Grey-Scale-1,#343A4A)] border-solid"
               }`}
             >
-              {item}
+              {item.label}
             </div>
           );
         })}
@@ -226,7 +297,7 @@ export function Component() {
           {renderNavbarMenu()}
           <div style={{ padding: "16px" }}>
             {highlights && renderInsight()}
-            {renderSummaryTabMenu()}
+            {isShowSummaryTabMenu && renderSummaryTabMenu()}
             <p
               style={{
                 fontWeight: "700",
@@ -247,7 +318,7 @@ export function Component() {
                 gridTemplateAreas: '". ."',
               }}
             >
-              <RenderItemProduct isPromo={true} imageProduct={image1} />
+              {/* <RenderItemProduct isPromo={true} imageProduct={image1} />
               <RenderItemProduct isPromo={false} imageProduct={image3} />
               <RenderItemProduct isPromo={true} imageProduct={image4} />
               <RenderItemProduct isPromo={false} imageProduct={image5} />
@@ -256,7 +327,16 @@ export function Component() {
               <RenderItemProduct isPromo={false} imageProduct={image3} />
               <RenderItemProduct isPromo={true} imageProduct={image4} />
               <RenderItemProduct isPromo={false} imageProduct={image5} />
-              <RenderItemProduct isPromo={true} imageProduct={image6} />
+              <RenderItemProduct isPromo={true} imageProduct={image6} /> */}
+              {dataItem.map((x,index) => {
+                return (
+                  <RenderItemProduct key={index}
+                    isPromo={x.productInfo.promotions.length > 0 ? true : false}
+                    imageProduct={image3}
+                    productInfo={x.productInfo}
+                  />
+                );
+              })}
             </div>
           </div>
         </div>

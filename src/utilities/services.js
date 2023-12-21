@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-export const GETRequest = async (path,params) => {
+export const GET = async (path,params) => {
     try
     {
         let url = `${import.meta.env.VITE_API_URL}/${path}`;
