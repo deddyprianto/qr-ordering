@@ -1,10 +1,59 @@
 import { Outlet, useNavigation, useLocation } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import screen from "../../hooks/useWindowSize";
+import { useDispatch, useSelector } from "react-redux";
+import { setSearchItemObj } from "../app/dataSlicePersisted";
 
 export default function Layout() {
+  const childRef = useRef(null);
+
+  const dispatch = useDispatch();
+  const isSearchItem = useSelector(
+    (state) => state.dataSlicePersisted.isSearchItem,
+  );
+  const enableSearchUsingScroll = useSelector(
+    (state) => state.dataSlicePersisted.enableSearchUsingScroll,
+  );
+  const searchItemObj = useSelector(
+    (state) => state.dataSlicePersisted.searchItemObj,
+  );
+
+
+  /** 
+ * Function to handle scrolling in the parent element
+ * @outputs call api search product is in searching state
+ */
+  const handleParentScroll = () => {
+    if(!isSearchItem || !enableSearchUsingScroll) return;
+    const childElement = childRef.current;
+    if (!childElement) return;
+
+    const childBottom = childElement.scrollHeight - childElement.scrollTop === childElement.clientHeight;
+
+    if (childBottom) {
+      let tempSearchItemObj = JSON.parse(JSON.stringify(searchItemObj));
+      tempSearchItemObj.doSearch = true;
+      tempSearchItemObj.isResetList = false;
+      dispatch(setSearchItemObj(tempSearchItemObj));
+    }
+  }
+
+  useEffect(() => {
+    const childElement = childRef.current;
+    if (childElement) {
+      childElement.addEventListener('scroll', handleParentScroll);
+    }
+
+    return () => {
+      if (childElement) {
+        childElement.removeEventListener('scroll', handleParentScroll);
+      }
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   let navigation = useNavigation();
   const location = useLocation();
   const pathname = location.pathname;
@@ -33,7 +82,7 @@ export default function Layout() {
             {navigation.state !== "idle" && <p>Navigation in progress...</p>}
           </div>
           <Header />
-          <div className="h-full overflow-x-auto">
+          <div className="h-full overflow-x-auto"  ref={childRef} onScroll={handleParentScroll}>
             <Outlet />
           </div>
           <Footer />
@@ -72,8 +121,8 @@ export default function Layout() {
                 )}
               </div>
               <Header />
-              <div className="h-full overflow-x-auto">
-                <Outlet />
+              <div className="h-full overflow-x-auto" ref={childRef} onScroll={handleParentScroll}>
+                <Outlet/>
               </div>
               <Footer />
             </div>

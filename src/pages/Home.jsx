@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { RenderItemProduct } from "../components/RenderItemProduct";
 import { useSelector, useDispatch } from "react-redux";
-import { setShowSplashScreen } from "../app/dataSlicePersisted";
+import { setShowSplashScreen, setEnableSearchUsingScroll } from "../app/dataSlicePersisted";
 import image1 from "../assets/image1.png";
 import image3 from "../assets/image3.png";
 import image4 from "../assets/image4.png";
@@ -10,15 +10,25 @@ import image6 from "../assets/image6.png";
 import { IconClose } from "../assets/svgIcon";
 import { ModalAuth } from "../components/Auth/ModalAuth";
 import { setIsOpenModalAuth } from "../app/dataSlice";
+import { RenderItemSearch } from "../components/Home/RenderItemSearch";
 
 export function Component() {
   const [summaryTabMenu, setSummaryTabMenu] = useState("Local Beverages");
   const [isSelectedItem, setIsSelectedItem] = useState("Christmas Menu 2023");
   const [highlights, setHighlights] = useState(true);
+  const [isFirstOpenSearchBar, setIsFirstOpenSearchBar] = useState(true);
+
   const dispatch = useDispatch();
 
   const isSplashScreen = useSelector(
     (state) => state.dataSlicePersisted.isSplashScreenShow,
+  );
+
+  const isSearchItem = useSelector(
+    (state) => state.dataSlicePersisted.isSearchItem,
+  ); 
+  const searchItemObj = useSelector(
+    (state) => state.dataSlicePersisted.searchItemObj,
   );
   useEffect(() => {
     dispatch(setIsOpenModalAuth(true));
@@ -28,11 +38,24 @@ export function Component() {
     const timeoutId = setTimeout(() => {
       dispatch(setShowSplashScreen(false));
     }, 2000); // 5000 milliseconds = 5 seconds
-
     return () => {
       clearTimeout(timeoutId);
     };
   }, [dispatch]);
+
+  useEffect(() => {
+    if(searchItemObj?.doSearch){
+      setIsFirstOpenSearchBar(false);
+    }
+  }, [searchItemObj]);
+
+  useEffect(()=>{
+    if(!isSearchItem) {
+      dispatch(setEnableSearchUsingScroll(false));
+      setIsFirstOpenSearchBar(true);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSearchItem]);
 
   const renderSplashScreen = () => {
     return (
@@ -49,6 +72,7 @@ export function Component() {
       />
     );
   };
+
   const renderItemScroll = ({ label, imageItem }) => {
     return (
       <div
@@ -88,6 +112,7 @@ export function Component() {
       </div>
     );
   };
+
   const renderNavbarMenu = () => {
     const data = [
       {
@@ -240,12 +265,9 @@ export function Component() {
       </div>
     );
   };
-  const renderMain = () => {
-    if (isSplashScreen) {
-      return renderSplashScreen();
-    } else {
-      return (
-        <div>
+
+  const renderMenu = () => {
+    return <div className="relative">
           {renderNavbarMenu()}
           <div style={{ padding: "16px" }}>
             {highlights && renderInsight()}
@@ -282,9 +304,14 @@ export function Component() {
               <RenderItemProduct isPromo={true} imageProduct={image6} />
             </div>
           </div>
+          {isSearchItem && <div className="absolute inset-0 backdrop-filter backdrop-blur-lg z-0"></div>}
         </div>
-      );
-    }
+  };
+
+  const renderMain = () => {
+    if (isSplashScreen) return renderSplashScreen();
+    else if(isFirstOpenSearchBar) return renderMenu();
+    else return <RenderItemSearch searchText={searchItemObj?.searchText}/>;
   };
 
   return (
