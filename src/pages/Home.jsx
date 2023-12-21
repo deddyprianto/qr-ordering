@@ -19,8 +19,8 @@ export function Component() {
   const [isSelectedItem, setIsSelectedItem] = useState("Christmas Menu 2023");
   const [highlights, setHighlights] = useState(true);
   const [dataCategory, setDataCategory] = useState([]);
-  const [dataSummaryTabMenu, setdataSummaryTabMenu] = useState([]);
-  const [dataItem, setdataItem] = useState([]);
+  const [dataSummaryTabMenu, setDataSummaryTabMenu] = useState([]);
+  const [dataItem, setDataItem] = useState([]);
   const [isFirstOpenSearchBar, setIsFirstOpenSearchBar] = useState(true);
 
   const dispatch = useDispatch();
