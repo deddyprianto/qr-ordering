@@ -115,6 +115,7 @@ export const RenderItemSearch = ({ searchText="" }) => {
           </div> */}
           <div className="justify-between items-stretch bg-pink-500 flex gap-2 mt-2 px-20 py-2 rounded-lg">
             <img
+              alt={"add_icon"}
               loading="lazy"
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/8030d201dcaa893bb31b0473d2846f5bbcf5965490542a46eac20fb4789e563e?apiKey=fb1a9cbe3d4146ecbf83898601353c5c&"
               className="aspect-square object-contain object-center w-5 overflow-hidden shrink-0 max-w-full"

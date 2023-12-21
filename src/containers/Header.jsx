@@ -50,7 +50,7 @@ export default function Header() {
       }));
       dispatchIsSearchItem(true);
       setTimeout(() => {
-        var inputElement = document.getElementById('input-search');
+        let inputElement = document.getElementById('input-search');
         if (inputElement) {
           inputElement.focus();
         }
