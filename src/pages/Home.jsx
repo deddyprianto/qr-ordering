@@ -8,8 +8,6 @@ import image4 from "../assets/image4.png";
 import image5 from "../assets/image5.png";
 import image6 from "../assets/image6.png";
 import { IconClose } from "../assets/svgIcon";
-import { ModalAuth } from "../components/Auth/ModalAuth";
-import { setIsOpenModalAuth } from "../app/dataSlice";
 import { RenderItemSearch } from "../components/Home/RenderItemSearch";
 
 export function Component() {
@@ -30,9 +28,6 @@ export function Component() {
   const searchItemObj = useSelector(
     (state) => state.dataSlicePersisted.searchItemObj,
   );
-  useEffect(() => {
-    dispatch(setIsOpenModalAuth(true));
-  }, [dispatch]);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -317,7 +312,6 @@ export function Component() {
   return (
     <React.Fragment>
       {renderMain()}
-      <ModalAuth />
     </React.Fragment>
   );
 }

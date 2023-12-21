@@ -1,6 +1,6 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import { IconArrowBottom, SearchIcon } from "../../assets/svgIcon";
+import { IconArrowBottom, SearchIcon } from "../../../assets/svgIcon";
 import SearchInput, { createFilter } from "react-search-input";
 import countryCodes from "country-codes-list";
 

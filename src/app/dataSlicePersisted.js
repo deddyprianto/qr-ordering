@@ -24,6 +24,12 @@ const dataSlicePersisted = createSlice({
     setEnableSearchUsingScroll: (state, action) => {
       state.enableSearchUsingScroll = action.payload;
     },
+    setOtpRequestInfo: (state, action) => {
+      state.otpRequestInfo = action.payload;
+    },
+    setMemberInfo: (state, action) => {
+      state.memberInfo = action.payload;
+    },
   },
 });
 
@@ -32,5 +38,8 @@ export const {
   setShowSplashScreen, 
   setIsSearchItem, 
   setSearchItemObj,
-  setEnableSearchUsingScroll } = dataSlicePersisted.actions;
+  setEnableSearchUsingScroll,
+  setOtpRequestInfo, 
+  setMemberInfo 
+} = dataSlicePersisted.actions;
 export default dataSlicePersisted.reducer; // Changed 'dataSlicePersisted.reducer.default' to 'dataSlicePersisted.reducer'
