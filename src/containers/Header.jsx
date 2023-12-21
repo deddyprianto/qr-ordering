@@ -7,12 +7,56 @@ import {
 import { useLocation } from "react-router-dom";
 import "react-modern-drawer/dist/index.css";
 import logo from "../assets/logo.png";
-import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setIsSearchItem, setSearchItemObj, setEnableSearchUsingScroll } from "../app/dataSlicePersisted";
+
 
 export default function Header() {
-  const [searchItem, setSearchItem] = useState(false);
   const location = useLocation();
   const pathname = location.pathname;
+
+  const dispatch = useDispatch();
+  const isSearchItem = useSelector(
+    (state) => state.dataSlicePersisted.isSearchItem,
+  );
+  const enableSearchUsingScroll = useSelector(
+    (state) => state.dataSlicePersisted.enableSearchUsingScroll,
+  );
+  const searchItemObj = useSelector(
+    (state) => state.dataSlicePersisted.searchItemObj,
+  );
+  const dispatchIsSearchItem = (val) => {
+    dispatch(setIsSearchItem(val))
+  };
+
+  const openSearchBar = () => {
+    if(isSearchItem){ 
+      let tempSearchItemObj = JSON.parse(JSON.stringify(searchItemObj));
+      if(enableSearchUsingScroll){
+        let inputElement = document.getElementById('input-search');
+        tempSearchItemObj.searchText = inputElement.value;
+        tempSearchItemObj.isResetList = true;
+      }
+
+      tempSearchItemObj.doSearch = true;
+      dispatch(setSearchItemObj(tempSearchItemObj));
+      dispatch(setEnableSearchUsingScroll(true));
+    }
+    else {
+      dispatch(setSearchItemObj({
+        doSearch: false,
+        searchText: "",
+        isResetList: true
+      }));
+      dispatchIsSearchItem(true);
+      setTimeout(() => {
+        let inputElement = document.getElementById('input-search');
+        if (inputElement) {
+          inputElement.focus();
+        }
+      }, 50);
+    }
+  };
 
   const renderLabelTableNo = () => {
     return (
@@ -31,24 +75,29 @@ export default function Header() {
   };
 
   const renderConditionally = () => {
-    if (searchItem) {
+    if (isSearchItem) {
       return (
         <div className="flex w-full">
           <div
             className="ml-[-22px]"
-            onClick={() => setSearchItem(false)}
+            onClick={() => dispatchIsSearchItem(false)}
             onKeyDown={(event) => {
               if (event.key === "Enter" || event.key === " ") {
-                setSearchItem(true);
+                dispatchIsSearchItem(false);
               }
             }}
           >
             <IconArrowLeft />
           </div>
           <div className="text-zinc-500 text-sm font-medium leading-5 tracking-wide whitespace-nowrap border border-[color:var(--Text-color-Tertiary,#888787)] shadow-sm bg-white grow justify-center rounded-lg border-solid items-start">
-            <input
+            <input id="input-search"
               placeholder="Search Anything..."
               className="outline-none w-full h-full px-4 rounded-lg"
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  openSearchBar();
+                }
+              }}
             />
           </div>
         </div>
@@ -70,10 +119,10 @@ export default function Header() {
       <div className="justify-between items-stretch border-b-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] bg-[#00524C] flex w-full gap-5 px-4 py-2.5 border-b border-solid">
         {renderConditionally()}
         <div
-          onClick={() => setSearchItem(true)}
+          onClick={() => openSearchBar()}
           onKeyDown={(event) => {
             if (event.key === "Enter" || event.key === " ") {
-              setSearchItem(true);
+              openSearchBar();
             }
           }}
           className="justify-center items-center bg-[#FF4782] flex aspect-square flex-col w-[46px] h-[46px] px-3 rounded-[1000px]"
@@ -83,6 +132,7 @@ export default function Header() {
       </div>
     );
   };
+
   const renderMain = () => {
     if (pathname === "/auth" || pathname === "/otp") {
       return (
