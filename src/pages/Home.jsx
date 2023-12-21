@@ -98,8 +98,8 @@ export function Component() {
           }
         });
 
-        setdataItem(tempItem);
-        setdataSummaryTabMenu(tempSummaryTabMenu);
+        setDataItem(tempItem);
+        setDataSummaryTabMenu(tempSummaryTabMenu);
         if (type.toLowerCase() == "folder") {
           setisShowSummaryTabMenu(true);
         } else {
@@ -154,7 +154,7 @@ export function Component() {
 
   const renderNavbarMenu = () => {
     let data = [];
-    dataCategory.map((x) => {
+    dataCategory?.map((x) => {
       if (
         x.buttonType.toLowerCase() == "category" ||
         x.buttonType.toLowerCase() == "folder"
