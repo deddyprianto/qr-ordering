@@ -345,20 +345,10 @@ export function Component() {
                 gridTemplateAreas: '". ."',
               }}
             >
-              {/* <RenderItemProduct isPromo={true} imageProduct={image1} />
-              <RenderItemProduct isPromo={false} imageProduct={image3} />
-              <RenderItemProduct isPromo={true} imageProduct={image4} />
-              <RenderItemProduct isPromo={false} imageProduct={image5} />
-              <RenderItemProduct isPromo={true} imageProduct={image6} />
-              <RenderItemProduct isPromo={true} imageProduct={image1} />
-              <RenderItemProduct isPromo={false} imageProduct={image3} />
-              <RenderItemProduct isPromo={true} imageProduct={image4} />
-              <RenderItemProduct isPromo={false} imageProduct={image5} />
-              <RenderItemProduct isPromo={true} imageProduct={image6} /> */}
               {dataItem.map((x,index) => {
                 return (
-                  <RenderItemProduct key={index}
-                    isPromo={x.productInfo.promotions.length > 0 ? true : false}
+                  <RenderItemProduct key={`${x.productInfo?.itemName}_${index}`}
+                    isPromo={x.productInfo.promotions.length == 0 ? false : true}
                     imageProduct={image3}
                     productInfo={x.productInfo}
                   />
