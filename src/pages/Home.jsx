@@ -322,7 +322,7 @@ export function Component() {
               gridTemplateAreas: '". ."',
             }}
           >
-            {dataItem.map((x, index) => {
+            {dataItem.map((x) => {
               return (
                 <RenderItemProduct
                   key={`${x.buttonType}_${x.buttonTitle}`}
