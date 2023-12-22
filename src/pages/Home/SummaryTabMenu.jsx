@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-export const RenderSummaryTabMenu = ({ isShow, dataSummaryTabMenu }) => {
+export const SummaryTabMenu = ({ isShow, dataSummaryTabMenu }) => {
   const [summarySelected, setSummarySelected] = useState("");
   const data = [];
   dataSummaryTabMenu?.map((x) => {
@@ -49,7 +49,7 @@ export const RenderSummaryTabMenu = ({ isShow, dataSummaryTabMenu }) => {
   );
 };
 
-RenderSummaryTabMenu.propTypes = {
+SummaryTabMenu.propTypes = {
   isShow: PropTypes.bool,
   dataSummaryTabMenu: PropTypes.any,
 };

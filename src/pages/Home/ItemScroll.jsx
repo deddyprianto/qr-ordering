@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-export const RenderItemScroll = ({
+export const ItemScroll = ({
   label,
   imageItem,
   handleSelected,
@@ -43,7 +43,7 @@ export const RenderItemScroll = ({
   );
 };
 
-RenderItemScroll.propTypes = {
+ItemScroll.propTypes = {
   label: PropTypes.string,
   imageItem: PropTypes.string,
   handleSelected: PropTypes.any,
