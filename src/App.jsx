@@ -14,7 +14,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        lazy: () => import("./pages/Home/Index"),
+        lazy: () => import("./pages/Home"),
       },
       {
         path: "auth",
