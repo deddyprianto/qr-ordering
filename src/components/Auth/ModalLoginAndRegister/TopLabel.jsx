@@ -26,8 +26,7 @@ export const RenderTopLabel = ({ label = "", subLabel = "", setIsOpenModal }) =>
           >
             {label}
           </div>
-          <div
-            role="button"
+          <button
             onClick={() => setIsOpenModal(false)}
             onKeyDown={(event) => {
               if (event.key === "Enter" || event.key === " ") {
@@ -36,7 +35,7 @@ export const RenderTopLabel = ({ label = "", subLabel = "", setIsOpenModal }) =>
             }}
           >
             <IconCloseTransparent />
-          </div>
+          </button>
         </div>
         <div
           style={{

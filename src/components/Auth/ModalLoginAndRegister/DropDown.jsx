@@ -116,8 +116,7 @@ export default function Dropdown() {
                         whiteSpace: "nowrap",
                       }}
                     >
-                      <p
-                        role="button"
+                      <button
                         id={countryCodeOption}
                         style={{
                           padding: "0px 0px 7px 0px",
@@ -139,7 +138,7 @@ export default function Dropdown() {
                         }}
                       >
                         {item}
-                      </p>
+                      </button>
                       <hr style={{ width: "95%" }} />
                     </div>
                   </Menu.Item>

@@ -20,8 +20,7 @@ export const TopLabel = ({ setIsOpenModal }) => {
         >
           Enter your OTP
         </div>
-        <div
-          role="button"
+        <button
           onClick={() => setIsOpenModal(false)}
           onKeyDown={(event) => {
             if (event.key === "Enter" || event.key === " ") {
@@ -30,7 +29,7 @@ export const TopLabel = ({ setIsOpenModal }) => {
           }}
         >
           <IconCloseTransparent />
-        </div>
+        </button>
       </div>
       
       
