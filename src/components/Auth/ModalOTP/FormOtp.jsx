@@ -1,18 +1,18 @@
 import PropTypes from "prop-types";
 
-export const RenderFormOTP = ({ otp, setOTP, refs, disableForm }) => {
+export const RenderFormOTP = ({ otp, setOTP, disableForm }) => {
   const handleChange = (index, e) => {
     const newOTP = [...otp];
-    newOTP[index] = e.target.value;
+    newOTP[index].value = e.target.value;
     setOTP(newOTP);
-    if (e.target.value !== "" && index < refs.length - 1) {
-      refs[index + 1].current.focus();
+    if (e.target.value !== "" && index < otp.length - 1) {
+      otp[index + 1]?.ref?.current?.focus();
     }
   };
 
   const handleKeyUp = (index, e) => {
-    if (e.key === "Backspace" && otp[index] === "" && index > 0) {
-      refs[index - 1].current.focus();
+    if (e.key === "Backspace" && otp[index].value === "" && index > 0) {
+      otp[index - 1]?.ref.current.focus();
     }
   };
 
@@ -26,9 +26,9 @@ export const RenderFormOTP = ({ otp, setOTP, refs, disableForm }) => {
         marginTop: "16px",
       }}
     >
-      {otp.map((value, index) => (
+      {otp.map((otpObj, index) => (
         <div
-          key={`otpForm-${index}`}
+          key={otpObj.id}
           style={{
             justifyContent: "center",
             alignItems: "center",
@@ -42,10 +42,10 @@ export const RenderFormOTP = ({ otp, setOTP, refs, disableForm }) => {
           <input
             type="text"
             maxLength="1"
-            value={value}
+            value={otpObj.value}
             onChange={(e) => handleChange(index, e)}
             onKeyUp={(e) => handleKeyUp(index, e)}
-            ref={refs[index]}
+            ref={otpObj.ref}
             disabled={disableForm}
             style={{
               textAlign: "center",
@@ -66,6 +66,5 @@ export const RenderFormOTP = ({ otp, setOTP, refs, disableForm }) => {
 RenderFormOTP.propTypes = {
   otp: PropTypes.array,
   setOTP: PropTypes.func,
-  refs: PropTypes.array,
   disableForm: PropTypes.bool
 };

@@ -8,16 +8,22 @@ import { ParentBlur } from "../../ParentBlur";
 
 export const RenderMainComponent = ({ callback, isOpenModal, setIsOpenModal }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [otp, setOTP] = useState(["", "", "", "", "", ""]);
-  const refs = [useRef(), useRef(), useRef(), useRef(), useRef(), useRef()];
+  const [otp, setOTP] = useState([
+    {id: 1, value:"", ref: useRef()},
+    {id: 2, value:"", ref: useRef()},
+    {id: 3, value:"", ref: useRef()},
+    {id: 4, value:"", ref: useRef()},
+    {id: 5, value:"", ref: useRef()},
+    {id: 6, value:"", ref: useRef()}]);
   const [errMsg, setErrMsg] = useState("");
 
   // Check if all OTP fields are filled
   const isOTPComplete = otp.every((value) => value !== "");
 
   useEffect(() => {
-    if(isOpenModal)
-      refs[0]?.current?.focus();
+    if(isOpenModal){
+      otp[0]?.ref?.current?.focus();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpenModal]);
 
@@ -35,7 +41,6 @@ export const RenderMainComponent = ({ callback, isOpenModal, setIsOpenModal }) =
         otp={otp}
         setOTP={setOTP}
         disableForm={isLoading}
-        refs={refs}
       />
       <ButtomLabel />
       {errMsg!="" && <div className="mt-2 text-xs text-red-500">{errMsg}</div>}

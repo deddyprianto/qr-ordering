@@ -15,7 +15,9 @@ export const ActionButton = ({ otp, isOTPComplete, isLoading, setIsLoading, setE
     try {
       setIsLoading(true);
       let body = JSON.parse(JSON.stringify(otpRequestInfo));
-      body.otp = otp.join("");
+      body.otp = "";
+      for(const otpObj of otp)
+        body.otp += otpObj.value;
 
       const result = await apiMemberships('POST', "ValidateOTP", body);
 
