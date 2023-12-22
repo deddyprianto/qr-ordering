@@ -17,13 +17,12 @@ export const Insights = ({onClick, title, description }) => {
               {title}
             </div>
           </div>
-          <div
+          <button
             onClick={() => onClick()}
-            onKeyDown={() => {}}
             className="justify-center items-center bg-[#FF4782] self-stretch flex aspect-square flex-col w-7 h-7 px-1 rounded-[1000px]"
           >
             <IconClose />
-          </div>
+          </button>
         </div>
         <div className="text-gray-700 text-xs font-medium leading-4 tracking-wide">
           {description}

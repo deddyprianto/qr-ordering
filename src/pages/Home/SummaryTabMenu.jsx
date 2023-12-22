@@ -25,10 +25,9 @@ export const SummaryTabMenu = ({ isShow, dataSummaryTabMenu }) => {
         <div className="flex overflow-x-auto mt-[24px] mb-[24px] gap-[8px]">
           {data?.map((item) => {
             return (
-              <div
+              <button
                 id={item.label}
                 onClick={(e) => handleClick(e)}
-                onKeyDown={() => {}}
                 key={item.label}
                 style={{
                   flex: "0 0 auto",
@@ -41,7 +40,7 @@ export const SummaryTabMenu = ({ isShow, dataSummaryTabMenu }) => {
                 }`}
               >
                 {item.label}
-              </div>
+              </button>
             );
           })}
         </div>

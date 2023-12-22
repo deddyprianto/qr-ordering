@@ -12,9 +12,8 @@ export const ItemScroll = ({
   };
 
   return (
-    <div
+    <button
       onClick={() => handleClick()}
-      onKeyDown={() => {}}
       style={{
         flex: "0 0 auto",
         width: "100px",
@@ -39,7 +38,7 @@ export const ItemScroll = ({
       >
         <div>{label}</div>
       </div>
-    </div>
+    </button>
   );
 };
 
