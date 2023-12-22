@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { ModalLogin } from "./ModalLoginAndRegister/ModalLogin";
 import { ModalRegister } from "./ModalLoginAndRegister/ModalRegister";
-import { ModalOtp } from "./ModalOTP/Index";
+import { ModalOtp } from "./ModalOTP";
 
 export const ModalAuth = ({
   isOpenModalLogin,
