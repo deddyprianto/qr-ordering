@@ -19,7 +19,6 @@ export const Insights = ({onClick, title, description }) => {
           </div>
           <div
             onClick={() => onClick()}
-            role="button"
             onKeyDown={() => {}}
             className="justify-center items-center bg-[#FF4782] self-stretch flex aspect-square flex-col w-7 h-7 px-1 rounded-[1000px]"
           >

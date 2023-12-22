@@ -17,7 +17,7 @@ export const SummaryTabMenu = ({ isShow, dataSummaryTabMenu }) => {
 
   const handleClick = (e) => {
     setSummarySelected(e.target.id);
-  }
+  };
 
   return (
     <>
@@ -25,8 +25,8 @@ export const SummaryTabMenu = ({ isShow, dataSummaryTabMenu }) => {
         <div className="flex overflow-x-auto mt-[24px] mb-[24px] gap-[8px]">
           {data?.map((item) => {
             return (
-              <div id = {item.label}
-                role="button"
+              <div
+                id={item.label}
                 onClick={(e) => handleClick(e)}
                 onKeyDown={() => {}}
                 key={item.label}
