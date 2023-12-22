@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { RenderMainComponent } from "./Main";
+import { RenderMainAuth } from "./Main";
 
-export const ModalRegister = ({ isOpenModal, setIsOpenModal, setIsOpenModalOtp, changeOpenModalAuth }) => {
+export const ModalLoginAndRegister = ({ isOpenModal, setIsOpenModal, setIsOpenModalOtp, changeOpenModalAuth, authScreen }) => {
   return (
     <Transition appear show={isOpenModal} as={Fragment}>
       <Dialog
@@ -24,7 +24,7 @@ export const ModalRegister = ({ isOpenModal, setIsOpenModal, setIsOpenModalOtp, 
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex  items-center justify-center p-4 text-center">
+           <div className="flex  items-center justify-center p-4 text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -35,23 +35,25 @@ export const ModalRegister = ({ isOpenModal, setIsOpenModal, setIsOpenModalOtp, 
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel className="w-full max-w-md transhtmlForm overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all h-full">
-                <RenderMainComponent
+                <RenderMainAuth
                   setIsOpenModal={setIsOpenModal}
                   setIsOpenModalOtp={setIsOpenModalOtp}
                   changeOpenModalAuth={changeOpenModalAuth}
+                  authScreen={authScreen}
                 />
               </Dialog.Panel>
             </Transition.Child>
-          </div>
+          </div> 
         </div>
       </Dialog>
     </Transition>
   );
 };
 
-ModalRegister.propTypes = {
+ModalLoginAndRegister.propTypes = {
   isOpenModal: PropTypes.bool,
   setIsOpenModal: PropTypes.func,
   setIsOpenModalOtp: PropTypes.func,
-  changeOpenModalAuth: PropTypes.func
+  changeOpenModalAuth: PropTypes.func,
+  authScreen: PropTypes.string
 };

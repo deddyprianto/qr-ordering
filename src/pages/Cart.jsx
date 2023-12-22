@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { ModalAuth } from "../components/Auth/ModalAuth";
+import { ModalAuth } from "../components/Auth";
 
 export function Component() {
-  const [isOpenModalLogin, setIsOpenModalLogin] = useState(true);
-  const [isOpenModalRegister, setIsOpenModalRegister] = useState(false);
+  const [isOpenModalAuth, setIsOpenModalAuth] = useState(true);
+  const [authScreen, setAuthScreen] = useState('Login');
   const [isOpenModalOtp, setIsOpenModalOtp] = useState(false);
 
   const handleSuccessOTP = (isSuccess) => {
@@ -15,10 +15,10 @@ export function Component() {
     <div>
       <h1>Cart</h1>
       <ModalAuth
-        isOpenModalLogin={isOpenModalLogin}
-        setIsOpenModalLogin={setIsOpenModalLogin}
-        isOpenModalRegister={isOpenModalRegister}
-        setIsOpenModalRegister={setIsOpenModalRegister}
+        isOpenModal={isOpenModalAuth}
+        setIsOpenModal={setIsOpenModalAuth}
+        authScreen={authScreen}
+        setAuthScreen={setAuthScreen}
         isOpenModalOtp={isOpenModalOtp}
         setIsOpenModalOtp={setIsOpenModalOtp}
         callback={handleSuccessOTP}
