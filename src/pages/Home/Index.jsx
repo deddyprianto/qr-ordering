@@ -59,6 +59,7 @@ export function Component() {
   const renderSplashScreen = () => {
     return (
       <img
+        alt=""
         loading="lazy"
         srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/fb0551243645df4fdd79fa97aa6b14d9368a75de464edf18120823a4068a0133?apiKey=7ef2d401d2464e0bb0e4708e7eee43f9&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/fb0551243645df4fdd79fa97aa6b14d9368a75de464edf18120823a4068a0133?apiKey=7ef2d401d2464e0bb0e4708e7eee43f9&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/fb0551243645df4fdd79fa97aa6b14d9368a75de464edf18120823a4068a0133?apiKey=7ef2d401d2464e0bb0e4708e7eee43f9&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/fb0551243645df4fdd79fa97aa6b14d9368a75de464edf18120823a4068a0133?apiKey=7ef2d401d2464e0bb0e4708e7eee43f9&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/fb0551243645df4fdd79fa97aa6b14d9368a75de464edf18120823a4068a0133?apiKey=7ef2d401d2464e0bb0e4708e7eee43f9&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/fb0551243645df4fdd79fa97aa6b14d9368a75de464edf18120823a4068a0133?apiKey=7ef2d401d2464e0bb0e4708e7eee43f9&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/fb0551243645df4fdd79fa97aa6b14d9368a75de464edf18120823a4068a0133?apiKey=7ef2d401d2464e0bb0e4708e7eee43f9&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/fb0551243645df4fdd79fa97aa6b14d9368a75de464edf18120823a4068a0133?apiKey=7ef2d401d2464e0bb0e4708e7eee43f9&"
         style={{
@@ -78,6 +79,7 @@ export function Component() {
         className={`${bgColor} flex justify-between gap-1 pl-1.5 pr-3 py-1 rounded-[100px]`}
       >
         <img
+          alt=""
           loading="lazy"
           src={icon}
           className="aspect-square object-contain object-center w-[18px] overflow-hidden shrink-0 max-w-full"
@@ -95,6 +97,7 @@ export function Component() {
         <div className="flex w-full justify-between gap-5 mt-1.5 items-start">
           <div className="items-stretch flex gap-1">
             <img
+              alt=""
               loading="lazy"
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/14f562e35fb290deedd2e1894727d725e021330e099e319a33268d4b786041f2?apiKey=7ef2d401d2464e0bb0e4708e7eee43f9&"
               className="aspect-square object-contain object-center w-6 overflow-hidden shrink-0 max-w-full"
@@ -104,6 +107,7 @@ export function Component() {
             </div>
           </div>
           <div
+            role="button"
             onClick={() => setHighlights(false)}
             onKeyDown={(event) => {
               if (event.key === "Enter" || event.key === " ") {

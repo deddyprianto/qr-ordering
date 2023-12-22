@@ -13,6 +13,7 @@ export const RenderItemScroll = ({
 
   return (
     <div
+      role="button"
       onClick={() => handleClick()}
       style={{
         flex: "0 0 auto",
@@ -24,6 +25,7 @@ export const RenderItemScroll = ({
       }`}
     >
       <img
+        alt={label}
         loading="lazy"
         src={imageItem}
         className={`w-[64px] rounded-2xl ${
