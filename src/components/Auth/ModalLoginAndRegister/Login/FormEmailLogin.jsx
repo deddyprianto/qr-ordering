@@ -40,7 +40,5 @@ export const RenderEmailLogin = ({ setEmailField }) => {
   );
 };
 RenderEmailLogin.propTypes = {
-  setEmailField: PropTypes.func.isRequired,
-  pathname: PropTypes.string.isRequired,
-  setNameField: PropTypes.string
+  setEmailField: PropTypes.func.isRequired
 };

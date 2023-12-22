@@ -28,7 +28,7 @@ export const RenderFormOTP = ({ otp, setOTP, refs, disableForm }) => {
     >
       {otp.map((value, index) => (
         <div
-          key={index}
+          key={index+""}
           style={{
             justifyContent: "center",
             alignItems: "center",

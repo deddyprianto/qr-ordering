@@ -57,6 +57,7 @@ export const RenderButton = ({
             {labelAccount}
           </div>
           <div
+            role="button"
             onClick={() => changeOpenModalAuth(path)}
             onKeyDown={(event) => {
               if (event.key === "Enter" || event.key === " ") {

@@ -21,6 +21,7 @@ export const TopLabel = ({ setIsOpenModal }) => {
           Enter your OTP
         </div>
         <div
+          role="button"
           onClick={() => setIsOpenModal(false)}
           onKeyDown={(event) => {
             if (event.key === "Enter" || event.key === " ") {

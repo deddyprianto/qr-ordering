@@ -117,6 +117,7 @@ export default function Dropdown() {
                       }}
                     >
                       <p
+                        role="button"
                         id={countryCodeOption}
                         style={{
                           padding: "0px 0px 7px 0px",

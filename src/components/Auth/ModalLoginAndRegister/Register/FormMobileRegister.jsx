@@ -112,7 +112,6 @@ export const RenderMobileRegister = ({ setNameField, setMobileField }) => {
   );
 };
 RenderMobileRegister.propTypes = {
-pathname: PropTypes.string.isRequired,
-setNameField: PropTypes.func,
-setMobileField: PropTypes.func
+    setNameField: PropTypes.func,
+    setMobileField: PropTypes.func
 };

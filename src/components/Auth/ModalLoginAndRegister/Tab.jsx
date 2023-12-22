@@ -14,6 +14,7 @@ export const RenderTab = ({ setIsChecked, tabScreen, setTabScreen }) => {
         }}
       >
         <div
+          role="button"
           onClick={() => {
             setIsChecked(false);
             setTabScreen("mobile");
@@ -38,6 +39,7 @@ export const RenderTab = ({ setIsChecked, tabScreen, setTabScreen }) => {
           Login with Phone Number
         </div>
         <div
+          role="button"
           onClick={() => {
             setIsChecked(false);
             setTabScreen("email");

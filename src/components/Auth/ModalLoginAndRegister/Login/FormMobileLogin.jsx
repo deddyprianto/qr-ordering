@@ -74,6 +74,5 @@ export const RenderMobileLogin = ({ setMobileField }) => {
   );
 };
 RenderMobileLogin.propTypes = {
-  setNameField: PropTypes.func,
   setMobileField: PropTypes.func
 };

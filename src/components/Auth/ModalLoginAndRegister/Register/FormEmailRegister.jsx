@@ -80,6 +80,5 @@ export const RenderEmailRegister = ({ setEmailField, setNameField }) => {
 };
 RenderEmailRegister.propTypes = {
   setEmailField: PropTypes.func.isRequired,
-  pathname: PropTypes.string.isRequired,
   setNameField: PropTypes.string
 };
