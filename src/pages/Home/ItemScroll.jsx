@@ -14,6 +14,7 @@ export const ItemScroll = ({
   return (
     <div
       onClick={() => handleClick()}
+      role="button"
       onKeyDown={() => {}}
       style={{
         flex: "0 0 auto",
