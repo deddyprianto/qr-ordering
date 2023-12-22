@@ -1,13 +1,14 @@
 import PropTypes from "prop-types";
 import { RenderTab } from "../Tab"
-import { RenderTabLoginContainer } from "./TabLoginContainer"
+import { RenderTabRegisterContainer } from "./TabRegisterContainer";
 
 export const RenderForm = ({ 
   setIsChecked, 
   tabScreen, 
   setTabScreen, 
   setMobileField, 
-  setEmailField
+  setEmailField,
+  setNameField
 }) => {
   return(
     <div> 
@@ -16,10 +17,11 @@ export const RenderForm = ({
         tabScreen={tabScreen}
         setTabScreen={setTabScreen}
       />
-      <RenderTabLoginContainer 
+      <RenderTabRegisterContainer 
         tabScreen={tabScreen}
         setMobileField={setMobileField}
         setEmailField={setEmailField}
+        setNameField={setNameField}
       />
     </div>   
   )
@@ -30,5 +32,6 @@ RenderForm.propTypes = {
   tabScreen: PropTypes.string,
   setTabScreen: PropTypes.func,
   setMobileField: PropTypes.func,
-  setEmailField: PropTypes.func
+  setEmailField: PropTypes.func,
+  setNameField: PropTypes.func
 }

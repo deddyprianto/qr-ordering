@@ -17,6 +17,7 @@ export const RenderMainComponent = ({ setIsOpenModal, setIsOpenModalOtp, changeO
   const [isChecked, setIsChecked] = useState(false);
   const [emailField, setEmailField] = useState("");
   const [mobileField, setMobileField] = useState("");
+  const [nameField, setNameField] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const handleCheckboxChange = (e) => {
@@ -28,12 +29,11 @@ export const RenderMainComponent = ({ setIsOpenModal, setIsOpenModalOtp, changeO
     return (tabScreen == "email"?validateEmail():mobileField!="") && isChecked;
   };
   
-  const doLogin = async(body) => {
+  const doRegister = async(body) => {
     if(isLoading) return;
     try {
       setIsLoading(true);
-      const result = await apiMemberships('POST', "Login", body);
-
+      const result = await apiMemberships('POST', "Register", body);
       if(result.resultCode == 200){
         dispatch(setOtpRequestInfo(result.data?.otpRequestInfo));
         setIsOpenModal(false);
@@ -64,18 +64,18 @@ export const RenderMainComponent = ({ setIsOpenModal, setIsOpenModalOtp, changeO
       body.email = emailField;
     }
     else body.mobile = mobileField
-    doLogin(body);
+    body.nameToAppear = nameField
+    doRegister(body);
   };
-
 
   return (
     <div style={{ padding: "16px" }}>
-      {isLoading && <ParentBlur/>}
       <RenderTopLabel
         dispatchAction={dispatch}
         label="Welcome to CHICKY FUN!"
         subLabel="Access this cart page by selecting Register, Log In, or Continue as a Guest."
       />
+      {isLoading && <ParentBlur/>}
       <RenderButtonSocialMedia />
       <RenderDivider />
       <RenderForm 
@@ -84,6 +84,7 @@ export const RenderMainComponent = ({ setIsOpenModal, setIsOpenModalOtp, changeO
         setTabScreen={setTabScreen} 
         setMobileField={setMobileField} 
         setEmailField={setEmailField}
+        setNameField={setNameField}
       />
       {errMsg!="" && <div className="mt-2 text-xs text-red-500">{errMsg}</div>}
       <RenderTermAndCondition
@@ -91,11 +92,11 @@ export const RenderMainComponent = ({ setIsOpenModal, setIsOpenModalOtp, changeO
         handleCheckboxChange={handleCheckboxChange}
       />
       <RenderButton
+        label="Register"
         isCanProcess={isCanProcess}
         changeOpenModalAuth={changeOpenModalAuth}
-        label="Login"
-        labelAccount="Don’t have account?"
-        labelRegLog="Register"
+        labelAccount="Already have account?"
+        labelRegLog="Login"
         handleButton={handleButtonClick}
       />
       <hr

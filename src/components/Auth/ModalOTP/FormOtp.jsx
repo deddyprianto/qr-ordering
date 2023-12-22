@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-export const RenderFormOTP = ({ otp, setOTP, refs }) => {
+export const RenderFormOTP = ({ otp, setOTP, refs, disableForm }) => {
   const handleChange = (index, e) => {
     const newOTP = [...otp];
     newOTP[index] = e.target.value;
@@ -46,6 +46,7 @@ export const RenderFormOTP = ({ otp, setOTP, refs }) => {
             onChange={(e) => handleChange(index, e)}
             onKeyUp={(e) => handleKeyUp(index, e)}
             ref={refs[index]}
+            disabled={disableForm}
             style={{
               textAlign: "center",
               backgroundColor:
@@ -65,5 +66,6 @@ export const RenderFormOTP = ({ otp, setOTP, refs }) => {
 RenderFormOTP.propTypes = {
   otp: PropTypes.array,
   setOTP: PropTypes.func,
-  refs: PropTypes.array
+  refs: PropTypes.array,
+  disableForm: PropTypes.bool
 };

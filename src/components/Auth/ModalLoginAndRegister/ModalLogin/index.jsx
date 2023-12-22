@@ -2,17 +2,15 @@ import PropTypes from "prop-types";
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { RenderMainComponent } from "./Main";
-import { useDispatch } from "react-redux";
 
-export const ModalLogin = ({ isOpenModal, setIsOpenModal, setIsOpenModalOtp }) => {
-  const dispatch = useDispatch();
+export const ModalLogin = ({ isOpenModal, setIsOpenModal, setIsOpenModalOtp, changeOpenModalAuth }) => {
 
   return (
     <Transition appear show={isOpenModal} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-10"
-        onClose={() => dispatch(setIsOpenModal(true))}
+        onClose={() => setIsOpenModal(true)}
       >
         <Transition.Child
           as={Fragment}
@@ -27,7 +25,7 @@ export const ModalLogin = ({ isOpenModal, setIsOpenModal, setIsOpenModalOtp }) =
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex  items-center justify-center p-4 text-center">
+           <div className="flex  items-center justify-center p-4 text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -39,11 +37,13 @@ export const ModalLogin = ({ isOpenModal, setIsOpenModal, setIsOpenModalOtp }) =
             >
               <Dialog.Panel className="w-full max-w-md transhtmlForm overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all h-full">
                 <RenderMainComponent
+                  setIsOpenModal={setIsOpenModal}
                   setIsOpenModalOtp={setIsOpenModalOtp}
+                  changeOpenModalAuth={changeOpenModalAuth}
                 />
               </Dialog.Panel>
             </Transition.Child>
-          </div>
+          </div> 
         </div>
       </Dialog>
     </Transition>
@@ -53,5 +53,6 @@ export const ModalLogin = ({ isOpenModal, setIsOpenModal, setIsOpenModalOtp }) =
 ModalLogin.propTypes = {
   isOpenModal: PropTypes.bool,
   setIsOpenModal: PropTypes.func,
-  setIsOpenModalOtp: PropTypes.func
+  setIsOpenModalOtp: PropTypes.func,
+  changeOpenModalAuth: PropTypes.func
 };

@@ -1,15 +1,38 @@
-export const TopLabel = () => {
+import PropTypes from "prop-types";
+import { IconCloseTransparent } from "../../../assets/svgIcon";
+
+export const TopLabel = ({ setIsOpenModal }) => {
   return(
     <div>
       <div
         style={{
-        color: "var(--text-color-primary, #343A4A)",
-        width: "100%",
-        font: "700 22px/31px Helvetica Neue, sans-serif ",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
         }}
       >
-        Enter your OTP
+        <div
+          style={{
+          color: "var(--text-color-primary, #343A4A)",
+          width: "100%",
+          font: "700 22px/31px Helvetica Neue, sans-serif ",
+          }}
+        >
+          Enter your OTP
+        </div>
+        <div
+          onClick={() => setIsOpenModal(false)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              setIsOpenModal(false);
+            }
+          }}
+        >
+          <IconCloseTransparent />
+        </div>
       </div>
+      
+      
       <div
         style={{
         color: "#000",
@@ -24,4 +47,8 @@ export const TopLabel = () => {
       </div>
     </div>
   )
+}
+
+TopLabel.propTypes = {
+  setIsOpenModal: PropTypes.bool
 }

@@ -1,9 +1,7 @@
-import PropTypes from "prop-types";
-import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { RenderMainComponent } from "./Main";
+import { Fragment } from "react";
 
-export const ModalOtp = ( { isOpenModal, setIsOpenModal, callback } ) => {
+export const Modal = ({ isOpenModal, setIsOpenModal }) => {
   return (
     <Transition appear show={isOpenModal} as={Fragment}>
       <Dialog
@@ -36,9 +34,9 @@ export const ModalOtp = ( { isOpenModal, setIsOpenModal, callback } ) => {
             >
               <Dialog.Panel className="w-full max-w-md transhtmlForm overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all h-full">
                 <RenderMainComponent
-                  // callback={callback}
-                  isOpenModal={isOpenModal}
                   setIsOpenModal={setIsOpenModal}
+                  setIsOpenModalOtp={setIsOpenModalOtp}
+                  changeOpenModalAuth={changeOpenModalAuth}
                 />
               </Dialog.Panel>
             </Transition.Child>
@@ -47,10 +45,4 @@ export const ModalOtp = ( { isOpenModal, setIsOpenModal, callback } ) => {
       </Dialog>
     </Transition>
   );
-};
-
-ModalOtp.propTypes = {
-  isOpenModal: PropTypes.bool,
-  setIsOpenModal: PropTypes.func,
-  callback: PropTypes.func
-};
+}

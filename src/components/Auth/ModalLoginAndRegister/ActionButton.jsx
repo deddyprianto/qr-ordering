@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 export const RenderButton = ({
     isCanProcess,
-    navigate,
+    changeOpenModalAuth,
     label,
     labelAccount,
     labelRegLog,
@@ -57,10 +57,10 @@ export const RenderButton = ({
             {labelAccount}
           </div>
           <div
-            onClick={() => navigate(path)}
+            onClick={() => changeOpenModalAuth(path)}
             onKeyDown={(event) => {
               if (event.key === "Enter" || event.key === " ") {
-                navigate(path);
+                changeOpenModalAuth(path);
               }
             }}
             style={{
@@ -79,7 +79,7 @@ export const RenderButton = ({
   };
   RenderButton.propTypes = {
     isCanProcess: PropTypes.func.isRequired,
-    navigate: PropTypes.func.isRequired,
+    changeOpenModalAuth: PropTypes.func.isRequired,
     label: PropTypes.string.isRequired,
     labelAccount: PropTypes.string.isRequired,
     labelRegLog: PropTypes.string.isRequired,

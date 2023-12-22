@@ -1,11 +1,12 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TopLabel } from "./TopLabel";
 import { RenderFormOTP } from "./FormOtp";
 import { ButtomLabel } from "./ButtonLabel";
 import { ActionButton } from "./ActionButton";
 import PropTypes from "prop-types";
+import { ParentBlur } from "../../ParentBlur";
 
-export const RenderMainComponent = ({ callback }) => {
+export const RenderMainComponent = ({ callback, isOpenModal, setIsOpenModal }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [otp, setOTP] = useState(["", "", "", "", "", ""]);
   const refs = [useRef(), useRef(), useRef(), useRef(), useRef(), useRef()];
@@ -13,6 +14,12 @@ export const RenderMainComponent = ({ callback }) => {
 
   // Check if all OTP fields are filled
   const isOTPComplete = otp.every((value) => value !== "");
+
+  useEffect(() => {
+    if(isOpenModal)
+      refs[0]?.current?.focus();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpenModal]);
 
   return (
     <div
@@ -22,15 +29,17 @@ export const RenderMainComponent = ({ callback }) => {
         padding: "16px",
       }}
     >
-      {/* {isLoading && <ParentBlur/>} */}
-      <TopLabel />
+      {isLoading && <ParentBlur/>}
+      <TopLabel setIsOpenModal={setIsOpenModal}/>
       <RenderFormOTP
         otp={otp}
         setOTP={setOTP}
+        disableForm={isLoading}
         refs={refs}
       />
       <ButtomLabel />
       {errMsg!="" && <div className="mt-2 text-xs text-red-500">{errMsg}</div>}
+      {console.log(isLoading)}
       <ActionButton
         otp={otp}
         isOTPComplete={isOTPComplete}
@@ -44,5 +53,7 @@ export const RenderMainComponent = ({ callback }) => {
 };
 
 RenderMainComponent.propTypes = {
-  callback: PropTypes.func
+  callback: PropTypes.func,
+  isOpenModal: PropTypes.bool,
+  setIsOpenModal: PropTypes.func
 }
