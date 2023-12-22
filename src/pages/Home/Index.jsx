@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { RenderItemProduct } from "../components/RenderItemProduct";
+import { RenderItemProduct } from "../../components/RenderItemProduct";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setShowSplashScreen,
   setEnableSearchUsingScroll,
-} from "../app/dataSlicePersisted";
-import image1 from "../assets/image1.png";
-import image3 from "../assets/image3.png";
-import { IconClose } from "../assets/svgIcon";
+} from "../../app/dataSlicePersisted";
 
-import { GET } from "../utilities/services";
+import image3 from "../../assets/image3.png";
+import { IconClose } from "../../assets/svgIcon";
 
-import { RenderItemSearch } from "../components/Home/RenderItemSearch";
+
+import { RenderItemSearch } from "../../components/Home/RenderItemSearch";
+import { RenderNavbarMenu } from "./NavbarMenu";
+import { RenderSummaryTabMenu } from "./SummaryTabMenu";
 
 export function Component() {
-  const [summaryTabMenu, setSummaryTabMenu] = useState("Local Beverages");
-  const [isShowSummaryTabMenu, setIsShowSummaryTabMenu] = useState(false);
-  const [isSelectedItem, setIsSelectedItem] = useState("Christmas Menu 2023");
+  
   const [highlights, setHighlights] = useState(true);
-  const [dataCategory, setDataCategory] = useState([]);
   const [dataSummaryTabMenu, setDataSummaryTabMenu] = useState([]);
   const [dataItem, setDataItem] = useState([]);
   const [isFirstOpenSearchBar, setIsFirstOpenSearchBar] = useState(true);
@@ -37,14 +35,7 @@ export function Component() {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       dispatch(setShowSplashScreen(false));
-      let obj = {
-        skip: 0,
-        take: 5,
-      };
-
-      GET("products/edge cafe", obj).then((x) => {
-        setDataCategory(x.data);
-      });
+ 
     }, 2000); // 5000 milliseconds = 5 seconds
     return () => {
       clearTimeout(timeoutId);
@@ -78,107 +69,6 @@ export function Component() {
           objectPosition: "center",
         }}
       />
-    );
-  };
-
-  const renderItemScroll = ({ label, imageItem, refNo, type }) => {
-    const fetchButton = () => {
-      let obj = {
-        skip: 0,
-        take: 5,
-      };
-      GET(`products/edge cafe/${type}/${refNo}`, obj).then((x) => {
-        let tempSummaryTabMenu = [];
-        let tempItem = [];
-        x.data.map((prop) => {
-          if (prop.buttonType.toLowerCase() == "folder") {
-            tempSummaryTabMenu.push(prop);
-          } else if (prop.buttonType.toLowerCase() == "item") {
-            tempItem.push(prop);
-          }
-        });
-
-        setDataItem(tempItem);
-        setDataSummaryTabMenu(tempSummaryTabMenu);
-        if (type.toLowerCase() == "folder") {
-          setIsShowSummaryTabMenu(true);
-        } else {
-          setIsShowSummaryTabMenu(false);
-        }
-      });
-    };
-
-    const handleClick = () => {
-      setIsSelectedItem(label);
-      fetchButton();
-    };
-
-    return (
-      <div
-        onClick={() => handleClick()}
-        onKeyDown={(event) => {
-          if (event.key === "Enter" || event.key === " ") {
-            setIsSelectedItem(label);
-          }
-        }}
-        style={{
-          flex: "0 0 auto",
-          width: "100px",
-        }}
-        className={`mt-[16px] flex items-center flex-col p-[5px] ${
-          label === isSelectedItem &&
-          "border-b-[6px] border-solid border-b-[color:var(--Brand-color-Secondary,#FF4782)]"
-        }`}
-      >
-        <img
-          loading="lazy"
-          src={imageItem}
-          className={`w-[64px] rounded-2xl ${
-            label === isSelectedItem
-              ? "border-4 border-[#FF4782]"
-              : "border-[2px] border-[#FFFFFF]"
-          } `}
-        />
-        <div
-          className={`flex justify-center items-center text-sm h-full text-center ${
-            label === isSelectedItem
-              ? "font-bold text-[#FF4782]"
-              : "font-normal text-white"
-          }`}
-        >
-          <div>{label}</div>
-        </div>
-      </div>
-    );
-  };
-
-  const renderNavbarMenu = () => {
-    let data = [];
-    dataCategory?.map((x) => {
-      if (
-        x.buttonType.toLowerCase() == "category" ||
-        x.buttonType.toLowerCase() == "folder"
-      ) {
-        let imageDefault = image1;
-        data.push({
-          name: x.buttonTitle,
-          img: x.imageURL ? x.imageURL : imageDefault,
-          refNo: x.refNo,
-          type: x.buttonType,
-        });
-      }
-    });
-    return (
-      <div className="overflow-x-auto flex border-t-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] bg-[#00524C] rounded-b-lg pl-[16px] pr-[16px]">
-        {data.map((item) => {
-          return renderItemScroll({
-            label: item.name,
-            imageItem: item.img,
-            refNo: item.refNo,
-            type: item.type,
-          });
-        })}
-      </div>
     );
   };
 
@@ -252,56 +142,19 @@ export function Component() {
     );
   };
 
-  const renderSummaryTabMenu = () => {
-    const data = [];
-    dataSummaryTabMenu.map((x) => {
-      if (x.buttonType.toLowerCase() == "folder") {
-        data.push({
-          label: x.buttonTitle,
-          refNo: x.refNo,
-          buttonType: x.buttonType,
-          priority: x.priority,
-        });
-      }
-    });
-
-    return (
-      <div className="flex overflow-x-auto mt-[24px] mb-[24px] gap-[8px]">
-        {data.map((item) => {
-          return (
-            <div
-              onClick={() => setSummaryTabMenu(item.label)}
-              onKeyDown={(event) => {
-                if (event.key === "Enter" || event.key === " ") {
-                  setSummaryTabMenu(item.label);
-                }
-              }}
-              key={item.label}
-              style={{
-                flex: "0 0 auto",
-                width: "150px",
-              }}
-              className={`flex items-center text-sm tracking-wide  justify-center py-2 rounded-full ${
-                item.label === summaryTabMenu
-                  ? "text-white bg-[#FF4782] font-bold"
-                  : "text-gray-700 border border-[color:var(--Grey-Scale-color-Grey-Scale-1,#343A4A)] border-solid"
-              }`}
-            >
-              {item.label}
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
-
   const renderMenu = () => {
     return (
       <div className="relative">
-        {renderNavbarMenu()}
+        <RenderNavbarMenu
+          procSummaryTabMenu = {setDataSummaryTabMenu}
+          procItem = {setDataItem}
+        />
         <div style={{ padding: "16px" }}>
           {highlights && renderInsight()}
-          {isShowSummaryTabMenu && renderSummaryTabMenu()}
+          <RenderSummaryTabMenu 
+            isShow={dataSummaryTabMenu.length > 0}
+            dataSummaryTabMenu = {dataSummaryTabMenu}
+          />
           <p
             style={{
               fontWeight: "700",
@@ -326,7 +179,7 @@ export function Component() {
               return (
                 <RenderItemProduct
                   key={`${x.buttonType}_${x.buttonTitle}`}
-                  isPromo={x.productInfo?.promotions.length > 0 }
+                  isPromo={x.productInfo?.promotions.length > 0}
                   imageProduct={image3}
                   productInfo={x.productInfo}
                 />
