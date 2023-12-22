@@ -107,7 +107,6 @@ export function Component() {
             </div>
           </div>
           <div
-            role="button"
             onClick={() => setHighlights(false)}
             onKeyDown={(event) => {
               if (event.key === "Enter" || event.key === " ") {

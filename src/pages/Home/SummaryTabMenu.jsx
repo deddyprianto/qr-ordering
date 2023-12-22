@@ -26,7 +26,6 @@ export const RenderSummaryTabMenu = ({ isShow, dataSummaryTabMenu }) => {
           {data?.map((item) => {
             return (
               <div id = {item.label}
-                role="button"
                 onClick={(e) => handleClick(e)}
                 onKeyDown={() => {}}
                 key={item.label}

@@ -13,8 +13,8 @@ export const RenderItemScroll = ({
 
   return (
     <div
-      role="button"
       onClick={() => handleClick()}
+      onKeyDown={() => {}}
       style={{
         flex: "0 0 auto",
         width: "100px",
