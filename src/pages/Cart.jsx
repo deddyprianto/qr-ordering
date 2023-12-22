@@ -1,27 +1,27 @@
-import { ModalLogin } from "../components/Auth/ModalLoginAndRegister/ModalLogin";
 import { useState } from "react";
-import { ModalOtp } from "../components/Auth/ModalOTP/Index";
-import { ModalRegister } from "../components/Auth/ModalLoginAndRegister/ModalRegister";
+import { ModalAuth } from "../components/Auth/ModalAuth";
 
 export function Component() {
-  const [isOpenModalLogin, setIsOpenModalLogin] = useState(false);
+  const [isOpenModalLogin, setIsOpenModalLogin] = useState(true);
   const [isOpenModalRegister, setIsOpenModalRegister] = useState(false);
-  const [isOpenModalOtp, setIsOpenModalOtp] = useState(true);
+  const [isOpenModalOtp, setIsOpenModalOtp] = useState(false);
+
+  const handleSuccessOTP = (isSuccess) => {
+    // Replace this function with logic if member success login or register
+    return isSuccess
+  };
   
   return (
     <div>
       <h1>Cart</h1>
-      <ModalLogin  
-        isOpenModal={isOpenModalLogin} 
-        setIsOpenModal={setIsOpenModalLogin} 
-        setIsOpenModalOtp={setIsOpenModalOtp}/>
-      <ModalRegister  
-        isOpenModal={isOpenModalRegister} 
-        setIsOpenModal={setIsOpenModalRegister} 
-        setIsOpenModalOtp={setIsOpenModalOtp}/>
-      <ModalOtp  
-        isOpenModal={isOpenModalOtp} 
-        setIsOpenModal={setIsOpenModalOtp} 
-        callback={()=>{}}/>
+      <ModalAuth
+        isOpenModalLogin={isOpenModalLogin}
+        setIsOpenModalLogin={setIsOpenModalLogin}
+        isOpenModalRegister={isOpenModalRegister}
+        setIsOpenModalRegister={setIsOpenModalRegister}
+        isOpenModalOtp={isOpenModalOtp}
+        setIsOpenModalOtp={setIsOpenModalOtp}
+        callback={handleSuccessOTP}
+      />
     </div>);
 }

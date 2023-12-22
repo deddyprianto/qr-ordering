@@ -36,7 +36,7 @@ export const ModalOtp = ( { isOpenModal, setIsOpenModal, callback } ) => {
             >
               <Dialog.Panel className="w-full max-w-md transhtmlForm overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all h-full">
                 <RenderMainComponent
-                  // callback={callback}
+                  callback={callback}
                   isOpenModal={isOpenModal}
                   setIsOpenModal={setIsOpenModal}
                 />
