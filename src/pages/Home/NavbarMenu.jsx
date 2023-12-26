@@ -24,7 +24,7 @@ export const NavbarMenu = ({procSummaryTabMenu, procItem}) => {
     return () => {
       clearTimeout(timetOutId);
     };
-  });
+  },[]);
 
   const handleSelected = (item, type, refNo) => {
     setIsSelectedItem(item);

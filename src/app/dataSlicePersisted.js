@@ -3,6 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   accessToken: "",
   isSplashScreenShow: true,
+  memberInfo: {},
+  cartInfo: {},
+  outletName: ""
 };
 
 const dataSlicePersisted = createSlice({
@@ -30,6 +33,12 @@ const dataSlicePersisted = createSlice({
     setMemberInfo: (state, action) => {
       state.memberInfo = action.payload;
     },
+    setCartInfo: (state, action) => {
+      state.cartInfo = action.payload;
+    },
+    setOutletName: (state, action) => {
+      state.outletName = action.payload;
+    },
   },
 });
 
@@ -40,6 +49,8 @@ export const {
   setSearchItemObj,
   setEnableSearchUsingScroll,
   setOtpRequestInfo, 
-  setMemberInfo 
+  setMemberInfo,
+  setCartInfo,
+  setOutletName
 } = dataSlicePersisted.actions;
 export default dataSlicePersisted.reducer; // Changed 'dataSlicePersisted.reducer.default' to 'dataSlicePersisted.reducer'

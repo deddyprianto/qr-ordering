@@ -4,7 +4,6 @@ import { Insights } from "../../components/Insights";
 import { SummaryTabMenu } from "./SummaryTabMenu";
 import { useSelector } from "react-redux";
 import { RenderItemProduct } from "../../components/RenderItemProduct";
-import image3 from "../../assets/image3.png";
 
 export const MainView = () => {
   const [highlights, setHighlights] = useState(true);
@@ -52,13 +51,12 @@ export const MainView = () => {
             gridTemplateAreas: '". ."',
           }}
         >
-          {dataItem.map((x) => {
+          {dataItem.map((item) => {
             return (
               <RenderItemProduct
-                key={`${x.buttonType}_${x.buttonTitle}`}
-                isPromo={x.productInfo?.promotions.length > 0}
-                imageProduct={image3}
-                productInfo={x.productInfo}
+                key={`${item.buttonType}_${item.buttonTitle}`}
+                isPromo={item.productInfo?.promotions.length > 0}
+                item={item.productInfo}
               />
             );
           })}
