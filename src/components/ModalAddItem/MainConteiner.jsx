@@ -15,18 +15,14 @@ const RenderMainContainer = ({
           setOpenModal={setOpenModal}
           setTypeOfModalAddItem={setTypeOfModalAddItem} />
       );
-    case "attribute":
-      return (
-        <RenderItemMain 
-          item={item}
-          setOpenModal={setOpenModal} />
-      );
+    // case "attribute":
+    //   return (
+    //     <RenderItemMain 
+    //       item={item}
+    //       setOpenModal={setOpenModal} />
+    //   );
     default:
-      return (
-        <RenderItemMain 
-          item={item}
-          setOpenModal={setOpenModal} />
-      );
+      return <div></div>;
   }
 };
 export default RenderMainContainer;
