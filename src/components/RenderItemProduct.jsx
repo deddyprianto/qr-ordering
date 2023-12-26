@@ -1,6 +1,19 @@
 import PropTypes from "prop-types";
 
-export const RenderItemProduct = ({ isPromo = false, imageProduct }) => {
+export const RenderItemProduct = ({ isPromo = false, imageProduct, productInfo }) => {
+  const labelPromo = {
+    color: "var(--semantic-color-error, #CF3030)",
+    textAlign: "center",
+    whiteSpace: "nowrap",
+    font: "700 16px/22px Helvetica Neue, sans-serif ",
+  }
+
+  const labelNonPromo = {
+    color: "var(--semantic-color-error, #000000)",
+    textAlign: "center",
+    whiteSpace: "nowrap",
+    font: "700 16px/22px Helvetica Neue, sans-serif ",
+  }
   return (
     <div
       style={{
@@ -76,7 +89,7 @@ export const RenderItemProduct = ({ isPromo = false, imageProduct }) => {
             font: "500 14px/20px Helvetica Neue, sans-serif ",
           }}
         >
-          Pesto Paradise Portobello Burger
+          {productInfo?.itemName}
         </div>
 
         <div
@@ -86,7 +99,7 @@ export const RenderItemProduct = ({ isPromo = false, imageProduct }) => {
             gap: "8px",
           }}
         >
-          <div
+          {productInfo?.promotions.length > 0 && <div
             className="line-through"
             style={{
               color: "var(--text-color-tertiary, #9D9D9D)",
@@ -97,16 +110,12 @@ export const RenderItemProduct = ({ isPromo = false, imageProduct }) => {
             }}
           >
             $ 9.99
-          </div>
+          </div>}
+          
           <div
-            style={{
-              color: "var(--semantic-color-error, #CF3030)",
-              textAlign: "center",
-              whiteSpace: "nowrap",
-              font: "700 16px/22px Helvetica Neue, sans-serif ",
-            }}
+            style={productInfo.promotions.length > 0 ? labelPromo : labelNonPromo}
           >
-            $ 5.00
+            $ {productInfo?.retailPrice.toFixed(2)}
           </div>
         </div>
 
@@ -148,4 +157,5 @@ export const RenderItemProduct = ({ isPromo = false, imageProduct }) => {
 RenderItemProduct.propTypes = {
   isPromo: PropTypes.bool,
   imageProduct: PropTypes.string,
+  productInfo: PropTypes.any
 };
