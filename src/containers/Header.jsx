@@ -1,10 +1,4 @@
-import {
-  IconArrowLeft,
-  IconTable,
-  LogoIcon,
-  SearchIcon,
-} from "../assets/svgIcon";
-import { useLocation } from "react-router-dom";
+import { IconArrowLeft, IconTable, SearchIcon } from "../assets/svgIcon";
 import "react-modern-drawer/dist/index.css";
 import logo from "../assets/logo.png";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,9 +6,6 @@ import { setIsSearchItem, setSearchItemObj, setEnableSearchUsingScroll } from ".
 
 
 export default function Header() {
-  const location = useLocation();
-  const pathname = location.pathname;
-
   const dispatch = useDispatch();
   const isSearchItem = useSelector(
     (state) => state.dataSlicePersisted.isSearchItem,
@@ -134,25 +125,12 @@ export default function Header() {
   };
 
   const renderMain = () => {
-    if (pathname === "/auth" || pathname === "/otp") {
-      return (
-        <div
-          style={{
-            padding: "16px",
-          }}
-        >
-          <LogoIcon />
-          <p>[store location]</p>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          {renderLabelTableNo()}
-          {renderMainHeader()}
-        </div>
-      );
-    }
+    return (
+      <div>
+        {renderLabelTableNo()}
+        {renderMainHeader()}
+      </div>
+    );
   };
 
   return <>{renderMain()}</>;

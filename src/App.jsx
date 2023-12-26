@@ -17,20 +17,12 @@ const router = createBrowserRouter([
         lazy: () => import("./pages/Home"),
       },
       {
-        path: "auth",
-        lazy: () => import("./pages/Auth"),
-      },
-      {
         path: "cart",
         lazy: () => import("./pages/Cart"),
       },
       {
         path: "profile",
         lazy: () => import("./pages/Profile"),
-      },
-      {
-        path: "otp",
-        lazy: () => import("./pages/AuthOtp"),
       },
       {
         path: "*",

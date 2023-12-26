@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 export const LoginIcon = () => {
   return (
     <svg
@@ -133,7 +135,7 @@ export const TaskListIcon = () => {
   );
 };
 
-export const SearchIcon = () => {
+export const SearchIcon = ({ color = "#fff" }) => {
   return (
     <svg
       width="24"
@@ -142,10 +144,10 @@ export const SearchIcon = () => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <circle cx="15" cy="15" r="10.5" stroke="#fff" strokeWidth="3" />
+      <circle cx="15" cy="15" r="10.5" stroke={color} strokeWidth="3" />
       <path
         d="M22.5 22.5L31.5 31.5"
-        stroke="#fff"
+        stroke={color}
         strokeWidth="3"
         strokeLinecap="round"
       />
@@ -205,6 +207,28 @@ export const IconClose = () => {
     </svg>
   );
 };
+export const IconCloseTransparent = () => {
+  return (
+    <svg
+      width="24"
+      height="25"
+      viewBox="0 0 24 25"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M8.70711 7.79289C8.31658 7.40237 7.68342 7.40237 7.29289 7.79289C6.90237 8.18342 6.90237 8.81658 7.29289 9.20711L10.5858 12.5L7.29289 15.7929C6.90237 16.1834 6.90237 16.8166 7.29289 17.2071C7.68342 17.5976 8.31658 17.5976 8.70711 17.2071L12 13.9142L15.2929 17.2071C15.6834 17.5976 16.3166 17.5976 16.7071 17.2071C17.0976 16.8166 17.0976 16.1834 16.7071 15.7929L13.4142 12.5L16.7071 9.20711C17.0976 8.81658 17.0976 8.18342 16.7071 7.79289C16.3166 7.40237 15.6834 7.40237 15.2929 7.79289L12 11.0858L8.70711 7.79289Z"
+        fill="#181818"
+      />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M22 12.5C22 18.0228 17.5228 22.5 12 22.5C6.47715 22.5 2 18.0228 2 12.5C2 6.97715 6.47715 2.5 12 2.5C17.5228 2.5 22 6.97715 22 12.5ZM20 12.5C20 16.9183 16.4183 20.5 12 20.5C7.58172 20.5 4 16.9183 4 12.5C4 8.08172 7.58172 4.5 12 4.5C16.4183 4.5 20 8.08172 20 12.5Z"
+        fill="#181818"
+      />
+    </svg>
+  );
+};
 
 export const IconArrowLeft = () => {
   return (
@@ -240,6 +264,27 @@ export const IconArrowBottom = () => {
         strokeWidth="2"
         strokeLinecap="rounds"
         strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+SearchIcon.propTypes = {
+  color: PropTypes.string,
+};
+
+export const IconFaceBook = () => {
+  return (
+    <svg
+      width="25"
+      height="25"
+      viewBox="0 0 25 25"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M14.5 14H17L18 10H14.5V8C14.5 6.97 14.5 6 16.5 6H18V2.64C17.674 2.597 16.443 2.5 15.143 2.5C12.428 2.5 10.5 4.157 10.5 7.2V10H7.5V14H10.5V22.5H14.5V14Z"
+        fill="white"
       />
     </svg>
   );

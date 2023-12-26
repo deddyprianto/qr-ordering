@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   data: "",
+  isOpenModalAuth: false,
 };
 
 const dataSlice = createSlice({
@@ -11,8 +12,11 @@ const dataSlice = createSlice({
     setData: (state, action) => {
       state.data = action.payload;
     },
+    setIsOpenModalAuth: (state, action) => {
+      state.isOpenModalAuth = action.payload;
+    },
   },
 });
 
-export const { setData } = dataSlice.actions;
+export const { setData, setIsOpenModalAuth } = dataSlice.actions;
 export default dataSlice.reducer;
