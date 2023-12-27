@@ -124,7 +124,7 @@ export const RenderItemProduct = ({ isPromo = false, imageProduct, productInfo }
           </div>
         </div>
 
-        <div
+        <button
           style={{
             display: "flex",
             justifyContent: "center",
@@ -156,7 +156,7 @@ export const RenderItemProduct = ({ isPromo = false, imageProduct, productInfo }
           >
             Add
           </div>
-        </div>
+        </button>
       </div>
     </div>
   );
