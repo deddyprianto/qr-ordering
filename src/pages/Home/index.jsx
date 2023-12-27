@@ -25,6 +25,8 @@ export function Component() {
     (state) => state.dataSlicePersisted.searchItemObj,
   );
 
+  
+
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       dispatch(setShowSplashScreen(false));
@@ -48,10 +50,12 @@ export function Component() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSearchItem]);
 
+  
 
   
 
   const renderMain = () => {
+    
     if (isSplashScreen) return <RenderSplashScreen />;
     else if (isFirstOpenSearchBar) return <MainView/>;
     else return <RenderItemSearch searchText={searchItemObj?.searchText} />;

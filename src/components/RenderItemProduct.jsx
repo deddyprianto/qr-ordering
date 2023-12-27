@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { useEdgeSnack } from "./EdgeSnack/utils/useEdgeSnack";
 
 export const RenderItemProduct = ({ isPromo = false, imageProduct, productInfo }) => {
   const labelPromo = {
@@ -8,12 +9,16 @@ export const RenderItemProduct = ({ isPromo = false, imageProduct, productInfo }
     font: "700 16px/22px Helvetica Neue, sans-serif ",
   }
 
+  const toast = useEdgeSnack();
+
   const labelNonPromo = {
     color: "var(--semantic-color-error, #000000)",
     textAlign: "center",
     whiteSpace: "nowrap",
     font: "700 16px/22px Helvetica Neue, sans-serif ",
   }
+
+  
   return (
     <div
       style={{
@@ -130,6 +135,9 @@ export const RenderItemProduct = ({ isPromo = false, imageProduct, productInfo }
             padding: "5px 16px",
             alignItems: "center",
           }}
+
+          onClick={() => toast.open(`${productInfo?.itemName} success add to cart`, 'success')}
+          
         >
           <div>
             <img

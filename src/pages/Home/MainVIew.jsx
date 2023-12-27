@@ -1,10 +1,11 @@
-import { useState } from "react";
+import {  useState } from "react";
 import { NavbarMenu } from "./NavbarMenu";
 import { Insights } from "../../components/Insights";
 import { SummaryTabMenu } from "./SummaryTabMenu";
-import { useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import { RenderItemProduct } from "../../components/RenderItemProduct";
 import image3 from "../../assets/image3.png";
+
 
 export const MainView = () => {
   const [highlights, setHighlights] = useState(true);
@@ -13,6 +14,10 @@ export const MainView = () => {
   const isSearchItem = useSelector(
     (state) => state.dataSlicePersisted.isSearchItem,
   );
+
+  
+  
+  
   return (
     <div className="relative">
       <NavbarMenu
