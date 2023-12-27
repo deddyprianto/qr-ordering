@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const callAPI = async ({url, method, body}) => {
+export const callAPI = async (url, method, body) => {
   try {
     const axiosConfig = {
       method: method,
