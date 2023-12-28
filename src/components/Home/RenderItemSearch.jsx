@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { apiProduct } from "../../services/Product";
 import { setEnableSearchUsingScroll } from "../../app/dataSlicePersisted";
-import Loader from "../Loader";
+import { SkeletonSearch } from "../Skeleton";
 
-export const RenderItemSearch = ({ searchText="" }) => {
+export const RenderItemSearch = ({ searchText = "" }) => {
   const [searchItemList, setSearchItemList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const searchItemObj = useSelector(
@@ -13,32 +13,31 @@ export const RenderItemSearch = ({ searchText="" }) => {
   );
 
   useEffect(() => {
-    if(searchItemObj?.doSearch){
+    if (searchItemObj?.doSearch) {
       handleSearchItems();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchItemObj]);
 
-  const handleSearchItems = async() => {
-    if(isLoading) return;
+  const handleSearchItems = async () => {
+    if (isLoading) return;
     let params = {
       search: searchItemObj?.searchText,
-      skip: searchItemObj?.isResetList?0:searchItemList.length,
+      skip: searchItemObj?.isResetList ? 0 : searchItemList.length,
       take: 10,
       sortBy: "buttonTitle",
-      isDescending: false
-    }
+      isDescending: false,
+    };
     try {
       setIsLoading(true);
-      const result = await apiProduct('GET', "BUGIS/ALL", params);
-      if(result.resultCode == 200){
+      const result = await apiProduct("GET", "BUGIS/ALL", params);
+      if (result.resultCode == 200) {
         let newSearchItemList = [];
-        if(searchItemObj?.isResetList) newSearchItemList = result.data;
-        else newSearchItemList = searchItemList.concat(result.data)
+        if (searchItemObj?.isResetList) newSearchItemList = result.data;
+        else newSearchItemList = searchItemList.concat(result.data);
         setSearchItemList(newSearchItemList);
-        setEnableSearchUsingScroll(newSearchItemList.length>0);
-      }
-      else setSearchItemList([]);
+        setEnableSearchUsingScroll(newSearchItemList.length > 0);
+      } else setSearchItemList([]);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
@@ -46,9 +45,12 @@ export const RenderItemSearch = ({ searchText="" }) => {
     }
   };
 
-  const renderItem = (item={}, id="") => {
-    return(
-      <div id={id} className="items-stretch self-stretch shadow-sm bg-white flex justify-between gap-0 mt-4 rounded-2xl">
+  const renderItem = (item = {}, id = "") => {
+    return (
+      <div
+        id={id}
+        className="items-stretch self-stretch shadow-sm bg-white flex justify-between gap-0 mt-4 rounded-2xl"
+      >
         <div className="flex-col overflow-hidden relative flex aspect-square w-[150px] items-stretch pr-12 pb-2">
           <img
             alt={"itemImage"}
@@ -128,25 +130,24 @@ export const RenderItemSearch = ({ searchText="" }) => {
       </div>
     );
   };
-  
+
   const renderPerCategory = (cat, id) => {
-    return(
-      <div id={id}>        
+    return (
+      <div id={id}>
         <div className="text-gray-700 text-base font-bold leading-6 self-stretch mt-6">
           {cat.buttonTitle}
         </div>
-        {cat?.productInfo?.lenght>0?
-            cat?.productInfo?.map((item, idx) => {
-              return renderItem(item, `${id}-${idx}`)
+        {cat?.productInfo?.lenght > 0
+          ? cat?.productInfo?.map((item, idx) => {
+              return renderItem(item, `${id}-${idx}`);
             })
-            : renderItem(cat?.productInfo)
-            }
+          : renderItem(cat?.productInfo)}
       </div>
     );
   };
 
   const renderItemList = () => {
-    return(
+    return (
       <div className="items-start flex w-full flex-col pt-6 px-4">
         <div className="items-stretch flex gap-2 self-start">
           <div className="text-gray-700 text-sm font-medium leading-5 tracking-wide grow whitespace-nowrap">
@@ -157,7 +158,7 @@ export const RenderItemSearch = ({ searchText="" }) => {
           </div>
         </div>
         {searchItemList?.map((cat, idx) => {
-          return renderPerCategory(cat, idx)
+          return renderPerCategory(cat, idx);
         })}
       </div>
     );
@@ -184,8 +185,8 @@ export const RenderItemSearch = ({ searchText="" }) => {
     );
   };
 
-  if(isLoading) return <Loader/>
-  else if(searchItemList.length>0) return renderItemList();
+  if (isLoading) return <SkeletonSearch />;
+  else if (searchItemList.length > 0) return renderItemList();
   else return renderItemNotFound();
 };
 

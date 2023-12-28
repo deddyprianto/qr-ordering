@@ -1,5 +1,6 @@
 import {  useNavigate } from "react-router-dom";
 import { HomeIcon, ProfileIcon, TaskListIcon } from "../assets/svgIcon";
+import RenderToastCart from "../pages/Home/RenderToastCart";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ const Footer = () => {
         style={{
           display: "flex",
           flexDirection: "column",
+          position: "relative",
         }}
       >
         <nav
@@ -129,6 +131,7 @@ const Footer = () => {
           }}
           alt="Banner"
         />
+        <RenderToastCart />
       </header>
     );
   };

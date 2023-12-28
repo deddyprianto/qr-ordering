@@ -3,6 +3,7 @@ import { ItemScroll } from "./ItemScroll";
 import { GET } from "../../utilities/services";
 import image1 from "../../assets/image1.png";
 import PropTypes from "prop-types";
+import { SkeletonNavbar } from "../../components/Skeleton";
 
 export const NavbarMenu = ({ procSummaryTabMenu, procItem }) => {
   const [isSelectedItem, setIsSelectedItem] = useState("Christmas Menu 2023");
@@ -13,7 +14,7 @@ export const NavbarMenu = ({ procSummaryTabMenu, procItem }) => {
     return () => {
       clearTimeout(timetOutId);
     };
-  },[]);
+  }, []);
 
   useEffect(() => {
     if (!dataCategory?.length > 0) {
@@ -28,6 +29,7 @@ export const NavbarMenu = ({ procSummaryTabMenu, procItem }) => {
   }, [dataCategory]);
 
   const handleSelected = (item, type, refNo) => {
+    console.log(item, type, refNo);
     setIsSelectedItem(item);
 
     let obj = {
@@ -65,23 +67,28 @@ export const NavbarMenu = ({ procSummaryTabMenu, procItem }) => {
       });
     }
   });
+
   return (
     <div className="overflow-x-auto flex border-t-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] bg-[#00524C] rounded-b-lg pl-[16px] pr-[16px]">
-      {data.map((item) => {
-        return (
-          <ItemScroll
-            key={`${item.type}_${item.refNo}_${item.name}`}
-            label={item.name}
-            imageItem={item.img}
-            refNo={item.refNo}
-            type={item.type}
-            handleSelected={() =>
-              handleSelected(item.name, item.type, item.refNo)
-            }
-            isGlow={item.name == isSelectedItem}
-          />
-        );
-      })}
+      {data.length === 0 ? (
+        <SkeletonNavbar />
+      ) : (
+        data.map((item) => {
+          return (
+            <ItemScroll
+              key={`${item.type}_${item.refNo}_${item.name}`}
+              label={item.name}
+              imageItem={item.img}
+              refNo={item.refNo}
+              type={item.type}
+              handleSelected={() =>
+                handleSelected(item.name, item.type, item.refNo)
+              }
+              isGlow={item.name == isSelectedItem}
+            />
+          );
+        })
+      )}
     </div>
   );
 };

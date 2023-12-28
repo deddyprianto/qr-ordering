@@ -5,10 +5,8 @@ import { SummaryTabMenu } from "./SummaryTabMenu";
 import {  useSelector } from "react-redux";
 import { RenderItemProduct } from "../../components/RenderItemProduct";
 import image3 from "../../assets/image3.png";
-import RenderToastCart from "./RenderToastCart";
 import "../../scss/animation.scss";
-import Skeleton from "../../components/Skeleton";
-
+import { Skeleton } from "../../components/Skeleton";
 
 export const MainView = () => {
   const [highlights, setHighlights] = useState(true);
@@ -19,7 +17,7 @@ export const MainView = () => {
   );
 
   return (
-    <div>
+    <div className="relative pb-20">
       <NavbarMenu
         procSummaryTabMenu={setDataSummaryTabMenu}
         procItem={setDataItem}
@@ -69,7 +67,6 @@ export const MainView = () => {
           })}
         </div>
       </div>
-      <RenderToastCart />
       <Skeleton />
       {isSearchItem && (
         <div className="absolute inset-0 backdrop-filter backdrop-blur-lg z-0"></div>
