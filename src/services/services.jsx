@@ -17,13 +17,18 @@ export const callAPI = async (url, method, body) => {
     }
 
     const response = await axios(url, axiosConfig);
+    console.log(response)
     return response.data;
   } catch (error) {
     console.error(`Error api ${url}:`, error);
-    return {
-      "resultCode": 500,
-      "status": "ERROR",
-      "message": `Error on api ${url}`
-    };
+    try {
+      return error.response.data;
+    } catch (error) {
+      return {
+        "resultCode": 500,
+        "status": "ERROR",
+        "message": `Error on api ${url}`
+      };
+    }
   }
 }

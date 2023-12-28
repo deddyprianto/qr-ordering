@@ -22,7 +22,6 @@ const RenderModalItemDetail = ({
   let classNameCustom = "fixed bottom-0 bg-white z-50 overflow-auto";
   if (gadgetScreen) {
     classNameCustom += " left-0 w-full max-h-full rounded-t-[16px]";
-    classNameCustom += ` ${typeOfModalAddItem=="main"?"h-[70%]":""}`;
   } else {
     classNameCustom +=
       " left-[50%] translate-x-[-50%] w-2/5 h-3/4 max-h-[90%] rounded-[16px]";
@@ -33,7 +32,7 @@ const RenderModalItemDetail = ({
     if(openModal){
       setItemToAdd({
         "itemNo": item.itemNo,
-        "quantity": 0,
+        "quantity": 1,
         "unitPrice": item.retailPrice,
         "remark": "",
         "referenceNo": "",
@@ -62,6 +61,7 @@ const RenderModalItemDetail = ({
             typeOfModalAddItem={typeOfModalAddItem}
             setItemToAdd={setItemToAdd}
             setAttList={setAttList}
+            setIsLoading={setIsLoading}
           />
           <RenderButtonAdd
             item={item}

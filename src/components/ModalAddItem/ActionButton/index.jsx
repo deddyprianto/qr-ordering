@@ -4,6 +4,10 @@ import { addNewCart } from "./GenerateCart";
 import { useDispatch, useSelector } from "react-redux";
 import { generateAttributesBody } from "./ItemAttributeBody";
 import { apiCartAddItem } from "./AddItemToCart";
+import { setCartInfo } from "../../../app/dataSlicePersisted";
+import { useEffect, useState } from "react";
+import { useEdgeSnack } from "../../EdgeSnack/utils/useEdgeSnack";
+
 
 export const RenderButtonAdd = ({ 
   item,
@@ -14,7 +18,9 @@ export const RenderButtonAdd = ({
   setOpenModal,
   setIsLoading
  }) => {
+  const [productType, setProductType] = useState("main");
   const dispatch = useDispatch();
+  const toast = useEdgeSnack();
   const cartInfo = useSelector(
     (state) => state.dataSlicePersisted.cartInfo,
   );
@@ -22,18 +28,32 @@ export const RenderButtonAdd = ({
     (state) => state.dataSlicePersisted.outletName,
   );
 
+  useEffect(()=>{
+    setProductType(
+      item.bundles?.length>0
+        ?"bundle"
+        :item.attributes?.length>0
+          ?"attribute"
+          :"main"
+    );
+  },[item])
+
+  const resetCartInfo = (data) => {
+    dispatch(setCartInfo(data));
+  }
+
   const handleClickButton = async() => {
-    if(item.bundles?.length){
+    if(productType=="bundle"){
       setTypeOfModalAddItem("bundle");
       return;
     }
-    else if(item.attributes?.length && typeOfModalAddItem!='attribute'){
+    else if(productType=="attribute" && typeOfModalAddItem!='attribute'){
       setTypeOfModalAddItem("attribute");
       return;
     }
     
     let cartID = cartInfo?.uniqueID;
-    if(!cartID) cartID = await addNewCart(setIsLoading, dispatch, outletName);
+    if(!cartID) cartID = await addNewCart(setIsLoading, outletName, resetCartInfo);
 
     processAddItem(cartID);
   };
@@ -42,12 +62,12 @@ export const RenderButtonAdd = ({
     let body = {...itemToAdd};
     switch (typeOfModalAddItem.toLowerCase()) {
       case "main":
-        await apiCartAddItem(cartID, [body], setIsLoading, setOpenModal);
+        await apiCartAddItem(cartID, [body], setIsLoading, setOpenModal, resetCartInfo, item.itemName, toast);
         break;
       case "attribute":
         console.log('bre')
         body.attributes = generateAttributesBody(attList)
-        await apiCartAddItem(cartID, [body], setIsLoading, setOpenModal);
+        await apiCartAddItem(cartID, [body], setIsLoading, setOpenModal, resetCartInfo, item.itemName, toast);
         break;
       default:
         break;
@@ -55,7 +75,7 @@ export const RenderButtonAdd = ({
   }
 
   return (
-      <div
+    <div
       className="w-full flex items-center px-4 shadow-xl h-[75px]"
       style={{
         boxShadow: "0px -4px 10px 0px rgba(0, 0, 0, 0.10)",
@@ -68,7 +88,12 @@ export const RenderButtonAdd = ({
         <div className="flex items-stretch gap-2">
           <IconPlus />
           <div className="text-white text-xs font-bold leading-4 self-center my-auto">
-            Add
+            {(productType=="attribute" && typeOfModalAddItem=="main")
+              ?"Add New"
+              :(productType=="attribute" && typeOfModalAddItem=="attribute")
+                ?`Add - $ ${itemToAdd.amount}`
+                :"Add"
+            }
           </div>
         </div>
       </button>

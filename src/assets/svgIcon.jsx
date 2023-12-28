@@ -377,19 +377,48 @@ export const IconStar = () => {
   );
 };
 
-export const IconPlus = () => {
+export const IconPlus = ({color="white", width="20", height="20"}) => {
   return (
     <svg
-      width="21"
-      height="20"
+      width={width}
+      height={height}
       viewBox="0 0 21 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
         d="M9.5 15C9.5 15.5523 9.94772 16 10.5 16C11.0523 16 11.5 15.5523 11.5 15V11H15.5C16.0523 11 16.5 10.5523 16.5 10C16.5 9.44772 16.0523 9 15.5 9H11.5V5C11.5 4.44771 11.0523 4 10.5 4C9.94772 4 9.5 4.44771 9.5 5V9H5.5C4.94772 9 4.5 9.44772 4.5 10C4.5 10.5523 4.94772 11 5.5 11H9.5V15Z"
-        fill="white"
+        fill={color}
       />
     </svg>
   );
+};
+IconPlus.propTypes = {
+  color: PropTypes.string,
+  width: PropTypes.string,
+  height: PropTypes.string,
+};
+
+export const IconMinus = ({color="white", width="20", height="20"}) => {
+  return (
+    <svg 
+      width={width}
+      height={height}
+      viewBox="0 0 20 20" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg">
+      <g id="edgeicons">
+      <path 
+        id="Vector 29" 
+        d="M5 10L15 10" 
+        stroke={color}
+        strokeWidth={2} />
+      </g>
+    </svg>
+  );
+};
+IconMinus.propTypes = {
+  color: PropTypes.string,
+  width: PropTypes.string,
+  height: PropTypes.string,
 };

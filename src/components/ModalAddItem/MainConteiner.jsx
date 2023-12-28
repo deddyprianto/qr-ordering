@@ -7,13 +7,16 @@ const RenderMainContainer = ({
   typeOfModalAddItem,
   attList,
   setAttList,
-  setItemToAdd
+  setItemToAdd,
+  setIsLoading
 }) => {
   switch (typeOfModalAddItem.toLowerCase()) {
     case "main":
       return (
         <RenderItemMain 
-          item={item} />
+          item={item} 
+          setIsLoading={setIsLoading}
+        />
       );
     case "attribute":
       return (
@@ -35,5 +38,6 @@ RenderMainContainer.propTypes = {
   item: PropTypes.object,
   attList: PropTypes.array,
   setAttList: PropTypes.func,
-  setItemToAdd: PropTypes.func
+  setItemToAdd: PropTypes.func,
+  setIsLoading: PropTypes.func
 };
