@@ -6,7 +6,7 @@ import {
 } from "../../app/dataSlicePersisted";
 import { RenderItemSearch } from "../../components/Home/RenderItemSearch";
 import { RenderSplashScreen } from "../../components/SplashScreen";
-import { MainView } from "./MainVIew";
+import { MainView } from "./MainView";
 
 export function Component() {
   

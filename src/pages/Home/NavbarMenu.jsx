@@ -16,7 +16,7 @@ export const NavbarMenu = ({ procSummaryTabMenu, procItem }) => {
   },[]);
 
   useEffect(() => {
-    if (!dataCategory.length > 0) {
+    if (!dataCategory?.length > 0) {
       let obj = {
         skip: 0,
         take: 5,

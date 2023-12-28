@@ -1,9 +1,15 @@
+import { useSelector } from "react-redux";
 import { IconArrowRight, IconCart } from "../../assets/svgIcon";
 
 const RenderToastCart = () => {
+  const isSearchItem = useSelector(
+    (state) => state.dataSlicePersisted.isSearchItem,
+  );
   return (
     <div
-      className="justify-between items-stretch border-[color:var(--Brand-color-Primary,#00524C)] shadow-lg bg-[#FF4782] flex gap-5 p-[8px] rounded-xl border-[1px] border-solid absolute bottom-11 w-[95%] left-1/2 lg:w-[44%] z-50"
+      className={`justify-between items-stretch border-[color:var(--Brand-color-Primary,#00524C)] shadow-lg bg-[rgb(255,71,130)] flex gap-5 p-[8px] rounded-xl border-[1px] border-solid absolute bottom-11 w-[95%] left-1/2 lg:w-[44%] ${
+        isSearchItem ? "z-0" : "z-50"
+      } `}
       style={{
         transform: "translate(-50%, -50%)",
       }}
