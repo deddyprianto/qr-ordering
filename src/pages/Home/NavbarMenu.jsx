@@ -9,14 +9,7 @@ export const NavbarMenu = ({ procSummaryTabMenu, procItem }) => {
   const [dataCategory, setDataCategory] = useState([]);
 
   useEffect(() => {
-    const timetOutId = setTimeout(() => {}, 1500);
-    return () => {
-      clearTimeout(timetOutId);
-    };
-  },[]);
-
-  useEffect(() => {
-    if (!dataCategory.length > 0) {
+    const timetOutId = setTimeout(() => {
       let obj = {
         skip: 0,
         take: 5,
@@ -24,8 +17,11 @@ export const NavbarMenu = ({ procSummaryTabMenu, procItem }) => {
       GET("products/edge cafe", obj).then((x) => {
         setDataCategory(x.data);
       });
-    }
-  }, []);
+    }, 1);
+    return () => {
+      clearTimeout(timetOutId);
+    };
+  },[]);
 
   const handleSelected = (item, type, refNo) => {
     setIsSelectedItem(item);
