@@ -1,23 +1,28 @@
 import PropTypes from "prop-types";
 import RenderItemMain from "./ItemMain";
+import RenderItemAttributes from "./ItemAttributes";
 
 const RenderMainContainer = ({ 
   item,
   typeOfModalAddItem,
-  setOpenModal, 
-  setTypeOfModalAddItem
+  attList,
+  setAttList,
+  setItemToAdd
 }) => {
   switch (typeOfModalAddItem.toLowerCase()) {
     case "main":
       return (
         <RenderItemMain 
-          item={item}
-          setOpenModal={setOpenModal}
-          setTypeOfModalAddItem={setTypeOfModalAddItem} />
+          item={item} />
       );
     case "attribute":
       return (
-        <RenderItemMain  />
+        <RenderItemAttributes  
+          attributes={item.attributes}
+          attList={attList}
+          setItemToAdd={setItemToAdd}
+          setAttList={setAttList}
+        />
       );
     default:
       return <div></div>;
@@ -26,8 +31,9 @@ const RenderMainContainer = ({
 export default RenderMainContainer;
 
 RenderMainContainer.propTypes = {
-  setOpenModal: PropTypes.func,
   typeOfModalAddItem: PropTypes.string,
-  setTypeOfModalAddItem: PropTypes.func,
-  item: PropTypes.object
+  item: PropTypes.object,
+  attList: PropTypes.array,
+  setAttList: PropTypes.func,
+  setItemToAdd: PropTypes.func
 };

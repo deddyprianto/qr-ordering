@@ -4,13 +4,13 @@ import image3 from "../../assets/image3.png";
 
 const RenderItemMain = ({ item }) => {
   return (
-    <div className="bg-white w-full px-4 overflow-y-auto pb-10">
-      <div className="h-3/4">
+    <div className="bg-white w-full px-4 object-center overflow-y-auto pb-10">
+      <div className="h-3/4 flex items-center justify-center">
         <img
-          alt="imageProd"
+          alt="itemImage"
           loading="lazy"
           src={item.defaultImageURL?item.defaultImageURL:image3}
-          className="rounded-2xl h-full w-full object-cover object-center inset-0"
+          className="rounded-2xl object-cover object-center inset-0"
         />
       </div>
       {/* Tag Insight */}

@@ -1,12 +1,15 @@
 import PropTypes from "prop-types";
+import { IconPlus } from "../../../assets/svgIcon";
+import { addNewCart } from "./GenerateCart";
 import { useDispatch, useSelector } from "react-redux";
-import { IconPlus } from "../../assets/svgIcon";
-import { apiCart } from "../../services/Cart";
-import { setCartInfo } from "../../app/dataSlicePersisted";
+import { generateAttributesBody } from "./ItemAttributeBody";
+import { apiCartAddItem } from "./AddItemToCart";
 
 export const RenderButtonAdd = ({ 
   item,
   itemToAdd,
+  attList,
+  typeOfModalAddItem,
   setTypeOfModalAddItem,
   setOpenModal,
   setIsLoading
@@ -19,54 +22,41 @@ export const RenderButtonAdd = ({
     (state) => state.dataSlicePersisted.outletName,
   );
 
-  const addNewCart = async()=> {
-    try {
-      let body = {
-        "outletName": outletName
-      }
-      const result = await apiCart("POST", "", body);
-      if(result.resultCode == 200){
-        console.log(result)
-        dispatch(setCartInfo(result.data));
-        return result.data?.uniqueID
-      }
-      else throw(result.message);
-    } catch (error) {
-      setIsLoading(false);
-      console.log(error);
-    }
-  };
-
   const handleClickButton = async() => {
-    setIsLoading(true);
-    let cartID = cartInfo?.uniqueID;
-    if(!cartID) cartID = await addNewCart();
-
     if(item.bundles?.length){
-      setTypeOfModalAddItem("attribute");
-      return;
-    }
-    else if(item.attributes?.length){
       setTypeOfModalAddItem("bundle");
       return;
     }
+    else if(item.attributes?.length && typeOfModalAddItem!='attribute'){
+      setTypeOfModalAddItem("attribute");
+      return;
+    }
+    
+    let cartID = cartInfo?.uniqueID;
+    if(!cartID) cartID = await addNewCart(setIsLoading, dispatch, outletName);
 
-    try {
-      const result = await apiCart("POST", `${cartID}/additems`, [itemToAdd]);
-      if(result.resultCode == 200){
-        setOpenModal(false);
-      }
-      // else setSearchItemList([]);
-      setIsLoading(false);
-    } catch (error) {
-      setIsLoading(false);
-      console.log(error);
+    processAddItem(cartID);
+  };
+
+  const processAddItem = async(cartID) => {
+    let body = {...itemToAdd};
+    switch (typeOfModalAddItem.toLowerCase()) {
+      case "main":
+        await apiCartAddItem(cartID, [body], setIsLoading, setOpenModal);
+        break;
+      case "attribute":
+        console.log('bre')
+        body.attributes = generateAttributesBody(attList)
+        await apiCartAddItem(cartID, [body], setIsLoading, setOpenModal);
+        break;
+      default:
+        break;
     }
   }
 
   return (
       <div
-      className="w-full flex items-center px-4 shadow-xl h-full"
+      className="w-full flex items-center px-4 shadow-xl h-[75px]"
       style={{
         boxShadow: "0px -4px 10px 0px rgba(0, 0, 0, 0.10)",
       }}
@@ -89,6 +79,8 @@ export const RenderButtonAdd = ({
 RenderButtonAdd.propTypes = {
   item: PropTypes.object,
   itemToAdd: PropTypes.object,
+  attList: PropTypes.array,
+  typeOfModalAddItem: PropTypes.string,
   setTypeOfModalAddItem: PropTypes.func,
   setOpenModal: PropTypes.func,
   setIsLoading: PropTypes.func

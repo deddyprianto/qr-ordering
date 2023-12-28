@@ -14,6 +14,7 @@ const RenderModalItemDetail = ({
   setOpenModal,
 }) => {
   const [itemToAdd, setItemToAdd] = useState({});
+  const [attList, setAttList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { width } = screen();
   const gadgetScreen = width < 980;
@@ -45,24 +46,28 @@ const RenderModalItemDetail = ({
   },[openModal])
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full bg-modal-popup-container z-50 inset-0 backdrop-filter backdrop-blur-sm">
+    <div className="fixed top-0 left-0 w-full h-full bg-modal-popup-container z-50 inset-0 backdrop-filter backdrop-blur-sm bg-[black] bg-opacity-50">
       {/* <div > */}
         <div className={classNameCustom}>
         <div className="grid grid-cols-[1fr] grid-rows-custom gap-0 grid-flow-row h-full w-full">
-        {isLoading && <ParentBlur />}
+          {isLoading && <ParentBlur />}
           <RenderTopLabel 
             setOpenModal={setOpenModal} 
+            typeOfModalAddItem={typeOfModalAddItem}
             itemName={item.itemName} 
             price={item.retailPrice}/>
           <RenderMainContainer
             item={item}
+            attList={attList}
             typeOfModalAddItem={typeOfModalAddItem}
-            setOpenModal={setOpenModal}
-            setTypeOfModalAddItem={setTypeOfModalAddItem}
+            setItemToAdd={setItemToAdd}
+            setAttList={setAttList}
           />
           <RenderButtonAdd
             item={item}
             itemToAdd={itemToAdd}
+            attList={attList}
+            typeOfModalAddItem={typeOfModalAddItem}
             setTypeOfModalAddItem={setTypeOfModalAddItem}
             setOpenModal={setOpenModal}
             setIsLoading={setIsLoading}

@@ -22,10 +22,14 @@ export const RenderItemProduct = ({
     whiteSpace: "nowrap",
     font: "700 16px/22px Helvetica Neue, sans-serif ",
   }
+
+  const handleOpenModalAddItem = () => {
+    setTypeOfModalAddItem("main")
+    setOpenModalAddItem(true);
+  }
   return (
     <div>
-      <button
-        onClick={() => setOpenModalAddItem(true)}
+      <div
         style={{
           borderRadius: "16px",
           boxShadow: "0px 4px 10px 0px rgba(0, 0, 0, 0.10)",
@@ -36,7 +40,8 @@ export const RenderItemProduct = ({
           textAlign: "left"
         }}
       >
-        <header
+        <button
+          onClick={() => handleOpenModalAddItem()}
           style={{
             backgroundImage: `url(${item.imageURL})`,
             backgroundSize: "cover",
@@ -82,7 +87,7 @@ export const RenderItemProduct = ({
               </div9>
             </div>
           )}
-        </header>
+        </button>
 
         <div
           style={{
@@ -160,7 +165,7 @@ export const RenderItemProduct = ({
             </div>
           </div>
         </div>
-      </button>
+      </div>
       {openModalAddItem && (
         <RenderModalItemDetail
           openModal={openModalAddItem}
