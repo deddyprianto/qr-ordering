@@ -4,8 +4,6 @@ import {
   setShowSplashScreen,
   setEnableSearchUsingScroll,
 } from "../../app/dataSlicePersisted";
-
-
 import { RenderItemSearch } from "../../components/Home/RenderItemSearch";
 import { RenderSplashScreen } from "../../components/SplashScreen";
 import { MainView } from "./MainVIew";

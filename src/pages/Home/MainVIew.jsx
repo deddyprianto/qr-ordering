@@ -5,10 +5,14 @@ import { SummaryTabMenu } from "./SummaryTabMenu";
 import {  useSelector } from "react-redux";
 import { RenderItemProduct } from "../../components/RenderItemProduct";
 import image3 from "../../assets/image3.png";
+import RenderToastCart from "./RenderToastCart";
+import "../../scss/animation.scss";
+import Skeleton from "../../components/Skeleton";
 
 
 export const MainView = () => {
   const [highlights, setHighlights] = useState(true);
+  const [testAnimation, setTestAnimation] = useState(false);
   const [dataSummaryTabMenu, setDataSummaryTabMenu] = useState([]);
   const [dataItem, setDataItem] = useState([]);
   const isSearchItem = useSelector(
@@ -19,12 +23,12 @@ export const MainView = () => {
   
   
   return (
-    <div className="relative">
+    <div>
       <NavbarMenu
         procSummaryTabMenu={setDataSummaryTabMenu}
         procItem={setDataItem}
       />
-      <div style={{ padding: "16px" }}>
+      <div style={{ padding: "16px 16px 0px 16px" }}>
         {highlights && (
           <Insights
             title="Tag Insights"
@@ -41,8 +45,9 @@ export const MainView = () => {
           style={{
             fontWeight: "700",
             fontSize: "22px",
-            margin: "16px 0px",
+            marginTop: "16px",
           }}
+          onClick={() => setTestAnimation(!testAnimation)}
         >
           You Might Like This!
         </p>
@@ -68,7 +73,10 @@ export const MainView = () => {
             );
           })}
         </div>
+        {testAnimation && <div className="item-to-drop" />}
       </div>
+      <RenderToastCart />
+      <Skeleton />
       {isSearchItem && (
         <div className="absolute inset-0 backdrop-filter backdrop-blur-lg z-0"></div>
       )}
