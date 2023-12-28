@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { useEdgeSnack } from "./EdgeSnack/utils/useEdgeSnack";
 import RenderModalItemDetail from "./ModalAddItem";
 import { useState } from "react";
 
@@ -15,6 +16,8 @@ export const RenderItemProduct = ({
     whiteSpace: "nowrap",
     font: "700 16px/22px Helvetica Neue, sans-serif ",
   }
+
+  const toast = useEdgeSnack();
 
   const labelNonPromo = {
     color: "var(--semantic-color-error, #000000)",
@@ -89,7 +92,7 @@ export const RenderItemProduct = ({
           )}
         </button>
 
-        <div
+        <button
           style={{
             justifyContent: "center",
             display: "flex",
@@ -97,6 +100,9 @@ export const RenderItemProduct = ({
             flexDirection: "column",
             padding: "8px",
           }}
+
+          onClick={() => toast.open(`${item?.itemName} success add to cart`, 'success')}
+          
         >
           <div
             style={{
@@ -164,7 +170,7 @@ export const RenderItemProduct = ({
               Add
             </div>
           </div>
-        </div>
+        </button>
       </div>
       {openModalAddItem && (
         <RenderModalItemDetail

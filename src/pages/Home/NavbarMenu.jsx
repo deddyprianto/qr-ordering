@@ -2,17 +2,21 @@ import { useState, useEffect } from "react";
 import { ItemScroll } from "./ItemScroll";
 import { GET } from "../../utilities/services";
 import image1 from "../../assets/image1.png";
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
 
-export const NavbarMenu = ({procSummaryTabMenu, procItem}) => {
-  
-  const [isSelectedItem, setIsSelectedItem] = useState("Christmas Menu 2023"); 
+export const NavbarMenu = ({ procSummaryTabMenu, procItem }) => {
+  const [isSelectedItem, setIsSelectedItem] = useState("Christmas Menu 2023");
   const [dataCategory, setDataCategory] = useState([]);
 
-  
+  useEffect(() => {
+    const timetOutId = setTimeout(() => {}, 1500);
+    return () => {
+      clearTimeout(timetOutId);
+    };
+  },[]);
 
   useEffect(() => {
-    const timetOutId = setTimeout(() => {
+    if (!dataCategory.length > 0) {
       let obj = {
         skip: 0,
         take: 5,
@@ -20,35 +24,31 @@ export const NavbarMenu = ({procSummaryTabMenu, procItem}) => {
       GET("products/edge cafe", obj).then((x) => {
         setDataCategory(x.data);
       });
-    }, 1500);
-    return () => {
-      clearTimeout(timetOutId);
-    };
-  },[]);
+    }
+  }, []);
 
   const handleSelected = (item, type, refNo) => {
     setIsSelectedItem(item);
 
     let obj = {
-        skip: 0,
-        take: 5,
-      };
-      GET(`products/edge cafe/${type}/${refNo}`, obj).then((x) => {
-        let tempSummaryTabMenu = [];
-        let tempItem = [];
-        x.data.map((prop) => {
-          if (prop.buttonType.toLowerCase() == "folder") {
-            tempSummaryTabMenu.push(prop);
-          } else if (prop.buttonType.toLowerCase() == "item") {
-            tempItem.push(prop);
-          }
-        });
-  
-        procItem(tempItem);
-        procSummaryTabMenu(tempSummaryTabMenu);
-        
+      skip: 0,
+      take: 5,
+    };
+    GET(`products/edge cafe/${type}/${refNo}`, obj).then((x) => {
+      let tempSummaryTabMenu = [];
+      let tempItem = [];
+      x.data.map((prop) => {
+        if (prop.buttonType.toLowerCase() == "folder") {
+          tempSummaryTabMenu.push(prop);
+        } else if (prop.buttonType.toLowerCase() == "item") {
+          tempItem.push(prop);
+        }
       });
-  }
+
+      procItem(tempItem);
+      procSummaryTabMenu(tempSummaryTabMenu);
+    });
+  };
 
   let data = [];
   dataCategory?.map((x) => {
@@ -70,13 +70,15 @@ export const NavbarMenu = ({procSummaryTabMenu, procItem}) => {
       {data.map((item) => {
         return (
           <ItemScroll
-            key = {`${item.type}_${item.refNo}_${item.name}`}
+            key={`${item.type}_${item.refNo}_${item.name}`}
             label={item.name}
             imageItem={item.img}
             refNo={item.refNo}
             type={item.type}
-            handleSelected = {() => handleSelected(item.name, item.type, item.refNo)}
-            isGlow = {item.name == isSelectedItem}
+            handleSelected={() =>
+              handleSelected(item.name, item.type, item.refNo)
+            }
+            isGlow={item.name == isSelectedItem}
           />
         );
       })}
@@ -85,6 +87,6 @@ export const NavbarMenu = ({procSummaryTabMenu, procItem}) => {
 };
 
 NavbarMenu.propTypes = {
-    procSummaryTabMenu : PropTypes.any,
-    procItem : PropTypes.any
-}
+  procSummaryTabMenu: PropTypes.any,
+  procItem: PropTypes.any,
+};
