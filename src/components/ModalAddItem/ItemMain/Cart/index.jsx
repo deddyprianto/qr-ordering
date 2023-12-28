@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
-import { RenderCartItemRow } from "./cartItem";
 import { useDispatch, useSelector } from "react-redux";
 import { setCartInfo } from "../../../../app/dataSlicePersisted";
 import { apiCart } from "../../../../services/Cart";
 import { useEdgeSnack } from "../../../EdgeSnack/utils/useEdgeSnack";
+import { RenderCartItemRow } from "./CartItem";
 
 export const RenderItemCart = ({ 
   itemInCart,
@@ -57,6 +57,6 @@ export const RenderItemCart = ({
 }
 
 RenderItemCart.propTypes = {
-  itemInCart: PropTypes.string,
+  itemInCart: PropTypes.array,
   setIsLoading: PropTypes.func
 }

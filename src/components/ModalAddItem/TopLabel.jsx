@@ -30,5 +30,5 @@ RenderTopLabel.propTypes = {
   itemName: PropTypes.string,
   price: PropTypes.number,
   setOpenModal: PropTypes.func,
-  typeOfModalAddItem: PropTypes.bool
+  typeOfModalAddItem: PropTypes.string
 }
