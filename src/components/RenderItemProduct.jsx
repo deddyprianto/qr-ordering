@@ -15,7 +15,7 @@ export const RenderItemProduct = ({
     textAlign: "center",
     whiteSpace: "nowrap",
     font: "700 16px/22px Helvetica Neue, sans-serif ",
-  }
+  };
 
   const toast = useEdgeSnack();
 
@@ -24,12 +24,13 @@ export const RenderItemProduct = ({
     textAlign: "center",
     whiteSpace: "nowrap",
     font: "700 16px/22px Helvetica Neue, sans-serif ",
-  }
+  };
 
   const handleOpenModalAddItem = () => {
     setTypeOfModalAddItem("main")
     setOpenModalAddItem(true);
-  }
+  };
+  
   return (
     <div>
       <div
