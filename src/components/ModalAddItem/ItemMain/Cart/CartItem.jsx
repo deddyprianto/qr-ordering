@@ -13,9 +13,9 @@ export const RenderCartItemRow = ({
           {item.productInfo?.itemName}
         </div>
         <div className="self-stretch relative tracking-[0.02em] leading-[140%] text-xs text-text-color-tertiary">
-          {item.attributes?.map((attItem, attItidx)=>{
+          {item.attributes?.map((attItem)=>{
             return(
-              <ul key={attItem.attCode+"-"+attItidx} 
+              <ul key={attItem.attCode} 
                 className="m-0 font-inherit text-inherit pl-[19px] list-disc"
               >
                 <li>{attItem.attName}</li>

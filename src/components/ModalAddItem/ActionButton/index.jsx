@@ -29,13 +29,13 @@ export const RenderButtonAdd = ({
   );
 
   useEffect(()=>{
-    setProductType(
-      item.bundles?.length>0
-        ?"bundle"
-        :item.attributes?.length>0
-          ?"attribute"
-          :"main"
-    );
+    let itemType = "main";
+    if (item.bundles?.length > 0) 
+      itemType = "bundle";
+    else if (item.attributes?.length > 0) 
+      itemType = "attribute";
+
+    setProductType(itemType);
   },[item])
 
   const resetCartInfo = (data) => {
@@ -74,6 +74,15 @@ export const RenderButtonAdd = ({
     }
   }
 
+  const renderButtonText = () => {
+    let buttonText = "Add";
+    if (productType === "attribute" && typeOfModalAddItem === "main") 
+      buttonText = "Add New";
+    else if (productType === "attribute" && typeOfModalAddItem === "attribute") 
+      buttonText = `Add - $ ${itemToAdd.amount}`;
+    return buttonText
+  }
+
   return (
     <div
       className="w-full flex items-center px-4 shadow-xl h-[75px]"
@@ -88,12 +97,7 @@ export const RenderButtonAdd = ({
         <div className="flex items-stretch gap-2">
           <IconPlus />
           <div className="text-white text-xs font-bold leading-4 self-center my-auto">
-            {(productType=="attribute" && typeOfModalAddItem=="main")
-              ?"Add New"
-              :(productType=="attribute" && typeOfModalAddItem=="attribute")
-                ?`Add - $ ${itemToAdd.amount}`
-                :"Add"
-            }
+            {renderButtonText()}
           </div>
         </div>
       </button>

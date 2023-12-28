@@ -44,10 +44,10 @@ export const RenderItemCart = ({
   if(itemInCart.length<1) return "";
   return( 
     <div className="mt-2">
-      {itemInCart.map((item, idx)=>{
+      {itemInCart.map((item)=>{
         return (
           <RenderCartItemRow 
-            key={item.itemNo+"-"+idx}
+            key={item.itemNo}
             item={item} 
             updateCartItem={updateCartItem}
           />)

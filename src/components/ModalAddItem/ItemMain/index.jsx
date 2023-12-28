@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import { RenderImage } from "./Image";
-// import { RenderTag } from "./Tag";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { RenderItemCart } from "./Cart";
