@@ -12,16 +12,12 @@ import Skeleton from "../../components/Skeleton";
 
 export const MainView = () => {
   const [highlights, setHighlights] = useState(true);
-  const [testAnimation, setTestAnimation] = useState(false);
   const [dataSummaryTabMenu, setDataSummaryTabMenu] = useState([]);
   const [dataItem, setDataItem] = useState([]);
   const isSearchItem = useSelector(
     (state) => state.dataSlicePersisted.isSearchItem,
   );
 
-  
-  
-  
   return (
     <div>
       <NavbarMenu
@@ -47,7 +43,6 @@ export const MainView = () => {
             fontSize: "22px",
             marginTop: "16px",
           }}
-          onClick={() => setTestAnimation(!testAnimation)}
         >
           You Might Like This!
         </p>
@@ -73,7 +68,6 @@ export const MainView = () => {
             );
           })}
         </div>
-        {testAnimation && <div className="item-to-drop" />}
       </div>
       <RenderToastCart />
       <Skeleton />
