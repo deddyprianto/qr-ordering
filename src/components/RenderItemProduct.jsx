@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { useEdgeSnack } from "./EdgeSnack/utils/useEdgeSnack";
 import RenderModalItemDetail from "./ModalAddItem";
 import { useState } from "react";
+import { IconPlus } from "../assets/svgIcon";
 
 export const RenderItemProduct = ({ 
   isPromo = false,
@@ -47,7 +48,7 @@ export const RenderItemProduct = ({
         <button
           onClick={() => handleOpenModalAddItem()}
           style={{
-            backgroundImage: `url(${item.imageURL})`,
+            backgroundImage: `url(${item.defaultImageURL})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             width: "100%",
@@ -151,16 +152,10 @@ export const RenderItemProduct = ({
               gap: "5px",
               padding: "5px 16px",
               alignItems: "center",
+              width: "100%"
             }}
           >
-            <div>
-              <img
-                loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/5595fec064d44c399a62875647928c33d8ce43bd79c80597e896e2abd3c5da4d?apiKey=7ef2d401d2464e0bb0e4708e7eee43f9&"
-                alt="Add"
-              />
-            </div>
-
+            <IconPlus/>
             <div
               style={{
                 color: "var(--white, #FFF)",
