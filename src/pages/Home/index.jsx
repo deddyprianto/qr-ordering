@@ -4,14 +4,11 @@ import {
   setShowSplashScreen,
   setEnableSearchUsingScroll,
 } from "../../app/dataSlicePersisted";
-
-
 import { RenderItemSearch } from "../../components/Home/RenderItemSearch";
 import { RenderSplashScreen } from "../../components/SplashScreen";
 import { MainView } from "./MainVIew";
 
 export function Component() {
-  
   const [isFirstOpenSearchBar, setIsFirstOpenSearchBar] = useState(true);
 
   const dispatch = useDispatch();
@@ -24,8 +21,6 @@ export function Component() {
   const searchItemObj = useSelector(
     (state) => state.dataSlicePersisted.searchItemObj,
   );
-
-  
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -50,14 +45,9 @@ export function Component() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSearchItem]);
 
-  
-
-  
-
   const renderMain = () => {
-    
     if (isSplashScreen) return <RenderSplashScreen />;
-    else if (isFirstOpenSearchBar) return <MainView/>;
+    else if (isFirstOpenSearchBar) return <MainView />;
     else return <RenderItemSearch searchText={searchItemObj?.searchText} />;
   };
 

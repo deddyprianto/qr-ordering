@@ -1,0 +1,29 @@
+  .item-to-drop {
+    width: 30px;
+    height: 30px;
+    background-color: #CF3030;
+    position: absolute;
+    top: 0; 
+    left: 50%; 
+    border-radius: 50%;
+    animation: dropIntoBasket 1s ease-in-out forwards; 
+  }
+  
+  @keyframes dropIntoBasket {
+    0% {
+      top: 20%;
+      left: 50%;
+    }
+    50% {
+      top: 50%;
+      left: 10%;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+    100% {
+      top: 100%;
+      left: 10%;
+      transform: translate(-50%, -50%) rotate(90deg);
+      opacity: 0;
+    }
+  }
+  

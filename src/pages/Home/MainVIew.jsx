@@ -4,7 +4,8 @@ import { Insights } from "../../components/Insights";
 import { SummaryTabMenu } from "./SummaryTabMenu";
 import {  useSelector } from "react-redux";
 import { RenderItemProduct } from "../../components/RenderItemProduct";
-
+import "../../scss/animation.scss";
+import { Skeleton } from "../../components/Skeleton";
 
 export const MainView = () => {
   const [highlights, setHighlights] = useState(true);
@@ -14,16 +15,13 @@ export const MainView = () => {
     (state) => state.dataSlicePersisted.isSearchItem,
   );
 
-  
-  
-  
   return (
-    <div className="relative">
+    <div className="relative pb-20">
       <NavbarMenu
         procSummaryTabMenu={setDataSummaryTabMenu}
         procItem={setDataItem}
       />
-      <div style={{ padding: "16px" }}>
+      <div style={{ padding: "16px 16px 0px 16px" }}>
         {highlights && (
           <Insights
             title="Tag Insights"
@@ -40,7 +38,7 @@ export const MainView = () => {
           style={{
             fontWeight: "700",
             fontSize: "22px",
-            margin: "16px 0px",
+            marginTop: "16px",
           }}
         >
           You Might Like This!
@@ -67,6 +65,7 @@ export const MainView = () => {
           })}
         </div>
       </div>
+      <Skeleton />
       {isSearchItem && (
         <div className="absolute inset-0 backdrop-filter backdrop-blur-lg z-0"></div>
       )}
