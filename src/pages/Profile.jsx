@@ -1,3 +1,4 @@
+import { Trans } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 export function Component() {
@@ -11,7 +12,7 @@ export function Component() {
         }
       }}
     >
-      Login
+      <Trans i18nKey={"login"}/>
     </div>
   );
 }

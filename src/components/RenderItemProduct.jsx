@@ -7,6 +7,7 @@ import { apiCart } from "../services/Cart";
 import { setCartInfo } from "../app/dataSlicePersisted";
 import { useDispatch } from "react-redux";
 import { setIsCartSummaryBlink } from "../app/dataSlice";
+import { Trans } from "react-i18next";
 
 export const RenderItemProduct = ({ 
   isPromo = false,
@@ -144,7 +145,7 @@ export const RenderItemProduct = ({
                   font: "500 12px/17px Helvetica Neue, sans-serif ",
                 }}
               >
-                Promo
+                <Trans i18nKey={"promo"}/>
               </div9>
             </div>
           )}
@@ -219,7 +220,7 @@ export const RenderItemProduct = ({
                 marginTop: "3px",
               }}
             >
-              Add
+              <Trans i18nKey={"add"}/>
             </div>
           </button>
         </div>

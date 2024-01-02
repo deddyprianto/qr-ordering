@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { RenderFlagMandatory } from "../../../FlagMandatory";
-import Dropdown from "../DropDown";
 import { RenderInputFieldCustom } from "../../../InputFieldCustom";
+import { Trans } from "react-i18next";
+import PhoneDropdown from "../PhoneDropdown";
 
 export const RenderMobileRegister = ({ setNameField, setMobileField }) => {
   return (
@@ -32,7 +33,7 @@ export const RenderMobileRegister = ({ setNameField, setMobileField }) => {
                 font: "500 14px/20px Helvetica Neue, sans-serif ",
             }}
             >
-            Phone Number
+            <Trans i18nKey={"phone_number"}/>
             </div>
             <RenderFlagMandatory/>
         </div>
@@ -59,7 +60,7 @@ export const RenderMobileRegister = ({ setNameField, setMobileField }) => {
                 position: "relative",
             }}
             >
-            <Dropdown/>
+            <PhoneDropdown/>
             <input
                 onChange={(e) => setMobileField(e.target.value)}
                 style={{
@@ -98,7 +99,7 @@ export const RenderMobileRegister = ({ setNameField, setMobileField }) => {
                 font: "500 14px/20px Helvetica Neue, sans-serif ",
             }}
             >
-            Name
+            <Trans i18nKey={"name"}/>
             </div>
             <RenderFlagMandatory/>
         </div>

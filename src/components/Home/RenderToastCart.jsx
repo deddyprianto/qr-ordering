@@ -2,6 +2,7 @@ import { PropTypes } from 'prop-types';
 import { useSelector } from "react-redux";
 import { IconArrowRight, IconCart } from "../../assets/svgIcon";
 import { useNavigate } from 'react-router-dom';
+import { Trans } from 'react-i18next';
 
 const RenderToastCart = ({ numOfItems, totalAmount }) => {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ const RenderToastCart = ({ numOfItems, totalAmount }) => {
         onClick={() => navigate("/cart")}  
       >
         <div className="text-white text-center text-lg font-semibold leading-6 grow whitespace-nowrap my-auto">
-          CHECKOUT
+          <Trans i18nKey={"checkout"}/>
         </div>
         <div>
           <IconArrowRight />

@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { RenderFlagMandatory } from "../../../FlagMandatory";
-import Dropdown from "../DropDown";
+import { Trans } from "react-i18next";
+import PhoneDropdown from "../PhoneDropdown";
 
 export const RenderMobileLogin = ({ setMobileField }) => {
   return (
@@ -29,7 +30,7 @@ export const RenderMobileLogin = ({ setMobileField }) => {
             font: "500 14px/20px Helvetica Neue, sans-serif ",
           }}
         >
-          Phone Number
+          <Trans i18nKey={"phone_number"}/>
         </div>
         <RenderFlagMandatory/>
       </div>
@@ -57,7 +58,7 @@ export const RenderMobileLogin = ({ setMobileField }) => {
             width: "100%",
           }}
         >
-          <Dropdown />
+          <PhoneDropdown />
           <input
             onChange={(e) => setMobileField(e.target.value)}
             style={{

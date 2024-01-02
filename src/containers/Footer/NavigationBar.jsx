@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { HomeIcon, ProfileIcon, TaskListIcon } from "../../assets/svgIcon";
+import {  Trans } from 'react-i18next';
 
 export const RenderNavigationBar = () => {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ export const RenderNavigationBar = () => {
             font: "700 14px/20px Helvetica Neue, sans-serif ",
           }}
         >
-          Home
+          <Trans i18nKey={"home"}/>
         </div>
       </div>
       <div
@@ -74,7 +75,7 @@ export const RenderNavigationBar = () => {
             font: "700 14px/20px Helvetica Neue, sans-serif ",
           }}
         >
-          Orders
+          <Trans i18nKey={"orders"}/>
         </div>
       </div>
       <div
@@ -105,7 +106,7 @@ export const RenderNavigationBar = () => {
             font: "700 14px/20px Helvetica Neue, sans-serif ",
           }}
         >
-          Profile
+          <Trans i18nKey={"profile"}/>
         </div>
       </div>
     </nav>

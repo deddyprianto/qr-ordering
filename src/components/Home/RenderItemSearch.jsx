@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { apiProduct } from "../../services/Product";
 import { setEnableSearchUsingScroll } from "../../app/dataSlicePersisted";
 import { SkeletonSearch } from "../Skeleton";
+import { Trans } from "react-i18next";
 
 export const RenderItemSearch = ({ searchText = "" }) => {
   const [searchItemList, setSearchItemList] = useState([]);
@@ -123,7 +124,7 @@ export const RenderItemSearch = ({ searchText = "" }) => {
               className="aspect-square object-contain object-center w-5 overflow-hidden shrink-0 max-w-full"
             />
             <div className="text-white text-xs font-bold leading-4 self-center my-auto">
-              Add
+              <Trans i18nKey={"add"}/>
             </div>
           </div>
         </div>
@@ -151,7 +152,7 @@ export const RenderItemSearch = ({ searchText = "" }) => {
       <div className="items-start flex w-full flex-col pt-6 px-4">
         <div className="items-stretch flex gap-2 self-start">
           <div className="text-gray-700 text-sm font-medium leading-5 tracking-wide grow whitespace-nowrap">
-            Search result for{" "}
+            <Trans i18nKey={"search_result_for"}/>{" "}
           </div>
           <div className="text-gray-700 text-sm font-bold leading-5 tracking-wide whitespace-nowrap">
             {searchText}
@@ -174,12 +175,13 @@ export const RenderItemSearch = ({ searchText = "" }) => {
           className="aspect-square object-contain object-center w-[246px] overflow-hidden self-center max-w-full mt-40"
         />
         <div className="text-black text-center text-base font-bold self-center whitespace-nowrap mt-6">
-          Item Not Found
+          <Trans i18nKey={"item_not_found"}/>
         </div>
         <div className="text-black text-center text-sm font-medium mt-1 mb-28">
-          {"We couldn't find the item you searched for."}
+          <Trans i18nKey={"couldn_find_item_search"}/>
+          {""}
           <br />
-          Please double-check your keyword.
+          <Trans i18nKey={"please_double_check_keyword"}/>
         </div>
       </div>
     );

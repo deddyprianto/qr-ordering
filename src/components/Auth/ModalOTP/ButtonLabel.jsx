@@ -1,3 +1,5 @@
+import { Trans } from "react-i18next"
+
 export const ButtomLabel = () => {
   return (
     <div
@@ -19,7 +21,7 @@ export const ButtomLabel = () => {
           font: "500 14px/20px Helvetica Neue, sans-serif ",
         }}
       >
-        Didn’t receive code?
+        <Trans i18nKey={"didnt_receive_code?"}/>
       </div>
       <div
         style={{
@@ -30,7 +32,7 @@ export const ButtomLabel = () => {
           font: "500 14px/20px Helvetica Neue, sans-serif ",
         }}
       >
-        Resend OTP in 0:59
+        <Trans i18n={"resend_otp_in"}/> 0:59
       </div>
     </div>
   )

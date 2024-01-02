@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { RenderInputFieldCustom } from "../../../InputFieldCustom";
 import React from "react";
 import { RenderFlagMandatory } from "../../../FlagMandatory";
+import { Trans } from "react-i18next";
 
 export const RenderEmailRegister = ({ setEmailField, setNameField }) => {
   
@@ -31,7 +32,7 @@ export const RenderEmailRegister = ({ setEmailField, setNameField }) => {
               color: "var(--text-color-primary, #343A4A)",
             }}
           >
-            Email
+            <Trans i18nKey={"email"}/>
           </div>
           <RenderFlagMandatory/>
         </div>
@@ -65,7 +66,7 @@ export const RenderEmailRegister = ({ setEmailField, setNameField }) => {
               whiteSpace: "nowrap",
             }}
           >
-            Name
+            <Trans i18nKey={"name"}/>
           </div>
           <RenderFlagMandatory/>
         </div>

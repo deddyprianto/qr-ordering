@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { RenderInputFieldCustom } from "../../../InputFieldCustom";
+import { Trans } from "react-i18next";
 
 export const RenderEmailLogin = ({ setEmailField }) => {
   return (
@@ -27,7 +28,7 @@ export const RenderEmailLogin = ({ setEmailField }) => {
             whiteSpace: "nowrap",
           }}
         >
-          Email
+          <Trans i18nKey={"email"}/>
         </div>
         <renderFlagMandatory />
       </div>
