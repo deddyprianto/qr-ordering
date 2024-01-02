@@ -35,7 +35,8 @@ export const EdgeSnackProvider = ({children}) => {
     padding: '4px',
     top: '1em',
     left: '0',
-    width: '100%'
+    width: '100%',
+    zIndex: '999'
   }
 
   return (
