@@ -8,6 +8,7 @@ import { setCartInfo } from "../app/dataSlicePersisted";
 import { useDispatch } from "react-redux";
 import { setIsCartSummaryBlink } from "../app/dataSlice";
 import { Trans } from "react-i18next";
+import { getItemType } from "./GetItemType";
 
 export const RenderItemProduct = ({ 
   isPromo = false,
@@ -69,26 +70,16 @@ export const RenderItemProduct = ({
       setIsLoading(false);
       console.log(error);
     }
-  }
+  };
 
   const handleClickButtonAdd = () => {
-    if(getItemType()=="main"){
+    if(getItemType(getItemType(item))=="main"){
       addItemToCart();
       return;
     }
     setOpenModalAddItem(true);
   };
 
-  const getItemType = () => {
-    let itemType = "main";
-    if (item.bundles?.length > 0) 
-      itemType = "bundle";
-    else if (item.attributes?.length > 0) 
-      itemType = "attribute";
-
-    return itemType;
-  };
-  
   return (
     <>
       <div
@@ -229,7 +220,7 @@ export const RenderItemProduct = ({
         <RenderModalItemDetail
           openModal={openModalAddItem}
           item={item}
-          itemType={getItemType()}
+          itemType={getItemType(item)}
           typeOfModalAddItem={typeOfModalAddItem}
           setTypeOfModalAddItem={setTypeOfModalAddItem}
           setOpenModal={setOpenModalAddItem}

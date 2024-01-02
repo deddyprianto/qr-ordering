@@ -4,9 +4,9 @@ import {
   setShowSplashScreen,
   setEnableSearchUsingScroll,
 } from "../../app/dataSlicePersisted";
-import { RenderItemSearch } from "../../components/Home/RenderItemSearch";
 import { RenderSplashScreen } from "../../components/SplashScreen";
 import { MainView } from "./MainVIew";
+import { RenderSearchItemBar } from "../../components/Home/SearchItemBar";
 
 export function Component() {
   const [isFirstOpenSearchBar, setIsFirstOpenSearchBar] = useState(true);
@@ -45,7 +45,7 @@ export function Component() {
   const renderMain = () => {
     if (isSplashScreen) return <RenderSplashScreen />;
     else if (isFirstOpenSearchBar) return <MainView />;
-    else return <RenderItemSearch searchText={searchItemObj?.searchText} />;
+    else return <RenderSearchItemBar searchText={searchItemObj?.searchText} />;
   };
 
   return <React.Fragment>{renderMain()}</React.Fragment>;

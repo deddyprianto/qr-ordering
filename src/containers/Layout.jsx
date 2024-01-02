@@ -26,10 +26,9 @@ export default function Layout() {
     if(!isSearchItem || !enableSearchUsingScroll) return;
     const childElement = childRef.current;
     if (!childElement) return;
+    let scrollPosition = parseInt(childElement.scrollHeight - childElement.scrollTop);
 
-    const childBottom = childElement.scrollHeight - childElement.scrollTop === childElement.clientHeight;
-
-    if (childBottom) {
+    if (scrollPosition-5 < childElement.clientHeight && childElement.clientHeight < scrollPosition+5) {
       let tempSearchItemObj = JSON.parse(JSON.stringify(searchItemObj));
       tempSearchItemObj.doSearch = true;
       tempSearchItemObj.isResetList = false;
