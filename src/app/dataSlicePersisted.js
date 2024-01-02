@@ -5,7 +5,7 @@ const initialState = {
   isSplashScreenShow: true,
   memberInfo: {},
   cartInfo: {},
-  outletName: ""
+  outletName: "edge cafe"
 };
 
 const dataSlicePersisted = createSlice({
@@ -17,9 +17,6 @@ const dataSlicePersisted = createSlice({
     },
     setShowSplashScreen: (state, action) => {
       state.isSplashScreenShow = action.payload;
-    },
-    setIsSearchItem: (state, action) => {
-      state.isSearchItem = action.payload;
     },
     setSearchItemObj: (state, action) => {
       state.searchItemObj = action.payload;
@@ -45,7 +42,6 @@ const dataSlicePersisted = createSlice({
 export const { 
   setAccessToken, 
   setShowSplashScreen, 
-  setIsSearchItem, 
   setSearchItemObj,
   setEnableSearchUsingScroll,
   setOtpRequestInfo, 

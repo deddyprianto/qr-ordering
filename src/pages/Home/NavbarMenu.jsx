@@ -35,7 +35,6 @@ export const NavbarMenu = ({ handleSelectGroup }) => {
       dataLength = result.dataLength;
       groupList = groupList.concat(result.data);
       setDataCategory([...groupList])
-      console.log(isSelectedItem)
       if(isSelectedItem=="") handleChangeGroup(groupList[0].type, groupList[0].refNo)
     }
   setIsLoading(false);

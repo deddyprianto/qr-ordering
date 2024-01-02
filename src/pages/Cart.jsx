@@ -4,7 +4,7 @@ import { ModalAuth } from "../components/Auth";
 export function Component() {
   const [isOpenModalAuth, setIsOpenModalAuth] = useState(false);
   const [authScreen, setAuthScreen] = useState('Login');
-  const [isOpenModalOtp, setIsOpenModalOtp] = useState(true);
+  const [isOpenModalOtp, setIsOpenModalOtp] = useState(false);
 
   const handleSuccessOTP = (isSuccess) => {
     // Replace this function with logic if member success login or register

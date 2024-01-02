@@ -11,13 +11,10 @@ export default function Layout() {
 
   const dispatch = useDispatch();
   const isSearchItem = useSelector(
-    (state) => state.dataSlicePersisted.isSearchItem,
+    (state) => state.dataSlice.isSearchItem,
   );
-  const enableSearchUsingScroll = useSelector(
-    (state) => state.dataSlicePersisted.enableSearchUsingScroll,
-  );
-  const searchItemObj = useSelector(
-    (state) => state.dataSlicePersisted.searchItemObj,
+  const { enableSearchUsingScroll, searchItemObj} = useSelector(
+    (state) => state.dataSlicePersisted,
   );
 
 

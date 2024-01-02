@@ -10,6 +10,7 @@ const RenderModalItemDetail = ({
   openModal,
   item,
   typeOfModalAddItem,
+  itemType,
   setTypeOfModalAddItem,
   setOpenModal,
 }) => {
@@ -67,6 +68,7 @@ const RenderModalItemDetail = ({
             item={item}
             itemToAdd={itemToAdd}
             attList={attList}
+            itemType={itemType}
             typeOfModalAddItem={typeOfModalAddItem}
             setTypeOfModalAddItem={setTypeOfModalAddItem}
             setOpenModal={setOpenModal}
@@ -82,6 +84,7 @@ RenderModalItemDetail.propTypes = {
   openModal: PropTypes.bool,
   setOpenModal: PropTypes.func,
   typeOfModalAddItem: PropTypes.string,
+  itemType: PropTypes.string,
   setTypeOfModalAddItem: PropTypes.func,
   item: PropTypes.object,
 };

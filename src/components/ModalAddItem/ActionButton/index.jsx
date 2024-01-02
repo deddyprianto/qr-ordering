@@ -5,20 +5,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { generateAttributesBody } from "./ItemAttributeBody";
 import { apiCartAddItem } from "./AddItemToCart";
 import { setCartInfo } from "../../../app/dataSlicePersisted";
-import { useEffect, useState } from "react";
 import { useEdgeSnack } from "../../EdgeSnack/utils/useEdgeSnack";
 
 
 export const RenderButtonAdd = ({ 
   item,
   itemToAdd,
+  itemType,
   attList,
   typeOfModalAddItem,
   setTypeOfModalAddItem,
   setOpenModal,
   setIsLoading
  }) => {
-  const [productType, setProductType] = useState("main");
   const dispatch = useDispatch();
   const toast = useEdgeSnack();
   const cartInfo = useSelector(
@@ -27,27 +26,17 @@ export const RenderButtonAdd = ({
   const outletName = useSelector(
     (state) => state.dataSlicePersisted.outletName,
   );
-
-  useEffect(()=>{
-    let itemType = "main";
-    if (item.bundles?.length > 0) 
-      itemType = "bundle";
-    else if (item.attributes?.length > 0) 
-      itemType = "attribute";
-
-    setProductType(itemType);
-  },[item])
-
+  
   const resetCartInfo = (data) => {
     dispatch(setCartInfo(data));
   }
 
   const handleClickButton = async() => {
-    if(productType=="bundle"){
+    if(itemType=="bundle"){
       setTypeOfModalAddItem("bundle");
       return;
     }
-    else if(productType=="attribute" && typeOfModalAddItem!='attribute'){
+    else if(itemType=="attribute" && typeOfModalAddItem!='attribute'){
       setTypeOfModalAddItem("attribute");
       return;
     }
@@ -65,7 +54,6 @@ export const RenderButtonAdd = ({
         await apiCartAddItem(cartID, [body], setIsLoading, setOpenModal, resetCartInfo, item.itemName, toast);
         break;
       case "attribute":
-        console.log('bre')
         body.attributes = generateAttributesBody(attList)
         await apiCartAddItem(cartID, [body], setIsLoading, setOpenModal, resetCartInfo, item.itemName, toast);
         break;
@@ -76,9 +64,9 @@ export const RenderButtonAdd = ({
 
   const renderButtonText = () => {
     let buttonText = "Add";
-    if (productType === "attribute" && typeOfModalAddItem === "main") 
+    if (itemType === "attribute" && typeOfModalAddItem === "main") 
       buttonText = "Add New";
-    else if (productType === "attribute" && typeOfModalAddItem === "attribute") 
+    else if (itemType === "attribute" && typeOfModalAddItem === "attribute") 
       buttonText = `Add - $ ${itemToAdd.amount}`;
     return buttonText
   }
@@ -107,6 +95,7 @@ export const RenderButtonAdd = ({
 
 RenderButtonAdd.propTypes = {
   item: PropTypes.object,
+  itemType: PropTypes.string,
   itemToAdd: PropTypes.object,
   attList: PropTypes.array,
   typeOfModalAddItem: PropTypes.string,

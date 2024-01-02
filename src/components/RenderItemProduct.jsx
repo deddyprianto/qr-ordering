@@ -3,13 +3,20 @@ import { useEdgeSnack } from "./EdgeSnack/utils/useEdgeSnack";
 import RenderModalItemDetail from "./ModalAddItem";
 import { useState } from "react";
 import { IconPlus } from "../assets/svgIcon";
+import { apiCart } from "../services/Cart";
+import { setCartInfo } from "../app/dataSlicePersisted";
+import { useDispatch } from "react-redux";
+import { setIsCartSummaryBlink } from "../app/dataSlice";
 
 export const RenderItemProduct = ({ 
   isPromo = false,
-  item
+  item,
+  cartID
 }) => {
   const [openModalAddItem, setOpenModalAddItem] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [typeOfModalAddItem, setTypeOfModalAddItem] = useState('main'); //option "main", "attribute", "bundle", "bundle&attribute"
+  const dispatch = useDispatch();
 
   const labelPromo = {
     color: "var(--semantic-color-error, #CF3030)",
@@ -31,9 +38,58 @@ export const RenderItemProduct = ({
     setTypeOfModalAddItem("main")
     setOpenModalAddItem(true);
   };
+
+  const addItemToCart = async() => {
+    setIsLoading(true);
+    let body = {
+      "itemNo": item.itemNo,
+      "quantity": 1,
+      "unitPrice": item.retailPrice,
+      "remark": "",
+      "referenceNo": "",
+      "lineInfo": "",
+      "attributes": [],
+      "bundles": []
+    };
+    try {
+      const result = await apiCart("POST", `${cartID}/additems`, body)//);
+
+      if(result.resultCode == 200){
+        dispatch(setCartInfo(result.data));
+        dispatch(setIsCartSummaryBlink(true));
+        toast.open(`${item.productInfo?.itemName?item.productInfo?.itemName:"Item"} has been added to cart`, 'success')
+      }
+      else toast.open(result.message, 'error')
+      setIsLoading(false);
+      setTimeout(() => {
+        dispatch(setIsCartSummaryBlink(false));
+      }, 1000);
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+    }
+  }
+
+  const handleClickButtonAdd = () => {
+    if(getItemType()=="main"){
+      addItemToCart();
+      return;
+    }
+    setOpenModalAddItem(true);
+  };
+
+  const getItemType = () => {
+    let itemType = "main";
+    if (item.bundles?.length > 0) 
+      itemType = "bundle";
+    else if (item.attributes?.length > 0) 
+      itemType = "attribute";
+
+    return itemType;
+  };
   
   return (
-    <div>
+    <>
       <div
         style={{
           borderRadius: "16px",
@@ -94,7 +150,7 @@ export const RenderItemProduct = ({
           )}
         </button>
 
-        <button
+        <div
           style={{
             justifyContent: "center",
             display: "flex",
@@ -102,9 +158,6 @@ export const RenderItemProduct = ({
             flexDirection: "column",
             padding: "8px",
           }}
-
-          onClick={() => toast.open(`${item?.itemName} success add to cart`, 'success')}
-          
         >
           <div
             style={{
@@ -142,7 +195,7 @@ export const RenderItemProduct = ({
               $ {item?.retailPrice.toFixed(2)}
             </div>
           </div>
-          <div
+          <button
             style={{
               display: "flex",
               justifyContent: "center",
@@ -152,8 +205,11 @@ export const RenderItemProduct = ({
               gap: "5px",
               padding: "5px 16px",
               alignItems: "center",
-              width: "100%"
+              width: "100%",
+              filter: isLoading?"blur(1px)":""
             }}
+            disabled={isLoading}
+            onClick={handleClickButtonAdd}
           >
             <IconPlus/>
             <div
@@ -165,23 +221,25 @@ export const RenderItemProduct = ({
             >
               Add
             </div>
-          </div>
-        </button>
+          </button>
+        </div>
       </div>
       {openModalAddItem && (
         <RenderModalItemDetail
           openModal={openModalAddItem}
           item={item}
+          itemType={getItemType()}
           typeOfModalAddItem={typeOfModalAddItem}
           setTypeOfModalAddItem={setTypeOfModalAddItem}
           setOpenModal={setOpenModalAddItem}
         />
       )}
-    </div>
+    </>
   );
 };
 
 RenderItemProduct.propTypes = {
   isPromo: PropTypes.bool,
   item: PropTypes.any,
+  cartID: PropTypes.string
 };

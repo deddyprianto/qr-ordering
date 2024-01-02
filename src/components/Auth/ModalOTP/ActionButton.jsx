@@ -22,7 +22,7 @@ export const ActionButton = ({ otp, isOTPComplete, isLoading, setIsLoading, setE
       const result = await apiMemberships('POST', "ValidateOTP", body);
 
       if(result.resultCode == 200){
-        dispatch(setMemberInfo(result));
+        dispatch(setMemberInfo(result.data));
         if(callback) callback(true);
       }
       else {

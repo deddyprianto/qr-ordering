@@ -41,7 +41,7 @@ export const RenderItemCart = ({
     }
   };
 
-  if(itemInCart.length<1) return "";
+  if(itemInCart.length<1) return <></>;
   return( 
     <div className="mt-2">
       {itemInCart.map((item)=>{

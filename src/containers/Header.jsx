@@ -2,20 +2,19 @@ import { IconArrowLeft, IconTable, SearchIcon } from "../assets/svgIcon";
 import "react-modern-drawer/dist/index.css";
 import logo from "../assets/logo.png";
 import { useSelector, useDispatch } from "react-redux";
-import { setIsSearchItem, setSearchItemObj, setEnableSearchUsingScroll } from "../app/dataSlicePersisted";
+import { setSearchItemObj, setEnableSearchUsingScroll } from "../app/dataSlicePersisted";
+import { setIsSearchItem } from "../app/dataSlice";
 
 
 export default function Header() {
   const dispatch = useDispatch();
   const isSearchItem = useSelector(
-    (state) => state.dataSlicePersisted.isSearchItem,
+    (state) => state.dataSlice.isSearchItem,
   );
-  const enableSearchUsingScroll = useSelector(
-    (state) => state.dataSlicePersisted.enableSearchUsingScroll,
+  const { enableSearchUsingScroll, searchItemObj} = useSelector(
+    (state) => state.dataSlicePersisted,
   );
-  const searchItemObj = useSelector(
-    (state) => state.dataSlicePersisted.searchItemObj,
-  );
+  
   const dispatchIsSearchItem = (val) => {
     dispatch(setIsSearchItem(val))
   };

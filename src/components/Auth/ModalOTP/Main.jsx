@@ -44,7 +44,6 @@ export const RenderMainComponent = ({ callback, isOpenModal, setIsOpenModal }) =
       />
       <ButtomLabel />
       {errMsg!="" && <div className="mt-2 text-xs text-red-500">{errMsg}</div>}
-      {console.log(isLoading)}
       <ActionButton
         otp={otp}
         isOTPComplete={isOTPComplete}

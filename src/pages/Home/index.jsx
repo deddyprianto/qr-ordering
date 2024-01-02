@@ -12,14 +12,11 @@ export function Component() {
   const [isFirstOpenSearchBar, setIsFirstOpenSearchBar] = useState(true);
 
   const dispatch = useDispatch();
-  const isSplashScreen = useSelector(
-    (state) => state.dataSlicePersisted.isSplashScreenShow,
+  const { searchItemObj, isSplashScreen } = useSelector(
+    (state) => state.dataSlicePersisted,
   );
   const isSearchItem = useSelector(
-    (state) => state.dataSlicePersisted.isSearchItem,
-  );
-  const searchItemObj = useSelector(
-    (state) => state.dataSlicePersisted.searchItemObj,
+    (state) => state.dataSlice.isSearchItem,
   );
 
   useEffect(() => {
