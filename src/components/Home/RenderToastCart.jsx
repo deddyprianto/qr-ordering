@@ -12,7 +12,8 @@ const RenderToastCart = ({ numOfItems, totalAmount }) => {
   
   const memberInfo = useSelector((state) => state.dataSlicePersisted.memberInfo);
   return (
-    <div
+    <button
+      onClick={() => navigate("/cart")}  
       className={`justify-between items-stretch border-[color:var(--Brand-color-Primary,#00524C)] shadow-lg bg-[rgb(255,71,130)] flex gap-5 p-[8px] rounded-xl border-[1px] border-solid absolute 
         ${memberInfo?.membershipNo?"bottom-11":"bottom-0"} 
         w-[95%] left-1/2 ${
@@ -36,9 +37,7 @@ const RenderToastCart = ({ numOfItems, totalAmount }) => {
           $ {totalAmount}
         </div>
       </div>
-      <div className="items-center flex justify-between gap-0"
-        onClick={() => navigate("/cart")}  
-      >
+      <div className="items-center flex justify-between gap-0">
         <div className="text-white text-center text-lg font-semibold leading-6 grow whitespace-nowrap my-auto">
           <Trans i18nKey={"checkout"}/>
         </div>
@@ -46,7 +45,7 @@ const RenderToastCart = ({ numOfItems, totalAmount }) => {
           <IconArrowRight />
         </div>
       </div>
-    </div>
+    </button>
   );
 };
 
