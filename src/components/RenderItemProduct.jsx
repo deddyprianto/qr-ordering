@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useEdgeSnack } from "./EdgeSnack/utils/useEdgeSnack";
 import RenderModalItemDetail from "./ModalAddItem";
 import { useState } from "react";
-import { IconPlus } from "../assets/svgIcon";
+import { IconPercentage, IconPlus } from "../assets/svgIcon";
 import { apiCart } from "../services/Cart";
 import { setCartInfo } from "../app/dataSlicePersisted";
 import { useDispatch } from "react-redux";
@@ -120,11 +120,7 @@ export const RenderItemProduct = ({
                 padding: "4px 16px",
               }}
             >
-              <img
-                loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/0200fde884bae5562d40614d6872d03030fe87b9b6ec5d2848f9055618292e31?apiKey=7ef2d401d2464e0bb0e4708e7eee43f9&"
-                alt="Promo"
-              />
+              <IconPercentage/>
               <div9
                 style={{
                   color: "var(--text-color-secondary, #FFF)",
