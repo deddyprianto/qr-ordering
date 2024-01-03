@@ -1,9 +1,14 @@
 import PropTypes from "prop-types";
-import { FormEmail } from "../FormInput/FormEmail";
+import { FormInput } from "../FormInput/FormInput";
 
 export const RenderEmailLogin = ({ setEmailField }) => {
   return (
-    <FormEmail setEmailField={setEmailField}/>
+    <FormInput 
+      setField={setEmailField}
+      label={"Email"}
+      type={"input"}
+      i18nKey={"email"}  
+    />
   );
 };
 RenderEmailLogin.propTypes = {

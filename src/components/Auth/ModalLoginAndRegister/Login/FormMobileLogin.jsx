@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { FormMobile } from "../FormInput/FormMobile";
+import { FormInput } from "../FormInput/FormInput";
 
 export const RenderMobileLogin = ({ setMobileField }) => {
   return (
@@ -12,7 +12,11 @@ export const RenderMobileLogin = ({ setMobileField }) => {
         marginTop: "16px",
       }}
     >
-      <FormMobile setMobileField={setMobileField}/>
+      <FormInput 
+        setField={setMobileField}
+        type={"phoneOption"}
+        i18nKey={"phone_number"}  
+      />
     </div>
   );
 };

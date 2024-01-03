@@ -1,14 +1,23 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { FormEmail } from "../FormInput/FormEmail";
-import { FormName } from "../FormInput/FormName";
+import { FormInput } from "../FormInput/FormInput";
 
 export const RenderEmailRegister = ({ setEmailField, setNameField }) => {
   
   return (
     <React.Fragment>
-      <FormEmail setEmailField={setEmailField}/>
-      <FormName setNameField={setNameField}/>
+      <FormInput 
+        setField={setEmailField}
+        label={"Email"}
+        type={"text"}
+        i18nKey={"email"}  
+      />
+      <FormInput 
+        setField={setNameField}
+        label={"Name"}
+        type={"text"}
+        i18nKey={"name"}  
+      />
     </React.Fragment>
   );
 };
