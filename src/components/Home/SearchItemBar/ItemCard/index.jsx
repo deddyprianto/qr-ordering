@@ -1,65 +1,32 @@
 import { useState } from "react";
 import RenderModalItemDetail from "../../../ModalAddItem";
 import PropTypes from 'prop-types'
-import { getItemType } from "../../../GetItemType";
+import { getItemType } from "../../../RenderItemProduct/GetItemType";
 import { Trans } from "react-i18next";
 import { IconPlus } from "../../../../assets/svgIcon";
-import { apiCart } from "../../../../services/Cart";
 import { useDispatch, useSelector } from "react-redux";
-import { setCartInfo } from "../../../../app/dataSlicePersisted";
-import { setIsCartSummaryBlink } from "../../../../app/dataSlice";
 import { useEdgeSnack } from "../../../EdgeSnack/utils/useEdgeSnack";
 import { RenderItemPrice } from "./ItemPrice";
+import { addItemToCart } from "../../../RenderItemProduct/AddItemToCart";
 
 export const RenderItemCard = ({ item }) => {
   const dispatch = useDispatch()
   const [openModalAddItem, setOpenModalAddItem] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [typeOfModalAddItem, setTypeOfModalAddItem] = useState('main'); //option "main", "attribute", "bundle", "bundle&attribute"
   const cartID = useSelector((state) => state.dataSlicePersisted.cartInfo?.uniqueID)
   const toast = useEdgeSnack();
   const handleOpenModalAddItem = () => {
-    setTypeOfModalAddItem("main")
     setOpenModalAddItem(true);
   };
 
-  const addItemToCart = async() => {
-    setIsLoading(true);
-    let body = {
-      "itemNo": item.itemNo,
-      "quantity": 1,
-      "unitPrice": item.retailPrice,
-      "remark": "",
-      "referenceNo": "",
-      "lineInfo": "",
-      "attributes": [],
-      "bundles": []
-    };
-    try {
-      const result = await apiCart("POST", `${cartID}/additems`, body)//);
-
-      if(result.resultCode == 200){
-        dispatch(setCartInfo(result.data));
-        dispatch(setIsCartSummaryBlink(true));
-        toast.open(`${item.productInfo?.itemName?item.productInfo?.itemName:"Item"} has been added to cart`, 'success')
-      }
-      else toast.open(result.message, 'error')
-      setIsLoading(false);
-      setTimeout(() => {
-        dispatch(setIsCartSummaryBlink(false));
-      }, 1000);
-    } catch (error) {
-      setIsLoading(false);
-      console.log(error);
-    }
-  };
   const handleClickButtonAdd = () => {
     if(getItemType(item)=="main"){
-      addItemToCart();
+      addItemToCart(cartID, setIsLoading, item, dispatch, toast);
       return;
     }
     setOpenModalAddItem(true);
   };
+
   return (
     <div
       className="items-stretch self-stretch shadow-sm bg-white flex justify-between gap-0 mt-4 rounded-2xl"
@@ -105,8 +72,6 @@ export const RenderItemCard = ({ item }) => {
           openModal={openModalAddItem}
           item={item}
           itemType={getItemType(item)}
-          typeOfModalAddItem={typeOfModalAddItem}
-          setTypeOfModalAddItem={setTypeOfModalAddItem}
           setOpenModal={setOpenModalAddItem}
         />
       )}

@@ -9,9 +9,7 @@ import { ParentBlur } from "../ParentBlur";
 const RenderModalItemDetail = ({ 
   openModal,
   item,
-  typeOfModalAddItem,
   itemType,
-  setTypeOfModalAddItem,
   setOpenModal,
 }) => {
   const [itemToAdd, setItemToAdd] = useState({});
@@ -29,6 +27,8 @@ const RenderModalItemDetail = ({
   }
   classNameCustom += " flex flex-col items-center";
 
+  const [typeOfModalAddItem, setTypeOfModalAddItem] = useState('main'); //option "main", "attribute", "bundle", "bundle&attribute"
+
   useEffect(()=>{
     if(openModal){
       setItemToAdd({
@@ -41,6 +41,7 @@ const RenderModalItemDetail = ({
         "attributes": [],
         "bundles": []
       });
+      setTypeOfModalAddItem("main");
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[openModal])
@@ -83,9 +84,7 @@ const RenderModalItemDetail = ({
 RenderModalItemDetail.propTypes = {
   openModal: PropTypes.bool,
   setOpenModal: PropTypes.func,
-  typeOfModalAddItem: PropTypes.string,
   itemType: PropTypes.string,
-  setTypeOfModalAddItem: PropTypes.func,
   item: PropTypes.object,
 };
 export default RenderModalItemDetail;

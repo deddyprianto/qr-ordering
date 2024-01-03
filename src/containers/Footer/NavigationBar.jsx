@@ -16,7 +16,7 @@ export const RenderNavigationBar = () => {
         padding: "8px 10px",
       }}
     >
-      <div
+      <button
         style={{
           justifyContent: "center",
           alignItems: "center",
@@ -45,8 +45,8 @@ export const RenderNavigationBar = () => {
         >
           <Trans i18nKey={"home"}/>
         </div>
-      </div>
-      <div
+      </button>
+      <button
         style={{
           justifyContent: "center",
           alignItems: "center",
@@ -77,8 +77,8 @@ export const RenderNavigationBar = () => {
         >
           <Trans i18nKey={"orders"}/>
         </div>
-      </div>
-      <div
+      </button>
+      <button
         style={{
           justifyContent: "center",
           alignItems: "center",
@@ -108,7 +108,7 @@ export const RenderNavigationBar = () => {
         >
           <Trans i18nKey={"profile"}/>
         </div>
-      </div>
+      </button>
     </nav>
   );
 }

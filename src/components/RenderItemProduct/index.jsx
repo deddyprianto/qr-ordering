@@ -1,14 +1,12 @@
 import PropTypes from "prop-types";
-import { useEdgeSnack } from "./EdgeSnack/utils/useEdgeSnack";
-import RenderModalItemDetail from "./ModalAddItem";
+import { useEdgeSnack } from "../EdgeSnack/utils/useEdgeSnack";
+import RenderModalItemDetail from "../ModalAddItem";
 import { useState } from "react";
-import { IconPercentage, IconPlus } from "../assets/svgIcon";
-import { apiCart } from "../services/Cart";
-import { setCartInfo } from "../app/dataSlicePersisted";
+import { IconPercentage, IconPlus } from "../../assets/svgIcon";
 import { useDispatch } from "react-redux";
-import { setIsCartSummaryBlink } from "../app/dataSlice";
 import { Trans } from "react-i18next";
 import { getItemType } from "./GetItemType";
+import { addItemToCart } from "./AddItemToCart";
 
 export const RenderItemProduct = ({ 
   isPromo = false,
@@ -17,7 +15,6 @@ export const RenderItemProduct = ({
 }) => {
   const [openModalAddItem, setOpenModalAddItem] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [typeOfModalAddItem, setTypeOfModalAddItem] = useState('main'); //option "main", "attribute", "bundle", "bundle&attribute"
   const dispatch = useDispatch();
 
   const labelPromo = {
@@ -37,44 +34,12 @@ export const RenderItemProduct = ({
   };
 
   const handleOpenModalAddItem = () => {
-    setTypeOfModalAddItem("main")
     setOpenModalAddItem(true);
-  };
-
-  const addItemToCart = async() => {
-    setIsLoading(true);
-    let body = {
-      "itemNo": item.itemNo,
-      "quantity": 1,
-      "unitPrice": item.retailPrice,
-      "remark": "",
-      "referenceNo": "",
-      "lineInfo": "",
-      "attributes": [],
-      "bundles": []
-    };
-    try {
-      const result = await apiCart("POST", `${cartID}/additems`, body)//);
-
-      if(result.resultCode == 200){
-        dispatch(setCartInfo(result.data));
-        dispatch(setIsCartSummaryBlink(true));
-        toast.open(`${item.productInfo?.itemName?item.productInfo?.itemName:"Item"} has been added to cart`, 'success')
-      }
-      else toast.open(result.message, 'error')
-      setIsLoading(false);
-      setTimeout(() => {
-        dispatch(setIsCartSummaryBlink(false));
-      }, 1000);
-    } catch (error) {
-      setIsLoading(false);
-      console.log(error);
-    }
   };
 
   const handleClickButtonAdd = () => {
     if(getItemType(getItemType(item))=="main"){
-      addItemToCart();
+      addItemToCart(cartID, setIsLoading, item, dispatch, toast);
       return;
     }
     setOpenModalAddItem(true);
@@ -217,8 +182,6 @@ export const RenderItemProduct = ({
           openModal={openModalAddItem}
           item={item}
           itemType={getItemType(item)}
-          typeOfModalAddItem={typeOfModalAddItem}
-          setTypeOfModalAddItem={setTypeOfModalAddItem}
           setOpenModal={setOpenModalAddItem}
         />
       )}
