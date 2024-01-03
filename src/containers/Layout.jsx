@@ -53,6 +53,7 @@ export default function Layout() {
   let navigation = useNavigation();
   const location = useLocation();
   const pathname = location.pathname;
+  const { cartInfo, memberInfo } = useSelector((state) => state.dataSlicePersisted);
 
   const { width } = screen();
   const gadgetScreen = width < 980;
@@ -65,10 +66,11 @@ export default function Layout() {
             width: "100vw",
             display: "grid",
             gridTemplateColumns: "1fr",
-            gridTemplateRows:
-              pathname === "/auth" || pathname === "/otp"
-                ? "70px 1fr 50px"
-                : "100px 1fr 80px",
+            gridTemplateRows: (
+              !isSearchItem 
+              && ( memberInfo?.membershipNo 
+              || ((typeof(cartInfo.uniqueID) != 'undefined') && pathname=="/")))
+              ?"100px 1fr 80px":"",
             gap: "0px 0px",
             gridAutoFlow: "row",
             gridTemplateAreas: '"."\n    "."\n    "."',
