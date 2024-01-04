@@ -38,7 +38,6 @@ const calculateItemQty = (itemType, itemPrice, attList, bundleList) => {
 
 export const renderButtonText = (itemPrice, itemType, typeOfModalAddItem, attList, bundleList) => {
   let buttonText = "Add";
-  console.log(attList, bundleList)
   if ((itemType != "main" && typeOfModalAddItem === "main")) 
     buttonText = "Add New";
   else if (itemType != "main" && typeOfModalAddItem != "main") {
