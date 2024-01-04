@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { IconArrowBottom, IconArrowUp, IconCheckFill } from "../../../assets/svgIcon";
 import { useEffect, useState } from "react";
 import { RenderBundleItem } from "./BundlesItem";
+import { calculateBundleGroupQty, isValidBundleQty } from "./CalculateBundleGroupQty";
 
 export const RenderBundleGroup = ({ 
   bundleList,
@@ -27,24 +28,16 @@ export const RenderBundleGroup = ({
             setBundleList={setBundleList}
             itemIdx={idx}
             item={item}
-            disableMinButton={getTotalQty()==0}
-            disableMaxButton={getTotalQty()==bundleGroup.max}
+            disableMinButton={calculateBundleGroupQty(bundleGroup)==0}
+            disableMaxButton={calculateBundleGroupQty(bundleGroup)==bundleGroup.max}
           />
         )
       })
     )
   }
 
-  const getTotalQty = () => {
-    let totalQuantity = 0;
-    bundleGroup.items.forEach((item) => {
-      totalQuantity += (item.quantity || 0);
-    });
-    return totalQuantity;
-  }
-
   const renderCheckBox = () => {
-    if(getTotalQty()>=bundleGroup.max && getTotalQty()<=bundleGroup.max)
+    if(isValidBundleQty(bundleGroup))
       return <IconCheckFill />
     else return (
         <div className="text-emerald-800 text-sm font-medium leading-5 tracking-wide whitespace-nowrap items-stretch bg-white aspect-[1.9] justify-center px-1.5 rounded-[1000px]">

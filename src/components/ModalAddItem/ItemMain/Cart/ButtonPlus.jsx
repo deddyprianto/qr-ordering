@@ -11,7 +11,7 @@ export const RenderButtonPlus = ({ item, updateCartItem }) => {
   };
 
   return(
-    <button className="justify-center items-center bg-pink-500 flex aspect-[1.4444444444444444] flex-col px-2 py-2 rounded-lg"
+    <button className={`bg-pink-500 justify-center items-center flex aspect-square flex-col w-6 h-6 px-2 rounded-lg`}
       onClick={()=>handleClickButton()}
     >  
       <IconPlus width="14" height="21"/>

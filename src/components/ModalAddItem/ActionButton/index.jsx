@@ -7,6 +7,7 @@ import { apiCartAddItem } from "./AddItemToCart";
 import { setCartInfo } from "../../../app/dataSlicePersisted";
 import { useEdgeSnack } from "../../EdgeSnack/utils/useEdgeSnack";
 import { generateBundlesBody } from "./ItemBundleBody";
+import { renderButtonText } from "./GetButtonText";
 
 
 export const RenderButtonAdd = ({ 
@@ -51,6 +52,7 @@ export const RenderButtonAdd = ({
 
   const processAddItem = async(cartID) => {
     let body = {...itemToAdd};
+    let res = {};
     switch (typeOfModalAddItem.toLowerCase()) {
       case "main":
         await apiCartAddItem(cartID, [body], setIsLoading, setOpenModal, resetCartInfo, item.itemName, toast);
@@ -60,21 +62,14 @@ export const RenderButtonAdd = ({
         await apiCartAddItem(cartID, [body], setIsLoading, setOpenModal, resetCartInfo, item.itemName, toast);
         break;
       case "bundle":
-        body.bundles = generateBundlesBody(bundleList);
+        res = generateBundlesBody(bundleList);
+        if(!res.isBundleValid) break;
+        body.bundles = res.bundleBody;
         await apiCartAddItem(cartID, [body], setIsLoading, setOpenModal, resetCartInfo, item.itemName, toast);
         break;
       default:
         break;
     }
-  }
-
-  const renderButtonText = () => {
-    let buttonText = "Add";
-    if (itemType === "attribute" && typeOfModalAddItem === "main") 
-      buttonText = "Add New";
-    else if (itemType === "attribute" && typeOfModalAddItem === "attribute") 
-      buttonText = `Add - $ ${itemToAdd.amount}`;
-    return buttonText
   }
 
   return (
@@ -91,7 +86,7 @@ export const RenderButtonAdd = ({
         <div className="flex items-stretch gap-2">
           <IconPlus />
           <div className="text-white text-xs font-bold leading-4 self-center my-auto">
-            {renderButtonText()}
+            {renderButtonText(itemToAdd.unitPrice, itemType, typeOfModalAddItem, attList, bundleList)}
           </div>
         </div>
       </button>
