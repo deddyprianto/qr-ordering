@@ -38,7 +38,7 @@ export const RenderItemProduct = ({
   };
 
   const handleClickButtonAdd = () => {
-    if(getItemType(getItemType(item))=="main"){
+    if(getItemType(item)=="main"){
       addItemToCart(cartID, setIsLoading, item, dispatch, toast);
       return;
     }

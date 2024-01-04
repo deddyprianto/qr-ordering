@@ -20,7 +20,6 @@ const RenderItemMain = ({
       setItemInCart(cartInfo?.details.filter(det => det.itemNo === item.itemNo));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[item])
-
   return (
     <div className="bg-white w-full px-4 object-center overflow-y-auto pb-10">
       <RenderImage itemImage={item.defaultImageURL}/>

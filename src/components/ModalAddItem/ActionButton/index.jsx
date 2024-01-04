@@ -6,6 +6,7 @@ import { generateAttributesBody } from "./ItemAttributeBody";
 import { apiCartAddItem } from "./AddItemToCart";
 import { setCartInfo } from "../../../app/dataSlicePersisted";
 import { useEdgeSnack } from "../../EdgeSnack/utils/useEdgeSnack";
+import { generateBundlesBody } from "./ItemBundleBody";
 
 
 export const RenderButtonAdd = ({ 
@@ -13,6 +14,7 @@ export const RenderButtonAdd = ({
   itemToAdd,
   itemType,
   attList,
+  bundleList,
   typeOfModalAddItem,
   setTypeOfModalAddItem,
   setOpenModal,
@@ -32,7 +34,7 @@ export const RenderButtonAdd = ({
   }
 
   const handleClickButton = async() => {
-    if(itemType=="bundle"){
+    if(itemType=="bundle" && typeOfModalAddItem=='main'){
       setTypeOfModalAddItem("bundle");
       return;
     }
@@ -54,7 +56,11 @@ export const RenderButtonAdd = ({
         await apiCartAddItem(cartID, [body], setIsLoading, setOpenModal, resetCartInfo, item.itemName, toast);
         break;
       case "attribute":
-        body.attributes = generateAttributesBody(attList)
+        body.attributes = generateAttributesBody(attList);
+        await apiCartAddItem(cartID, [body], setIsLoading, setOpenModal, resetCartInfo, item.itemName, toast);
+        break;
+      case "bundle":
+        body.bundles = generateBundlesBody(bundleList);
         await apiCartAddItem(cartID, [body], setIsLoading, setOpenModal, resetCartInfo, item.itemName, toast);
         break;
       default:
@@ -98,6 +104,7 @@ RenderButtonAdd.propTypes = {
   itemType: PropTypes.string,
   itemToAdd: PropTypes.object,
   attList: PropTypes.array,
+  bundleList: PropTypes.array,
   typeOfModalAddItem: PropTypes.string,
   setTypeOfModalAddItem: PropTypes.func,
   setOpenModal: PropTypes.func,

@@ -11,10 +11,10 @@ export const RenderTopLabel = ({
   return(
     <div
       className={`w-full bg-white flex ${
-        typeOfModalAddItem.toLowerCase()=='attribute' ? "justify-between" : "justify-end"
+        typeOfModalAddItem.toLowerCase()!='main' ? "justify-between" : "justify-end"
       } items-center px-[16px]`}
     >
-      {typeOfModalAddItem.toLowerCase()=='attribute' && <RenderLabelAndPrice itemName={itemName} price={price}/>}
+      {typeOfModalAddItem.toLowerCase()!='main' && <RenderLabelAndPrice itemName={itemName} price={price}/>}
       <button
         onClick={() => {
           setOpenModal(false);

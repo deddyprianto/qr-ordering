@@ -5,8 +5,7 @@ import { useEffect } from "react";
 const RenderItemAttributes = ({ 
   attributes,
   attList,
-  setAttList,
-  setItemToAdd
+  setAttList
 }) => {
 
   useEffect(()=>{
@@ -34,7 +33,6 @@ const RenderItemAttributes = ({
             key={attGroup.attributesGroupCode}
             attGroup={attGroup}
             idxAttGroup={idx}
-            setItemToAdd={setItemToAdd}
             handleClickAttItem={handleClickAttItem}
           />
         )

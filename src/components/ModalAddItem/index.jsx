@@ -14,6 +14,7 @@ const RenderModalItemDetail = ({
 }) => {
   const [itemToAdd, setItemToAdd] = useState({});
   const [attList, setAttList] = useState([]);
+  const [bundleList, setBundleList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { width } = screen();
   const gadgetScreen = width < 980;
@@ -60,15 +61,18 @@ const RenderModalItemDetail = ({
           <RenderMainContainer
             item={item}
             attList={attList}
+            bundleList={bundleList}
             typeOfModalAddItem={typeOfModalAddItem}
             setItemToAdd={setItemToAdd}
             setAttList={setAttList}
+            setBundleList={setBundleList}
             setIsLoading={setIsLoading}
           />
           <RenderButtonAdd
             item={item}
             itemToAdd={itemToAdd}
             attList={attList}
+            bundleList={bundleList}
             itemType={itemType}
             typeOfModalAddItem={typeOfModalAddItem}
             setTypeOfModalAddItem={setTypeOfModalAddItem}

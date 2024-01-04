@@ -20,7 +20,7 @@ export const addItemToCart = async(cartID, setIsLoading, item, dispatch, toast) 
     if(result.resultCode == 200){
       dispatch(setCartInfo(result.data));
       dispatch(setIsCartSummaryBlink(true));
-      toast.open(`${item.productInfo?.itemName?item.productInfo?.itemName:"Item"} has been added to cart`, 'success')
+      toast.open(`${item.productInfo?.itemName || "Item"} has been added to cart`, 'success')
     }
     else toast.open(result.message, 'error')
     setIsLoading(false);
