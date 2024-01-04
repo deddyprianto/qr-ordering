@@ -76,7 +76,5 @@ RenderBundleGroup.propTypes = {
   bundleList: PropTypes.array,
   bundleGroup: PropTypes.object,
   groupIdx: PropTypes.number,
-  setBundleList: PropTypes.func,
-  setItemToAdd: PropTypes.func,
-  handleClickAttItem:PropTypes.func
+  setBundleList: PropTypes.func
 }

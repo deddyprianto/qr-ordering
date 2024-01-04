@@ -43,8 +43,7 @@ const RenderItemAttributes = ({
 RenderItemAttributes.propTypes = {
   attributes: PropTypes.array,
   attList: PropTypes.array,
-  setAttList: PropTypes.func,
-  setItemToAdd: PropTypes.func
+  setAttList: PropTypes.func
 };
 
 export default RenderItemAttributes;
