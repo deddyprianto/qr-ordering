@@ -4,7 +4,7 @@ import { IconArrowBottom, SearchIcon } from "../../../assets/svgIcon";
 import SearchInput, { createFilter } from "react-search-input";
 import countryCodes from "country-codes-list";
 
-export default function Dropdown() {
+export default function PhoneDropdown() {
   const [phoneCountryCode, setPhoneCountryCode] = useState("+65");
   const [valueSearchCode, setValueSearchCode] = useState("");
   const myCountryCodesObject = countryCodes.customList(

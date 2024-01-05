@@ -1,15 +1,21 @@
 import PropTypes from "prop-types";
-import { useEdgeSnack } from "./EdgeSnack/utils/useEdgeSnack";
-import RenderModalItemDetail from "./ModalAddItem";
+import { useEdgeSnack } from "../EdgeSnack/utils/useEdgeSnack";
+import RenderModalItemDetail from "../ModalAddItem";
 import { useState } from "react";
-import { IconPlus } from "../assets/svgIcon";
+import { IconPercentage, IconPlus } from "../../assets/svgIcon";
+import { useDispatch } from "react-redux";
+import { Trans } from "react-i18next";
+import { getItemType } from "./GetItemType";
+import { addItemToCart } from "./AddItemToCart";
 
 export const RenderItemProduct = ({ 
   isPromo = false,
-  item
+  item,
+  cartID
 }) => {
   const [openModalAddItem, setOpenModalAddItem] = useState(false);
-  const [typeOfModalAddItem, setTypeOfModalAddItem] = useState('main'); //option "main", "attribute", "bundle", "bundle&attribute"
+  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const labelPromo = {
     color: "var(--semantic-color-error, #CF3030)",
@@ -28,12 +34,19 @@ export const RenderItemProduct = ({
   };
 
   const handleOpenModalAddItem = () => {
-    setTypeOfModalAddItem("main")
     setOpenModalAddItem(true);
   };
-  
+
+  const handleClickButtonAdd = () => {
+    if(getItemType(item)=="main"){
+      addItemToCart(cartID, setIsLoading, item, dispatch, toast);
+      return;
+    }
+    setOpenModalAddItem(true);
+  };
+
   return (
-    <div>
+    <>
       <div
         style={{
           borderRadius: "16px",
@@ -72,11 +85,7 @@ export const RenderItemProduct = ({
                 padding: "4px 16px",
               }}
             >
-              <img
-                loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/0200fde884bae5562d40614d6872d03030fe87b9b6ec5d2848f9055618292e31?apiKey=7ef2d401d2464e0bb0e4708e7eee43f9&"
-                alt="Promo"
-              />
+              <IconPercentage/>
               <div9
                 style={{
                   color: "var(--text-color-secondary, #FFF)",
@@ -88,13 +97,13 @@ export const RenderItemProduct = ({
                   font: "500 12px/17px Helvetica Neue, sans-serif ",
                 }}
               >
-                Promo
+                <Trans i18nKey={"promo"}/>
               </div9>
             </div>
           )}
         </button>
 
-        <button
+        <div
           style={{
             justifyContent: "center",
             display: "flex",
@@ -102,9 +111,6 @@ export const RenderItemProduct = ({
             flexDirection: "column",
             padding: "8px",
           }}
-
-          onClick={() => toast.open(`${item?.itemName} success add to cart`, 'success')}
-          
         >
           <div
             style={{
@@ -142,7 +148,7 @@ export const RenderItemProduct = ({
               $ {item?.retailPrice.toFixed(2)}
             </div>
           </div>
-          <div
+          <button
             style={{
               display: "flex",
               justifyContent: "center",
@@ -152,8 +158,11 @@ export const RenderItemProduct = ({
               gap: "5px",
               padding: "5px 16px",
               alignItems: "center",
-              width: "100%"
+              width: "100%",
+              filter: isLoading?"blur(1px)":""
             }}
+            disabled={isLoading}
+            onClick={handleClickButtonAdd}
           >
             <IconPlus/>
             <div
@@ -163,25 +172,25 @@ export const RenderItemProduct = ({
                 marginTop: "3px",
               }}
             >
-              Add
+              <Trans i18nKey={"add"}/>
             </div>
-          </div>
-        </button>
+          </button>
+        </div>
       </div>
       {openModalAddItem && (
         <RenderModalItemDetail
           openModal={openModalAddItem}
           item={item}
-          typeOfModalAddItem={typeOfModalAddItem}
-          setTypeOfModalAddItem={setTypeOfModalAddItem}
+          itemType={getItemType(item)}
           setOpenModal={setOpenModalAddItem}
         />
       )}
-    </div>
+    </>
   );
 };
 
 RenderItemProduct.propTypes = {
   isPromo: PropTypes.bool,
   item: PropTypes.any,
+  cartID: PropTypes.string
 };

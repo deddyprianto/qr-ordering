@@ -2,7 +2,7 @@ import Lottie from "lottie-react"
 import loaderAnimation from "../assets/lottie/loader.json"
 
 export const ParentBlur = () => {
-    return <div className="absolute inset-0 backdrop-filter backdrop-blur-md z-40">
+    return <div className="absolute inset-0 backdrop-filter backdrop-blur-md z-40 bg-[black] bg-opacity-50">
         <Lottie
             animationData={loaderAnimation}
             loop={true}

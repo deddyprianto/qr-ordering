@@ -1,3 +1,4 @@
+import { Trans } from "react-i18next";
 import { IconFaceBook } from "../../../assets/svgIcon";
 
 export const RenderButtonSocialMedia = () => {
@@ -32,7 +33,7 @@ export const RenderButtonSocialMedia = () => {
               font: "500 14px/20px Helvetica Neue, sans-serif ",
             }}
           >
-            Login with Facebook
+            <Trans i18nKey={"login_facebook"}/>
           </div>
         </div>
       </div>

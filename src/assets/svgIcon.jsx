@@ -278,7 +278,8 @@ export const IconArrowRight = () => {
     </svg>
   );
 };
-export const IconArrowBottom = () => {
+
+export const IconArrowBottom = ({color}) => {
   return (
     <svg
       width="24"
@@ -289,7 +290,7 @@ export const IconArrowBottom = () => {
     >
       <path
         d="M6 9L12 15L18 9"
-        stroke="#343A4A"
+        stroke={color || "#343A4A"}
         strokeWidth="2"
         strokeLinecap="rounds"
         strokeLinejoin="round"
@@ -297,6 +298,35 @@ export const IconArrowBottom = () => {
     </svg>
   );
 };
+IconArrowBottom.propTypes = {
+  color: PropTypes.string
+}
+
+export const IconArrowUp = ({color}) => {
+  return (
+    <svg 
+      width="24" 
+      height="24" 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g id="edgeicons">
+      <path 
+        id="Vector" 
+        d="M7 14.25L12 8.625L17 14.25" 
+        stroke={color || "white"} 
+        strokeWidth="2.25" 
+        strokeLinecap="round" 
+        strokeLinejoin="round"/>
+      </g>
+    </svg>
+
+  )
+} 
+IconArrowUp.propTypes = {
+  color: PropTypes.string
+}
 
 SearchIcon.propTypes = {
   color: PropTypes.string,
@@ -458,3 +488,94 @@ export const IconCart = () => {
     </svg>
   );
 };
+
+export const IconPercentage = () => {
+  return (
+    <svg 
+      width="18" 
+      height="18" 
+      viewBox="0 0 18 18" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g id="edgeicons">
+      <path 
+        id="Subtract" 
+        fillRule="evenodd" 
+        clipRule="evenodd" 
+        d="M10.8641 2.18656C9.78996 1.27115 8.21004 1.27115 7.13585 2.18656C6.67554 2.57884 6.1032 2.81591 5.50033 2.86402C4.09346 2.97629 2.97629 4.09346 2.86402 5.50033C2.81591 6.1032 2.57884 6.67554 2.18656 7.13585C1.27115 8.21004 1.27115 9.78996 2.18656 10.8641C2.57884 11.3245 2.81591 11.8968 2.86402 12.4997C2.97629 13.9065 4.09346 15.0237 5.50033 15.136C6.1032 15.1841 6.67554 15.4212 7.13585 15.8134C8.21004 16.7289 9.78996 16.7289 10.8641 15.8134C11.3245 15.4212 11.8968 15.1841 12.4997 15.136C13.9065 15.0237 15.0237 13.9065 15.136 12.4997C15.1841 11.8968 15.4212 11.3245 15.8134 10.8641C16.7289 9.78996 16.7289 8.21004 15.8134 7.13585C15.4212 6.67554 15.1841 6.1032 15.136 5.50033C15.0237 4.09346 13.9065 2.97629 12.4997 2.86402C11.8968 2.81591 11.3245 2.57884 10.8641 2.18656ZM9.75 12C9.75 11.1716 10.4216 10.5 11.25 10.5C12.0784 10.5 12.75 11.1716 12.75 12C12.75 12.8284 12.0784 13.5 11.25 13.5C10.4216 13.5 9.75 12.8284 9.75 12ZM6.75 4.5C5.92157 4.5 5.25 5.17157 5.25 6C5.25 6.82843 5.92157 7.5 6.75 7.5C7.57843 7.5 8.25 6.82843 8.25 6C8.25 5.17157 7.57843 4.5 6.75 4.5ZM11.7708 5.70078C11.9779 5.34206 11.855 4.88337 11.4963 4.67626C11.1376 4.46916 10.6789 4.59206 10.4718 4.95078L6.22916 12.2992C6.02206 12.658 6.14497 13.1167 6.50369 13.3238C6.86241 13.5309 7.3211 13.408 7.5282 13.0492L11.7708 5.70078Z" 
+        fill="white"
+      />
+      </g>
+    </svg>
+
+  )
+}
+
+export const IconCheckFill = () => {
+  return (
+    <svg 
+      width="24" 
+      height="24" 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g id="edgeicons" clipPath="url(#clip0_7085_17187)">
+      <path 
+        id="Subtract" 
+        fillRule="evenodd" 
+        clipRule="evenodd" 
+        d="M12 0.75C5.7868 0.75 0.75 5.7868 0.75 12C0.75 18.2132 5.7868 23.25 12 23.25C18.2132 23.25 23.25 18.2132 23.25 12C23.25 5.7868 18.2132 0.75 12 0.75ZM18.3546 7.87658C18.8818 8.37868 18.8818 9.19275 18.3546 9.69485L11.6046 16.1234C11.0774 16.6255 10.2226 16.6255 9.69541 16.1234L5.64541 12.2663C5.1182 11.7642 5.1182 10.9501 5.64541 10.448C6.17261 9.9459 7.02739 9.9459 7.55459 10.448L10.65 13.396L16.4454 7.87658C16.9726 7.37447 17.8274 7.37447 18.3546 7.87658Z" 
+        fill="white"/>
+      </g>
+      <defs>
+      <clipPath id="clip0_7085_17187">
+      <rect width="24" height="24" fill="white"/>
+      </clipPath>
+      </defs>
+    </svg>
+  )
+}
+
+export const IconCheckSquareFill = () => {
+  return (
+    <svg 
+      width="24" 
+      height="24" 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg">
+      <g id="edgeicons">
+      <path 
+        id="Subtract" 
+        fillRule="evenodd" 
+        clipRule="evenodd" 
+        d="M6 2C3.79086 2 2 3.79086 2 6V18C2 20.2091 3.79086 22 6 22H18C20.2091 22 22 20.2091 22 18V6C22 3.79086 20.2091 2 18 2H6ZM17.6485 8.33473C18.1172 8.78105 18.1172 9.50467 17.6485 9.95098L11.6485 15.6653C11.1799 16.1116 10.4201 16.1116 9.95147 15.6653L6.35147 12.2367C5.88284 11.7904 5.88284 11.0668 6.35147 10.6205C6.8201 10.1741 7.5799 10.1741 8.04853 10.6205L10.8 13.2409L15.9515 8.33473C16.4201 7.88842 17.1799 7.88842 17.6485 8.33473Z" 
+        fill="#343A4A"/>
+      </g>
+    </svg>
+  )
+}
+
+export const IconRectangle = () => {
+  return (
+    <svg 
+      width="24" 
+      height="24" 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg">
+      <g id="edgeicons">
+      <rect 
+        id="Rectangle 14582" 
+        x="3" y="3" 
+        width="18" 
+        height="18" 
+        rx="3" 
+        stroke="#343A4A" 
+        strokeWidth="2"/>
+      </g>
+    </svg>
+  )
+}

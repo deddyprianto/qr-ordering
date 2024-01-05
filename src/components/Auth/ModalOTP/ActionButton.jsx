@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { apiMemberships } from "../../../services/Memberships";
 import { setMemberInfo } from "../../../app/dataSlicePersisted";
+import { Trans } from "react-i18next";
 
 
 export const ActionButton = ({ otp, isOTPComplete, isLoading, setIsLoading, setErrMsg, callback }) => {
@@ -22,7 +23,7 @@ export const ActionButton = ({ otp, isOTPComplete, isLoading, setIsLoading, setE
       const result = await apiMemberships('POST', "ValidateOTP", body);
 
       if(result.resultCode == 200){
-        dispatch(setMemberInfo(result));
+        dispatch(setMemberInfo(result.data));
         if(callback) callback(true);
       }
       else {
@@ -56,7 +57,7 @@ export const ActionButton = ({ otp, isOTPComplete, isLoading, setIsLoading, setE
         marginTop: "16px",
       }}
     >
-      Verify and Register
+      <Trans i18nKey={"verify_and_register"}/>
     </button>
   )
 };

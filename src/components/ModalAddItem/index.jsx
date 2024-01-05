@@ -9,12 +9,12 @@ import { ParentBlur } from "../ParentBlur";
 const RenderModalItemDetail = ({ 
   openModal,
   item,
-  typeOfModalAddItem,
-  setTypeOfModalAddItem,
+  itemType,
   setOpenModal,
 }) => {
   const [itemToAdd, setItemToAdd] = useState({});
   const [attList, setAttList] = useState([]);
+  const [bundleList, setBundleList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { width } = screen();
   const gadgetScreen = width < 980;
@@ -28,6 +28,8 @@ const RenderModalItemDetail = ({
   }
   classNameCustom += " flex flex-col items-center";
 
+  const [typeOfModalAddItem, setTypeOfModalAddItem] = useState('main'); //option "main", "attribute", "bundle", "bundle&attribute"
+
   useEffect(()=>{
     if(openModal){
       setItemToAdd({
@@ -40,6 +42,7 @@ const RenderModalItemDetail = ({
         "attributes": [],
         "bundles": []
       });
+      setTypeOfModalAddItem("main");
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[openModal])
@@ -58,15 +61,19 @@ const RenderModalItemDetail = ({
           <RenderMainContainer
             item={item}
             attList={attList}
+            bundleList={bundleList}
             typeOfModalAddItem={typeOfModalAddItem}
             setItemToAdd={setItemToAdd}
             setAttList={setAttList}
+            setBundleList={setBundleList}
             setIsLoading={setIsLoading}
           />
           <RenderButtonAdd
             item={item}
             itemToAdd={itemToAdd}
             attList={attList}
+            bundleList={bundleList}
+            itemType={itemType}
             typeOfModalAddItem={typeOfModalAddItem}
             setTypeOfModalAddItem={setTypeOfModalAddItem}
             setOpenModal={setOpenModal}
@@ -81,8 +88,7 @@ const RenderModalItemDetail = ({
 RenderModalItemDetail.propTypes = {
   openModal: PropTypes.bool,
   setOpenModal: PropTypes.func,
-  typeOfModalAddItem: PropTypes.string,
-  setTypeOfModalAddItem: PropTypes.func,
+  itemType: PropTypes.string,
   item: PropTypes.object,
 };
 export default RenderModalItemDetail;

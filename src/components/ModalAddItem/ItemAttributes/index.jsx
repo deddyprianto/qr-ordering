@@ -5,8 +5,7 @@ import { useEffect } from "react";
 const RenderItemAttributes = ({ 
   attributes,
   attList,
-  setAttList,
-  setItemToAdd
+  setAttList
 }) => {
 
   useEffect(()=>{
@@ -34,7 +33,6 @@ const RenderItemAttributes = ({
             key={attGroup.attributesGroupCode}
             attGroup={attGroup}
             idxAttGroup={idx}
-            setItemToAdd={setItemToAdd}
             handleClickAttItem={handleClickAttItem}
           />
         )
@@ -45,8 +43,7 @@ const RenderItemAttributes = ({
 RenderItemAttributes.propTypes = {
   attributes: PropTypes.array,
   attList: PropTypes.array,
-  setAttList: PropTypes.func,
-  setItemToAdd: PropTypes.func
+  setAttList: PropTypes.func
 };
 
 export default RenderItemAttributes;

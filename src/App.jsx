@@ -5,7 +5,8 @@ import "./scss/App.scss";
 
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsSearchItem, setSearchItemObj, setEnableSearchUsingScroll, setCartInfo } from "./app/dataSlicePersisted";
+import { setSearchItemObj, setEnableSearchUsingScroll, setCartInfo, setOutletName } from "./app/dataSlicePersisted";
+import { setIsSearchItem } from "./app/dataSlice";
 import { apiCart } from "./services/Cart";
 
 const router = createBrowserRouter([
@@ -61,6 +62,7 @@ export default function App() {
       isResetList: true
     })); 
     dispatch(setEnableSearchUsingScroll(false)); 
+    dispatch(setOutletName("edge cafe")); 
     getCartInfo();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])

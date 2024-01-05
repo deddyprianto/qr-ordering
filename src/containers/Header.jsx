@@ -2,20 +2,19 @@ import { IconArrowLeft, IconTable, SearchIcon } from "../assets/svgIcon";
 import "react-modern-drawer/dist/index.css";
 import logo from "../assets/logo.png";
 import { useSelector, useDispatch } from "react-redux";
-import { setIsSearchItem, setSearchItemObj, setEnableSearchUsingScroll } from "../app/dataSlicePersisted";
-
+import { setSearchItemObj, setEnableSearchUsingScroll } from "../app/dataSlicePersisted";
+import { setIsSearchItem } from "../app/dataSlice";
+import { Trans } from "react-i18next";
 
 export default function Header() {
   const dispatch = useDispatch();
   const isSearchItem = useSelector(
-    (state) => state.dataSlicePersisted.isSearchItem,
+    (state) => state.dataSlice.isSearchItem,
   );
-  const enableSearchUsingScroll = useSelector(
-    (state) => state.dataSlicePersisted.enableSearchUsingScroll,
+  const { enableSearchUsingScroll, searchItemObj} = useSelector(
+    (state) => state.dataSlicePersisted,
   );
-  const searchItemObj = useSelector(
-    (state) => state.dataSlicePersisted.searchItemObj,
-  );
+  
   const dispatchIsSearchItem = (val) => {
     dispatch(setIsSearchItem(val))
   };
@@ -55,10 +54,10 @@ export default function Header() {
         <div className="flex items-stretch gap-2 my-1">
           <IconTable />
           <div className="text-white text-center text-sm font-medium leading-5 tracking-wide my-auto">
-            You are at table
+            <Trans i18nKey={"you_at_table"}/>
           </div>
           <div className="text-white text-center text-sm font-medium leading-5 tracking-wide self-center whitespace-nowrap my-auto">
-            999
+            {'{table_no}'}
           </div>
         </div>
       </div>
@@ -98,7 +97,7 @@ export default function Header() {
         <div className="flex grow basis-[0%] flex-col items-start">
           <img loading="lazy" src={logo} width={43} height={24} />
           <div className="text-stone-50 text-sm font-medium leading-5 tracking-wide self-stretch">
-            Fusionopolis
+            {'{outlet_name}'}
           </div>
         </div>
       );

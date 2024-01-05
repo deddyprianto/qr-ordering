@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCartInfo } from "../../../../app/dataSlicePersisted";
 import { apiCart } from "../../../../services/Cart";
 import { useEdgeSnack } from "../../../EdgeSnack/utils/useEdgeSnack";
-import { RenderCartItemRow } from "./CartItem";
+import { RenderCartItemRow } from "./CartItemRow";
 
 export const RenderItemCart = ({ 
   itemInCart,
@@ -41,7 +41,7 @@ export const RenderItemCart = ({
     }
   };
 
-  if(itemInCart.length<1) return "";
+  if(itemInCart.length<1) return <></>;
   return( 
     <div className="mt-2">
       {itemInCart.map((item)=>{

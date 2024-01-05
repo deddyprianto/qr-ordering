@@ -5,20 +5,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { generateAttributesBody } from "./ItemAttributeBody";
 import { apiCartAddItem } from "./AddItemToCart";
 import { setCartInfo } from "../../../app/dataSlicePersisted";
-import { useEffect, useState } from "react";
 import { useEdgeSnack } from "../../EdgeSnack/utils/useEdgeSnack";
+import { generateBundlesBody } from "./ItemBundleBody";
+import { renderButtonText } from "./GetButtonText";
 
 
 export const RenderButtonAdd = ({ 
   item,
   itemToAdd,
+  itemType,
   attList,
+  bundleList,
   typeOfModalAddItem,
   setTypeOfModalAddItem,
   setOpenModal,
   setIsLoading
  }) => {
-  const [productType, setProductType] = useState("main");
   const dispatch = useDispatch();
   const toast = useEdgeSnack();
   const cartInfo = useSelector(
@@ -27,27 +29,17 @@ export const RenderButtonAdd = ({
   const outletName = useSelector(
     (state) => state.dataSlicePersisted.outletName,
   );
-
-  useEffect(()=>{
-    let itemType = "main";
-    if (item.bundles?.length > 0) 
-      itemType = "bundle";
-    else if (item.attributes?.length > 0) 
-      itemType = "attribute";
-
-    setProductType(itemType);
-  },[item])
-
+  
   const resetCartInfo = (data) => {
     dispatch(setCartInfo(data));
   }
 
   const handleClickButton = async() => {
-    if(productType=="bundle"){
+    if(itemType=="bundle" && typeOfModalAddItem=='main'){
       setTypeOfModalAddItem("bundle");
       return;
     }
-    else if(productType=="attribute" && typeOfModalAddItem!='attribute'){
+    else if(itemType=="attribute" && typeOfModalAddItem!='attribute'){
       setTypeOfModalAddItem("attribute");
       return;
     }
@@ -60,27 +52,24 @@ export const RenderButtonAdd = ({
 
   const processAddItem = async(cartID) => {
     let body = {...itemToAdd};
+    let res = {};
     switch (typeOfModalAddItem.toLowerCase()) {
       case "main":
         await apiCartAddItem(cartID, [body], setIsLoading, setOpenModal, resetCartInfo, item.itemName, toast);
         break;
       case "attribute":
-        console.log('bre')
-        body.attributes = generateAttributesBody(attList)
+        body.attributes = generateAttributesBody(attList);
+        await apiCartAddItem(cartID, [body], setIsLoading, setOpenModal, resetCartInfo, item.itemName, toast);
+        break;
+      case "bundle":
+        res = generateBundlesBody(bundleList);
+        if(!res.isBundleValid) break;
+        body.bundles = res.bundleBody;
         await apiCartAddItem(cartID, [body], setIsLoading, setOpenModal, resetCartInfo, item.itemName, toast);
         break;
       default:
         break;
     }
-  }
-
-  const renderButtonText = () => {
-    let buttonText = "Add";
-    if (productType === "attribute" && typeOfModalAddItem === "main") 
-      buttonText = "Add New";
-    else if (productType === "attribute" && typeOfModalAddItem === "attribute") 
-      buttonText = `Add - $ ${itemToAdd.amount}`;
-    return buttonText
   }
 
   return (
@@ -97,7 +86,7 @@ export const RenderButtonAdd = ({
         <div className="flex items-stretch gap-2">
           <IconPlus />
           <div className="text-white text-xs font-bold leading-4 self-center my-auto">
-            {renderButtonText()}
+            {renderButtonText(itemToAdd.unitPrice, itemType, typeOfModalAddItem, attList, bundleList)}
           </div>
         </div>
       </button>
@@ -107,8 +96,10 @@ export const RenderButtonAdd = ({
 
 RenderButtonAdd.propTypes = {
   item: PropTypes.object,
+  itemType: PropTypes.string,
   itemToAdd: PropTypes.object,
   attList: PropTypes.array,
+  bundleList: PropTypes.array,
   typeOfModalAddItem: PropTypes.string,
   setTypeOfModalAddItem: PropTypes.func,
   setOpenModal: PropTypes.func,

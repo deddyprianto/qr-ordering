@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { IconCloseTransparent } from "../../../assets/svgIcon";
+import { Trans } from "react-i18next";
 
 export const TopLabel = ({ setIsOpenModal }) => {
   return(
@@ -18,7 +19,7 @@ export const TopLabel = ({ setIsOpenModal }) => {
           font: "700 22px/31px Helvetica Neue, sans-serif ",
           }}
         >
-          Enter your OTP
+          <Trans i18nKey={"enter_your_otp"}/>
         </div>
         <button
           onClick={() => setIsOpenModal(false)}
@@ -43,7 +44,8 @@ export const TopLabel = ({ setIsOpenModal }) => {
         font: "500 14px/20px Helvetica Neue, sans-serif ",
         }}
       >
-        We have sent the OTP to j*******j@g***.***
+        
+        <Trans i18nKey={"we_have_sent_otp_to"}/> j*******j@g***.***
       </div>
     </div>
   )

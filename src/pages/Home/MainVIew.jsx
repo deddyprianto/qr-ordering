@@ -7,6 +7,7 @@ import "../../scss/animation.scss";
 import { Skeleton } from "../../components/Skeleton";
 import { GET } from "../../utilities/services";
 import { ProductCatalog } from "./ProductCatalog";
+import { Trans } from "react-i18next";
 
 export const MainView = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -19,7 +20,7 @@ export const MainView = () => {
     (state) => state.dataSlicePersisted.outletName,
   );
   const isSearchItem = useSelector(
-    (state) => state.dataSlicePersisted.isSearchItem,
+    (state) => state.dataSlice.isSearchItem,
   );
 
   const fetchAllSubGroupItem = async(subGroup) => {
@@ -107,7 +108,7 @@ export const MainView = () => {
             marginTop: "16px",
           }}
         >
-          You Might Like This!
+          <Trans i18nKey={"you_may_like_this"}/>
         </p>}
         <ProductCatalog menuSubGroup={menuSubGroup}/>
         {isProcessToGetItem && <Skeleton />}

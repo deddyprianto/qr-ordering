@@ -4,7 +4,6 @@ import { RenderAttItem } from "./AttributesItem";
 export const RenderAttGroup = ({ 
   attGroup,
   idxAttGroup,
-  setItemToAdd, 
   handleClickAttItem
 }) => {
   return (
@@ -20,7 +19,6 @@ export const RenderAttGroup = ({
               att={att}
               idxAttGroup={idxAttGroup}
               idxAttItem={idx}
-              setItemToAdd={setItemToAdd}
               handleClickAttItem={handleClickAttItem}/>
           );
         })}
@@ -32,6 +30,5 @@ export const RenderAttGroup = ({
 RenderAttGroup.propTypes = {
   attGroup: PropTypes.object,
   idxAttGroup: PropTypes.number,
-  setItemToAdd: PropTypes.func,
   handleClickAttItem:PropTypes.func
 }

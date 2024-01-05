@@ -1,42 +1,14 @@
 import PropTypes from "prop-types";
-import { RenderInputFieldCustom } from "../../../InputFieldCustom";
+import { FormInput } from "../FormInput/FormInput";
 
 export const RenderEmailLogin = ({ setEmailField }) => {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "start",
-        flexDirection: "column",
-        marginTop: "16px",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          alignItems: "start",
-          gap: "4px",
-          padding: "0px",
-        }}
-      >
-        <div
-          style={{
-            font: "500 14px/20px Helvetica Neue, sans-serif ",
-            color: "var(--text-color-primary, #343A4A)",
-            letterSpacing: "0.28px",
-            whiteSpace: "nowrap",
-          }}
-        >
-          Email
-        </div>
-        <renderFlagMandatory />
-      </div>
-      <RenderInputFieldCustom
-          label={"Email"}
-          type={"email"}
-          setField={setEmailField}
-      />
-    </div>
+    <FormInput 
+      setField={setEmailField}
+      label={"Email"}
+      type={"input"}
+      i18nKey={"email"}  
+    />
   );
 };
 RenderEmailLogin.propTypes = {

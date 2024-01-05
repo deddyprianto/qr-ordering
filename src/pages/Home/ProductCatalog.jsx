@@ -1,9 +1,14 @@
 import PropTypes from "prop-types";
 import { RenderItemProduct } from "../../components/RenderItemProduct";
+import { useSelector } from "react-redux";
 
 export const ProductCatalog = ({ 
   menuSubGroup
 }) => {
+  const cartInfo = useSelector(
+    (state) => state.dataSlicePersisted.cartInfo,
+  );
+
   return (
     menuSubGroup?.map((menu, idx)=>{
       return(
@@ -26,6 +31,7 @@ export const ProductCatalog = ({
             return (
               <RenderItemProduct
                 key={`${item.buttonType}_${item.refNo}`}
+                cartID={cartInfo.uniqueID}
                 isPromo={item.productInfo?.promotions.length > 0}
                 item={item.productInfo}
               />

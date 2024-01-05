@@ -1,5 +1,6 @@
 
 import PropTypes from "prop-types";
+import { Trans } from "react-i18next";
 
 export const RenderTab = ({ setIsChecked, tabScreen, setTabScreen }) => {
     return (
@@ -35,7 +36,7 @@ export const RenderTab = ({ setIsChecked, tabScreen, setTabScreen }) => {
             paddingBottom: "5px",
           }}
         >
-          Login with Phone Number
+          <Trans i18nKey={"login_phone_number"}/>
         </button>
         <button
           onClick={() => {
@@ -58,7 +59,7 @@ export const RenderTab = ({ setIsChecked, tabScreen, setTabScreen }) => {
             paddingBottom: "5px",
           }}
         >
-          Login with Email
+          <Trans i18nKey={"login_email"}/>
         </button>
       </div>
     );

@@ -11,13 +11,10 @@ export default function Layout() {
 
   const dispatch = useDispatch();
   const isSearchItem = useSelector(
-    (state) => state.dataSlicePersisted.isSearchItem,
+    (state) => state.dataSlice.isSearchItem,
   );
-  const enableSearchUsingScroll = useSelector(
-    (state) => state.dataSlicePersisted.enableSearchUsingScroll,
-  );
-  const searchItemObj = useSelector(
-    (state) => state.dataSlicePersisted.searchItemObj,
+  const { enableSearchUsingScroll, searchItemObj} = useSelector(
+    (state) => state.dataSlicePersisted,
   );
 
 
@@ -29,10 +26,9 @@ export default function Layout() {
     if(!isSearchItem || !enableSearchUsingScroll) return;
     const childElement = childRef.current;
     if (!childElement) return;
+    let scrollPosition = parseInt(childElement.scrollHeight - childElement.scrollTop);
 
-    const childBottom = childElement.scrollHeight - childElement.scrollTop === childElement.clientHeight;
-
-    if (childBottom) {
+    if (scrollPosition-5 < childElement.clientHeight && childElement.clientHeight < scrollPosition+5) {
       let tempSearchItemObj = JSON.parse(JSON.stringify(searchItemObj));
       tempSearchItemObj.doSearch = true;
       tempSearchItemObj.isResetList = false;
@@ -57,6 +53,7 @@ export default function Layout() {
   let navigation = useNavigation();
   const location = useLocation();
   const pathname = location.pathname;
+  const { cartInfo, memberInfo } = useSelector((state) => state.dataSlicePersisted);
 
   const { width } = screen();
   const gadgetScreen = width < 980;
@@ -69,10 +66,11 @@ export default function Layout() {
             width: "100vw",
             display: "grid",
             gridTemplateColumns: "1fr",
-            gridTemplateRows:
-              pathname === "/auth" || pathname === "/otp"
-                ? "70px 1fr 50px"
-                : "100px 1fr 80px",
+            gridTemplateRows: (
+              !isSearchItem 
+              && ( memberInfo?.membershipNo 
+              || ((typeof(cartInfo.uniqueID) != 'undefined') && pathname=="/")))
+              ?"100px 1fr 80px":"",
             gap: "0px 0px",
             gridAutoFlow: "row",
             gridTemplateAreas: '"."\n    "."\n    "."',

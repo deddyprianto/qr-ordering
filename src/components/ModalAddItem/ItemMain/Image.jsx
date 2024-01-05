@@ -3,7 +3,7 @@ import image3 from "../../../assets/image3.png";
 
 export const RenderImage = ({ itemImage }) => {
   return( 
-    <div className="h-3/5 flex items-center justify-center">
+    <div className="flex items-center justify-center">
       <img
         alt="itemImage"
         loading="lazy"
