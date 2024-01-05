@@ -5,6 +5,8 @@ const bundlesAmount = (bundleList) => {
       let quantity = (item.quantity || 0)
       if(quantity<=0) continue;
       amount += (item.productInfo.retailPrice || 0) * quantity
+      if(item.productInfo?.attributes?.length>0)
+        amount += attributeAmount(item.productInfo?.attributes)
     }
   }
   return amount;
@@ -33,7 +35,7 @@ const calculateItemQty = (itemType, itemPrice, attList, bundleList) => {
     default:
       break;
   }
-  return itemPrice;
+  return Math.round((itemPrice + Number.EPSILON) * 100) / 100;
 }
 
 export const renderButtonText = (itemPrice, itemType, typeOfModalAddItem, attList, bundleList) => {

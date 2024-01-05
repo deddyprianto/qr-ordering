@@ -1,4 +1,5 @@
 import { isValidBundleQty } from "../ItemBundle/CalculateBundleGroupQty";
+import { generateAttributesBody } from "./ItemAttributeBody";
 
 export const generateBundlesBody = (bundleList) => {
   let bundles = [];
@@ -11,13 +12,17 @@ export const generateBundlesBody = (bundleList) => {
     }
     for(const item of bundleGroup.items){
       if((item.quantity || 0)<=0) continue;
-      bundles.push({
+      let bundle = {
         "bundleItemCode": item.setMealItemCode,
         "quantity": item.quantity,
         "attributes": [],
         "remark": "",
         "lineInfo": ""
-      })}
+      }
+      if(item.productInfo?.attributes?.length>0)
+        bundle.attributes = generateAttributesBody(item.productInfo?.attributes)
+      bundles.push(bundle);
+    }
   }
   return {bundles, isValidQty}
 }

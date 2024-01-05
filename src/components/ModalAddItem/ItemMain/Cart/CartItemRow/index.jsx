@@ -8,6 +8,22 @@ export const RenderCartItemRow = ({
   item, 
   updateCartItem
 }) => {
+  const renderBundleItemDet = (bundle) => {
+    return (
+      <>
+        <RenderItemDetailInCart 
+          key={bundle.bundleItemCode} 
+          name={`(${bundle.quantity}X) ${bundle.productInfo?.itemName}`}
+        />
+        {bundle.attributes?.length>0
+          ?<div className="ml-4">{renderItemDetail(bundle)}</div>
+          :""
+        }
+      </>
+      
+    )
+  }
+
   const renderItemDetail = (item) => {
     let itemType=getItemType(item)
     switch (itemType) {
@@ -18,12 +34,9 @@ export const RenderCartItemRow = ({
           )})
     case "bundle":
       return item.bundles?.map((bundle)=>{
-        return(
-          <RenderItemDetailInCart 
-            key={bundle.bundleItemCode} 
-            name={`(${bundle.quantity}X) ${bundle.productInfo?.itemName}`}
-          />
-        )})
+        return renderBundleItemDet(bundle)
+      })
+        
       default:
         break;
     }

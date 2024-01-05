@@ -5,7 +5,8 @@ import { useEffect } from "react";
 const RenderItemAttributes = ({ 
   attributes,
   attList,
-  setAttList
+  setAttList,
+  isFromBundle=false
 }) => {
 
   useEffect(()=>{
@@ -26,7 +27,7 @@ const RenderItemAttributes = ({
     setAttList(tempAttList);
   }
   return (
-    <div className="justify-center bg-[#F9F9F9] flex flex-col p-4 mb-4">
+    <div className="justify-center bg-[#F9F9F9] flex flex-col p-4 mb-4 pt-0">
       {attList.map((attGroup, idx)=>{
         return (
           <RenderAttGroup 
@@ -34,6 +35,7 @@ const RenderItemAttributes = ({
             attGroup={attGroup}
             idxAttGroup={idx}
             handleClickAttItem={handleClickAttItem}
+            isFromBundle={isFromBundle}
           />
         )
       })}
@@ -43,7 +45,8 @@ const RenderItemAttributes = ({
 RenderItemAttributes.propTypes = {
   attributes: PropTypes.array,
   attList: PropTypes.array,
-  setAttList: PropTypes.func
+  setAttList: PropTypes.func,
+  isFromBundle: PropTypes.bool
 };
 
 export default RenderItemAttributes;

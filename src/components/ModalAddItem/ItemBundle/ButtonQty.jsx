@@ -21,7 +21,7 @@ export const RenderButtonQty = ({
   else 
     return (
       <div className="items-stretch self-center flex gap-1 my-auto">
-        <button className={`bg-${(disableMinButton)?"[#9D9D9D]":"pink-500"} justify-center items-center  flex aspect-square flex-col w-6 h-6 px-2 rounded-lg`}
+        <button className={`${(disableMinButton)?"bg-[#9D9D9D]":"bg-pink-500"} justify-center items-center  flex aspect-square flex-col w-6 h-6 px-2 rounded-lg`}
           onClick={()=>handleChangeQty(false)}
           disabled={disableMinButton || false}
         >
@@ -30,7 +30,7 @@ export const RenderButtonQty = ({
         <div className="text-gray-700 text-center text-base font-bold bg-zinc-300 w-12 h-6 rounded-lg">
           {item.quantity || 0}
         </div>
-        <button className={`bg-${disableMaxButton?"[#9D9D9D]":"pink-500"} justify-center items-center flex aspect-square flex-col w-6 h-6 px-2 rounded-lg`}
+        <button className={`${disableMaxButton?"bg-[#9D9D9D]":"bg-pink-500"} justify-center items-center flex aspect-square flex-col w-6 h-6 px-2 rounded-lg`}
           onClick={()=>handleChangeQty(true)}
           disabled={disableMaxButton || false}
         >
