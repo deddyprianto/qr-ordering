@@ -63,8 +63,8 @@ export const RenderButtonAdd = ({
         break;
       case "bundle":
         res = generateBundlesBody(bundleList);
-        if(!res.isBundleValid) break;
-        body.bundles = res.bundleBody;
+        if(!res.isValidQty) break;
+        body.bundles = res.bundles;
         await apiCartAddItem(cartID, [body], setIsLoading, setOpenModal, resetCartInfo, item.itemName, toast);
         break;
       default:

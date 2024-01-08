@@ -4,11 +4,12 @@ import { RenderAttItem } from "./AttributesItem";
 export const RenderAttGroup = ({ 
   attGroup,
   idxAttGroup,
-  handleClickAttItem
+  handleClickAttItem,
+  isFromBundle=false
 }) => {
   return (
     <div>
-      <div className="text-black text-sm font-medium leading-5 tracking-wide">
+      <div className="text-black text-xs font-medium leading-5 tracking-wide pt-2">
         {attGroup.attributesGroupName}
       </div>
       <div className="flex items-center flex-wrap">
@@ -19,7 +20,9 @@ export const RenderAttGroup = ({
               att={att}
               idxAttGroup={idxAttGroup}
               idxAttItem={idx}
-              handleClickAttItem={handleClickAttItem}/>
+              handleClickAttItem={handleClickAttItem}
+              isFromBundle={isFromBundle}
+            />
           );
         })}
       </div>
@@ -30,5 +33,6 @@ export const RenderAttGroup = ({
 RenderAttGroup.propTypes = {
   attGroup: PropTypes.object,
   idxAttGroup: PropTypes.number,
-  handleClickAttItem:PropTypes.func
+  handleClickAttItem:PropTypes.func,
+  isFromBundle: PropTypes.bool
 }
