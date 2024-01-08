@@ -152,7 +152,7 @@ export const RenderItemProduct = ({ isPromo = false, item, cartID }) => {
               display: "flex",
               justifyContent: "center",
               borderRadius: "8px",
-              backgroundColor: "var(--button-color-active, #FF4782)",
+              backgroundColor: theme.secondary,
               marginTop: "8px",
               gap: "5px",
               padding: "5px 16px",

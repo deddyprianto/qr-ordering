@@ -8,9 +8,9 @@ import { Skeleton } from "../../components/Skeleton";
 import { GET } from "../../utilities/services";
 import { ProductCatalog } from "./ProductCatalog";
 import { Trans } from "react-i18next";
-import { textColor } from "../../../helper";
 
 export const MainView = () => {
+  const theme = useSelector((state) => state.dataSlice.theme);
   const [isLoading, setIsLoading] = useState(true);
   const [highlights, setHighlights] = useState(true);
   const [menuSubGroup, setMenuSubGroup] = useState([]);
@@ -106,7 +106,7 @@ export const MainView = () => {
               fontWeight: "700",
               fontSize: "22px",
               marginTop: "16px",
-              color: textColor,
+              color: theme.textColor,
             }}
           >
             <Trans i18nKey={"you_may_like_this"} />

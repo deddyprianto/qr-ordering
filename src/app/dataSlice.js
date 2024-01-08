@@ -13,6 +13,7 @@ const initialState = {
     discountedPrice: "#DDD",
     backgroundMain: "#F9F9F9",
     primary: "#00524C",
+    secondary: "#FF4782",
   },
 };
 

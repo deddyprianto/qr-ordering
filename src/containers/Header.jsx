@@ -118,7 +118,7 @@ export default function Header() {
               openSearchBar();
             }
           }}
-          className="justify-center items-center bg-[#FF4782] flex aspect-square flex-col w-[46px] h-[46px] px-3 rounded-[1000px]"
+          className={`justify-center items-center bg-[${theme.secondary}] flex aspect-square flex-col w-[46px] h-[46px] px-3 rounded-[1000px]`}
         >
           <SearchIcon />
         </div>
@@ -128,7 +128,7 @@ export default function Header() {
 
   const renderMain = () => {
     return (
-      <div className="bg-red-500">
+      <div>
         {renderLabelTableNo()}
         {renderMainHeader()}
       </div>

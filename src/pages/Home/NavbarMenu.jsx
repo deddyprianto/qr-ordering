@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import { SkeletonNavbar } from "../../components/Skeleton";
 
 export const NavbarMenu = ({ handleSelectGroup }) => {
+  const theme = useSelector((state) => state.dataSlice.theme);
   const [isSelectedItem, setIsSelectedItem] = useState("");
   const [dataCategory, setDataCategory] = useState([]);
   const [dtCategoryLength, setDtCategoryLength] = useState(0);
@@ -76,7 +77,9 @@ export const NavbarMenu = ({ handleSelectGroup }) => {
   };
 
   return (
-    <div className="overflow-x-auto flex border-t-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] bg-[#00524C] rounded-b-lg pl-[16px] pr-[16px]">
+    <div
+      className={`overflow-x-auto flex border-t-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] bg-[${theme.primary}] rounded-b-lg pl-[16px] pr-[16px]`}
+    >
       {(dtCategoryLength > dataCategory.length || dataCategory.length == 0) &&
       isLoading ? (
         <SkeletonNavbar />
