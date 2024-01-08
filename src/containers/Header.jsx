@@ -7,23 +7,22 @@ import { setIsSearchItem } from "../app/dataSlice";
 import { Trans } from "react-i18next";
 
 export default function Header() {
+  const theme = useSelector((state) => state.dataSlice.theme);
   const dispatch = useDispatch();
-  const isSearchItem = useSelector(
-    (state) => state.dataSlice.isSearchItem,
-  );
-  const { enableSearchUsingScroll, searchItemObj} = useSelector(
+  const isSearchItem = useSelector((state) => state.dataSlice.isSearchItem);
+  const { enableSearchUsingScroll, searchItemObj } = useSelector(
     (state) => state.dataSlicePersisted,
   );
-  
+
   const dispatchIsSearchItem = (val) => {
-    dispatch(setIsSearchItem(val))
+    dispatch(setIsSearchItem(val));
   };
 
   const openSearchBar = () => {
-    if(isSearchItem){ 
+    if (isSearchItem) {
       let tempSearchItemObj = JSON.parse(JSON.stringify(searchItemObj));
-      if(enableSearchUsingScroll){
-        let inputElement = document.getElementById('input-search');
+      if (enableSearchUsingScroll) {
+        let inputElement = document.getElementById("input-search");
         tempSearchItemObj.searchText = inputElement.value;
         tempSearchItemObj.isResetList = true;
       }
@@ -31,16 +30,17 @@ export default function Header() {
       tempSearchItemObj.doSearch = true;
       dispatch(setSearchItemObj(tempSearchItemObj));
       dispatch(setEnableSearchUsingScroll(true));
-    }
-    else {
-      dispatch(setSearchItemObj({
-        doSearch: false,
-        searchText: "",
-        isResetList: true
-      }));
+    } else {
+      dispatch(
+        setSearchItemObj({
+          doSearch: false,
+          searchText: "",
+          isResetList: true,
+        }),
+      );
       dispatchIsSearchItem(true);
       setTimeout(() => {
-        let inputElement = document.getElementById('input-search');
+        let inputElement = document.getElementById("input-search");
         if (inputElement) {
           inputElement.focus();
         }
@@ -54,10 +54,10 @@ export default function Header() {
         <div className="flex items-stretch gap-2 my-1">
           <IconTable />
           <div className="text-white text-center text-sm font-medium leading-5 tracking-wide my-auto">
-            <Trans i18nKey={"you_at_table"}/>
+            <Trans i18nKey={"you_at_table"} />
           </div>
           <div className="text-white text-center text-sm font-medium leading-5 tracking-wide self-center whitespace-nowrap my-auto">
-            {'{table_no}'}
+            {"{table_no}"}
           </div>
         </div>
       </div>
@@ -80,7 +80,8 @@ export default function Header() {
             <IconArrowLeft />
           </div>
           <div className="text-zinc-500 text-sm font-medium leading-5 tracking-wide whitespace-nowrap border border-[color:var(--Text-color-Tertiary,#888787)] shadow-sm bg-white grow justify-center rounded-lg border-solid items-start">
-            <input id="input-search"
+            <input
+              id="input-search"
               placeholder="Search Anything..."
               className="outline-none w-full h-full px-4 rounded-lg"
               onKeyDown={(event) => {
@@ -97,7 +98,7 @@ export default function Header() {
         <div className="flex grow basis-[0%] flex-col items-start">
           <img loading="lazy" src={logo} width={43} height={24} />
           <div className="text-stone-50 text-sm font-medium leading-5 tracking-wide self-stretch">
-            {'{outlet_name}'}
+            {"{outlet_name}"}
           </div>
         </div>
       );
@@ -106,7 +107,9 @@ export default function Header() {
 
   const renderMainHeader = () => {
     return (
-      <div className="justify-between items-stretch border-b-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] bg-[#00524C] flex w-full gap-5 px-4 py-2.5 border-b border-solid">
+      <div
+        className={`justify-between items-stretch border-b-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] bg-[${theme.primary}] flex w-full gap-5 px-4 py-2.5 border-b border-solid`}
+      >
         {renderConditionally()}
         <div
           onClick={() => openSearchBar()}
@@ -125,7 +128,7 @@ export default function Header() {
 
   const renderMain = () => {
     return (
-      <div>
+      <div className="bg-red-500">
         {renderLabelTableNo()}
         {renderMainHeader()}
       </div>

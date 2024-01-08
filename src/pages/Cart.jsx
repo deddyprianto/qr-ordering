@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ModalAuth } from "../components/Auth";
 
 export function Component() {
-  const [isOpenModalAuth, setIsOpenModalAuth] = useState(false);
+  const [isOpenModalAuth, setIsOpenModalAuth] = useState(true);
   const [authScreen, setAuthScreen] = useState('Login');
   const [isOpenModalOtp, setIsOpenModalOtp] = useState(false);
 

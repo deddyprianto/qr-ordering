@@ -3,22 +3,19 @@ import { useEdgeSnack } from "../EdgeSnack/utils/useEdgeSnack";
 import RenderModalItemDetail from "../ModalAddItem";
 import { useState } from "react";
 import { IconPercentage, IconPlus } from "../../assets/svgIcon";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Trans } from "react-i18next";
 import { getItemType } from "./GetItemType";
 import { addItemToCart } from "./AddItemToCart";
 
-export const RenderItemProduct = ({ 
-  isPromo = false,
-  item,
-  cartID
-}) => {
+export const RenderItemProduct = ({ isPromo = false, item, cartID }) => {
+  const theme = useSelector((state) => state.dataSlice.theme);
   const [openModalAddItem, setOpenModalAddItem] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
   const labelPromo = {
-    color: "var(--semantic-color-error, #CF3030)",
+    color: theme.disableColor,
     textAlign: "center",
     whiteSpace: "nowrap",
     font: "700 16px/22px Helvetica Neue, sans-serif ",
@@ -27,7 +24,7 @@ export const RenderItemProduct = ({
   const toast = useEdgeSnack();
 
   const labelNonPromo = {
-    color: "var(--semantic-color-error, #000000)",
+    color: theme.warning,
     textAlign: "center",
     whiteSpace: "nowrap",
     font: "700 16px/22px Helvetica Neue, sans-serif ",
@@ -38,7 +35,7 @@ export const RenderItemProduct = ({
   };
 
   const handleClickButtonAdd = () => {
-    if(getItemType(item)=="main"){
+    if (getItemType(item) == "main") {
       addItemToCart(cartID, setIsLoading, item, dispatch, toast);
       return;
     }
@@ -55,7 +52,7 @@ export const RenderItemProduct = ({
           display: "flex",
           flexDirection: "column",
           width: "100%",
-          textAlign: "left"
+          textAlign: "left",
         }}
       >
         <button
@@ -77,7 +74,7 @@ export const RenderItemProduct = ({
               style={{
                 width: "92px",
                 borderRadius: "16px 0px 16px 0px",
-                backgroundColor: "var(--semantic-color-error, #CF3030)",
+                backgroundColor: theme.warning,
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -85,7 +82,7 @@ export const RenderItemProduct = ({
                 padding: "4px 16px",
               }}
             >
-              <IconPercentage/>
+              <IconPercentage />
               <div9
                 style={{
                   color: "var(--text-color-secondary, #FFF)",
@@ -97,7 +94,7 @@ export const RenderItemProduct = ({
                   font: "500 12px/17px Helvetica Neue, sans-serif ",
                 }}
               >
-                <Trans i18nKey={"promo"}/>
+                <Trans i18nKey={"promo"} />
               </div9>
             </div>
           )}
@@ -129,19 +126,21 @@ export const RenderItemProduct = ({
               gap: "8px",
             }}
           >
-            {item?.promotions.length > 0 && <div
-              className="line-through"
-              style={{
-                color: "var(--text-color-tertiary, #9D9D9D)",
-                textAlign: "center",
-                textDecorationLine: "strikethrough",
-                whiteSpace: "nowrap",
-                font: "500 16px/22px Helvetica Neue, sans-serif ",
-              }}
-            >
-              $ 9.99
-            </div>}
-            
+            {item?.promotions.length > 0 && (
+              <div
+                className="line-through"
+                style={{
+                  color: theme.disableColor,
+                  textAlign: "center",
+                  textDecorationLine: "strikethrough",
+                  whiteSpace: "nowrap",
+                  font: "500 16px/22px Helvetica Neue, sans-serif ",
+                }}
+              >
+                $ 9.99
+              </div>
+            )}
+
             <div
               style={item.promotions.length > 0 ? labelPromo : labelNonPromo}
             >
@@ -159,12 +158,12 @@ export const RenderItemProduct = ({
               padding: "5px 16px",
               alignItems: "center",
               width: "100%",
-              filter: isLoading?"blur(1px)":""
+              filter: isLoading ? "blur(1px)" : "",
             }}
             disabled={isLoading}
             onClick={handleClickButtonAdd}
           >
-            <IconPlus/>
+            <IconPlus />
             <div
               style={{
                 color: "var(--white, #FFF)",
@@ -172,7 +171,7 @@ export const RenderItemProduct = ({
                 marginTop: "3px",
               }}
             >
-              <Trans i18nKey={"add"}/>
+              <Trans i18nKey={"add"} />
             </div>
           </button>
         </div>

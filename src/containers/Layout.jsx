@@ -1,62 +1,58 @@
-import { Outlet, useNavigation, useLocation } from "react-router-dom";
+import { Outlet, useNavigation } from "react-router-dom";
 import Header from "./Header";
-import Footer from "./Footer";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import screen from "../../hooks/useWindowSize";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchItemObj } from "../app/dataSlicePersisted";
+import { EdgeSnackProvider } from "../components/EdgeSnack";
+// import RenderCartSummary from "../components/Home/RenderCartSummary";
 
 export default function Layout() {
   const childRef = useRef(null);
 
   const dispatch = useDispatch();
-  const isSearchItem = useSelector(
-    (state) => state.dataSlice.isSearchItem,
-  );
-  const { enableSearchUsingScroll, searchItemObj} = useSelector(
+  const isSearchItem = useSelector((state) => state.dataSlice.isSearchItem);
+  const { enableSearchUsingScroll, searchItemObj } = useSelector(
     (state) => state.dataSlicePersisted,
   );
 
-
-  /** 
- * Function to handle scrolling in the parent element
- * @outputs call api search product is in searching state
- */
   const handleParentScroll = () => {
-    if(!isSearchItem || !enableSearchUsingScroll) return;
+    if (!isSearchItem || !enableSearchUsingScroll) return;
     const childElement = childRef.current;
     if (!childElement) return;
-    let scrollPosition = parseInt(childElement.scrollHeight - childElement.scrollTop);
+    let scrollPosition = parseInt(
+      childElement.scrollHeight - childElement.scrollTop,
+    );
 
-    if (scrollPosition-5 < childElement.clientHeight && childElement.clientHeight < scrollPosition+5) {
+    if (
+      scrollPosition - 5 < childElement.clientHeight &&
+      childElement.clientHeight < scrollPosition + 5
+    ) {
       let tempSearchItemObj = JSON.parse(JSON.stringify(searchItemObj));
       tempSearchItemObj.doSearch = true;
       tempSearchItemObj.isResetList = false;
       dispatch(setSearchItemObj(tempSearchItemObj));
     }
-  }
+  };
 
   useEffect(() => {
     const childElement = childRef.current;
     if (childElement) {
-      childElement.addEventListener('scroll', handleParentScroll);
+      childElement.addEventListener("scroll", handleParentScroll);
     }
 
     return () => {
       if (childElement) {
-        childElement.removeEventListener('scroll', handleParentScroll);
+        childElement.removeEventListener("scroll", handleParentScroll);
       }
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   let navigation = useNavigation();
-  const location = useLocation();
-  const pathname = location.pathname;
-  const { cartInfo, memberInfo } = useSelector((state) => state.dataSlicePersisted);
-
   const { width } = screen();
   const gadgetScreen = width < 980;
+
   const renderResponsiveDesign = () => {
     if (gadgetScreen) {
       return (
@@ -66,24 +62,25 @@ export default function Layout() {
             width: "100vw",
             display: "grid",
             gridTemplateColumns: "1fr",
-            gridTemplateRows: (
-              !isSearchItem 
-              && ( memberInfo?.membershipNo 
-              || ((typeof(cartInfo.uniqueID) != 'undefined') && pathname=="/")))
-              ?"100px 1fr 80px":"",
+            gridTemplateRows: "100px 1fr",
             gap: "0px 0px",
             gridAutoFlow: "row",
             gridTemplateAreas: '"."\n    "."\n    "."',
+            overflow: "hidden",
           }}
         >
           <div style={{ position: "fixed", top: 0, right: 0 }}>
             {navigation.state !== "idle" && <p>Navigation in progress...</p>}
           </div>
           <Header />
-          <div className="h-full overflow-x-auto"  ref={childRef} onScroll={handleParentScroll}>
+          <div
+            className="h-full overflow-x-auto"
+            ref={childRef}
+            onScroll={handleParentScroll}
+          >
             <Outlet />
           </div>
-          <Footer />
+          {/* <RenderCartSummary /> */}
         </div>
       );
     } else {
@@ -107,10 +104,11 @@ export default function Layout() {
                 height: "98vh",
                 display: "grid",
                 gridTemplateColumns: "1fr",
-                gridTemplateRows: "100px 1fr 80px",
+                gridTemplateRows: "100px 1fr",
                 gap: "0px 0px",
                 gridAutoFlow: "row",
                 gridTemplateAreas: '"."\n    "."\n    "."',
+                overflow: "hidden",
               }}
             >
               <div style={{ position: "fixed", top: 0, right: 0 }}>
@@ -119,15 +117,19 @@ export default function Layout() {
                 )}
               </div>
               <Header />
-              <div className="h-full overflow-x-auto" ref={childRef} onScroll={handleParentScroll}>
-                <Outlet/>
+              <div
+                className="h-full overflow-x-auto"
+                ref={childRef}
+                onScroll={handleParentScroll}
+              >
+                <Outlet />
               </div>
-              <Footer />
+              {/* <RenderCartSummary /> */}
             </div>
           </div>
         </div>
       );
     }
   };
-  return <React.Fragment>{renderResponsiveDesign()}</React.Fragment>;
+  return <EdgeSnackProvider>{renderResponsiveDesign()}</EdgeSnackProvider>;
 }
