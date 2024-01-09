@@ -16,10 +16,33 @@ export const MainView = () => {
   const [menuSubGroup, setMenuSubGroup] = useState([]);
   const [selectedSubGroup, setSelectedSubGroup] = useState("");
   const [isHasSubGroup, setIsHasSubGroup] = useState([]);
-  const outletName = useSelector(
-    (state) => state.dataSlicePersisted.outletName,
+  const [isProcessToGetItem, setIsProcessToGetItem] = useState(true);
+  const {outletName, cartInfo} = useSelector(
+    (state) => state.dataSlicePersisted,
   );
   const isSearchItem = useSelector((state) => state.dataSlice.isSearchItem);
+
+  const mapCartAndProduct = (menuList) => {
+    if(cartInfo.details?.length<1) return;
+    const cartDetailsMap = new Map();
+    cartInfo.details.forEach((item) => {
+      cartDetailsMap.set(item.itemNo, item.quantity);
+    });
+
+    // Map product items with quantities from cart
+    const updatedMenuList = menuList.map((menu) => {
+      menu.items = menu.items.map((item) => {
+        const cartQuantity = cartDetailsMap.get(item.refNo);
+        return {
+          ...item,
+          cartQuantity: cartQuantity || 0, // If no quantity found, default to 0
+        };
+      });
+      return menu
+    });
+    setIsProcessToGetItem(false);
+    setMenuSubGroup(updatedMenuList);
+  }
 
   const fetchAllSubGroupItem = async (subGroup) => {
     for (const sb of subGroup) {
@@ -37,6 +60,7 @@ export const MainView = () => {
       }
       setMenuSubGroup([...subGroup]);
     }
+    mapCartAndProduct(subGroup);
   };
 
   const handleSelectGroup = async (type, refNo) => {
@@ -112,11 +136,8 @@ export const MainView = () => {
             <Trans i18nKey={"you_may_like_this"} />
           </p>
         )}
-        {isLoading ? (
-          <Skeleton />
-        ) : (
-          <ProductCatalog menuSubGroup={menuSubGroup} />
-        )}
+        <ProductCatalog menuSubGroup={menuSubGroup} />
+        {isProcessToGetItem && <Skeleton />}
       </div>
       {isSearchItem && (
         <div className="absolute inset-0 backdrop-filter backdrop-blur-lg z-0"></div>

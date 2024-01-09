@@ -2,13 +2,19 @@ import PropTypes from "prop-types";
 import { useEdgeSnack } from "../EdgeSnack/utils/useEdgeSnack";
 import RenderModalItemDetail from "../ModalAddItem";
 import { useState } from "react";
-import { IconPercentage, IconPlus } from "../../assets/svgIcon";
+import { IconPercentage } from "../../assets/svgIcon";
 import { useDispatch, useSelector } from "react-redux";
 import { Trans } from "react-i18next";
 import { getItemType } from "./GetItemType";
 import { addItemToCart } from "./AddItemToCart";
+import { RenderButtonAddToCart } from "./ButtonAddToCart";
 
-export const RenderItemProduct = ({ isPromo = false, item, cartID }) => {
+export const RenderItemProduct = ({ 
+  isPromo = false, 
+  item, 
+  cartID,
+  qtyInCart 
+}) => {
   const theme = useSelector((state) => state.dataSlice.theme);
   const [openModalAddItem, setOpenModalAddItem] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -34,14 +40,14 @@ export const RenderItemProduct = ({ isPromo = false, item, cartID }) => {
     setOpenModalAddItem(true);
   };
 
-  const handleClickButtonAdd = () => {
+  const handleClickButtonAdd = (qty) => {
     if (getItemType(item) == "main") {
-      addItemToCart(cartID, setIsLoading, item, dispatch, toast);
+      addItemToCart(cartID, setIsLoading, item, dispatch, toast, qty);
       return;
     }
     setOpenModalAddItem(true);
   };
-
+  console.log(qtyInCart)
   return (
     <>
       <div
@@ -147,33 +153,11 @@ export const RenderItemProduct = ({ isPromo = false, item, cartID }) => {
               $ {item?.retailPrice.toFixed(2)}
             </div>
           </div>
-          <button
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              borderRadius: "8px",
-              backgroundColor: theme.secondary,
-              marginTop: "8px",
-              gap: "5px",
-              padding: "5px 16px",
-              alignItems: "center",
-              width: "100%",
-              filter: isLoading ? "blur(1px)" : "",
-            }}
-            disabled={isLoading}
-            onClick={handleClickButtonAdd}
-          >
-            <IconPlus />
-            <div
-              style={{
-                color: "var(--white, #FFF)",
-                font: "700 12px/17px Helvetica Neue, sans-serif ",
-                marginTop: "3px",
-              }}
-            >
-              <Trans i18nKey={"add"} />
-            </div>
-          </button>
+          <RenderButtonAddToCart
+            isLoading={isLoading}
+            qtyInCart={qtyInCart}
+            handleClickButtonAdd={handleClickButtonAdd}
+          />
         </div>
       </div>
       {openModalAddItem && (
@@ -191,5 +175,6 @@ export const RenderItemProduct = ({ isPromo = false, item, cartID }) => {
 RenderItemProduct.propTypes = {
   isPromo: PropTypes.bool,
   item: PropTypes.any,
-  cartID: PropTypes.string
+  cartID: PropTypes.string,
+  qtyInCart: PropTypes.number
 };

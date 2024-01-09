@@ -32,6 +32,7 @@ export const ProductCatalog = ({
               <RenderItemProduct
                 key={`${item.buttonType}_${item.refNo}`}
                 cartID={cartInfo.uniqueID}
+                qtyInCart={item.cartQuantity || 0}
                 isPromo={item.productInfo?.promotions.length > 0}
                 item={item.productInfo}
               />
