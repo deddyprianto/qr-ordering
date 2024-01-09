@@ -26,16 +26,21 @@ export const MainView = () => {
     if(cartInfo.details?.length<1) return;
     const cartDetailsMap = new Map();
     cartInfo.details.forEach((item) => {
-      cartDetailsMap.set(item.itemNo, item.quantity);
+      cartDetailsMap.set(item.itemNo, {
+        quantity: item.quantity,
+        cartLineID: item.uniqueID,
+      });
     });
 
     // Map product items with quantities from cart
     const updatedMenuList = menuList.map((menu) => {
       menu.items = menu.items.map((item) => {
-        const cartQuantity = cartDetailsMap.get(item.refNo);
+        const cardDetail = cartDetailsMap.get(item.refNo);
+        console.log(cardDetail)
         return {
           ...item,
-          cartQuantity: cartQuantity || 0, // If no quantity found, default to 0
+          cartQuantity: cardDetail?cardDetail.quantity:0, 
+          cartLineID: cardDetail?cardDetail.cartLineID:"", 
         };
       });
       return menu

@@ -1,18 +1,20 @@
 import { Trans } from "react-i18next"
 import { IconPlus } from "../../../assets/svgIcon"
 import PropTypes from 'prop-types'
+import { useSelector } from "react-redux";
 
 export const RenderButtonAdd = ({
   isLoading,
   handleClickButtonAdd
 }) => {
+  const theme = useSelector((state) => state.dataSlice.theme);
   return (
     <button
         style={{
           display: "flex",
           justifyContent: "center",
           borderRadius: "8px",
-          backgroundColor: "var(--button-color-active, #FF4782)",
+          backgroundColor: theme.secondary,
           marginTop: "8px",
           gap: "5px",
           padding: "5px 16px",

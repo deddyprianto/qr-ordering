@@ -13,7 +13,8 @@ export const RenderItemProduct = ({
   isPromo = false, 
   item, 
   cartID,
-  qtyInCart 
+  qtyInCart,
+  cartLineID
 }) => {
   const theme = useSelector((state) => state.dataSlice.theme);
   const [openModalAddItem, setOpenModalAddItem] = useState(false);
@@ -40,14 +41,22 @@ export const RenderItemProduct = ({
     setOpenModalAddItem(true);
   };
 
-  const handleClickButtonAdd = (qty) => {
+  const handleClickButtonAdd = (qty, lineID) => {
     if (getItemType(item) == "main") {
-      addItemToCart(cartID, setIsLoading, item, dispatch, toast, qty);
+      addItemToCart(
+        cartID, 
+        setIsLoading, 
+        item, 
+        dispatch, 
+        toast, 
+        qty,
+        lineID==""?"add":qty<1?"delete":"update",
+        lineID
+        );
       return;
     }
     setOpenModalAddItem(true);
   };
-  console.log(qtyInCart)
   return (
     <>
       <div
@@ -156,6 +165,7 @@ export const RenderItemProduct = ({
           <RenderButtonAddToCart
             isLoading={isLoading}
             qtyInCart={qtyInCart}
+            cartLineID={cartLineID}
             handleClickButtonAdd={handleClickButtonAdd}
           />
         </div>
@@ -176,5 +186,6 @@ RenderItemProduct.propTypes = {
   isPromo: PropTypes.bool,
   item: PropTypes.any,
   cartID: PropTypes.string,
-  qtyInCart: PropTypes.number
+  qtyInCart: PropTypes.number,
+  cartLineID: PropTypes.string
 };

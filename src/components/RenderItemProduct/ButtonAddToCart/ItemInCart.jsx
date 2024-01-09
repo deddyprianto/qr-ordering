@@ -4,10 +4,12 @@ import PropTypes from 'prop-types'
 export const RenderButtonItemInCart = ({
   isLoading,
   qtyInCart,
+  cartLineID,
   handleClickButtonAdd
 }) => {
   const handleClickChangeQty = (qty) => {
-    handleClickButtonAdd(qty)
+    console.log(cartLineID)
+    handleClickButtonAdd(qty, cartLineID)
   }
   return (
     <div className="items-stretch flex gap-1 mt-2"
@@ -31,6 +33,7 @@ export const RenderButtonItemInCart = ({
 }
 RenderButtonItemInCart.propTypes = {
   qtyInCart: PropTypes.number,
+  cartLineID: PropTypes.string,
   isLoading: PropTypes.bool,
   handleClickButtonAdd: PropTypes.func
 }

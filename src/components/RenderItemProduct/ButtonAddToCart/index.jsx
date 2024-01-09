@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 export const RenderButtonAddToCart = ({ 
   isLoading,
   qtyInCart,
+  cartLineID,
   handleClickButtonAdd
 }) => {
   if(qtyInCart==0) 
@@ -18,6 +19,7 @@ export const RenderButtonAddToCart = ({
     return (
       <RenderButtonItemInCart 
         qtyInCart={qtyInCart}
+        cartLineID={cartLineID}
         isLoading={isLoading}
         handleClickButtonAdd={handleClickButtonAdd}
       />
@@ -26,5 +28,6 @@ export const RenderButtonAddToCart = ({
 RenderButtonAddToCart.propTypes = {
   isLoading: PropTypes.bool,
   qtyInCart: PropTypes.number,
+  cartLineID: PropTypes.string,
   handleClickButtonAdd: PropTypes.func
 }
