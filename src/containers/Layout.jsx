@@ -5,7 +5,6 @@ import screen from "../../hooks/useWindowSize";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchItemObj } from "../app/dataSlicePersisted";
 import { EdgeSnackProvider } from "../components/EdgeSnack";
-// import RenderCartSummary from "../components/Home/RenderCartSummary";
 
 export default function Layout() {
   const childRef = useRef(null);
