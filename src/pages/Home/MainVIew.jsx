@@ -8,6 +8,7 @@ import { Skeleton } from "../../components/Skeleton";
 import { GET } from "../../utilities/services";
 import { ProductCatalog } from "./ProductCatalog";
 import { Trans } from "react-i18next";
+import { mapCartAndProduct } from "../../components/Home/productAndCartMapper";
 
 export const MainView = () => {
   const theme = useSelector((state) => state.dataSlice.theme);
@@ -22,28 +23,6 @@ export const MainView = () => {
   );
   const isSearchItem = useSelector((state) => state.dataSlice.isSearchItem);
 
-  const mapCartAndProduct = (menuList) => {
-    if(cartInfo.details?.length<1) return;
-    const cartDetailsMap = new Map();
-    cartInfo.details.forEach((item) => {
-      cartDetailsMap.set(item.itemNo, {
-        quantity: item.quantity,
-        cartLineID: item.uniqueID,
-      });
-    });
-
-    // Map product items with quantities from cart
-    const updatedMenuList = menuList.map((item) => {
-        const cardDetail = cartDetailsMap.get(item.refNo);
-        return {
-          ...item,
-          cartQuantity: cardDetail?cardDetail.quantity:0, 
-          cartLineID: cardDetail?cardDetail.cartLineID:"", 
-        };
-    });
-    return updatedMenuList;
-  }
-
   const fetchAllSubGroupItem = async (subGroup) => {
     for (const sb of subGroup) {
       sb.items = [];
@@ -56,7 +35,7 @@ export const MainView = () => {
           sb.items.length,
         );
         dataLength = result.dataLength;
-        let addMenu = mapCartAndProduct(result.tempItem)
+        let addMenu = mapCartAndProduct(result.tempItem, cartInfo)
         sb.items = sb.items.concat(addMenu);
       }
       setMenuSubGroup([...subGroup]);
@@ -143,7 +122,10 @@ export const MainView = () => {
             <Trans i18nKey={"you_may_like_this"} />
           </p>
         )}
-        <ProductCatalog menuSubGroup={menuSubGroup} />
+        <ProductCatalog 
+          menuSubGroup={menuSubGroup} 
+          setMenuSubGroup={setMenuSubGroup}
+        />
         {isProcessToGetItem && <Skeleton />}
       </div>
       {isSearchItem && (

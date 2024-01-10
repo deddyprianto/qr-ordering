@@ -14,7 +14,8 @@ export const RenderItemProduct = ({
   item, 
   cartID,
   qtyInCart,
-  cartLineID
+  cartLineID,
+  reMapProductAndCart
 }) => {
   const theme = useSelector((state) => state.dataSlice.theme);
   const [openModalAddItem, setOpenModalAddItem] = useState(false);
@@ -60,7 +61,8 @@ export const RenderItemProduct = ({
         toast, 
         qty,
         actionType(qty, lineID),
-        lineID
+        lineID,
+        reMapProductAndCart
         );
       return;
     }
@@ -176,6 +178,7 @@ export const RenderItemProduct = ({
             qtyInCart={qtyInCart}
             cartLineID={cartLineID}
             handleClickButtonAdd={handleClickButtonAdd}
+            reMapProductAndCart={reMapProductAndCart}
           />
         </div>
       </div>
@@ -196,5 +199,6 @@ RenderItemProduct.propTypes = {
   item: PropTypes.any,
   cartID: PropTypes.string,
   qtyInCart: PropTypes.number,
-  cartLineID: PropTypes.string
+  cartLineID: PropTypes.string,
+  reMapProductAndCart: PropTypes.func
 };

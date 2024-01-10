@@ -10,7 +10,8 @@ export const addItemToCart = async(
   toast, 
   qty, 
   type, 
-  lineID
+  lineID,
+  reMapProductAndCart
 ) => {
   setIsLoading(true);
   let body = {
@@ -29,7 +30,8 @@ export const addItemToCart = async(
     if(result.resultCode == 200){
       dispatch(setCartInfo(result.data));
       dispatch(setIsCartSummaryBlink(true));
-      toastSuccess(type, item.productInfo?.itemName);
+      toastSuccess(type, toast, item.itemName);
+      reMapProductAndCart(result.data);
     }
     else toast.open(result.message, 'error')
     setIsLoading(false);

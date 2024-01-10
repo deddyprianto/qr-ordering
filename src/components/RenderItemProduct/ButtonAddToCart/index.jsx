@@ -29,5 +29,5 @@ RenderButtonAddToCart.propTypes = {
   isLoading: PropTypes.bool,
   qtyInCart: PropTypes.number,
   cartLineID: PropTypes.string,
-  handleClickButtonAdd: PropTypes.func
+  handleClickButtonAdd: PropTypes.func,
 }
