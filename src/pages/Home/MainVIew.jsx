@@ -33,20 +33,15 @@ export const MainView = () => {
     });
 
     // Map product items with quantities from cart
-    const updatedMenuList = menuList.map((menu) => {
-      menu.items = menu.items.map((item) => {
+    const updatedMenuList = menuList.map((item) => {
         const cardDetail = cartDetailsMap.get(item.refNo);
-        console.log(cardDetail)
         return {
           ...item,
           cartQuantity: cardDetail?cardDetail.quantity:0, 
           cartLineID: cardDetail?cardDetail.cartLineID:"", 
         };
-      });
-      return menu
     });
-    setIsProcessToGetItem(false);
-    setMenuSubGroup(updatedMenuList);
+    return updatedMenuList;
   }
 
   const fetchAllSubGroupItem = async (subGroup) => {
@@ -61,11 +56,12 @@ export const MainView = () => {
           sb.items.length,
         );
         dataLength = result.dataLength;
-        sb.items = sb.items.concat(result.tempItem);
+        let addMenu = mapCartAndProduct(result.tempItem)
+        sb.items = sb.items.concat(addMenu);
       }
       setMenuSubGroup([...subGroup]);
     }
-    mapCartAndProduct(subGroup);
+    setIsProcessToGetItem(false);
   };
 
   const handleSelectGroup = async (type, refNo) => {
@@ -77,12 +73,18 @@ export const MainView = () => {
       setSelectedSubGroup(data.tempSubGroup[0].refNo);
       fetchAllSubGroupItem(data.tempSubGroup);
     } else {
+      let tempSubGroup = [{
+        items:data.tempItem,
+        buttonType: type,
+        refNo: refNo, 
+      }]
       setMenuSubGroup([
         {
           refNo: "",
           items: data.tempItem,
         },
       ]);
+      fetchAllSubGroupItem(tempSubGroup);
     }
     setIsLoading(false);
   };
