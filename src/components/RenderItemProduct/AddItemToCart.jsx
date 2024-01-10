@@ -45,7 +45,7 @@ export const addItemToCart = async(
 const apiService = async(type, cartID, lineID, body) => {
   switch (type) {
     case "add":
-      return await apiCart("POST", `${cartID}/additems`, body);
+      return await apiCart("POST", `${cartID}/additems`, [body]);
     case "update":
       return await apiCart("PATCH", `${cartID}/${lineID}/changeitemqty`, {
         uniqueID: lineID,
