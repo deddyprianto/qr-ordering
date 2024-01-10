@@ -47,7 +47,10 @@ const apiService = async(type, cartID, lineID, body) => {
     case "add":
       return await apiCart("POST", `${cartID}/additems`, body);
     case "update":
-      return await apiCart("POST", `${cartID}/${lineID}`, body);
+      return await apiCart("PATCH", `${cartID}/${lineID}/changeitemqty`, {
+        uniqueID: lineID,
+        quantity: body.quantity
+      });
     case "delete":
       return await apiCart("DELETE", `${cartID}/${lineID}`, {});    
     default:

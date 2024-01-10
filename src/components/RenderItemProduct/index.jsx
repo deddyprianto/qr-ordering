@@ -41,6 +41,15 @@ export const RenderItemProduct = ({
     setOpenModalAddItem(true);
   };
 
+  const actionType = (qty, lineID) => {
+    if((lineID || "")=="")
+      return "add";
+    else if(qty<1)
+      return "delete";
+    else 
+      return "update";
+  }
+
   const handleClickButtonAdd = (qty, lineID) => {
     if (getItemType(item) == "main") {
       addItemToCart(
@@ -50,7 +59,7 @@ export const RenderItemProduct = ({
         dispatch, 
         toast, 
         qty,
-        lineID==""?"add":qty<1?"delete":"update",
+        actionType(qty, lineID),
         lineID
         );
       return;
