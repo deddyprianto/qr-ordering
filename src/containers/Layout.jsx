@@ -8,7 +8,6 @@ import { EdgeSnackProvider } from "../components/EdgeSnack";
 
 export default function Layout() {
   const childRef = useRef(null);
-
   const dispatch = useDispatch();
   const isSearchItem = useSelector((state) => state.dataSlice.isSearchItem);
   const { enableSearchUsingScroll, searchItemObj } = useSelector(
@@ -66,6 +65,7 @@ export default function Layout() {
             gridAutoFlow: "row",
             gridTemplateAreas: '"."\n    "."\n    "."',
             overflow: "hidden",
+            font: "500 14px/140% Helvetica Neue, sans-serif ",
           }}
         >
           <div style={{ position: "fixed", top: 0, right: 0 }}>
@@ -79,7 +79,6 @@ export default function Layout() {
           >
             <Outlet />
           </div>
-          {/* <RenderCartSummary /> */}
         </div>
       );
     } else {
@@ -123,7 +122,6 @@ export default function Layout() {
               >
                 <Outlet />
               </div>
-              {/* <RenderCartSummary /> */}
             </div>
           </div>
         </div>

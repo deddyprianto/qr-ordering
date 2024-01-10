@@ -49,15 +49,15 @@ const RenderModalItemDetail = ({
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-modal-popup-container z-50 inset-0 backdrop-filter backdrop-blur-sm bg-[black] bg-opacity-50">
-      {/* <div > */}
-        <div className={classNameCustom}>
+      <div className={classNameCustom}>
         <div className="grid grid-cols-[1fr] grid-rows-custom gap-0 grid-flow-row h-full w-full">
           {isLoading && <ParentBlur />}
-          <RenderTopLabel 
-            setOpenModal={setOpenModal} 
+          <RenderTopLabel
+            setOpenModal={setOpenModal}
             typeOfModalAddItem={typeOfModalAddItem}
-            itemName={item.itemName} 
-            price={item.retailPrice}/>
+            itemName={item.itemName}
+            price={item.retailPrice}
+          />
           <RenderMainContainer
             item={item}
             attList={attList}

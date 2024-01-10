@@ -5,8 +5,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSearchItemObj, setEnableSearchUsingScroll } from "../app/dataSlicePersisted";
 import { setIsSearchItem } from "../app/dataSlice";
 import { Trans } from "react-i18next";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Header() {
+  const navigate = useNavigate();
+  let location = useLocation();
   const theme = useSelector((state) => state.dataSlice.theme);
   const dispatch = useDispatch();
   const { isSearchItem, orderType } = useSelector((state) => state.dataSlice);
@@ -106,24 +109,39 @@ export default function Header() {
   };
 
   const renderMainHeader = () => {
-    return (
-      <div
-        className={`justify-between items-stretch border-b-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] bg-[${theme.primary}] flex w-full gap-5 px-4 py-2.5 border-b border-solid`}
-      >
-        {renderConditionally()}
+    if (location.pathname === "/cart") {
+      return (
         <div
-          onClick={() => openSearchBar()}
-          onKeyDown={(event) => {
-            if (event.key === "Enter" || event.key === " ") {
-              openSearchBar();
-            }
+          onClick={() => {
+            console.log("ll");
+            navigate("/");
           }}
-          className={`justify-center items-center bg-[${theme.secondary}] flex aspect-square flex-col w-[46px] h-[46px] px-3 rounded-[1000px]`}
+          className={`bg-[${theme.primary}] flex text-white items-center text-[16px] font-medium py-[5px]`}
         >
-          <SearchIcon />
+          <IconArrowLeft />
+          <div>Order Cart</div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div
+          className={`justify-between items-stretch border-b-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] bg-[${theme.primary}] flex w-full gap-5 px-4 py-2.5 border-b border-solid`}
+        >
+          {renderConditionally()}
+          <div
+            onClick={() => openSearchBar()}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                openSearchBar();
+              }
+            }}
+            className={`justify-center items-center bg-[${theme.secondary}] flex aspect-square flex-col w-[46px] h-[46px] px-3 rounded-[1000px]`}
+          >
+            <SearchIcon />
+          </div>
+        </div>
+      );
+    }
   };
 
   const renderMain = () => {

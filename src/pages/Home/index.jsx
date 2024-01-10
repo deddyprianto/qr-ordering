@@ -4,10 +4,11 @@ import { setShowSplashScreen } from "../../app/dataSlicePersisted";
 import { RenderSplashScreen } from "../../components/SplashScreen";
 import { MainView } from "./MainVIew";
 import { RenderOrderType } from "./OrderType";
+import RenderCartSummary from "../../components/Home/RenderCartSummary";
 
 export function Component() {
-
   const dispatch = useDispatch();
+  const cartInfo = useSelector((state) => state.dataSlicePersisted.cartInfo);
   const { isSplashScreenShow } = useSelector(
     (state) => state.dataSlicePersisted,
   );
@@ -29,5 +30,10 @@ export function Component() {
     else return <MainView />;
   };
 
-  return <React.Fragment>{renderMain()}</React.Fragment>;
+  return (
+    <React.Fragment>
+      {renderMain()}
+      {cartInfo?.details?.length > 0 && <RenderCartSummary />}
+    </React.Fragment>
+  );
 }
