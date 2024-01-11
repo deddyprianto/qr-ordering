@@ -8,7 +8,7 @@ export const ProductCatalog = () => {
   const menuSubGroup = useSelector(
     (state) => state.dataSlice.menuSubGroup
   );
-  console.log(menuSubGroup)
+
   return (
     menuSubGroup?.map((menu, idx)=>{
       return(

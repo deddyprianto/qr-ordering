@@ -6,11 +6,16 @@ import image1 from "../../assets/image1.png";
 import PropTypes from "prop-types";
 import { SkeletonNavbar } from "../../components/Skeleton";
 
-export const NavbarMenu = ({ handleSelectGroup }) => {
+export const NavbarMenu = ({ 
+  handleSelectGroup,
+  dataCategory,
+  isSelectedItem,
+  dtCategoryLength,
+  setDataCategory,
+  setIsSelectedItem,
+  setDtCategoryLength
+}) => {
   const theme = useSelector((state) => state.dataSlice.theme);
-  const [isSelectedItem, setIsSelectedItem] = useState("");
-  const [dataCategory, setDataCategory] = useState([]);
-  const [dtCategoryLength, setDtCategoryLength] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
   const outletName = useSelector(
@@ -28,6 +33,7 @@ export const NavbarMenu = ({ handleSelectGroup }) => {
   }, []);
 
   const mountData = async () => {
+    if(dataCategory.length>0) return;
     setIsLoading(true);
     let groupList = [];
     let dataLength = 1;
@@ -108,4 +114,10 @@ export const NavbarMenu = ({ handleSelectGroup }) => {
 
 NavbarMenu.propTypes = {
   handleSelectGroup: PropTypes.func,
+  dataCategory: PropTypes.bool,
+  isSelectedItem: PropTypes.bool,
+  dtCategoryLength: PropTypes.number,
+  setDataCategory: PropTypes.func,
+  setIsSelectedItem: PropTypes.func,
+  setDtCategoryLength: PropTypes.func
 };
