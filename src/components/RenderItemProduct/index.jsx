@@ -8,16 +8,17 @@ import { Trans } from "react-i18next";
 import { getItemType } from "./GetItemType";
 import { addItemToCart } from "./AddItemToCart";
 import { RenderButtonAddToCart } from "./ButtonAddToCart";
+import { setMenuSubGroup } from "../../app/dataSlice";
+import { mapCartAndProduct } from "../Home/productAndCartMapper";
 
 export const RenderItemProduct = ({ 
   isPromo = false, 
   item, 
   cartID,
   qtyInCart,
-  cartLineID,
-  reMapProductAndCart
+  cartLineID
 }) => {
-  const theme = useSelector((state) => state.dataSlice.theme);
+  const { theme, menuSubGroup } = useSelector((state) => state.dataSlice);
   const [openModalAddItem, setOpenModalAddItem] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
@@ -42,7 +43,14 @@ export const RenderItemProduct = ({
     setOpenModalAddItem(true);
   };
 
-
+  const reMapProductAndCart = (newCartInfo) => {
+    let newMenuSubGroup = JSON.parse(JSON.stringify(menuSubGroup));
+    for (const sb of newMenuSubGroup) {
+      let itemReplacer = mapCartAndProduct(sb.items, newCartInfo)
+      sb.items = itemReplacer
+      dispatch(setMenuSubGroup([...newMenuSubGroup]));
+    }
+  };
 
   const handleClickButtonAdd = async(qty, lineID) => {
     if (getItemType(item) == "main") {
@@ -171,7 +179,6 @@ export const RenderItemProduct = ({
             qtyInCart={qtyInCart}
             cartLineID={cartLineID}
             handleClickButtonAdd={handleClickButtonAdd}
-            reMapProductAndCart={reMapProductAndCart}
           />
         </div>
       </div>
@@ -192,6 +199,5 @@ RenderItemProduct.propTypes = {
   item: PropTypes.any,
   cartID: PropTypes.string,
   qtyInCart: PropTypes.number,
-  cartLineID: PropTypes.string,
-  reMapProductAndCart: PropTypes.func
+  cartLineID: PropTypes.string
 };
