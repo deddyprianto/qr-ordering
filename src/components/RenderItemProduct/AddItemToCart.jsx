@@ -4,16 +4,13 @@ import { apiCart } from "../../services/Cart";
 
 export const addItemToCart = async(
   cartID, 
-  setIsLoading, 
   item, 
   dispatch, 
   toast, 
   qty, 
-  type, 
   lineID,
   reMapProductAndCart
 ) => {
-  setIsLoading(true);
   let body = {
     "itemNo": item.itemNo,
     "quantity": qty,
@@ -25,6 +22,7 @@ export const addItemToCart = async(
     "bundles": []
   };
   try {
+    let type = actionType(qty, lineID)
     const result = await apiService(type, cartID, lineID, body)
 
     if(result.resultCode == 200){
@@ -34,15 +32,22 @@ export const addItemToCart = async(
       reMapProductAndCart(result.data);
     }
     else toast.open(result.message, 'error')
-    setIsLoading(false);
     setTimeout(() => {
       dispatch(setIsCartSummaryBlink(false));
     }, 1000);
   } catch (error) {
-    setIsLoading(false);
     console.log(error);
   }
 };
+
+const actionType = (qty, lineID) => {
+  if((lineID || "")=="")
+    return "add";
+  else if(qty<1)
+    return "delete";
+  else 
+    return "update";
+}
 
 const apiService = async(type, cartID, lineID, body) => {
   switch (type) {

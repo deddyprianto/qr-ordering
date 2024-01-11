@@ -42,28 +42,21 @@ export const RenderItemProduct = ({
     setOpenModalAddItem(true);
   };
 
-  const actionType = (qty, lineID) => {
-    if((lineID || "")=="")
-      return "add";
-    else if(qty<1)
-      return "delete";
-    else 
-      return "update";
-  }
 
-  const handleClickButtonAdd = (qty, lineID) => {
+
+  const handleClickButtonAdd = async(qty, lineID) => {
     if (getItemType(item) == "main") {
-      addItemToCart(
+      setIsLoading(true);
+      await addItemToCart(
         cartID, 
-        setIsLoading, 
         item, 
         dispatch, 
         toast, 
         qty,
-        actionType(qty, lineID),
         lineID,
         reMapProductAndCart
-        );
+      );
+      setIsLoading(false);
       return;
     }
     setOpenModalAddItem(true);

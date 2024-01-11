@@ -16,21 +16,21 @@ export const RenderButtonItemInCart = ({
     <div className="items-stretch flex gap-1 mt-2"
       style={{filter: isLoading ? "blur(1px)" : "",}}
     >
-      <div className="justify-center items-center flex flex-col px-3 py-1 rounded-lg"
+      <button className="justify-center items-center flex flex-col px-3 py-1 rounded-lg"
         style={{backgroundColor: theme.secondary}}
         onClick={()=>handleClickChangeQty(qtyInCart-1)}
       >
         <IconMinus width="16"/>
-      </div>
+      </button>
       <span className="text-gray-700 text-center text-base font-bold leading-6 whitespace-nowrap justify-center items-stretch bg-zinc-300 px-7 py-1 rounded-lg">
         {qtyInCart}
       </span>
-      <div className="justify-center items-center flex flex-col px-3 py-1 rounded-lg"
+      <button className="justify-center items-center flex flex-col px-3 py-1 rounded-lg"
         style={{backgroundColor: theme.secondary}}
         onClick={()=>handleClickChangeQty(qtyInCart+1)}
       >
         <IconPlus width="16"/>
-      </div>
+      </button>
     </div>
   )
 }
