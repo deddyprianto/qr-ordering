@@ -10,12 +10,15 @@ import { RenderItemPrice } from "./ItemPrice";
 import { addItemToCart } from "../../../RenderItemProduct/AddItemToCart";
 import { setMenuSubGroup } from "../../../../app/dataSlice";
 import { mapCartAndProduct } from "../../productAndCartMapper"
+import { addNewCart } from "../../../../components/GenerateCart"
+import { setCartInfo } from "../../../../app/dataSlicePersisted";
 
 export const RenderItemCard = ({ item }) => {
   const dispatch = useDispatch()
   const [openModalAddItem, setOpenModalAddItem] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const cartID = useSelector((state) => state.dataSlicePersisted.cartInfo?.uniqueID)
+  const outletName = useSelector((state) => state.dataSlicePersisted.outletName)
   const { menuSubGroup } = useSelector((state) => state.dataSlice);
   const toast = useEdgeSnack();
   const handleOpenModalAddItem = () => {
@@ -31,11 +34,17 @@ export const RenderItemCard = ({ item }) => {
     }
   };
 
+  const saveNewCartInfo = (data) => {
+    dispatch(setCartInfo(data));
+  }
+
   const handleClickButtonAdd = async() => {
     if(getItemType(item)=="main"){
       setIsLoading(true);
+      let curCartID = cartID;
+      if(!curCartID) curCartID = await addNewCart(setIsLoading, outletName, saveNewCartInfo);
       await addItemToCart(
-        cartID, 
+        curCartID, 
         item, 
         dispatch, 
         toast,

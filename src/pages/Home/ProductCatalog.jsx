@@ -31,11 +31,11 @@ export const ProductCatalog = () => {
               return (
                 <RenderItemProduct
                   key={`${item.buttonType}_${item.refNo}`}
-                  cartID={cartInfo.uniqueID}
-                  qtyInCart={item.cartQuantity || 0}
-                  cartLineID={item.cartLineID || ""}
-                  isPromo={item.productInfo?.promotions.length > 0}
-                  item={item.productInfo}
+                  cartID={cartInfo?.uniqueID}
+                  qtyInCart={item?.cartQuantity || 0}
+                  cartLineID={item?.cartLineID || ""}
+                  isPromo={item?.productInfo?.promotions.length > 0}
+                  item={item?.productInfo}
                 />
               );
             })}

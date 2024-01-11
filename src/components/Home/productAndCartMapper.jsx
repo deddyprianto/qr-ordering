@@ -1,5 +1,5 @@
 export const mapCartAndProduct = (menuList, cartInfo) => {
-  if(cartInfo.details?.length<1) return;
+  if(cartInfo.details?.length<1) return menuList;
   const cartDetailsMap = new Map();
   cartInfo.details.forEach((item) => {
     cartDetailsMap.set(item.itemNo, {

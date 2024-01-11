@@ -10,6 +10,8 @@ import { addItemToCart } from "./AddItemToCart";
 import { RenderButtonAddToCart } from "./ButtonAddToCart";
 import { setMenuSubGroup } from "../../app/dataSlice";
 import { mapCartAndProduct } from "../Home/productAndCartMapper";
+import { setCartInfo } from "../../app/dataSlicePersisted";
+import { addNewCart } from "../GenerateCart";
 
 export const RenderItemProduct = ({ 
   isPromo = false, 
@@ -19,6 +21,7 @@ export const RenderItemProduct = ({
   cartLineID
 }) => {
   const { theme, menuSubGroup } = useSelector((state) => state.dataSlice);
+  const outletName = useSelector((state) => state.dataSlicePersisted.outletName)
   const [openModalAddItem, setOpenModalAddItem] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
@@ -52,11 +55,17 @@ export const RenderItemProduct = ({
     }
   };
 
+  const saveNewCartInfo = (data) => {
+    dispatch(setCartInfo(data));
+  }
+
   const handleClickButtonAdd = async(qty, lineID) => {
     if (getItemType(item) == "main") {
       setIsLoading(true);
+      let curCartID = cartID;
+      if(!curCartID) curCartID = await addNewCart(setIsLoading, outletName, saveNewCartInfo);
       await addItemToCart(
-        cartID, 
+        curCartID, 
         item, 
         dispatch, 
         toast, 

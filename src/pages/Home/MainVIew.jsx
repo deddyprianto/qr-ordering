@@ -81,7 +81,7 @@ export const MainView = () => {
       fetchAllSubGroupItem(data.tempSubGroup);
     } else {
       let tempSubGroup = [{
-        items:data.tempItem,
+        items: data.tempItem,
         buttonType: type,
         refNo: refNo, 
       }]

@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { IconPlus } from "../../../assets/svgIcon";
-import { addNewCart } from "./GenerateCart";
+import { addNewCart } from "../../GenerateCart";
 import { useDispatch, useSelector } from "react-redux";
 import { generateAttributesBody } from "./ItemAttributeBody";
 import { apiCartAddItem } from "./AddItemToCart";
@@ -47,6 +47,7 @@ export const RenderButtonAdd = ({
       return;
     }
     
+    setIsLoading(true);
     let cartID = cartInfo?.uniqueID;
     if(!cartID) cartID = await addNewCart(setIsLoading, outletName, resetCartInfo);
 
@@ -77,7 +78,8 @@ export const RenderButtonAdd = ({
       default:
         break;
     }
-    await apiCartAddItem(cartID, [body], setIsLoading, setOpenModal, resetCartInfo, item.itemName, toast);
+    await apiCartAddItem(cartID, [body], setOpenModal, resetCartInfo, item.itemName, toast);
+    setIsLoading(false);
   }
 
   return (
