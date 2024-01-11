@@ -1,16 +1,17 @@
 import { IconCheck, IconWarning } from "../../assets/svgIcon";
 import { useTimeOut } from "./utils/useTimeOut";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
-export const EdgeSnack = ({type, className, close, content}) => {
-  
+export const EdgeSnack = ({ type, className, close, content }) => {
+  const theme = useSelector((state) => state.dataSlice.theme);
   useTimeOut(close, 2000);
 
   const getBackGroundColor = () => {
     if (type?.toLowerCase() == "success") {
-      return "bg-green-700";
+      return `bg-[${theme.success}]`;
     } else if (type?.toLowerCase() == "error") {
-      return "bg-red-700";
+      return `bg-[${theme.warning}]`;
     }
   };
 

@@ -16,7 +16,7 @@ export const Skeleton = () => {
     );
   };
   return (
-    <div className="grid grid-cols-2 gap-4 px-[16px]">
+    <div className="grid grid-cols-2 gap-4 mt-1">
       {renderSkeletonChild()}
       {renderSkeletonChild()}
     </div>
@@ -64,6 +64,16 @@ export const SkeletonSearch = () => {
       {renderSkeletonChild()}
       {renderSkeletonChild()}
       {renderSkeletonChild()}
+    </div>
+  );
+};
+
+export const SkeletonSubGroupMenu = () => {
+  return (
+    <div className="mt-5 flex flex-col gap-2 animate-pulse">
+      <div className="h-2 bg-gray-300 rounded-md w-1/2"></div>
+      <div className="h-2 bg-gray-300 rounded-md w-[75%]"></div>
+      <div className="flex justify-center items-center w-full h-2 rounded-lg bg-gray-300"></div>
     </div>
   );
 };

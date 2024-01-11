@@ -2,9 +2,19 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   data: "",
-  isOpenModalAuth: false,
+  isOpenModalAuth: true,
   isCartSummaryBlink: false,
-  isSearchItem: false
+  isSearchItem: false,
+  theme: {
+    success: "#1A883C",
+    warning: "#CF3030",
+    textColor: "#343A4A",
+    disableColor: "#9D9D9D",
+    discountedPrice: "#DDD",
+    backgroundMain: "#F9F9F9",
+    primary: "#00524C",
+    secondary: "#FF4782",
+  },
 };
 
 const dataSlice = createSlice({
@@ -22,14 +32,13 @@ const dataSlice = createSlice({
     },
     setIsCartSummaryBlink: (state, action) => {
       state.isCartSummaryBlink = action.payload;
-    }
+    },
+    setTheme: (state, action) => {
+      state.theme = action.payload;
+    },
   },
 });
 
-export const { 
-  setData, 
-  setIsOpenModalAuth,
-  setIsSearchItem,
-  setIsCartSummaryBlink 
-} = dataSlice.actions;
+export const { setData, setIsOpenModalAuth, setIsSearchItem, setIsCartSummaryBlink } =
+  dataSlice.actions;
 export default dataSlice.reducer;

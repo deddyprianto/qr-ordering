@@ -7,10 +7,12 @@ import PropTypes from "prop-types";
 import { SkeletonNavbar } from "../../components/Skeleton";
 
 export const NavbarMenu = ({ handleSelectGroup }) => {
+  const theme = useSelector((state) => state.dataSlice.theme);
   const [isSelectedItem, setIsSelectedItem] = useState("");
   const [dataCategory, setDataCategory] = useState([]);
   const [dtCategoryLength, setDtCategoryLength] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+
   const outletName = useSelector(
     (state) => state.dataSlicePersisted.outletName,
   );
@@ -22,25 +24,26 @@ export const NavbarMenu = ({ handleSelectGroup }) => {
     return () => {
       clearTimeout(timetOutId);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const mountData = async() => {
-    setIsLoading(true)
+  const mountData = async () => {
+    setIsLoading(true);
     let groupList = [];
     let dataLength = 1;
-  
+
     while (groupList.length < dataLength && dataLength !== 0) {
       let result = await getMenuGroup(groupList.length);
       dataLength = result.dataLength;
       groupList = groupList.concat(result.data);
-      setDataCategory([...groupList])
-      if(isSelectedItem=="") handleChangeGroup(groupList[0].type, groupList[0].refNo)
+      setDataCategory([...groupList]);
+      if (isSelectedItem == "")
+        handleChangeGroup(groupList[0].type, groupList[0].refNo);
     }
-  setIsLoading(false);
+    setIsLoading(false);
   };
 
-  const getMenuGroup = async(skip=0, take=5) => {
+  const getMenuGroup = async (skip = 0, take = 5) => {
     let obj = {
       skip: skip,
       take: take,
@@ -50,7 +53,7 @@ export const NavbarMenu = ({ handleSelectGroup }) => {
       setDtCategoryLength(result.dataLength);
       let data = [];
       let dataLength = result.dataLength;
-      for(const dt of result.data){
+      for (const dt of result.data) {
         if (
           dt.buttonType.toLowerCase() == "category" ||
           dt.buttonType.toLowerCase() == "folder"
@@ -64,35 +67,41 @@ export const NavbarMenu = ({ handleSelectGroup }) => {
           });
         }
       }
-      return {data, dataLength};
+      return { data, dataLength };
     });
-  }
+  };
 
   const handleChangeGroup = (type, refNo) => {
     setIsSelectedItem(refNo);
     handleSelectGroup(type, refNo);
-  }
-  
+  };
+
   return (
-    <div className="overflow-x-auto flex border-t-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] bg-[#00524C] rounded-b-lg pl-[16px] pr-[16px]">
-      {dataCategory.map((item) => {
-        return (
-          <MenuGroup
-            key={`${item.type}_${item.refNo}_${item.name}`}
-            label={item.name}
-            imageItem={item.img}
-            refNo={item.refNo}
-            type={item.type}
-            handleSelected={() =>{
-              handleChangeGroup(item.type, item.refNo)
-            }
-            }
-            isGlow={item.refNo == isSelectedItem}
-          />
-        );
-      })}
-      {((dtCategoryLength>dataCategory.length || dataCategory.length==0) 
-          && isLoading) && <SkeletonNavbar />}
+    <div
+      className={`overflow-x-auto flex border-t-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] bg-[${theme.primary}] rounded-b-lg pl-[16px] pr-[16px]`}
+    >
+      {(dtCategoryLength > dataCategory.length || dataCategory.length == 0) &&
+      isLoading ? (
+        <SkeletonNavbar />
+      ) : (
+        <>
+          {dataCategory.map((item) => {
+            return (
+              <MenuGroup
+                key={`${item.type}_${item.refNo}_${item.name}`}
+                label={item.name}
+                imageItem={item.img}
+                refNo={item.refNo}
+                type={item.type}
+                handleSelected={() => {
+                  handleChangeGroup(item.type, item.refNo);
+                }}
+                isGlow={item.refNo == isSelectedItem}
+              />
+            );
+          })}
+        </>
+      )}
     </div>
   );
 };

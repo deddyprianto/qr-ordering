@@ -7,6 +7,8 @@ import rootReducer from "./rootReducers";
 const persistConfig = {
   key: "root",
   storage,
+  whitelist: ["dataSlicePersisted"],
+  blacklist: ["dataSlice"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

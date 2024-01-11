@@ -12,12 +12,11 @@ export function Component() {
   const [isFirstOpenSearchBar, setIsFirstOpenSearchBar] = useState(true);
 
   const dispatch = useDispatch();
-  const { searchItemObj, isSplashScreen } = useSelector(
+  const { searchItemObj, isSplashScreenShow } = useSelector(
     (state) => state.dataSlicePersisted,
   );
-  const isSearchItem = useSelector(
-    (state) => state.dataSlice.isSearchItem,
-  );
+
+  const isSearchItem = useSelector((state) => state.dataSlice.isSearchItem);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -43,7 +42,7 @@ export function Component() {
   }, [isSearchItem]);
 
   const renderMain = () => {
-    if (isSplashScreen) return <RenderSplashScreen />;
+    if (isSplashScreenShow) return <RenderSplashScreen />;
     else if (isFirstOpenSearchBar) return <MainView />;
     else return <RenderSearchItemBar searchText={searchItemObj?.searchText} />;
   };

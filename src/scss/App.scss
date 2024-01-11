@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Hide scrollbar for WebKit-based browsers */
+.scroll-container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Set up the container with overflow and other styles */
+  .scroll-container {
+    width: 100%; /* Set your desired width */
+    overflow-x: auto; /* Enable horizontal scroll */
+    white-space: nowrap; /* Prevent text wrapping */
+  }
+  
+  .scroll-content {
+    padding: 10px; /* Optional: add padding for better readability */
+  }
+
+  
+  
