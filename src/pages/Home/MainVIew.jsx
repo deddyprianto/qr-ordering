@@ -72,6 +72,7 @@ export const MainView = () => {
 
   const handleSelectGroup = async (type, refNo) => {
     setIsLoading(true);
+    setIsProcessToGetItem(true);
     dispatch(setMenuSubGroup([]));
     let data = await getMenuItem(type, refNo);
     setIsHasSubGroup(data.tempSubGroup?.length > 0);
