@@ -1,12 +1,15 @@
 import { Fragment } from "react";
 import PropTypes from "prop-types";
 import { SkeletonSubGroupMenu } from "../../components/Skeleton";
+import { useSelector } from "react-redux";
 
 export const SubGroupMenu = ({
-  menuSubGroup,
   selectedSubGroup,
   setSelectedSubGroup,
 }) => {
+  const menuSubGroup = useSelector(
+    (state) => state.dataSlice.menuSubGroup
+  );
   const handleClick = (refNo, idx) => {
     setSelectedSubGroup(refNo);
     scrollToSubMenuItem("sub_" + idx + "_" + refNo);
@@ -52,7 +55,6 @@ export const SubGroupMenu = ({
 };
 
 SubGroupMenu.propTypes = {
-  menuSubGroup: PropTypes.any,
   selectedSubGroup: PropTypes.string,
   setSelectedSubGroup: PropTypes.func,
 };

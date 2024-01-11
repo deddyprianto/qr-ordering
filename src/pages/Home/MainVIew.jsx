@@ -2,26 +2,29 @@ import { useState } from "react";
 import { NavbarMenu } from "./NavbarMenu";
 import { Insights } from "../../components/Insights";
 import { SubGroupMenu } from "./SubGroupMenu";
-import {  useSelector } from "react-redux";
+import {  useDispatch, useSelector } from "react-redux";
 import "../../scss/animation.scss";
 import { Skeleton } from "../../components/Skeleton";
 import { GET } from "../../utilities/services";
 import { ProductCatalog } from "./ProductCatalog";
 import { Trans } from "react-i18next";
 import { mapCartAndProduct } from "../../components/Home/productAndCartMapper";
+import { setMenuSubGroup } from "../../app/dataSlice";
 
 export const MainView = () => {
   const theme = useSelector((state) => state.dataSlice.theme);
   const [isLoading, setIsLoading] = useState(true);
   const [highlights, setHighlights] = useState(true);
-  const [menuSubGroup, setMenuSubGroup] = useState([]);
   const [selectedSubGroup, setSelectedSubGroup] = useState("");
   const [isHasSubGroup, setIsHasSubGroup] = useState([]);
   const [isProcessToGetItem, setIsProcessToGetItem] = useState(true);
+  const dispatch = useDispatch();
   const {outletName, cartInfo} = useSelector(
     (state) => state.dataSlicePersisted,
   );
-  const isSearchItem = useSelector((state) => state.dataSlice.isSearchItem);
+  const { isSearchItem } = useSelector(
+    (state) => state.dataSlice
+  );
 
   const fetchAllSubGroupItem = async (subGroup) => {
     for (const sb of subGroup) {
@@ -38,14 +41,14 @@ export const MainView = () => {
         let addMenu = mapCartAndProduct(result.tempItem, cartInfo)
         sb.items = sb.items.concat(addMenu);
       }
-      setMenuSubGroup([...subGroup]);
+      dispatch(setMenuSubGroup([...subGroup]));
     }
     setIsProcessToGetItem(false);
   };
 
   const handleSelectGroup = async (type, refNo) => {
     setIsLoading(true);
-    setMenuSubGroup([]);
+    dispatch(setMenuSubGroup([]));
     let data = await getMenuItem(type, refNo);
     setIsHasSubGroup(data.tempSubGroup?.length > 0);
     if (data.tempSubGroup?.length > 0) {
@@ -57,12 +60,12 @@ export const MainView = () => {
         buttonType: type,
         refNo: refNo, 
       }]
-      setMenuSubGroup([
+      dispatch(setMenuSubGroup([
         {
           refNo: "",
           items: data.tempItem,
         },
-      ]);
+      ]));
       fetchAllSubGroupItem(tempSubGroup);
     }
     setIsLoading(false);
@@ -105,7 +108,6 @@ export const MainView = () => {
         )}
         {isHasSubGroup && (
           <SubGroupMenu
-            menuSubGroup={menuSubGroup}
             selectedSubGroup={selectedSubGroup}
             setSelectedSubGroup={setSelectedSubGroup}
           />
@@ -122,10 +124,7 @@ export const MainView = () => {
             <Trans i18nKey={"you_may_like_this"} />
           </p>
         )}
-        <ProductCatalog 
-          menuSubGroup={menuSubGroup} 
-          setMenuSubGroup={setMenuSubGroup}
-        />
+        <ProductCatalog />
         {isProcessToGetItem && <Skeleton />}
       </div>
       {isSearchItem && (
