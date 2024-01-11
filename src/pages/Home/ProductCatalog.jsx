@@ -1,13 +1,23 @@
 import PropTypes from "prop-types";
 import { RenderItemProduct } from "../../components/RenderItemProduct";
 import { useSelector } from "react-redux";
+import { mapCartAndProduct } from "../../components/Home/productAndCartMapper";
 
 export const ProductCatalog = ({ 
-  menuSubGroup
+  menuSubGroup,
+  setMenuSubGroup
 }) => {
   const cartInfo = useSelector(
     (state) => state.dataSlicePersisted.cartInfo,
   );
+
+  const reMapProductAndCart = (newCartInfo) => {
+    for (const sb of menuSubGroup) {
+      let itemReplacer = mapCartAndProduct(sb.items, newCartInfo)
+      sb.items = itemReplacer;
+      setMenuSubGroup([...menuSubGroup]);
+    }
+  }
 
   return (
     menuSubGroup?.map((menu, idx)=>{
@@ -32,8 +42,11 @@ export const ProductCatalog = ({
               <RenderItemProduct
                 key={`${item.buttonType}_${item.refNo}`}
                 cartID={cartInfo.uniqueID}
+                qtyInCart={item.cartQuantity || 0}
+                cartLineID={item.cartLineID || ""}
                 isPromo={item.productInfo?.promotions.length > 0}
                 item={item.productInfo}
+                reMapProductAndCart={reMapProductAndCart}
               />
             );
           })}
@@ -46,5 +59,6 @@ export const ProductCatalog = ({
 }
 
 ProductCatalog.propTypes = {
-  menuSubGroup: PropTypes.array
+  menuSubGroup: PropTypes.array,
+  setMenuSubGroup: PropTypes.func
 }

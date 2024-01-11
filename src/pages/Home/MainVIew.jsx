@@ -8,6 +8,7 @@ import { Skeleton } from "../../components/Skeleton";
 import { GET } from "../../utilities/services";
 import { ProductCatalog } from "./ProductCatalog";
 import { Trans } from "react-i18next";
+import { mapCartAndProduct } from "../../components/Home/productAndCartMapper";
 
 export const MainView = () => {
   const theme = useSelector((state) => state.dataSlice.theme);
@@ -16,8 +17,9 @@ export const MainView = () => {
   const [menuSubGroup, setMenuSubGroup] = useState([]);
   const [selectedSubGroup, setSelectedSubGroup] = useState("");
   const [isHasSubGroup, setIsHasSubGroup] = useState([]);
-  const outletName = useSelector(
-    (state) => state.dataSlicePersisted.outletName,
+  const [isProcessToGetItem, setIsProcessToGetItem] = useState(true);
+  const {outletName, cartInfo} = useSelector(
+    (state) => state.dataSlicePersisted,
   );
   const isSearchItem = useSelector((state) => state.dataSlice.isSearchItem);
 
@@ -33,10 +35,12 @@ export const MainView = () => {
           sb.items.length,
         );
         dataLength = result.dataLength;
-        sb.items = sb.items.concat(result.tempItem);
+        let addMenu = mapCartAndProduct(result.tempItem, cartInfo)
+        sb.items = sb.items.concat(addMenu);
       }
       setMenuSubGroup([...subGroup]);
     }
+    setIsProcessToGetItem(false);
   };
 
   const handleSelectGroup = async (type, refNo) => {
@@ -48,12 +52,18 @@ export const MainView = () => {
       setSelectedSubGroup(data.tempSubGroup[0].refNo);
       fetchAllSubGroupItem(data.tempSubGroup);
     } else {
+      let tempSubGroup = [{
+        items:data.tempItem,
+        buttonType: type,
+        refNo: refNo, 
+      }]
       setMenuSubGroup([
         {
           refNo: "",
           items: data.tempItem,
         },
       ]);
+      fetchAllSubGroupItem(tempSubGroup);
     }
     setIsLoading(false);
   };
@@ -112,11 +122,11 @@ export const MainView = () => {
             <Trans i18nKey={"you_may_like_this"} />
           </p>
         )}
-        {isLoading ? (
-          <Skeleton />
-        ) : (
-          <ProductCatalog menuSubGroup={menuSubGroup} />
-        )}
+        <ProductCatalog 
+          menuSubGroup={menuSubGroup} 
+          setMenuSubGroup={setMenuSubGroup}
+        />
+        {isProcessToGetItem && <Skeleton />}
       </div>
       {isSearchItem && (
         <div className="absolute inset-0 backdrop-filter backdrop-blur-lg z-0"></div>
