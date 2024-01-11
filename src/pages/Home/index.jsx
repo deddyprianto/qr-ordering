@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setShowSplashScreen } from "../../app/dataSlicePersisted";
 import { RenderSplashScreen } from "../../components/SplashScreen";
 import { MainView } from "./MainVIew";
+import { RenderOrderType } from "./OrderType";
 
 export function Component() {
 
@@ -10,6 +11,8 @@ export function Component() {
   const { isSplashScreenShow } = useSelector(
     (state) => state.dataSlicePersisted,
   );
+
+  const orderType = useSelector((state) => state.dataSlice.orderType);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -22,6 +25,7 @@ export function Component() {
 
   const renderMain = () => {
     if (isSplashScreenShow) return <RenderSplashScreen />;
+    else if (orderType=="") return <RenderOrderType/>
     else return <MainView />;
   };
 
