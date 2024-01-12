@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { IconPlus } from "../../../assets/svgIcon";
-import { addNewCart } from "./GenerateCart";
+import { addNewCart } from "../../GenerateCart";
 import { useDispatch, useSelector } from "react-redux";
 import { generateAttributesBody } from "./ItemAttributeBody";
 import { apiCartAddItem } from "./AddItemToCart";
@@ -8,6 +8,8 @@ import { setCartInfo } from "../../../app/dataSlicePersisted";
 import { useEdgeSnack } from "../../EdgeSnack/utils/useEdgeSnack";
 import { generateBundlesBody } from "./ItemBundleBody";
 import { renderButtonText } from "./GetButtonText";
+import { mapCartAndProduct } from "../../Home/productAndCartMapper";
+import { setMenuSubGroup } from "../../../app/dataSlice";
 
 
 export const RenderButtonAdd = ({ 
@@ -23,15 +25,16 @@ export const RenderButtonAdd = ({
  }) => {
   const dispatch = useDispatch();
   const toast = useEdgeSnack();
-  const cartInfo = useSelector(
-    (state) => state.dataSlicePersisted.cartInfo,
+  const { cartInfo, outletName } = useSelector(
+    (state) => state.dataSlicePersisted,
   );
-  const outletName = useSelector(
-    (state) => state.dataSlicePersisted.outletName,
+  const menuSubGroup = useSelector(
+    (state) => state.dataSlice.menuSubGroup,
   );
   
   const resetCartInfo = (data) => {
     dispatch(setCartInfo(data));
+    updateCartQtyProductCatalog(data);
   }
 
   const handleClickButton = async() => {
@@ -44,32 +47,39 @@ export const RenderButtonAdd = ({
       return;
     }
     
+    setIsLoading(true);
     let cartID = cartInfo?.uniqueID;
     if(!cartID) cartID = await addNewCart(setIsLoading, outletName, resetCartInfo);
 
     processAddItem(cartID);
+  };  
+  
+  const updateCartQtyProductCatalog = (newCartInfo) => {
+    let newMenuSubGroup = JSON.parse(JSON.stringify(menuSubGroup));
+    for (const sb of newMenuSubGroup) {
+      let itemReplacer = mapCartAndProduct(sb.items, newCartInfo)
+      sb.items = itemReplacer
+      dispatch(setMenuSubGroup([...newMenuSubGroup]));
+    }
   };
 
   const processAddItem = async(cartID) => {
     let body = {...itemToAdd};
     let res = {};
     switch (typeOfModalAddItem.toLowerCase()) {
-      case "main":
-        await apiCartAddItem(cartID, [body], setIsLoading, setOpenModal, resetCartInfo, item.itemName, toast);
-        break;
       case "attribute":
         body.attributes = generateAttributesBody(attList);
-        await apiCartAddItem(cartID, [body], setIsLoading, setOpenModal, resetCartInfo, item.itemName, toast);
         break;
       case "bundle":
         res = generateBundlesBody(bundleList);
         if(!res.isValidQty) break;
         body.bundles = res.bundles;
-        await apiCartAddItem(cartID, [body], setIsLoading, setOpenModal, resetCartInfo, item.itemName, toast);
         break;
       default:
         break;
     }
+    await apiCartAddItem(cartID, [body], setOpenModal, resetCartInfo, item.itemName, toast);
+    setIsLoading(false);
   }
 
   return (

@@ -9,7 +9,7 @@ import { Trans } from "react-i18next";
 export default function Header() {
   const theme = useSelector((state) => state.dataSlice.theme);
   const dispatch = useDispatch();
-  const isSearchItem = useSelector((state) => state.dataSlice.isSearchItem);
+  const { isSearchItem, orderType } = useSelector((state) => state.dataSlice);
   const { enableSearchUsingScroll, searchItemObj } = useSelector(
     (state) => state.dataSlicePersisted,
   );
@@ -127,6 +127,7 @@ export default function Header() {
   };
 
   const renderMain = () => {
+    if(orderType=="") return<div></div>
     return (
       <div>
         {renderLabelTableNo()}

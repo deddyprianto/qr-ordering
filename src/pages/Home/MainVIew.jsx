@@ -1,27 +1,54 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavbarMenu } from "./NavbarMenu";
 import { Insights } from "../../components/Insights";
 import { SubGroupMenu } from "./SubGroupMenu";
-import {  useSelector } from "react-redux";
+import {  useDispatch, useSelector } from "react-redux";
 import "../../scss/animation.scss";
 import { Skeleton } from "../../components/Skeleton";
 import { GET } from "../../utilities/services";
 import { ProductCatalog } from "./ProductCatalog";
 import { Trans } from "react-i18next";
 import { mapCartAndProduct } from "../../components/Home/productAndCartMapper";
+import { setMenuSubGroup } from "../../app/dataSlice";
+import { RenderSearchItemBar } from "../../components/Home/SearchItemBar";
+import { setEnableSearchUsingScroll } from "../../app/dataSlicePersisted";
 
 export const MainView = () => {
+  const [dataCategory, setDataCategory] = useState([]);
+  const [isSelectedItem, setIsSelectedItem] = useState("");
+  const [dtCategoryLength, setDtCategoryLength] = useState(0);
+
+  const [isFirstOpenSearchBar, setIsFirstOpenSearchBar] = useState(true);
   const theme = useSelector((state) => state.dataSlice.theme);
   const [isLoading, setIsLoading] = useState(true);
   const [highlights, setHighlights] = useState(true);
-  const [menuSubGroup, setMenuSubGroup] = useState([]);
   const [selectedSubGroup, setSelectedSubGroup] = useState("");
   const [isHasSubGroup, setIsHasSubGroup] = useState([]);
   const [isProcessToGetItem, setIsProcessToGetItem] = useState(true);
+  const dispatch = useDispatch();
   const {outletName, cartInfo} = useSelector(
     (state) => state.dataSlicePersisted,
   );
-  const isSearchItem = useSelector((state) => state.dataSlice.isSearchItem);
+  const { isSearchItem } = useSelector(
+    (state) => state.dataSlice
+  );
+  const { searchItemObj } = useSelector(
+    (state) => state.dataSlicePersisted,
+  );
+
+  useEffect(() => {
+    if (searchItemObj?.doSearch) {
+      setIsFirstOpenSearchBar(false);
+    }
+  }, [searchItemObj]);
+
+  useEffect(() => {
+    if (!isSearchItem) {
+      dispatch(setEnableSearchUsingScroll(false));
+      setIsFirstOpenSearchBar(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSearchItem]);
 
   const fetchAllSubGroupItem = async (subGroup) => {
     for (const sb of subGroup) {
@@ -38,14 +65,15 @@ export const MainView = () => {
         let addMenu = mapCartAndProduct(result.tempItem, cartInfo)
         sb.items = sb.items.concat(addMenu);
       }
-      setMenuSubGroup([...subGroup]);
+      dispatch(setMenuSubGroup([...subGroup]));
     }
     setIsProcessToGetItem(false);
   };
 
   const handleSelectGroup = async (type, refNo) => {
     setIsLoading(true);
-    setMenuSubGroup([]);
+    setIsProcessToGetItem(true);
+    dispatch(setMenuSubGroup([]));
     let data = await getMenuItem(type, refNo);
     setIsHasSubGroup(data.tempSubGroup?.length > 0);
     if (data.tempSubGroup?.length > 0) {
@@ -53,16 +81,16 @@ export const MainView = () => {
       fetchAllSubGroupItem(data.tempSubGroup);
     } else {
       let tempSubGroup = [{
-        items:data.tempItem,
+        items: data.tempItem,
         buttonType: type,
         refNo: refNo, 
       }]
-      setMenuSubGroup([
+      dispatch(setMenuSubGroup([
         {
           refNo: "",
           items: data.tempItem,
         },
-      ]);
+      ]));
       fetchAllSubGroupItem(tempSubGroup);
     }
     setIsLoading(false);
@@ -91,46 +119,55 @@ export const MainView = () => {
     });
   };
 
-  return (
-    <div className="relative pb-20">
-      <NavbarMenu handleSelectGroup={handleSelectGroup} />
-      <div style={{ padding: "16px 16px 0px 16px" }}>
-        {!isLoading && highlights && (
-          <Insights
-            title="Tag Insights"
-            description="Explore tags as you navigate the menu. You might encounter these tags
-                          anywhere in our menu."
-            onClick={() => setHighlights(false)}
-          />
-        )}
-        {isHasSubGroup && (
-          <SubGroupMenu
-            menuSubGroup={menuSubGroup}
-            selectedSubGroup={selectedSubGroup}
-            setSelectedSubGroup={setSelectedSubGroup}
-          />
-        )}
-        {!isLoading && (
-          <p
-            style={{
-              fontWeight: "700",
-              fontSize: "22px",
-              marginTop: "16px",
-              color: theme.textColor,
-            }}
-          >
-            <Trans i18nKey={"you_may_like_this"} />
-          </p>
-        )}
-        <ProductCatalog 
-          menuSubGroup={menuSubGroup} 
-          setMenuSubGroup={setMenuSubGroup}
+  const renderMainView = () => {
+    return (
+      <div className="relative pb-20">
+        <NavbarMenu 
+          dataCategory={dataCategory}
+          isSelectedItem={isSelectedItem}
+          dtCategoryLength={dtCategoryLength}
+          setDataCategory={setDataCategory}
+          setIsSelectedItem={setIsSelectedItem}
+          setDtCategoryLength={setDtCategoryLength}
+          handleSelectGroup={handleSelectGroup} 
         />
-        {isProcessToGetItem && <Skeleton />}
+        <div style={{ padding: "16px 16px 0px 16px" }}>
+          {!isLoading && highlights && (
+            <Insights
+              title="Tag Insights"
+              description="Explore tags as you navigate the menu. You might encounter these tags
+                            anywhere in our menu."
+              onClick={() => setHighlights(false)}
+            />
+          )}
+          {isHasSubGroup && (
+            <SubGroupMenu
+              selectedSubGroup={selectedSubGroup}
+              setSelectedSubGroup={setSelectedSubGroup}
+            />
+          )}
+          {!isLoading && (
+            <p
+              style={{
+                fontWeight: "700",
+                fontSize: "22px",
+                marginTop: "16px",
+                color: theme.textColor,
+              }}
+            >
+              <Trans i18nKey={"you_may_like_this"} />
+            </p>
+          )}
+          <ProductCatalog />
+          {isProcessToGetItem && <Skeleton />}
+        </div>
+        {isSearchItem && (
+          <div className="absolute inset-0 backdrop-filter backdrop-blur-lg z-0"></div>
+        )}
       </div>
-      {isSearchItem && (
-        <div className="absolute inset-0 backdrop-filter backdrop-blur-lg z-0"></div>
-      )}
-    </div>
-  );
+    );
+  }
+  
+  if (isFirstOpenSearchBar) return renderMainView();
+  else return <RenderSearchItemBar searchText={searchItemObj?.searchText} />;
 };

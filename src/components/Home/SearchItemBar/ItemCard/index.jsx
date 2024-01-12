@@ -8,20 +8,51 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEdgeSnack } from "../../../EdgeSnack/utils/useEdgeSnack";
 import { RenderItemPrice } from "./ItemPrice";
 import { addItemToCart } from "../../../RenderItemProduct/AddItemToCart";
+import { setMenuSubGroup } from "../../../../app/dataSlice";
+import { mapCartAndProduct } from "../../productAndCartMapper"
+import { addNewCart } from "../../../../components/GenerateCart"
+import { setCartInfo } from "../../../../app/dataSlicePersisted";
 
 export const RenderItemCard = ({ item }) => {
   const dispatch = useDispatch()
   const [openModalAddItem, setOpenModalAddItem] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const cartID = useSelector((state) => state.dataSlicePersisted.cartInfo?.uniqueID)
+  const outletName = useSelector((state) => state.dataSlicePersisted.outletName)
+  const { menuSubGroup } = useSelector((state) => state.dataSlice);
   const toast = useEdgeSnack();
   const handleOpenModalAddItem = () => {
     setOpenModalAddItem(true);
   };
 
-  const handleClickButtonAdd = () => {
+  const reMapProductCatalogQty = (newCartInfo) => {
+    let updatedSubMenu = JSON.parse(JSON.stringify(menuSubGroup));
+    for (const menuItem of updatedSubMenu) {
+      let itemReplacer = mapCartAndProduct(menuItem.items, newCartInfo)
+      menuItem.items = itemReplacer
+      dispatch(setMenuSubGroup([...updatedSubMenu]));
+    }
+  };
+
+  const saveNewCartInfo = (data) => {
+    dispatch(setCartInfo(data));
+  }
+
+  const handleClickButtonAdd = async() => {
     if(getItemType(item)=="main"){
-      addItemToCart(cartID, setIsLoading, item, dispatch, toast);
+      setIsLoading(true);
+      let curCartID = cartID;
+      if(!curCartID) curCartID = await addNewCart(setIsLoading, outletName, saveNewCartInfo);
+      await addItemToCart(
+        curCartID, 
+        item, 
+        dispatch, 
+        toast,
+        1,
+        "",
+        reMapProductCatalogQty
+      );
+      setIsLoading(false);
       return;
     }
     setOpenModalAddItem(true);

@@ -15,6 +15,8 @@ const initialState = {
     primary: "#00524C",
     secondary: "#FF4782",
   },
+  menuSubGroup: [],
+  orderType: ""
 };
 
 const dataSlice = createSlice({
@@ -36,9 +38,23 @@ const dataSlice = createSlice({
     setTheme: (state, action) => {
       state.theme = action.payload;
     },
+    setMenuSubGroup: (state, action) => {
+      state.menuSubGroup = action.payload;
+    },
+    setOrderType: (state, action) => {
+      state.orderType = action.payload;
+    },
   },
 });
 
-export const { setData, setIsOpenModalAuth, setIsSearchItem, setIsCartSummaryBlink } =
+export const { 
+  setData, 
+  setIsOpenModalAuth, 
+  setIsSearchItem, 
+  setIsCartSummaryBlink,
+  setTheme,
+  setMenuSubGroup,
+  setOrderType 
+} =
   dataSlice.actions;
 export default dataSlice.reducer;

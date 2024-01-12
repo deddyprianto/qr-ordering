@@ -1,4 +1,4 @@
-import { apiCart } from "../../../services/Cart";
+import { apiCart } from "../services/Cart";
 
 export  const addNewCart = async(setIsLoading, outletName, resetCartInfo)=> {
   try {

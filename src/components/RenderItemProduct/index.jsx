@@ -8,16 +8,20 @@ import { Trans } from "react-i18next";
 import { getItemType } from "./GetItemType";
 import { addItemToCart } from "./AddItemToCart";
 import { RenderButtonAddToCart } from "./ButtonAddToCart";
+import { setMenuSubGroup } from "../../app/dataSlice";
+import { mapCartAndProduct } from "../Home/productAndCartMapper";
+import { setCartInfo } from "../../app/dataSlicePersisted";
+import { addNewCart } from "../GenerateCart";
 
 export const RenderItemProduct = ({ 
   isPromo = false, 
   item, 
   cartID,
   qtyInCart,
-  cartLineID,
-  reMapProductAndCart
+  cartLineID
 }) => {
-  const theme = useSelector((state) => state.dataSlice.theme);
+  const { theme, menuSubGroup } = useSelector((state) => state.dataSlice);
+  const outletName = useSelector((state) => state.dataSlicePersisted.outletName)
   const [openModalAddItem, setOpenModalAddItem] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
@@ -42,13 +46,26 @@ export const RenderItemProduct = ({
     setOpenModalAddItem(true);
   };
 
+  const reMapProductAndCart = (newCartInfo) => {
+    let newMenuSubGroup = JSON.parse(JSON.stringify(menuSubGroup));
+    for (const sb of newMenuSubGroup) {
+      let itemReplacer = mapCartAndProduct(sb.items, newCartInfo)
+      sb.items = itemReplacer
+      dispatch(setMenuSubGroup([...newMenuSubGroup]));
+    }
+  };
 
+  const saveNewCartInfo = (data) => {
+    dispatch(setCartInfo(data));
+  }
 
   const handleClickButtonAdd = async(qty, lineID) => {
     if (getItemType(item) == "main") {
       setIsLoading(true);
+      let curCartID = cartID;
+      if(!curCartID) curCartID = await addNewCart(setIsLoading, outletName, saveNewCartInfo);
       await addItemToCart(
-        cartID, 
+        curCartID, 
         item, 
         dispatch, 
         toast, 
@@ -171,7 +188,6 @@ export const RenderItemProduct = ({
             qtyInCart={qtyInCart}
             cartLineID={cartLineID}
             handleClickButtonAdd={handleClickButtonAdd}
-            reMapProductAndCart={reMapProductAndCart}
           />
         </div>
       </div>
@@ -192,6 +208,5 @@ RenderItemProduct.propTypes = {
   item: PropTypes.any,
   cartID: PropTypes.string,
   qtyInCart: PropTypes.number,
-  cartLineID: PropTypes.string,
-  reMapProductAndCart: PropTypes.func
+  cartLineID: PropTypes.string
 };
