@@ -8,6 +8,7 @@ import { Skeleton } from "../../components/Skeleton";
 import { GET } from "../../utilities/services";
 import { ProductCatalog } from "./ProductCatalog";
 import { Trans } from "react-i18next";
+import { setSelectedItemProds } from "../../app/dataSlicePersisted";
 import { mapCartAndProduct } from "../../components/Home/productAndCartMapper";
 import { setMenuSubGroup } from "../../app/dataSlice";
 import { RenderSearchItemBar } from "../../components/Home/SearchItemBar";
@@ -17,24 +18,19 @@ export const MainView = () => {
   const [dataCategory, setDataCategory] = useState([]);
   const [isSelectedItem, setIsSelectedItem] = useState("");
   const [dtCategoryLength, setDtCategoryLength] = useState(0);
-
   const [isFirstOpenSearchBar, setIsFirstOpenSearchBar] = useState(true);
   const theme = useSelector((state) => state.dataSlice.theme);
   const [isLoading, setIsLoading] = useState(true);
   const [highlights, setHighlights] = useState(true);
   const [selectedSubGroup, setSelectedSubGroup] = useState("");
   const [isHasSubGroup, setIsHasSubGroup] = useState([]);
-  const [isProcessToGetItem, setIsProcessToGetItem] = useState(true);
   const dispatch = useDispatch();
-  const {outletName, cartInfo} = useSelector(
+  const menuSubGroup = useSelector((state) => state.dataSlice.menuSubGroup);
+  const { outletName, cartInfo } = useSelector(
     (state) => state.dataSlicePersisted,
   );
-  const { isSearchItem } = useSelector(
-    (state) => state.dataSlice
-  );
-  const { searchItemObj } = useSelector(
-    (state) => state.dataSlicePersisted,
-  );
+  const { isSearchItem } = useSelector((state) => state.dataSlice);
+  const { searchItemObj } = useSelector((state) => state.dataSlicePersisted);
 
   useEffect(() => {
     if (searchItemObj?.doSearch) {
@@ -62,35 +58,38 @@ export const MainView = () => {
           sb.items.length,
         );
         dataLength = result.dataLength;
-        let addMenu = mapCartAndProduct(result.tempItem, cartInfo)
+        let addMenu = mapCartAndProduct(result.tempItem, cartInfo);
         sb.items = sb.items.concat(addMenu);
       }
       dispatch(setMenuSubGroup([...subGroup]));
     }
-    setIsProcessToGetItem(false);
   };
 
   const handleSelectGroup = async (type, refNo) => {
     setIsLoading(true);
-    setIsProcessToGetItem(true);
     dispatch(setMenuSubGroup([]));
     let data = await getMenuItem(type, refNo);
+    dispatch(setSelectedItemProds(data));
     setIsHasSubGroup(data.tempSubGroup?.length > 0);
     if (data.tempSubGroup?.length > 0) {
       setSelectedSubGroup(data.tempSubGroup[0].refNo);
       fetchAllSubGroupItem(data.tempSubGroup);
     } else {
-      let tempSubGroup = [{
-        items: data.tempItem,
-        buttonType: type,
-        refNo: refNo, 
-      }]
-      dispatch(setMenuSubGroup([
+      let tempSubGroup = [
         {
-          refNo: "",
           items: data.tempItem,
+          buttonType: type,
+          refNo: refNo,
         },
-      ]));
+      ];
+      dispatch(
+        setMenuSubGroup([
+          {
+            refNo: "",
+            items: data.tempItem,
+          },
+        ]),
+      );
       fetchAllSubGroupItem(tempSubGroup);
     }
     setIsLoading(false);
@@ -118,18 +117,18 @@ export const MainView = () => {
       return { tempItem, tempSubGroup, dataLength };
     });
   };
-
+  console.log("menuSubGroup =>", menuSubGroup);
   const renderMainView = () => {
     return (
       <div className="relative pb-20">
-        <NavbarMenu 
+        <NavbarMenu
           dataCategory={dataCategory}
           isSelectedItem={isSelectedItem}
           dtCategoryLength={dtCategoryLength}
           setDataCategory={setDataCategory}
           setIsSelectedItem={setIsSelectedItem}
           setDtCategoryLength={setDtCategoryLength}
-          handleSelectGroup={handleSelectGroup} 
+          handleSelectGroup={handleSelectGroup}
         />
         <div style={{ padding: "16px 16px 0px 16px" }}>
           {!isLoading && highlights && (
@@ -146,7 +145,7 @@ export const MainView = () => {
               setSelectedSubGroup={setSelectedSubGroup}
             />
           )}
-          {!isLoading && (
+          {!isLoading && menuSubGroup.length >= 1 && (
             <p
               style={{
                 fontWeight: "700",
@@ -158,16 +157,15 @@ export const MainView = () => {
               <Trans i18nKey={"you_may_like_this"} />
             </p>
           )}
-          <ProductCatalog />
-          {isProcessToGetItem && <Skeleton />}
+          {isLoading ? <Skeleton /> : <ProductCatalog />}
         </div>
         {isSearchItem && (
           <div className="absolute inset-0 backdrop-filter backdrop-blur-lg z-0"></div>
         )}
       </div>
     );
-  }
-  
+  };
+
   if (isFirstOpenSearchBar) return renderMainView();
   else return <RenderSearchItemBar searchText={searchItemObj?.searchText} />;
 };

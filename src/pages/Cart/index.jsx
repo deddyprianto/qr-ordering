@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { ModalAuth } from "../../components/Auth";
 import { useSelector } from "react-redux";
-import Item from "./Item";
 import { PaymentMethod } from "./PaymentMethod";
 import { PriceSummary } from "./PriceSummary";
 import FooterCart from "./FooterCart";
+import ItemCart from "./ItemCart";
 
 export function Component() {
+  const cartInfo = useSelector((state) => state.dataSlicePersisted.cartInfo);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
   const [isOpenModalAuth, setIsOpenModalAuth] = useState(false);
   const [authScreen, setAuthScreen] = useState("Login");
   const [isOpenModalOtp, setIsOpenModalOtp] = useState(false);
   const theme = useSelector((state) => state.dataSlice.theme);
-  const cartInfo = useSelector((state) => state.dataSlicePersisted.cartInfo);
 
   const handleSuccessOTP = (isSuccess) => {
     // Replace this function with logic if member success login or register
@@ -34,7 +34,7 @@ export function Component() {
         <div>{cartInfo?.details?.length} Items</div>
       </div>
       {cartInfo?.details?.map((item) => {
-        return <Item item={item} key={item?.uniqueID} />;
+        return <ItemCart item={item} key={item?.uniqueID} />;
       })}
       <hr
         style={{

@@ -5,7 +5,8 @@ const initialState = {
   isSplashScreenShow: true,
   memberInfo: {},
   cartInfo: {},
-  outletName: "edge cafe"
+  outletName: "edge cafe",
+  selectedItemProds: [],
 };
 
 const dataSlicePersisted = createSlice({
@@ -36,17 +37,21 @@ const dataSlicePersisted = createSlice({
     setOutletName: (state, action) => {
       state.outletName = action.payload;
     },
+    setSelectedItemProds: (state, action) => {
+      state.selectedItemProds = action.payload;
+    },
   },
 });
 
-export const { 
-  setAccessToken, 
-  setShowSplashScreen, 
+export const {
+  setAccessToken,
+  setShowSplashScreen,
   setSearchItemObj,
   setEnableSearchUsingScroll,
-  setOtpRequestInfo, 
+  setOtpRequestInfo,
   setMemberInfo,
   setCartInfo,
-  setOutletName
+  setOutletName,
+  setSelectedItemProds,
 } = dataSlicePersisted.actions;
 export default dataSlicePersisted.reducer; // Changed 'dataSlicePersisted.reducer.default' to 'dataSlicePersisted.reducer'
