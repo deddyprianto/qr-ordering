@@ -47,18 +47,20 @@ export const RenderTab = ({ setIsChecked, tabScreen, setTabScreen }) => {
             setTabScreen("email");
           }
         }}
-        className={` ${
-          tabScreen === "email" && `text-${theme.primary}`
-        } tracking-tighter whitespace-nowrap ${
-          tabScreen === "email" && `border-b-2 border-${theme.primary}`
-        } font-bold text-base leading-[0.28px] pb-[5px]
-      `}
+        style={{
+          color: tabScreen === "email" && theme.primary,
+          borderColor: tabScreen === "email" && theme.primary,
+        }}
+        className={`tracking-tighter whitespace-nowrap font-bold text-base leading-[0.28px] pb-[5px] ${
+          tabScreen === "email" && "border-b-2"
+        }`}
       >
         <Trans i18nKey={"login_email"} />
       </button>
     </div>
   );
 };
+
 RenderTab.propTypes = {
   setIsChecked: PropTypes.func.isRequired,
   tabScreen: PropTypes.string.isRequired,

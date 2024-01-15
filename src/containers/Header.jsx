@@ -12,8 +12,8 @@ export default function Header() {
   let location = useLocation();
   const theme = useSelector((state) => state.dataSlice.theme);
   const dispatch = useDispatch();
-  const { isSearchItem, orderType } = useSelector((state) => state.dataSlice);
-  const { enableSearchUsingScroll, searchItemObj } = useSelector(
+  const { isSearchItem } = useSelector((state) => state.dataSlice);
+  const { enableSearchUsingScroll, searchItemObj, orderType } = useSelector(
     (state) => state.dataSlicePersisted,
   );
 

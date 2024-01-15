@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { IconDineIn, IconTakeAway } from "../../assets/svgIcon";
 import { useDispatch } from "react-redux";
-import { setOrderType } from "../../app/dataSlice";
+import { setOrderType } from "../../app/dataSlicePersisted";
+
 
 export const RenderOrderType = () => {
   const dispatch = useDispatch();

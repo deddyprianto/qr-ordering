@@ -23,6 +23,10 @@ const router = createBrowserRouter([
         lazy: () => import("./pages/Cart"),
       },
       {
+        path: "order",
+        lazy: () => import("./pages/Order"),
+      },
+      {
         path: "profile",
         lazy: () => import("./pages/Profile"),
       },

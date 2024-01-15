@@ -1,10 +1,16 @@
 import { useSelector } from "react-redux";
 import screen from "../../../hooks/useWindowSize";
+import { useNavigate } from "react-router-dom";
 
 const FooterCart = () => {
+  const navigate = useNavigate();
   const { width } = screen();
 
   const gadgetScreen = width < 980;
+
+  const handlePayment = () => {
+    navigate("/order");
+  };
 
   const theme = useSelector((state) => state.dataSlice.theme);
   return (
@@ -17,6 +23,7 @@ const FooterCart = () => {
       }}
     >
       <button
+        onClick={handlePayment}
         style={{ backgroundColor: theme.secondary }}
         className="py-[10px] px-[20px]  text-white rounded-lg cursor-pointer text-[16px] w-full"
       >

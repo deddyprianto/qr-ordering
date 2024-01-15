@@ -6,12 +6,14 @@ import { getCurrencyHelper } from "../../helper";
 
 const RenderCartSummary = () => {
   const navigate = useNavigate();
-  const cartInfo = useSelector((state) => state.dataSlicePersisted.cartInfo);
+  const { cartInfo, orderType } = useSelector(
+    (state) => state.dataSlicePersisted,
+  );
   const { isSearchItem } = useSelector((state) => state.dataSlice);
   const memberInfo = useSelector(
     (state) => state.dataSlicePersisted.memberInfo,
   );
-  const { theme, orderType } = useSelector((state) => state.dataSlice);
+  const { theme } = useSelector((state) => state.dataSlice);
 
   if (orderType) {
     return (

@@ -8,12 +8,12 @@ import RenderCartSummary from "../../components/Home/RenderCartSummary";
 
 export function Component() {
   const dispatch = useDispatch();
-  const cartInfo = useSelector((state) => state.dataSlicePersisted.cartInfo);
+  const { cartInfo, orderType } = useSelector(
+    (state) => state.dataSlicePersisted,
+  );
   const { isSplashScreenShow } = useSelector(
     (state) => state.dataSlicePersisted,
   );
-
-  const orderType = useSelector((state) => state.dataSlice.orderType);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {

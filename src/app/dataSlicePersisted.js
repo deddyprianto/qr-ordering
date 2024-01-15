@@ -7,6 +7,7 @@ const initialState = {
   cartInfo: {},
   outletName: "edge cafe",
   selectedItemProds: [],
+  orderType: "",
 };
 
 const dataSlicePersisted = createSlice({
@@ -40,6 +41,9 @@ const dataSlicePersisted = createSlice({
     setSelectedItemProds: (state, action) => {
       state.selectedItemProds = action.payload;
     },
+    setOrderType: (state, action) => {
+      state.orderType = action.payload;
+    },
   },
 });
 
@@ -52,6 +56,7 @@ export const {
   setMemberInfo,
   setCartInfo,
   setOutletName,
+  setOrderType,
   setSelectedItemProds,
 } = dataSlicePersisted.actions;
 export default dataSlicePersisted.reducer; // Changed 'dataSlicePersisted.reducer.default' to 'dataSlicePersisted.reducer'
