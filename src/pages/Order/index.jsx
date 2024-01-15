@@ -1,3 +1,9 @@
+import ItemOrder from "./ItemOrder";
+
 export function Component() {
-  return <div>LOL</div>;
+  return (
+    <div className="p-[16px]">
+      <ItemOrder />
+    </div>
+  );
 }
