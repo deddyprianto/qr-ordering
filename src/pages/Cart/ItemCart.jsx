@@ -9,20 +9,11 @@ import RenderModalItemDetail from "../../components/ModalAddItem";
 import { getItemType } from "../../components/RenderItemProduct/GetItemType";
 
 const ItemCart = ({ item, idCart }) => {
-  console.log(item);
-  const prodItems = useSelector(
-    (state) => state.dataSlicePersisted.selectedItemProds,
-  );
-  const dataFilter = prodItems.tempItem.find(
-    (itemFilter) =>
-      itemFilter.productInfo.uniqueID === item.productInfo.uniqueID,
-  );
-
   const [openEditModal, setOpenEditModal] = useState(false);
-
   const [quantity, setQuantity] = useState(item?.quantity);
   const [expandItem, setExpandItem] = useState(false);
   const theme = useSelector((state) => state.dataSlice.theme);
+  const [itemDataEdit, setItemDataEdit] = useState([]);
   const isEmptyArray =
     !hasEmptyElement(item?.attributes) || !hasEmptyElement(item?.bundles);
 
@@ -58,6 +49,8 @@ const ItemCart = ({ item, idCart }) => {
         theme={theme}
       />
       <RenderQty
+        itemNo={item.itemNo}
+        setItemDataEdit={setItemDataEdit}
         expandItem={expandItem}
         quantity={quantity}
         setQuantity={setQuantity}
@@ -69,10 +62,11 @@ const ItemCart = ({ item, idCart }) => {
       {openEditModal && (
         <RenderModalItemDetail
           openModal={openEditModal}
-          item={dataFilter.productInfo}
-          itemType={getItemType(dataFilter.productInfo)}
           setOpenModal={setOpenEditModal}
-          renderFromCart={true}
+          item={itemDataEdit}
+          itemType={getItemType(itemDataEdit)}
+          isCalledFromCart
+          itemCart={item}
         />
       )}
     </div>

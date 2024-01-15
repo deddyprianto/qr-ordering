@@ -22,18 +22,24 @@ export const RenderOrderType = () => {
         <div className="text-black text-center text-2xl font-semibold leading-8 whitespace-nowrap">
           How Would You Like to Order?
         </div>
-        <button className={`${curOrderType=="takeaway"?bgTypeSelected:bgTypeUnSelected} items-center self-stretch border flex flex-col mt-6 px-4 py-6 rounded-lg border-solid`}
-          onClick={()=>handleSelectOrderType('takeaway')}  
+        <button
+          className={`${
+            curOrderType == "takeaway" ? bgTypeSelected : bgTypeUnSelected
+          } items-center self-stretch border flex flex-col mt-6 px-4 py-6 rounded-lg border-solid`}
+          onClick={() => handleSelectOrderType("takeaway")}
         >
-          <IconTakeAway/>
+          <IconTakeAway />
           <div className="justify-center self-stretch text-gray-700 text-center text-2xl font-semibold leading-8 whitespace-nowrap mt-4">
             Takeaway
           </div>
         </button>
-        <button className={`${curOrderType=="dinein"?bgTypeSelected:bgTypeUnSelected} justify-center items-center self-stretch border flex flex-col mt-6 px-4 py-6 rounded-lg border-solid`}
-          onClick={()=>handleSelectOrderType('dinein')}  
+        <button
+          className={`${
+            curOrderType == "dinein" ? bgTypeSelected : bgTypeUnSelected
+          } justify-center items-center self-stretch border flex flex-col mt-6 px-4 py-6 rounded-lg border-solid`}
+          onClick={() => handleSelectOrderType("dinein")}
         >
-          <IconDineIn/>
+          <IconDineIn />
           <div className="justify-center self-stretch text-gray-700 text-center text-2xl font-semibold leading-8 whitespace-nowrap mt-4">
             Dine In
           </div>

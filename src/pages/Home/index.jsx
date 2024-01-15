@@ -26,7 +26,7 @@ export function Component() {
 
   const renderMain = () => {
     if (isSplashScreenShow) return <RenderSplashScreen />;
-    else if (orderType=="") return <RenderOrderType/>
+    else if (orderType == "") return <RenderOrderType />;
     else return <MainView />;
   };
 

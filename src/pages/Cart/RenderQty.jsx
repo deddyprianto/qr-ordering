@@ -1,5 +1,8 @@
 import { IconEdit, IconExpand, IconExpandHide } from "../../assets/svgIcon";
 import PropTypes from "prop-types";
+import { apiProduct } from "../../services/Product";
+import { useSelector } from "react-redux";
+import { useState } from "react";
 
 export const RenderQty = ({
   isEmptyArray,
@@ -9,7 +12,25 @@ export const RenderQty = ({
   quantity,
   setExpandItem,
   setOpenEditModal,
+  setItemDataEdit,
+  itemNo,
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const { outletName } = useSelector((state) => state.dataSlicePersisted);
+  const handleEdit = async () => {
+    const body = {
+      itemNo,
+    };
+    try {
+      setIsLoading(true);
+      const result = await apiProduct("GET", `${outletName}/all`, body);
+      setIsLoading(false);
+      setItemDataEdit(result.data[0].productInfo);
+      setOpenEditModal(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="justify-between items-center border-t-[color:var(--Grey-Scale-color-Grey-Scale-3,#D6D6D6)] flex border-t border-solid py-2 px-2">
       <div className="items-stretch flex justify-between my-auto">
@@ -39,10 +60,10 @@ export const RenderQty = ({
         >
           <IconEdit primary={theme.secondary} />
           <div
-            onClick={() => setOpenEditModal(true)}
+            onClick={handleEdit}
             className={`text-[${theme.secondary}] text-sm font-medium leading-5 tracking-wide underline self-stretch grow whitespace-nowrap ml-1 cursor-pointer`}
           >
-            Edit
+            {isLoading ? "Get your data..." : "Edit"}
           </div>
         </div>
       </div>
@@ -79,4 +100,6 @@ RenderQty.propTypes = {
   setExpandItem: PropTypes.func,
   expandItem: PropTypes.bool,
   setOpenEditModal: PropTypes.func,
+  setItemDataEdit: PropTypes.func,
+  itemNo: PropTypes.string,
 };

@@ -8,16 +8,17 @@ import ItemCart from "./ItemCart";
 
 export function Component() {
   const cartInfo = useSelector((state) => state.dataSlicePersisted.cartInfo);
+  const { theme } = useSelector((state) => state.dataSlice);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
   const [isOpenModalAuth, setIsOpenModalAuth] = useState(false);
   const [authScreen, setAuthScreen] = useState("Login");
   const [isOpenModalOtp, setIsOpenModalOtp] = useState(false);
-  const theme = useSelector((state) => state.dataSlice.theme);
 
   const handleSuccessOTP = (isSuccess) => {
     // Replace this function with logic if member success login or register
     return isSuccess;
   };
+
   return (
     <div className="px-[16px]" style={{ paddingBottom: 80 }}>
       <h1>You are ordering from</h1>

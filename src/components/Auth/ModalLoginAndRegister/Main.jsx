@@ -65,8 +65,8 @@ export const RenderMainAuth = ({ setIsOpenModal, setIsOpenModalOtp, changeOpenMo
 
   return (
     <div>
-      {authScreen=="Login"
-        ?<RenderLoginComponent
+      {authScreen == "Login" ? (
+        <RenderLoginComponent
           isLoading={isLoading}
           setIsChecked={setIsChecked}
           tabScreen={tabScreen}
@@ -78,9 +78,10 @@ export const RenderMainAuth = ({ setIsOpenModal, setIsOpenModalOtp, changeOpenMo
           handleCheckboxChange={handleCheckboxChange}
           isCanProcess={isCanProcess}
           handleButtonClick={handleButtonClick}
-          changeOpenModalAuth={changeOpenModalAuth} 
+          changeOpenModalAuth={changeOpenModalAuth}
         />
-        :<RenderRegisterComponent
+      ) : (
+        <RenderRegisterComponent
           isLoading={isLoading}
           setIsChecked={setIsChecked}
           tabScreen={tabScreen}
@@ -93,8 +94,9 @@ export const RenderMainAuth = ({ setIsOpenModal, setIsOpenModalOtp, changeOpenMo
           handleCheckboxChange={handleCheckboxChange}
           isCanProcess={isCanProcess}
           handleButtonClick={handleButtonClick}
-          changeOpenModalAuth={changeOpenModalAuth} 
-        />}
+          changeOpenModalAuth={changeOpenModalAuth}
+        />
+      )}
     </div>
   );
 };

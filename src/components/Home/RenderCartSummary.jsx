@@ -11,46 +11,50 @@ const RenderCartSummary = () => {
   const memberInfo = useSelector(
     (state) => state.dataSlicePersisted.memberInfo,
   );
-  const theme = useSelector((state) => state.dataSlice.theme);
+  const { theme, orderType } = useSelector((state) => state.dataSlice);
 
-  return (
-    <button
-      onClick={() => navigate("/cart")}
-      className={`w-[95%] lg:w-[42%] flex justify-between items-stretch border-[color:var(--Brand-color-Primary,#00524C)] shadow-lg bg-[rgb(255,71,130)] gap-5 p-[8px] rounded-xl border-[1px] border-solid absolute left-1/2 -translate-x-1/2 -translate-y-1/2 ${
-        memberInfo?.membershipNo ? "bottom-11" : "-bottom-5"
-      } ${isSearchItem ? "hidden" : "z-30"}`}
-    >
-      <div className="items-stretch flex justify-between gap-2.5">
-        <div>
-          <span className="absolute flex w-[25px] h-[25px] top-1 left-7">
-            <span
-              style={{
-                backgroundColor: theme.warning,
-              }}
-              className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75`}
-            ></span>
-            <span
-              style={{ backgroundColor: theme.warning }}
-              className={`relative rounded-full w-[25px] h-[25px] text-white text-center leading-[25px] text-[12px]`}
-            >
-              {cartInfo?.details?.length}
+  if (orderType) {
+    return (
+      <button
+        onClick={() => navigate("/cart")}
+        className={`w-[95%] lg:w-[42%] flex justify-between items-stretch border-[color:var(--Brand-color-Primary,#00524C)] shadow-lg bg-[rgb(255,71,130)] gap-5 p-[8px] rounded-xl border-[1px] border-solid absolute left-1/2 -translate-x-1/2 -translate-y-1/2 ${
+          memberInfo?.membershipNo ? "bottom-11" : "-bottom-5"
+        } ${isSearchItem ? "hidden" : "z-30"}`}
+      >
+        <div className="items-stretch flex justify-between gap-2.5">
+          <div>
+            <span className="absolute flex w-[25px] h-[25px] top-1 left-7">
+              <span
+                style={{
+                  backgroundColor: theme.warning,
+                }}
+                className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75`}
+              ></span>
+              <span
+                style={{ backgroundColor: theme.warning }}
+                className={`relative rounded-full w-[25px] h-[25px] text-white text-center leading-[25px] text-[12px]`}
+              >
+                {cartInfo?.details?.length}
+              </span>
             </span>
-          </span>
-          <IconCart />
+            <IconCart />
+          </div>
+          <div className="text-white text-center text-base font-semibold leading-6 self-center grow whitespace-nowrap my-auto pl-2">
+            $ {getCurrencyHelper(cartInfo?.nettAmount)}
+          </div>
         </div>
-        <div className="text-white text-center text-base font-semibold leading-6 self-center grow whitespace-nowrap my-auto pl-2">
-          $ {getCurrencyHelper(cartInfo?.nettAmount)}
+        <div className="items-center flex justify-between gap-0">
+          <div className="text-white text-center text-lg font-semibold leading-6 grow whitespace-nowrap my-auto">
+            <Trans i18nKey={"checkout"} />
+          </div>
+          <div>
+            <IconArrowRight />
+          </div>
         </div>
-      </div>
-      <div className="items-center flex justify-between gap-0">
-        <div className="text-white text-center text-lg font-semibold leading-6 grow whitespace-nowrap my-auto">
-          <Trans i18nKey={"checkout"} />
-        </div>
-        <div>
-          <IconArrowRight />
-        </div>
-      </div>
-    </button>
-  );
+      </button>
+    );
+  } else {
+    return null;
+  }
 };
 export default RenderCartSummary;

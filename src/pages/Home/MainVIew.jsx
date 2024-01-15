@@ -8,7 +8,6 @@ import { Skeleton } from "../../components/Skeleton";
 import { GET } from "../../utilities/services";
 import { ProductCatalog } from "./ProductCatalog";
 import { Trans } from "react-i18next";
-import { setSelectedItemProds } from "../../app/dataSlicePersisted";
 import { mapCartAndProduct } from "../../components/Home/productAndCartMapper";
 import { setMenuSubGroup } from "../../app/dataSlice";
 import { RenderSearchItemBar } from "../../components/Home/SearchItemBar";
@@ -25,13 +24,12 @@ export const MainView = () => {
   const [selectedSubGroup, setSelectedSubGroup] = useState("");
   const [isHasSubGroup, setIsHasSubGroup] = useState([]);
   const dispatch = useDispatch();
-  const menuSubGroup = useSelector((state) => state.dataSlice.menuSubGroup);
-  const { outletName, cartInfo } = useSelector(
+  const { outletName, cartInfo, searchItemObj } = useSelector(
     (state) => state.dataSlicePersisted,
   );
-  const { isSearchItem } = useSelector((state) => state.dataSlice);
-  const { searchItemObj } = useSelector((state) => state.dataSlicePersisted);
-
+  const { isSearchItem, menuSubGroup } = useSelector(
+    (state) => state.dataSlice,
+  );
   useEffect(() => {
     if (searchItemObj?.doSearch) {
       setIsFirstOpenSearchBar(false);
@@ -69,7 +67,6 @@ export const MainView = () => {
     setIsLoading(true);
     dispatch(setMenuSubGroup([]));
     let data = await getMenuItem(type, refNo);
-    dispatch(setSelectedItemProds(data));
     setIsHasSubGroup(data.tempSubGroup?.length > 0);
     if (data.tempSubGroup?.length > 0) {
       setSelectedSubGroup(data.tempSubGroup[0].refNo);
@@ -117,7 +114,6 @@ export const MainView = () => {
       return { tempItem, tempSubGroup, dataLength };
     });
   };
-  console.log("menuSubGroup =>", menuSubGroup);
   const renderMainView = () => {
     return (
       <div className="relative pb-20">
