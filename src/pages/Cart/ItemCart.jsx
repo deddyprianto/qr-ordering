@@ -1,38 +1,19 @@
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { hasEmptyElement } from "../../helper";
-import { apiCart } from "../../services/Cart";
 import { RenderExpandDetail } from "./RenderExpandDetail";
 import { RenderQty } from "./RenderQty";
 import RenderModalItemDetail from "../../components/ModalAddItem";
 import { getItemType } from "../../components/RenderItemProduct/GetItemType";
 
-const ItemCart = ({ item, idCart }) => {
+const ItemCart = ({ item, idCart, setIsCartEmpty }) => {
   const [openEditModal, setOpenEditModal] = useState(false);
-  const [quantity, setQuantity] = useState(item?.quantity);
   const [expandItem, setExpandItem] = useState(false);
   const theme = useSelector((state) => state.dataSlice.theme);
   const [itemDataEdit, setItemDataEdit] = useState([]);
   const isEmptyArray =
     !hasEmptyElement(item?.attributes) || !hasEmptyElement(item?.bundles);
-
-  useEffect(() => {
-    const handleAPIQty = async () => {
-      let body = {
-        uniqueID: idCart,
-        quantity: quantity,
-      };
-      const result = await apiCart(
-        "PATCH",
-        `${idCart}/${body.uniqueID}/changeitemqty`,
-        body,
-      );
-      console.log(result);
-    };
-    handleAPIQty();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [quantity]);
 
   return (
     <div className="items-stretch self-stretch border border-[#D6D6D6] flex w-full flex-col rounded-lg border-solid mt-[16px]">
@@ -52,12 +33,13 @@ const ItemCart = ({ item, idCart }) => {
         itemNo={item.itemNo}
         setItemDataEdit={setItemDataEdit}
         expandItem={expandItem}
-        quantity={quantity}
-        setQuantity={setQuantity}
+        item={item}
+        idCart={idCart}
         setExpandItem={setExpandItem}
         theme={theme}
         isEmptyArray={isEmptyArray}
         setOpenEditModal={setOpenEditModal}
+        setIsCartEmpty={setIsCartEmpty}
       />
       {openEditModal && (
         <RenderModalItemDetail
@@ -78,4 +60,5 @@ export default ItemCart;
 ItemCart.propTypes = {
   item: PropTypes.object,
   idCart: PropTypes.string,
+  setIsCartEmpty: PropTypes.func,
 };

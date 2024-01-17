@@ -15,6 +15,13 @@ const RenderCartSummary = () => {
   );
   const { theme } = useSelector((state) => state.dataSlice);
 
+  const totalQuantity = cartInfo?.details.reduce(
+    (accumulator, currentValue) => {
+      return accumulator + currentValue.quantity;
+    },
+    0,
+  );
+
   if (orderType) {
     return (
       <button
@@ -36,7 +43,7 @@ const RenderCartSummary = () => {
                 style={{ backgroundColor: theme.warning }}
                 className={`relative rounded-full w-[25px] h-[25px] text-white text-center leading-[25px] text-[12px]`}
               >
-                {cartInfo?.details?.length}
+                {totalQuantity}
               </span>
             </span>
             <IconCart />

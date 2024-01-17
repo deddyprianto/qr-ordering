@@ -62,6 +62,7 @@ const RenderModalItemDetail = ({
           attList={attList}
           setAttList={setAttList}
           itemCart={itemCart}
+          isCalledFromCart
         />
       );
     } else if (itemType === "bundle") {
@@ -72,6 +73,7 @@ const RenderModalItemDetail = ({
           setItemToAdd={setItemToAdd}
           setBundleList={setBundleList}
           itemCart={itemCart}
+          isCalledFromCart
         />
       );
     } else if (itemType === "main") {
