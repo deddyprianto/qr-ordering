@@ -7,6 +7,8 @@ const RenderItemBundles = ({
   bundleList,
   setBundleList,
   setItemToAdd,
+  isCalledFromCart,
+  itemCart,
 }) => {
   useEffect(() => {
     setBundleList(JSON.parse(JSON.stringify(bundles)));
@@ -40,6 +42,8 @@ const RenderItemBundles = ({
             setItemToAdd={setItemToAdd}
             setBundleList={setBundleList}
             handleClickAttItem={handleClickAttItem}
+            isCalledFromCart={isCalledFromCart}
+            itemCart={itemCart}
           />
         );
       })}
@@ -51,6 +55,8 @@ RenderItemBundles.propTypes = {
   bundleList: PropTypes.array,
   setBundleList: PropTypes.func,
   setItemToAdd: PropTypes.func,
+  isCalledFromCart: PropTypes.func,
+  itemCart: PropTypes.obj,
 };
 
 export default RenderItemBundles;
