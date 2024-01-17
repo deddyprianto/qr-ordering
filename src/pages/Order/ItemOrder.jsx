@@ -7,7 +7,7 @@ const ItemOrder = () => {
 
   const { theme } = useSelector((state) => state.dataSlice);
   return (
-    <div className="items-stretch self-stretch border border-[color:var(--Brand-color-Primary,#00524C)] flex max-w-[398px] flex-col rounded-lg border-solid">
+    <div className="items-stretch self-stretch border border-[color:var(--Brand-color-Primary,#00524C)] flex w-full flex-col rounded-lg border-solid">
       <div className="justify-center items-stretch border-b-[color:var(--Brand-color-Primary,#00524C)] flex w-full flex-col p-3 border-b border-solid">
         <div className="justify-between items-stretch flex gap-5">
           <div className="text-emerald-800 text-center text-sm font-bold leading-5 tracking-wide">
