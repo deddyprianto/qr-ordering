@@ -10,7 +10,10 @@ export const RenderBundleGroup = ({
   bundleGroup,
   groupIdx,
   setBundleList,
+  itemCart,
+  isCalledFromCart,
 }) => {
+  const [itemCartBundles, setItemCartBundles] = useState(itemCart);
   const theme = useSelector((state) => state.dataSlice.theme);
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -25,6 +28,9 @@ export const RenderBundleGroup = ({
         return (
           <RenderBundleItem
             key={item.setMealItemCode}
+            itemCart={itemCartBundles}
+            setItemCartBundles={setItemCartBundles}
+            isCalledFromCart={isCalledFromCart}
             groupIdx={groupIdx}
             bundleList={bundleList}
             setBundleList={setBundleList}
@@ -89,5 +95,7 @@ RenderBundleGroup.propTypes = {
   bundleList: PropTypes.array,
   bundleGroup: PropTypes.object,
   groupIdx: PropTypes.number,
-  setBundleList: PropTypes.func
-}
+  setBundleList: PropTypes.func,
+  itemCart: PropTypes.object,
+  isCalledFromCart: PropTypes.bool,
+};

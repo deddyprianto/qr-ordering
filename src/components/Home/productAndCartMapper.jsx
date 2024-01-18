@@ -1,7 +1,7 @@
 export const mapCartAndProduct = (menuList, cartInfo) => {
-  if(cartInfo.details?.length<1) return menuList;
+  if (cartInfo.details?.length < 1) return menuList;
   const cartDetailsMap = new Map();
-  cartInfo.details.forEach((item) => {
+  cartInfo?.details?.forEach((item) => {
     cartDetailsMap.set(item.itemNo, {
       quantity: item.quantity,
       cartLineID: item.uniqueID,

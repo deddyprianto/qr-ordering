@@ -18,5 +18,16 @@
     padding: 10px; /* Optional: add padding for better readability */
   }
 
-  
+
+// aside
+/* Hide scrollbar for WebKit-based browsers */
+.scroll-containerExpand::-webkit-scrollbar {
+  display: none;
+}
+/* Set up the containerExpand with overflow and other styles */
+.scroll-containerExpand {
+  overflow-y: auto;
+  width: 100%,
+}
+
   

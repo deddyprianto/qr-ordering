@@ -617,3 +617,104 @@ export const IconDineIn = () => {
 
   )
 }
+export const IconExpand = ({ primary }) => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M1.99999 14L5.99999 10M1.99999 14V10.8M1.99999 14H5.19999M14 10.8V14M14 14H10.8M14 14L10 10M1.99999 5.2V2M1.99999 2H5.19999M1.99999 2L5.99999 6M14 5.2V2M14 2H10.8M14 2L10 6"
+        stroke={primary}
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+IconExpand.propTypes = {
+  primary: PropTypes.string,
+};
+export const IconExpandHide = ({ primary }) => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M10 10L14 14M10 10V13.2M10 10H13.2M6 13.2V10M6 10H2.8M6 10L2 14M10 2.8V6M10 6H13.2M10 6L14 2M6 2.8V6M6 6H2.8M6 6L2 2"
+        stroke={primary}
+        strokeWidth="1.59937"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+IconExpandHide.propTypes = {
+  primary: PropTypes.string,
+};
+
+export const IconEdit = ({ primary }) => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M2.17805 13.0661L2.94166 11.1478C3.03992 10.901 3.18694 10.677 3.37361 10.4894L11.5217 2.30172L10.9581 1.74083L11.5217 2.30172C11.6453 2.17755 11.8173 2.11739 11.9891 2.13657L12.2498 2.16569C13.1673 2.26813 13.8669 3.04887 13.8669 3.9846C13.8669 4.12248 13.8124 4.25395 13.7165 4.35027L5.48484 12.6219C5.29818 12.8095 5.07578 12.9568 4.83122 13.0551L2.92219 13.8224C2.46362 14.0067 1.98549 13.5498 2.17805 13.0661Z"
+        stroke={primary}
+        strokeWidth="1.59937"
+      />
+    </svg>
+  );
+};
+
+IconEdit.propTypes = {
+  primary: PropTypes.string,
+};
+
+export const IconMasterCard = () => {
+  return (
+    <svg
+      width="40"
+      height="40"
+      viewBox="0 0 28 28"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M21.0002 7.00008H7.00016C5.7115 7.00008 4.66683 8.04475 4.66683 9.33341V10.5001H23.3335V12.8334H4.66683V18.6667C4.66683 19.9554 5.7115 21.0001 7.00017 21.0001H21.0002C22.2888 21.0001 23.3335 19.9554 23.3335 18.6667V9.33341C23.3335 8.04475 22.2888 7.00008 21.0002 7.00008ZM7.00016 4.66675C4.42283 4.66675 2.3335 6.75608 2.3335 9.33341V18.6667C2.3335 21.2441 4.42284 23.3334 7.00017 23.3334H21.0002C23.5775 23.3334 25.6668 21.2441 25.6668 18.6667V9.33341C25.6668 6.75609 23.5775 4.66675 21.0002 4.66675H7.00016ZM17.5001 15.1667C16.8558 15.1667 16.3335 15.6891 16.3335 16.3334C16.3335 16.9777 16.8558 17.5001 17.5001 17.5001H19.8335C20.4778 17.5001 21.0001 16.9777 21.0001 16.3334C21.0001 15.6891 20.4778 15.1667 19.8335 15.1667H17.5001Z"
+        fill="black"
+      />
+    </svg>
+  );
+};
+
+export const IconArrowSolid = () => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M8 20V4L16 12L8 20Z" fill="white" />
+    </svg>
+  );
+};

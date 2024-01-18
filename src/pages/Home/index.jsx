@@ -4,15 +4,16 @@ import { setShowSplashScreen } from "../../app/dataSlicePersisted";
 import { RenderSplashScreen } from "../../components/SplashScreen";
 import { MainView } from "./MainVIew";
 import { RenderOrderType } from "./OrderType";
+import RenderCartSummary from "../../components/Home/RenderCartSummary";
 
 export function Component() {
-
   const dispatch = useDispatch();
+  const { cartInfo, orderType } = useSelector(
+    (state) => state.dataSlicePersisted,
+  );
   const { isSplashScreenShow } = useSelector(
     (state) => state.dataSlicePersisted,
   );
-
-  const orderType = useSelector((state) => state.dataSlice.orderType);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -25,9 +26,14 @@ export function Component() {
 
   const renderMain = () => {
     if (isSplashScreenShow) return <RenderSplashScreen />;
-    else if (orderType=="") return <RenderOrderType/>
+    else if (orderType == "") return <RenderOrderType />;
     else return <MainView />;
   };
 
-  return <React.Fragment>{renderMain()}</React.Fragment>;
+  return (
+    <React.Fragment>
+      {renderMain()}
+      {cartInfo?.details?.length > 0 && <RenderCartSummary />}
+    </React.Fragment>
+  );
 }

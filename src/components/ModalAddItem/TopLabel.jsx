@@ -8,19 +8,23 @@ export const RenderTopLabel = ({
   setOpenModal, 
   typeOfModalAddItem 
 }) => {
-  return(
+  return (
     <div
       className={`w-full bg-white flex ${
-        typeOfModalAddItem.toLowerCase()!='main' ? "justify-between" : "justify-end"
+        typeOfModalAddItem.toLowerCase() != "main"
+          ? "justify-between"
+          : "justify-end"
       } items-center px-[16px]`}
     >
-      {typeOfModalAddItem.toLowerCase()!='main' && <RenderLabelAndPrice itemName={itemName} price={price}/>}
+      {typeOfModalAddItem.toLowerCase() !== "main" && (
+        <RenderLabelAndPrice itemName={itemName} price={price} />
+      )}
       <button
         onClick={() => {
           setOpenModal(false);
         }}
       >
-          <IconClose color="black" width="30" height="50"/>
+        <IconClose color="black" width="30" height="50" />
       </button>
     </div>
   );
