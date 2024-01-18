@@ -48,7 +48,6 @@ export const RenderBundleItem = ({
 
   const handleSelectItem = () => {
     if (isCalledFromCart) {
-      console.log(1);
       const removeItem = { ...itemCart, bundles: [] };
       setItemCartBundles(removeItem);
     }
