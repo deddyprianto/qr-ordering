@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
@@ -80,8 +79,4 @@ export const ModalGeneral = () => {
       </Dialog>
     </Transition>
   );
-};
-
-ModalGeneral.propTypes = {
-  children: PropTypes.element,
 };
