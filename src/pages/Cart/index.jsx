@@ -56,6 +56,7 @@ export function Component() {
               idCart={cartInfo?.uniqueID}
               key={item?.uniqueID}
               setIsCartEmpty={setIsCartEmpty}
+              totalQuantityCart={totalQuantityCart}
             />
           );
         })}

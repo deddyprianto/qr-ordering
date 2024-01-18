@@ -8,7 +8,7 @@ import RenderModalItemDetail from "../../components/ModalAddItem";
 import { getItemType } from "../../components/RenderItemProduct/GetItemType";
 import { numberFormatter } from "../../utilities/numberFormatter";
 
-const ItemCart = ({ item, idCart, setIsCartEmpty }) => {
+const ItemCart = ({ item, idCart, setIsCartEmpty, totalQuantityCart }) => {
   const [openEditModal, setOpenEditModal] = useState(false);
   const [expandItem, setExpandItem] = useState(false);
   const theme = useSelector((state) => state.dataSlice.theme);
@@ -30,6 +30,7 @@ const ItemCart = ({ item, idCart, setIsCartEmpty }) => {
         theme={theme}
       />
       <RenderQty
+        totalQuantityCart={totalQuantityCart}
         itemNo={item.itemNo}
         setItemDataEdit={setItemDataEdit}
         expandItem={expandItem}
@@ -61,4 +62,5 @@ ItemCart.propTypes = {
   item: PropTypes.object,
   idCart: PropTypes.string,
   setIsCartEmpty: PropTypes.func,
+  totalQuantityCart: PropTypes.func,
 };
