@@ -71,17 +71,12 @@ export default function Header() {
     if (isSearchItem) {
       return (
         <div className="flex w-full">
-          <div
+          <button
             className="ml-[-22px]"
             onClick={() => dispatchIsSearchItem(false)}
-            onKeyDown={(event) => {
-              if (event.key === "Enter" || event.key === " ") {
-                dispatchIsSearchItem(false);
-              }
-            }}
           >
             <IconArrowLeft />
-          </div>
+          </button>
           <div className="text-zinc-500 text-sm font-medium leading-5 tracking-wide whitespace-nowrap border border-[color:var(--Text-color-Tertiary,#888787)] shadow-sm bg-white grow justify-center rounded-lg border-solid items-start">
             <input
               id="input-search"
@@ -99,7 +94,7 @@ export default function Header() {
     } else {
       return (
         <div className="flex grow basis-[0%] flex-col items-start">
-          <img loading="lazy" src={logo} width={43} height={24} />
+          <img loading="lazy" src={logo} width={43} height={24} alt="logo" />
           <div className="text-stone-50 text-sm font-medium leading-5 tracking-wide self-stretch">
             {"{outlet_name}"}
           </div>
@@ -112,12 +107,11 @@ export default function Header() {
     if (location.pathname === "/cart") {
       return (
         <div
-          onClick={() => {
-            navigate("/");
-          }}
           className={`bg-[${theme.primary}] flex text-white items-center text-[16px] font-medium py-[5px]`}
         >
-          <IconArrowLeft />
+          <button onClick={() => navigate("/")}>
+            <IconArrowLeft />
+          </button>
           <div>Order Cart</div>
         </div>
       );
@@ -127,17 +121,13 @@ export default function Header() {
           className={`justify-between items-stretch border-b-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] bg-[${theme.primary}] flex w-full gap-5 px-4 py-2.5 border-b border-solid`}
         >
           {renderConditionally()}
-          <div
+          <button
             onClick={() => openSearchBar()}
-            onKeyDown={(event) => {
-              if (event.key === "Enter" || event.key === " ") {
-                openSearchBar();
-              }
-            }}
-            className={`justify-center items-center bg-[${theme.secondary}] flex aspect-square flex-col w-[46px] h-[46px] px-3 rounded-[1000px]`}
+            style={{ backgroundColor: theme.secondary }}
+            className="justify-center items-center flex aspect-square flex-col w-[46px] h-[46px] px-3 rounded-[1000px]"
           >
             <SearchIcon />
-          </div>
+          </button>
         </div>
       );
     }

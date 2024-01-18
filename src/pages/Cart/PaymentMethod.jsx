@@ -23,7 +23,7 @@ export function PaymentMethod({
       <div className="items-stretch  flex  gap-x-2 mt-4 scroll-container">
         {paymentMethod.map((item) => {
           return (
-            <div
+            <button
               onClick={() => setSelectedPaymentMethod(item)}
               key={item}
               className={`w-[160px] flex justify-center items-center border  p-[16px] gap-x-2 rounded-lg border-solid ${
@@ -36,7 +36,7 @@ export function PaymentMethod({
                 <IconMasterCard />
               </div>
               <div className="text-center">{item}</div>
-            </div>
+            </button>
           );
         })}
       </div>

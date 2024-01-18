@@ -41,15 +41,18 @@ const ItemOrder = () => {
         </div>
       </div>
       {/* 3 */}
-      <div
+      <button
         onClick={() => navigate("/ordersummary")}
-        className="items-stretch bg-emerald-800 flex justify-between gap-0 mt-3 px-3 py-2 rounded-b-md"
+        className="items-stretch flex justify-between gap-0 mt-3 px-3 py-2 rounded-b-md"
+        style={{
+          backgroundColor: theme.primary,
+        }}
       >
         <IconArrowSolid />
         <div className="text-white text-center text-sm font-bold leading-5 tracking-wide self-center grow whitespace-nowrap my-auto">
           PROCESSING
         </div>
-      </div>
+      </button>
     </div>
   );
 };
