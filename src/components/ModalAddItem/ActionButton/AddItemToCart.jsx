@@ -6,10 +6,11 @@ export const apiCartAddItem = async (
   setOpenModal, 
   resetCartInfo,
   itemName,
-  toast
+  toast,
+  lineID
 ) => {
   try {
-    const result = await apiCart("POST", `${cartID}/additems`, body)//);
+    const result = await callAPI(cartID, lineID, body)//);
     if(result.resultCode == 200){
       setOpenModal(false);
       resetCartInfo(result.data);
@@ -19,4 +20,11 @@ export const apiCartAddItem = async (
   } catch (error) {
     console.log(error);
   }
+}
+
+const callAPI = async (cartID, lineID, body) => {
+  if(lineID)
+    return await apiCart("PUT", `${cartID}/${lineID}`, body[0]);
+  else
+    return await apiCart("POST", `${cartID}/additems`, body);
 }

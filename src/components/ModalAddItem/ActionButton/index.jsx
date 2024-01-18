@@ -21,7 +21,9 @@ export const RenderButtonAdd = ({
   typeOfModalAddItem,
   setTypeOfModalAddItem,
   setOpenModal,
-  setIsLoading
+  setIsLoading,
+  isCalledFromCart,
+  lineID
  }) => {
   const dispatch = useDispatch();
   const toast = useEdgeSnack();
@@ -38,11 +40,11 @@ export const RenderButtonAdd = ({
   }
 
   const handleClickButton = async() => {
-    if(itemType=="bundle" && typeOfModalAddItem=='main'){
+    if(itemType=="bundle" && typeOfModalAddItem=='main' && !isCalledFromCart){
       setTypeOfModalAddItem("bundle");
       return;
     }
-    else if(itemType=="attribute" && typeOfModalAddItem!='attribute'){
+    else if(itemType=="attribute" && typeOfModalAddItem!='attribute' && !isCalledFromCart){
       setTypeOfModalAddItem("attribute");
       return;
     }
@@ -78,7 +80,7 @@ export const RenderButtonAdd = ({
       default:
         break;
     }
-    await apiCartAddItem(cartID, [body], setOpenModal, resetCartInfo, item.itemName, toast);
+    await apiCartAddItem(cartID, [body], setOpenModal, resetCartInfo, item.itemName, toast, lineID);
     setIsLoading(false);
   }
 
@@ -94,7 +96,7 @@ export const RenderButtonAdd = ({
         className="bg-pink-500 w-full rounded-lg px-[16px] py-[12px] flex justify-center items-center cursor-pointer"
       >
         <div className="flex items-stretch gap-2">
-          <IconPlus />
+          {isCalledFromCart?"":<IconPlus />}
           <div className="text-white text-xs font-bold leading-4 self-center my-auto">
             {renderButtonText(itemToAdd.unitPrice, itemType, typeOfModalAddItem, attList, bundleList)}
           </div>
@@ -113,5 +115,7 @@ RenderButtonAdd.propTypes = {
   typeOfModalAddItem: PropTypes.string,
   setTypeOfModalAddItem: PropTypes.func,
   setOpenModal: PropTypes.func,
-  setIsLoading: PropTypes.func
+  setIsLoading: PropTypes.func,
+  isCalledFromCart: PropTypes.bool,
+  lineID: PropTypes.string
 }

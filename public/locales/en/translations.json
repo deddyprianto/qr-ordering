@@ -27,5 +27,14 @@
   "please_double_check_keyword": "Please double-check your keyword.",
   "couldn_find_item_search": "We couldn't find the item you searched for.",
   "checkout": "CHECKOUT",
-  "promo": "Promo"
+  "promo": "Promo",
+  "show_less": "Show Less",
+  "show_more": "Show More",
+  "you_order_from": "You are order from",
+  "order_items": "Order Item(s)",
+  "choose_payment_method": "Choose Payment Method",
+  "payment_summary": "Payment Summary",
+  "subtotal": "Subtotal",
+  "total_payment": "Total Payment",
+  "pay": "PAY"
 }

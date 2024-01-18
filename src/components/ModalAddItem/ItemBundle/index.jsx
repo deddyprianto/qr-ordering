@@ -1,17 +1,29 @@
 import PropTypes from "prop-types";
 import { RenderBundleGroup } from "./BundlesGroup";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
+import { mappingBundleProductCart } from "./MappingBundleCartAndItem";
 
 const RenderItemBundles = ({
   bundles,
   bundleList,
   setBundleList,
   setItemToAdd,
-  isCalledFromCart,
   itemCart,
+  isCalledFromCart
 }) => {
+  const memoizedCart = useMemo(() => {
+    return itemCart?.bundles.reduce((acc, item) => {
+      const key = `${item.bundleCode}-${item.bundleItemCode}`;
+      acc[key] = item;
+      return acc;
+    }, {});
+  }, [itemCart]);
+
   useEffect(() => {
-    setBundleList(JSON.parse(JSON.stringify(bundles)));
+    if(isCalledFromCart) 
+      setBundleList(mappingBundleProductCart(memoizedCart, bundles));
+    else 
+      setBundleList(JSON.parse(JSON.stringify(bundles)));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, bundles);
 

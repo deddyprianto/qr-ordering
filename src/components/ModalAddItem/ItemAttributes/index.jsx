@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { RenderAttGroup } from "./AttributesGroup";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { mappingCartAttributes } from "./MappingAttributesCart";
 
 const RenderItemAttributes = ({
   attributes,
@@ -10,9 +11,11 @@ const RenderItemAttributes = ({
   itemCart,
   isCalledFromCart,
 }) => {
-  const [itemCartObj, setItemCartObj] = useState(itemCart);
   useEffect(() => {
-    setAttList(JSON.parse(JSON.stringify(attributes)));
+    if(isCalledFromCart) 
+      setAttList(mappingCartAttributes(itemCart, attributes));
+    else
+      setAttList(JSON.parse(JSON.stringify(attributes)));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, attributes);
 
@@ -21,11 +24,6 @@ const RenderItemAttributes = ({
   };
 
   const handleClickAttItem = (idxAttGroup, idxAttItem) => {
-    if (isCalledFromCart) {
-      console.log("isCalledFromCart", isCalledFromCart);
-      const removeItem = { ...itemCartObj, attributes: [] };
-      setItemCartObj(removeItem);
-    }
     let tempAttList = [...attList];
 
     if (tempAttList[idxAttGroup].isSingleSelection)
@@ -48,7 +46,6 @@ const RenderItemAttributes = ({
             idxAttGroup={idx}
             handleClickAttItem={handleClickAttItem}
             isFromBundle={isFromBundle}
-            itemCart={itemCartObj}
           />
         );
       })}

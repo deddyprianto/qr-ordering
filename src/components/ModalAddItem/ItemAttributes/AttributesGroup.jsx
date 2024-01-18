@@ -5,8 +5,7 @@ export const RenderAttGroup = ({
   attGroup,
   idxAttGroup,
   handleClickAttItem,
-  isFromBundle = false,
-  itemCart,
+  isFromBundle = false
 }) => {
   return (
     <>
@@ -17,7 +16,6 @@ export const RenderAttGroup = ({
         {attGroup.items?.map((att, idx) => {
           return (
             <RenderAttItem
-              itemCart={itemCart}
               key={att.attributesCode}
               att={att}
               idxAttGroup={idxAttGroup}
@@ -36,6 +34,5 @@ RenderAttGroup.propTypes = {
   attGroup: PropTypes.object,
   idxAttGroup: PropTypes.number,
   handleClickAttItem: PropTypes.func,
-  isFromBundle: PropTypes.bool,
-  itemCart: PropTypes.object,
+  isFromBundle: PropTypes.bool
 };

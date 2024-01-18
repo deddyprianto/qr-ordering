@@ -15,7 +15,7 @@ export const RenderExpandDetail = ({
     heightCustom = expandItem ? "30px" : "0px";
   }
 
-  if (isEmptyArray) {
+  if (!isEmptyArray) {
     return (
       <div
         className="px-[8px] py-1 scroll-containerExpand"
