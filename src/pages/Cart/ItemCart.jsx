@@ -6,6 +6,7 @@ import { RenderExpandDetail } from "./RenderExpandDetail";
 import { RenderQty } from "./RenderQty";
 import RenderModalItemDetail from "../../components/ModalAddItem";
 import { getItemType } from "../../components/RenderItemProduct/GetItemType";
+import { numberFormatter } from "../../utilities/numberFormatter";
 
 const ItemCart = ({ item, idCart, setIsCartEmpty }) => {
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -20,7 +21,7 @@ const ItemCart = ({ item, idCart, setIsCartEmpty }) => {
       <div className="flex justify-between gap-4 py-2 items-start px-[8px]">
         <div>{item?.productInfo?.itemName}</div>
         <div className="w-[45px] text-center">
-          $ {item?.productInfo?.retailPrice.toFixed(2)}
+          $ {numberFormatter(item?.amount)}
         </div>
       </div>
       <RenderExpandDetail

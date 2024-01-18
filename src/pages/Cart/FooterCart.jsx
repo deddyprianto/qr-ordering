@@ -1,6 +1,8 @@
 import { useSelector } from "react-redux";
 import screen from "../../../hooks/useWindowSize";
 import { useNavigate } from "react-router-dom";
+import { numberFormatter } from "../../utilities/numberFormatter";
+import { Trans } from "react-i18next";
 
 const FooterCart = () => {
   const { cartInfo } = useSelector((state) => state.dataSlicePersisted);
@@ -29,7 +31,7 @@ const FooterCart = () => {
         style={{ backgroundColor: theme.secondary }}
         className="py-[10px] px-[20px]  text-white rounded-lg cursor-pointer text-[16px] w-full"
       >
-        PAY - $ {cartInfo?.nettAmount}
+        <Trans i18nKey={"pay"}/> - $ {numberFormatter(cartInfo?.nettAmount)}
       </button>
     </footer>
   );

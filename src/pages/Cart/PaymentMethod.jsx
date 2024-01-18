@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { IconMasterCard } from "../../assets/svgIcon";
 import { useSelector } from "react-redux";
+import { Trans } from "react-i18next";
 
 export function PaymentMethod({
   selectedPaymentMethod,
@@ -17,7 +18,7 @@ export function PaymentMethod({
   return (
     <span className="items-stretch self-stretch flex w-full flex-col">
       <div className="text-gray-700 text-base font-bold leading-6 w-full">
-        Choose Payment Method
+        <Trans i18nKey={"choose_payment_method"}/>
       </div>
       <div className="items-stretch  flex  gap-x-2 mt-4 scroll-container">
         {paymentMethod.map((item) => {
