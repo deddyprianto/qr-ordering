@@ -22,7 +22,7 @@ export const SubGroupMenu = ({ selectedSubGroup, setSelectedSubGroup }) => {
           <button
             id={subGroup.refNo}
             onClick={() => handleClick(subGroup.refNo, idx)}
-            key={subGroup.buttonTitle}
+            key={subGroup.refNo}
             style={{
               flex: "0 0 auto",
               width: "150px",

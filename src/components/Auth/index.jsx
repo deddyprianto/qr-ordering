@@ -34,9 +34,9 @@ export const ModalAuth = ({
 ModalAuth.propTypes = {
   isOpenModal: PropTypes.bool,
   setIsOpenModal: PropTypes.func,
-  authScreen: PropTypes.bool,
+  authScreen: PropTypes.string,
   setAuthScreen: PropTypes.func,
   isOpenModalOtp: PropTypes.bool,
   setIsOpenModalOtp: PropTypes.func,
-  callback: PropTypes.func
+  callback: PropTypes.func,
 };
