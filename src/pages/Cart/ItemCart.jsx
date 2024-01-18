@@ -13,8 +13,7 @@ const ItemCart = ({ item, idCart, setIsCartEmpty }) => {
   const [expandItem, setExpandItem] = useState(false);
   const theme = useSelector((state) => state.dataSlice.theme);
   const [itemDataEdit, setItemDataEdit] = useState([]);
-  const isEmptyArray =
-    !hasEmptyElement(item?.attributes) || !hasEmptyElement(item?.bundles);
+  const isEmptyArray = hasEmptyElement(item?.attributes) && hasEmptyElement(item?.bundles);
 
   return (
     <div className="items-stretch self-stretch border border-[#D6D6D6] flex w-full flex-col rounded-lg border-solid mt-[16px]">
