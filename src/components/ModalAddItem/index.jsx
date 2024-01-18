@@ -23,6 +23,7 @@ const RenderModalItemDetail = ({
   const [attList, setAttList] = useState([]);
   const [bundleList, setBundleList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [lineID, setLineID] = useState("");
   const { width } = screen();
   const gadgetScreen = width < 980;
 
@@ -50,6 +51,7 @@ const RenderModalItemDetail = ({
         bundles: [],
       });
       setTypeOfModalAddItem("main");
+      setLineID(isCalledFromCart?itemCart.uniqueID:"");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openModal]);
@@ -129,19 +131,21 @@ const RenderModalItemDetail = ({
                 setBundleList={setBundleList}
                 setIsLoading={setIsLoading}
               />
-              <RenderButtonAdd
-                item={item}
-                itemToAdd={itemToAdd}
-                attList={attList}
-                bundleList={bundleList}
-                itemType={itemType}
-                typeOfModalAddItem={typeOfModalAddItem}
-                setTypeOfModalAddItem={setTypeOfModalAddItem}
-                setOpenModal={setOpenModal}
-                setIsLoading={setIsLoading}
-              />
             </>
           )}
+          <RenderButtonAdd
+            item={item}
+            lineID={lineID}
+            itemToAdd={itemToAdd}
+            attList={attList}
+            bundleList={bundleList}
+            itemType={itemType}
+            typeOfModalAddItem={typeOfModalAddItem}
+            setTypeOfModalAddItem={setTypeOfModalAddItem}
+            setOpenModal={setOpenModal}
+            setIsLoading={setIsLoading}
+            isCalledFromCart={isCalledFromCart}
+          />
         </div>
       </div>
     </div>
