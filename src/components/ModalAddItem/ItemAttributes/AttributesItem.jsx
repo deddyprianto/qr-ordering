@@ -5,14 +5,10 @@ export const RenderAttItem = ({
   idxAttGroup,
   idxAttItem,
   handleClickAttItem,
-  isFromBundle = false,
-  itemCart,
+  isFromBundle = false
 }) => {
-  const hasMatchingAttributes = itemCart?.attributes.some(
-    (item) => item.attCode === att.attributesCode,
-  );
   const coloringItem = () => {
-    if (att.isSelected || hasMatchingAttributes) {
+    if (att.isSelected) {
       return "bg-[#FFF2DF] border-[#00524C]";
     } else {
       return "bg-white border-[color:var(--Grey-Scale-color-Grey-Scale-3,#D6D6D6)]";
@@ -52,6 +48,5 @@ RenderAttItem.propTypes = {
   idxAttGroup: PropTypes.number,
   idxAttItem: PropTypes.number,
   handleClickAttItem: PropTypes.func,
-  isFromBundle: PropTypes.bool,
-  itemCart: PropTypes.object,
+  isFromBundle: PropTypes.bool
 };

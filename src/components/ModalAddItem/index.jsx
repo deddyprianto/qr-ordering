@@ -50,7 +50,7 @@ const RenderModalItemDetail = ({
         attributes: [],
         bundles: [],
       });
-      setTypeOfModalAddItem("main");
+      setTypeOfModalAddItem(isCalledFromCart?itemType:"main");
       setLineID(isCalledFromCart?itemCart.uniqueID:"");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
