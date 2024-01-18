@@ -112,12 +112,11 @@ export default function Header() {
     if (location.pathname === "/cart") {
       return (
         <div
-          onClick={() => {
-            navigate("/");
-          }}
           className={`bg-[${theme.primary}] flex text-white items-center text-[16px] font-medium py-[5px]`}
         >
-          <IconArrowLeft />
+          <button onClick={() => navigate("/")}>
+            <IconArrowLeft />
+          </button>
           <div>Order Cart</div>
         </div>
       );
