@@ -154,4 +154,5 @@ RenderQty.propTypes = {
   itemNo: PropTypes.string,
   item: PropTypes.any,
   idCart: PropTypes.string,
+  totalQuantityCart: PropTypes.any,
 };
