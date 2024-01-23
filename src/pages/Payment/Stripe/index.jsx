@@ -3,7 +3,7 @@ import {loadStripe} from '@stripe/stripe-js';
 
 import {RenderCheckoutPage} from './CheckoutForm';
 import { useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { apiCart } from '../../../services/Cart';
 import { ParentBlur } from '../../../components/ParentBlur';
 import { useEdgeSnack } from '../../../components/EdgeSnack/utils/useEdgeSnack';
@@ -19,11 +19,15 @@ export const Stripe = () => {
   const toast = useEdgeSnack();
 
   useEffect(()=>{
-    loadStripeByPubishableKey();
-    getPublishableKey();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    preparation.current();
   },[])
 
+  const preparation = useRef();
+  preparation.current = () => {
+    loadStripeByPubishableKey();
+    getPublishableKey();
+  }
+  
   const loadStripeByPubishableKey = () => {
     for(const setting of paymentMethod.settings){
       if(setting.settingName?.toLowerCase() == 'publishablekey'){

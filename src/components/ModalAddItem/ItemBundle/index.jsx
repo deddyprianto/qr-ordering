@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { RenderBundleGroup } from "./BundlesGroup";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { mappingBundleProductCart } from "./MappingBundleCartAndItem";
 
 const RenderItemBundles = ({
@@ -19,13 +19,17 @@ const RenderItemBundles = ({
     }, {});
   }, [itemCart]);
 
+  const setBundleListRef = useRef();
   useEffect(() => {
+    setBundleListRef.current();
+  }, [bundles]);
+
+  setBundleListRef.current = () => {
     if(isCalledFromCart) 
       setBundleList(mappingBundleProductCart(memoizedCart, bundles));
     else 
       setBundleList(JSON.parse(JSON.stringify(bundles)));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, bundles);
+  }
 
   const removeAllSelectedAttItem = (attGroupItems) => {
     return attGroupItems.map((item) => ({ ...item, isSelected: false }));
@@ -68,7 +72,7 @@ RenderItemBundles.propTypes = {
   setBundleList: PropTypes.func,
   setItemToAdd: PropTypes.func,
   isCalledFromCart: PropTypes.func,
-  itemCart: PropTypes.obj,
+  itemCart: PropTypes.any,
 };
 
 export default RenderItemBundles;

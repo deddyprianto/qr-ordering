@@ -16,8 +16,7 @@ const RenderItemAttributes = ({
       setAttList(mappingCartAttributes(itemCart, attributes));
     else
       setAttList(JSON.parse(JSON.stringify(attributes)));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, attributes);
+  }, [attributes, isCalledFromCart, itemCart, setAttList]);
 
   const removeAllSelectedAttItem = (attGroupItems) => {
     return attGroupItems.map((item) => ({ ...item, isSelected: false }));

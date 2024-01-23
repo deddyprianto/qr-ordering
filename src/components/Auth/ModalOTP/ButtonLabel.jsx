@@ -32,7 +32,7 @@ export const ButtomLabel = () => {
           font: "500 14px/20px Helvetica Neue, sans-serif ",
         }}
       >
-        <Trans i18n={"resend_otp_in"}/> 0:59
+        <Trans i18nKey={"resend_otp_in"}/> 0:59
       </div>
     </div>
   )

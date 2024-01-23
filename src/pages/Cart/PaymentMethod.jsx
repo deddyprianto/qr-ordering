@@ -1,7 +1,7 @@
 import { IconMasterCard } from "../../assets/svgIcon";
 import { useDispatch, useSelector } from "react-redux";
 import { Trans } from "react-i18next";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { apiOutlet } from "../../services/Outlet";
 import { setPaymentMethod } from "../../app/dataSlice";
 
@@ -11,12 +11,8 @@ export function PaymentMethod() {
   const outletName = useSelector((state) => state.dataSlicePersisted.outletName);
   const [ paymentMethodList, setPaymentMethodList ] = useState([]);
 
-  useEffect(()=>{
-    getPaymentMethod()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[]);
-
-  const getPaymentMethod = async() => {
+  const getPaymentMethod = useRef();
+  getPaymentMethod.current = async() => {
     try {
       const result = await apiOutlet("GET", `${outletName}/paymentmodes`, {});
       if(result.resultCode == 200){
@@ -27,6 +23,10 @@ export function PaymentMethod() {
       console.log(error);
     }
   };
+
+  useEffect(()=>{
+    getPaymentMethod.current();
+  },[]);
   
   return (
     <span className="items-stretch self-stretch flex w-full flex-col">

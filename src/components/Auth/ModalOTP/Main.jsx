@@ -18,14 +18,14 @@ export const RenderMainComponent = ({ callback, isOpenModal, setIsOpenModal }) =
   const [errMsg, setErrMsg] = useState("");
 
   // Check if all OTP fields are filled
-  const isOTPComplete = otp.every((value) => value !== "");
+  const isOTPComplete = otp.every((value) => value != "");
+  const firstOtpRef = otp[0]?.ref;
 
   useEffect(() => {
     if(isOpenModal){
-      otp[0]?.ref?.current?.focus();
+      firstOtpRef?.current?.focus();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpenModal]);
+  }, [isOpenModal, firstOtpRef]);
 
   return (
     <div

@@ -33,7 +33,8 @@ export default function Layout() {
     }
   };
 
-  useEffect(() => {
+  const parentScrollRef = useRef();
+  parentScrollRef.current = () => {
     const childElement = childRef.current;
     if (childElement) {
       childElement.addEventListener("scroll", handleParentScroll);
@@ -44,7 +45,10 @@ export default function Layout() {
         childElement.removeEventListener("scroll", handleParentScroll);
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }
+
+  useEffect(() => {
+    parentScrollRef.current();
   }, []);
 
   let navigation = useNavigation();

@@ -6,7 +6,6 @@ export const RenderButtonQty = ({
   updateBundleList,
   disableMinButton,
   disableMaxButton,
-  hasMatchingBundlesItem,
   itemCartMatchesQty,
 }) => {
   const handleChangeQty = (isAddQuantity) => {
@@ -19,7 +18,7 @@ export const RenderButtonQty = ({
     updateBundleList(tmpItem);
   };
 
-  if (item.isSelected || hasMatchingBundlesItem) {
+  if (item.isSelected) {
     return (
       <div className="items-stretch self-center flex gap-1 my-auto">
         <button
@@ -54,6 +53,5 @@ RenderButtonQty.propTypes = {
   updateBundleList: PropTypes.func,
   disableMinButton: PropTypes.bool,
   disableMaxButton: PropTypes.bool,
-  hasMatchingBundlesItem: PropTypes.bool,
   itemCartMatchesQty: PropTypes.object,
 };

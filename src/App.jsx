@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Loading from "./components/Loading";
 import "./scss/App.scss";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchItemObj, setEnableSearchUsingScroll, setCartInfo, setOutletName } from "./app/dataSlicePersisted";
 import { setIsSearchItem } from "./app/dataSlice";
@@ -53,18 +53,21 @@ export default function App() {
     (state) => state.dataSlicePersisted.cartInfo,
   );
 
-  const getCartInfo = async() => {
-    if(!cartInfo.uniqueID) return
+  const getCartInfoRef = useRef();
+
+  getCartInfoRef.current = async () => {
+    if (!cartInfo.uniqueID) return;
     try {
       const result = await apiCart("GET", cartInfo.uniqueID, {});
-      if(result.resultCode == 200){
-        dispatch(setCartInfo(result.data))
+      if (result.resultCode === 200) {
+        dispatch(setCartInfo(result.data));
+      } else {
+        throw result.message;
       }
-      else throw(result.message);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(()=>{
     dispatch(setIsSearchItem(false)); 
@@ -75,8 +78,8 @@ export default function App() {
     })); 
     dispatch(setEnableSearchUsingScroll(false)); 
     dispatch(setOutletName("edge cafe")); 
-    getCartInfo();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+
+    getCartInfoRef.current();
+  },[dispatch])
   return <RouterProvider router={router} fallbackElement={<Loading />} />;
 }

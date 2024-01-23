@@ -16,11 +16,8 @@ export const RenderCheckoutPage = () => {
       },
     });
 
-    if (error) {
-      toast.open(error.message, 'error')
-    } else {
-      toast.open("Payment has been successfully submitted", 'success')
-    }
+    if (error)
+      toast.open(error.message, 'error');
   }
   return (
     <form id={"payment-form"}>

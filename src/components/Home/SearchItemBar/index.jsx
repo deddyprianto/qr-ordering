@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { apiProduct } from "../../../services/Product";
 import { setEnableSearchUsingScroll } from "../../../app/dataSlicePersisted";
@@ -16,14 +16,14 @@ export const RenderSearchItemBar = ({ searchText = "" }) => {
     (state) => state.dataSlicePersisted.searchItemObj,
   );
 
+  const handleSearchItems = useRef();
   useEffect(() => {
     if (searchItemObj?.doSearch) {
-      handleSearchItems();
+      handleSearchItems.current();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchItemObj]);
 
-  const handleSearchItems = async () => {
+  handleSearchItems.current = async () => {
     if (isLoading) return;
     if(searchItemObj.isResetList) setDataLength(0);
     if((dataLength == searchItemList.length) && !searchItemObj.isResetList) return;
