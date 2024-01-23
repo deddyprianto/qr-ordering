@@ -132,7 +132,7 @@ export const RenderQty = ({
 };
 RenderQty.propTypes = {
   isEmptyArray: PropTypes.bool,
-  theme: PropTypes.string,
+  theme: PropTypes.object,
   setExpandItem: PropTypes.func,
   expandItem: PropTypes.bool,
   setOpenEditModal: PropTypes.func,

@@ -4,7 +4,7 @@ import { Tumbs } from "./Tumbs";
 
 export const Insights = ({onClick, title, description }) => {
     return (
-      <div className="bg-orange-100 flex max-w-[398px] flex-col pb-2 px-2 rounded-2xl">
+      <div className="bg-orange-100 flex max-w-[398px] flex-col pb-2 px-2 rounded-2xl mt-6">
         <div className="flex w-full justify-between gap-5 mt-1.5 items-start">
           <div className="items-stretch flex gap-1">
             <img

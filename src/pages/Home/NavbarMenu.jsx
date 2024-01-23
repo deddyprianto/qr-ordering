@@ -114,10 +114,10 @@ export const NavbarMenu = ({
 
 NavbarMenu.propTypes = {
   handleSelectGroup: PropTypes.func,
-  dataCategory: PropTypes.bool,
-  isSelectedItem: PropTypes.bool,
+  dataCategory: PropTypes.array,
+  isSelectedItem: PropTypes.string,
   dtCategoryLength: PropTypes.number,
   setDataCategory: PropTypes.func,
   setIsSelectedItem: PropTypes.func,
-  setDtCategoryLength: PropTypes.func
+  setDtCategoryLength: PropTypes.func,
 };

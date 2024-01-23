@@ -16,6 +16,7 @@ const initialState = {
     secondary: "#FF4782",
   },
   menuSubGroup: [],
+  openModalGeneral: false,
 };
 
 const dataSlice = createSlice({
@@ -40,16 +41,19 @@ const dataSlice = createSlice({
     setMenuSubGroup: (state, action) => {
       state.menuSubGroup = action.payload;
     },
+    setOpenModalGeneral: (state, action) => {
+      state.openModalGeneral = action.payload;
+    },
   },
 });
 
-export const { 
-  setData, 
-  setIsOpenModalAuth, 
-  setIsSearchItem, 
+export const {
+  setData,
+  setIsOpenModalAuth,
+  setIsSearchItem,
   setIsCartSummaryBlink,
   setTheme,
   setMenuSubGroup,
-} =
-  dataSlice.actions;
+  setOpenModalGeneral,
+} = dataSlice.actions;
 export default dataSlice.reducer;
