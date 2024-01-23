@@ -35,6 +35,10 @@ const router = createBrowserRouter([
         lazy: () => import("./pages/Profile"),
       },
       {
+        path: "payment",
+        lazy: () => import("./pages/Payment"),
+      },
+      {
         path: "*",
         lazy: () => import("./pages/NotFound"),
       },

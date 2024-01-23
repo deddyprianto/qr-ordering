@@ -1,17 +1,15 @@
-import PropTypes from "prop-types";
 import { IconMasterCard } from "../../assets/svgIcon";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Trans } from "react-i18next";
 import { useEffect, useState } from "react";
 import { apiOutlet } from "../../services/Outlet";
+import { setPaymentMethod } from "../../app/dataSlice";
 
-export function PaymentMethod({
-  selectedPaymentMethod,
-  setSelectedPaymentMethod,
-}) {
-  const theme = useSelector((state) => state.dataSlice.theme);
+export function PaymentMethod() {
+  const dispatch = useDispatch();
+  const { theme, paymentMethod } = useSelector((state) => state.dataSlice);
   const outletName = useSelector((state) => state.dataSlicePersisted.outletName);
-  const [ paymentMethod, setPaymentMethod ] = useState([]);
+  const [ paymentMethodList, setPaymentMethodList ] = useState([]);
 
   useEffect(()=>{
     getPaymentMethod()
@@ -22,7 +20,7 @@ export function PaymentMethod({
     try {
       const result = await apiOutlet("GET", `${outletName}/paymentmodes`, {});
       if(result.resultCode == 200){
-        setPaymentMethod(result.data);
+        setPaymentMethodList(result.data);
       }
       else throw(result.message);
     } catch (error) {
@@ -36,13 +34,13 @@ export function PaymentMethod({
         <Trans i18nKey={"choose_payment_method"}/>
       </div>
       <div className="items-stretch flex gap-x-2 mt-4 max-h-[300px] overflow-y-auto">
-        {paymentMethod.map((item) => {
+        {paymentMethodList.map((item) => {
           return (
             <button
-              onClick={() => setSelectedPaymentMethod(item)}
+              onClick={() => dispatch(setPaymentMethod(item))}
               key={item.paymentMode}
               className={`w-[160px] flex justify-center items-center border p-[16px] gap-x-2 rounded-lg border-solid ${
-                selectedPaymentMethod.paymentMode === item.paymentMode
+                paymentMethod.paymentMode === item.paymentMode
                   ? `bg-[#FFF2DF] border-[${theme.primary}]`
                   : "bg-white border-[#D6D6D6]"
               } `}
@@ -58,7 +56,3 @@ export function PaymentMethod({
     </span>
   );
 }
-PaymentMethod.propTypes = {
-  selectedPaymentMethod: PropTypes.string,
-  setSelectedPaymentMethod: PropTypes.func,
-};

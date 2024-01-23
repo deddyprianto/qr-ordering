@@ -109,37 +109,50 @@ export default function Header() {
   };
 
   const renderMainHeader = () => {
-    if (location.pathname === "/cart") {
-      return (
-        <div
-          onClick={() => {
-            navigate("/");
-          }}
-          className={`bg-[${theme.primary}] flex text-white items-center text-[16px] font-medium py-[5px]`}
-        >
-          <IconArrowLeft />
-          <div>Order Cart</div>
-        </div>
-      );
-    } else {
-      return (
-        <div
-          className={`justify-between items-stretch border-b-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] bg-[${theme.primary}] flex w-full gap-5 px-4 py-2.5 border-b border-solid`}
-        >
-          {renderConditionally()}
+    switch (location.pathname) {
+      case "/cart":
+        return (
           <div
-            onClick={() => openSearchBar()}
-            onKeyDown={(event) => {
-              if (event.key === "Enter" || event.key === " ") {
-                openSearchBar();
-              }
+            onClick={() => {
+              navigate("/");
             }}
-            className={`justify-center items-center bg-[${theme.secondary}] flex aspect-square flex-col w-[46px] h-[46px] px-3 rounded-[1000px]`}
+            className={`bg-[${theme.primary}] flex text-white items-center text-[16px] font-medium py-[5px]`}
           >
-            <SearchIcon />
+            <IconArrowLeft />
+            <div><Trans i18nKey={"order_cart"}/></div>
           </div>
-        </div>
-      );
+        );
+      case "/payment":
+        return (
+          <div
+            onClick={() => {
+              navigate("/cart");
+            }}
+            className={`bg-[${theme.primary}] flex text-white items-center text-[16px] font-medium py-[5px]`}
+          >
+            <IconArrowLeft />
+            <div><Trans i18nKey={"order_payment"}/></div>
+          </div>
+        );
+      default:
+        return (
+          <div
+            className={`justify-between items-stretch border-b-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] bg-[${theme.primary}] flex w-full gap-5 px-4 py-2.5 border-b border-solid`}
+          >
+            {renderConditionally()}
+            <div
+              onClick={() => openSearchBar()}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  openSearchBar();
+                }
+              }}
+              className={`justify-center items-center bg-[${theme.secondary}] flex aspect-square flex-col w-[46px] h-[46px] px-3 rounded-[1000px]`}
+            >
+              <SearchIcon />
+            </div>
+          </div>
+        );
     }
   };
 
