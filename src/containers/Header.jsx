@@ -107,7 +107,7 @@ export default function Header() {
     switch (location.pathname) {
       case "/cart":
         return (
-          <div
+          <button
             onClick={() => {
               navigate("/");
             }}
@@ -115,11 +115,11 @@ export default function Header() {
           >
             <IconArrowLeft />
             <div><Trans i18nKey={"order_cart"}/></div>
-          </div>
+          </button>
         );
       case "/payment":
         return (
-          <div
+          <button
             onClick={() => {
               navigate("/cart");
             }}
@@ -127,7 +127,7 @@ export default function Header() {
           >
             <IconArrowLeft />
             <div><Trans i18nKey={"order_payment"}/></div>
-          </div>
+          </button>
         );
       default:
         return (
@@ -135,7 +135,7 @@ export default function Header() {
             className={`justify-between items-stretch border-b-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] bg-[${theme.primary}] flex w-full gap-5 px-4 py-2.5 border-b border-solid`}
           >
             {renderConditionally()}
-            <div
+            <button
               onClick={() => openSearchBar()}
               onKeyDown={(event) => {
                 if (event.key === "Enter" || event.key === " ") {
@@ -145,7 +145,7 @@ export default function Header() {
               className={`justify-center items-center bg-[${theme.secondary}] flex aspect-square flex-col w-[46px] h-[46px] px-3 rounded-[1000px]`}
             >
               <SearchIcon />
-            </div>
+            </button>
           </div>
         );
     }
