@@ -111,7 +111,7 @@ export default function Header() {
             onClick={() => {
               navigate("/");
             }}
-            className={`bg-[${theme.primary}] flex text-white items-center text-[16px] font-medium py-[5px]`}
+            className={`bg-[${theme.primary}] flex text-white items-center text-[16px] font-medium py-[5px] w-full`}
           >
             <IconArrowLeft />
             <div><Trans i18nKey={"order_cart"}/></div>
@@ -123,7 +123,7 @@ export default function Header() {
             onClick={() => {
               navigate("/cart");
             }}
-            className={`bg-[${theme.primary}] flex text-white items-center text-[16px] font-medium py-[5px]`}
+            className={`bg-[${theme.primary}] flex text-white items-center text-[16px] font-medium py-[5px] w-full`}
           >
             <IconArrowLeft />
             <div><Trans i18nKey={"order_payment"}/></div>
