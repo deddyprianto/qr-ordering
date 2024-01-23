@@ -37,12 +37,12 @@ export const RenderQty = ({
     }
   };
 
-  const handleAPIQty = async (quantityParams) => {
+  const handleAPIQty = async (quantityParams, increaseQuantity) => {
     let body = {
       uniqueID: item.uniqueID,
       quantity: quantityParams,
     };
-    if (item.quantity > 1) {
+    if (item.quantity > 1 || increaseQuantity) {
       const result = await apiCart(
         "PATCH",
         `${idCart}/${body.uniqueID}/changeitemqty`,
@@ -56,9 +56,10 @@ export const RenderQty = ({
   };
 
   const increaseQuantity = () => {
+    const increaseQuantity = true;
     setQuantity((prevQuantity) => {
       const newQuantity = prevQuantity + 1;
-      handleAPIQty(newQuantity);
+      handleAPIQty(newQuantity, increaseQuantity);
       return newQuantity;
     });
   };
