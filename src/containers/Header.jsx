@@ -71,17 +71,12 @@ export default function Header() {
     if (isSearchItem) {
       return (
         <div className="flex w-full">
-          <div
+          <button
             className="ml-[-22px]"
             onClick={() => dispatchIsSearchItem(false)}
-            onKeyDown={(event) => {
-              if (event.key === "Enter" || event.key === " ") {
-                dispatchIsSearchItem(false);
-              }
-            }}
           >
             <IconArrowLeft />
-          </div>
+          </button>
           <div className="text-zinc-500 text-sm font-medium leading-5 tracking-wide whitespace-nowrap border border-[color:var(--Text-color-Tertiary,#888787)] shadow-sm bg-white grow justify-center rounded-lg border-solid items-start">
             <input
               id="input-search"
@@ -99,7 +94,7 @@ export default function Header() {
     } else {
       return (
         <div className="flex grow basis-[0%] flex-col items-start">
-          <img loading="lazy" src={logo} width={43} height={24} />
+          <img loading="lazy" src={logo} width={43} height={24} alt="logo" />
           <div className="text-stone-50 text-sm font-medium leading-5 tracking-wide self-stretch">
             {"{outlet_name}"}
           </div>
