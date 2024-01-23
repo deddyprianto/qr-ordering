@@ -12,6 +12,7 @@ import { mapCartAndProduct } from "../../components/Home/productAndCartMapper";
 import { setMenuSubGroup } from "../../app/dataSlice";
 import { RenderSearchItemBar } from "../../components/Home/SearchItemBar";
 import { setEnableSearchUsingScroll } from "../../app/dataSlicePersisted";
+import { RenderNotificationOrder } from "./RenderNotifOrder";
 
 export const MainView = () => {
   const [dataCategory, setDataCategory] = useState([]);
@@ -126,7 +127,9 @@ export const MainView = () => {
           setDtCategoryLength={setDtCategoryLength}
           handleSelectGroup={handleSelectGroup}
         />
+
         <div style={{ padding: "16px 16px 0px 16px" }}>
+          <RenderNotificationOrder />
           {!isLoading && highlights && (
             <Insights
               title="Tag Insights"

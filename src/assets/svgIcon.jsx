@@ -105,7 +105,7 @@ export const HamburgerIcon = () => {
   );
 };
 
-export const TaskListIcon = () => {
+export const TaskListIcon = ({ color = "#E91254" }) => {
   return (
     <svg
       width="36"
@@ -116,24 +116,27 @@ export const TaskListIcon = () => {
     >
       <path
         d="M13.5 12C12.6716 12 12 12.6716 12 13.5C12 14.3284 12.6716 15 13.5 15H22.5C23.3284 15 24 14.3284 24 13.5C24 12.6716 23.3284 12 22.5 12H13.5Z"
-        fill="#E91254"
+        fill={color}
       />
       <path
         d="M12 19.5C12 18.6716 12.6716 18 13.5 18H21C21.8284 18 22.5 18.6716 22.5 19.5C22.5 20.3284 21.8284 21 21 21H13.5C12.6716 21 12 20.3284 12 19.5Z"
-        fill="#E91254"
+        fill={color}
       />
       <path
         d="M13.5 24C12.6716 24 12 24.6716 12 25.5C12 26.3284 12.6716 27 13.5 27H19.5C20.3284 27 21 26.3284 21 25.5C21 24.6716 20.3284 24 19.5 24H13.5Z"
-        fill="#E91254"
+        fill={color}
       />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M15 4.5C15 3.67157 14.3284 3 13.5 3C12.6716 3 12 3.67157 12 4.5V6C8.68629 6 6 8.68629 6 12V27C6 30.3137 8.68629 33 12 33H24C27.3137 33 30 30.3137 30 27V12C30 8.68629 27.3137 6 24 6V4.5C24 3.67157 23.3284 3 22.5 3C21.6716 3 21 3.67157 21 4.5V6H15V4.5ZM22.5 10.5C21.6716 10.5 21 9.82843 21 9H15C15 9.82843 14.3284 10.5 13.5 10.5C12.6716 10.5 12 9.82843 12 9C10.3431 9 9 10.3431 9 12V27C9 28.6569 10.3431 30 12 30H24C25.6569 30 27 28.6569 27 27V12C27 10.3431 25.6569 9 24 9C24 9.82843 23.3284 10.5 22.5 10.5Z"
-        fill="#E91254"
+        fill={color}
       />
     </svg>
   );
+};
+TaskListIcon.propTypes = {
+  color: PropTypes.string,
 };
 
 export const SearchIcon = ({ color = "#fff" }) => {
@@ -192,7 +195,7 @@ export const IconTable = () => {
   );
 };
 
-export const IconClose = ({color="white", width="20", height="20"}) => {
+export const IconClose = ({ color = "white", width = "20", height = "20" }) => {
   return (
     <svg
       width={width}
@@ -216,7 +219,7 @@ IconClose.propTypes = {
   height: PropTypes.string,
 };
 
-export const IconCloseTransparent = () => {
+export const IconCloseTransparent = ({color =  '#181818'}) => {
   return (
     <svg
       width="24"
@@ -227,17 +230,20 @@ export const IconCloseTransparent = () => {
     >
       <path
         d="M8.70711 7.79289C8.31658 7.40237 7.68342 7.40237 7.29289 7.79289C6.90237 8.18342 6.90237 8.81658 7.29289 9.20711L10.5858 12.5L7.29289 15.7929C6.90237 16.1834 6.90237 16.8166 7.29289 17.2071C7.68342 17.5976 8.31658 17.5976 8.70711 17.2071L12 13.9142L15.2929 17.2071C15.6834 17.5976 16.3166 17.5976 16.7071 17.2071C17.0976 16.8166 17.0976 16.1834 16.7071 15.7929L13.4142 12.5L16.7071 9.20711C17.0976 8.81658 17.0976 8.18342 16.7071 7.79289C16.3166 7.40237 15.6834 7.40237 15.2929 7.79289L12 11.0858L8.70711 7.79289Z"
-        fill="#181818"
+        fill={color}
       />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M22 12.5C22 18.0228 17.5228 22.5 12 22.5C6.47715 22.5 2 18.0228 2 12.5C2 6.97715 6.47715 2.5 12 2.5C17.5228 2.5 22 6.97715 22 12.5ZM20 12.5C20 16.9183 16.4183 20.5 12 20.5C7.58172 20.5 4 16.9183 4 12.5C4 8.08172 7.58172 4.5 12 4.5C16.4183 4.5 20 8.08172 20 12.5Z"
-        fill="#181818"
+        fill={color}
       />
     </svg>
   );
 };
+IconCloseTransparent.propTypes = {
+    color: PropTypes.string
+}
 
 export const IconArrowLeft = () => {
   return (
@@ -259,7 +265,7 @@ export const IconArrowLeft = () => {
   );
 };
 
-export const IconArrowRight = () => {
+export const IconArrowRight = ({ color = 'white' }) => {
   return (
     <svg
       width="36"
@@ -270,7 +276,7 @@ export const IconArrowRight = () => {
     >
       <path
         d="M15 10.5L22.5 18L15 25.5"
-        stroke="white"
+        stroke={color}
         strokeWidth="3"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -278,7 +284,9 @@ export const IconArrowRight = () => {
     </svg>
   );
 };
-
+IconArrowRight.propTypes = {
+  color: PropTypes.string,
+};
 export const IconArrowBottom = ({color}) => {
   return (
     <svg

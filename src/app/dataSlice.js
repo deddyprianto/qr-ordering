@@ -16,7 +16,8 @@ const initialState = {
     secondary: "#FF4782",
   },
   menuSubGroup: [],
-  paymentMethod: {}
+  paymentMethod: {},
+  openModalGeneral: false,
 };
 
 const dataSlice = createSlice({
@@ -44,17 +45,20 @@ const dataSlice = createSlice({
     setPaymentMethod:  (state, action) => {
       state.paymentMethod = action.payload;
     },
+    setOpenModalGeneral: (state, action) => {
+      state.openModalGeneral = action.payload;
+    },
   },
 });
 
-export const { 
-  setData, 
-  setIsOpenModalAuth, 
-  setIsSearchItem, 
+export const {
+  setData,
+  setIsOpenModalAuth,
+  setIsSearchItem,
   setIsCartSummaryBlink,
   setTheme,
   setMenuSubGroup,
-  setPaymentMethod
-} =
-  dataSlice.actions;
+  setPaymentMethod,
+  setOpenModalGeneral,
+} = dataSlice.actions;
 export default dataSlice.reducer;

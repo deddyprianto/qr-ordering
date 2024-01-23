@@ -57,8 +57,8 @@ export const RenderExpandDetail = ({
 };
 
 RenderExpandDetail.propTypes = {
-  item: PropTypes.string,
+  item: PropTypes.object,
   expandItem: PropTypes.bool,
   isEmptyArray: PropTypes.bool,
-  theme: PropTypes.string,
+  theme: PropTypes.object,
 };

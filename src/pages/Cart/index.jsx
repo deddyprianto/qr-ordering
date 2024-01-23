@@ -6,6 +6,7 @@ import { PriceSummary } from "./PriceSummary";
 import FooterCart from "./FooterCart";
 import ItemCart from "./ItemCart";
 import { Trans } from "react-i18next";
+import { ModalGeneral } from "../../components/ModalGeneral";
 
 export function Component() {
   const cartInfo = useSelector((state) => state.dataSlicePersisted.cartInfo);
@@ -29,8 +30,12 @@ export function Component() {
   return (
     <>
       <div className="px-[16px]" style={{ paddingBottom: 80 }}>
-        <h1><Trans i18nKey={"you_order_from"}/></h1>
-        <p style={{ color: theme.secondary }}>{`{company_name @ outlet_name}`}</p>
+        <h1>
+          <Trans i18nKey={"you_order_from"} />
+        </h1>
+        <p
+          style={{ color: theme.secondary }}
+        >{`{company_name @ outlet_name}`}</p>
         <hr
           style={{
             margin: "24px 0px",
@@ -39,7 +44,9 @@ export function Component() {
           }}
         />
         <div className="flex justify-between items-center w-full">
-          <div><Trans i18nKey={"order_items"}/></div>
+          <div>
+            <Trans i18nKey={"order_items"} />
+          </div>
           <div>{totalQuantityCart} Items</div>
         </div>
         {cartInfo?.details?.map((item) => {
@@ -69,6 +76,7 @@ export function Component() {
         />
         <PriceSummary />
         <FooterCart />
+        <ModalGeneral />
         <ModalAuth
           isOpenModal={isOpenModalAuth}
           setIsOpenModal={setIsOpenModalAuth}
