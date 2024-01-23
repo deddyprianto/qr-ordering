@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { OrderInformation } from "./OrderInformation";
 import { OrderItemSummary } from "./OrderItemSummary";
 export function Component() {
-  const { theme } = useSelector((state) => state.dataSlice);
+  const { theme } = useSelector((state) => state.dataSlicePersisted);
   let isProgress = false;
   return (
     <div className="p-[16px]">

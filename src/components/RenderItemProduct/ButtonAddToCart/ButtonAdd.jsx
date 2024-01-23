@@ -7,7 +7,7 @@ export const RenderButtonAdd = ({
   isLoading,
   handleClickButtonAdd
 }) => {
-  const theme = useSelector((state) => state.dataSlice.theme);
+  const theme = useSelector((state) => state.dataSlicePersisted.theme);
   return (
     <button
         style={{

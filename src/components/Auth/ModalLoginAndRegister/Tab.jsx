@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Trans } from "react-i18next";
 import { useSelector } from "react-redux";
 export const RenderTab = ({ setIsChecked, tabScreen, setTabScreen }) => {
-  const theme = useSelector((state) => state.dataSlice.theme);
+  const theme = useSelector((state) => state.dataSlicePersisted.theme);
 
   return (
     <div

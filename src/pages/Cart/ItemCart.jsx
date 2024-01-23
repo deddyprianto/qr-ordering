@@ -11,7 +11,7 @@ import { numberFormatter } from "../../utilities/numberFormatter";
 const ItemCart = ({ item, idCart, setIsCartEmpty, totalQuantityCart }) => {
   const [openEditModal, setOpenEditModal] = useState(false);
   const [expandItem, setExpandItem] = useState(false);
-  const theme = useSelector((state) => state.dataSlice.theme);
+  const theme = useSelector((state) => state.dataSlicePersisted.theme);
   const [itemDataEdit, setItemDataEdit] = useState([]);
   const isEmptyArray = hasEmptyElement(item?.attributes) && hasEmptyElement(item?.bundles);
 

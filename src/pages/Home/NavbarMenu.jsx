@@ -15,7 +15,7 @@ export const NavbarMenu = ({
   setIsSelectedItem,
   setDtCategoryLength
 }) => {
-  const theme = useSelector((state) => state.dataSlice.theme);
+  const theme = useSelector((state) => state.dataSlicePersisted.theme);
   const [isLoading, setIsLoading] = useState(true);
 
   const outletName = useSelector(

@@ -13,7 +13,7 @@ const RenderCartSummary = () => {
   const memberInfo = useSelector(
     (state) => state.dataSlicePersisted.memberInfo,
   );
-  const { theme } = useSelector((state) => state.dataSlice);
+  const { theme } = useSelector((state) => state.dataSlicePersisted);
 
   const totalQuantity = cartInfo?.details.reduce(
     (accumulator, currentValue) => {

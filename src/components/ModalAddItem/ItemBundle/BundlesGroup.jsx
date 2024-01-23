@@ -14,7 +14,7 @@ export const RenderBundleGroup = ({
   isCalledFromCart,
 }) => {
   const [itemCartBundles, setItemCartBundles] = useState(itemCart);
-  const theme = useSelector((state) => state.dataSlice.theme);
+  const theme = useSelector((state) => state.dataSlicePersisted.theme);
   const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {

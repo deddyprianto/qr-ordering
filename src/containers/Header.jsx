@@ -10,12 +10,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 export default function Header() {
   const navigate = useNavigate();
   let location = useLocation();
-  const theme = useSelector((state) => state.dataSlice.theme);
   const dispatch = useDispatch();
   const { isSearchItem } = useSelector((state) => state.dataSlice);
-  const { enableSearchUsingScroll, searchItemObj, orderType } = useSelector(
-    (state) => state.dataSlicePersisted,
-  );
+  const { enableSearchUsingScroll, searchItemObj, orderType, theme } =
+    useSelector((state) => state.dataSlicePersisted);
 
   const dispatchIsSearchItem = (val) => {
     dispatch(setIsSearchItem(val));

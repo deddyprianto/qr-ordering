@@ -5,7 +5,7 @@ import { numberFormatter } from "../../utilities/numberFormatter";
 import { Trans } from "react-i18next";
 
 export function PriceSummary() {
-  const theme = useSelector((state) => state.dataSlice.theme);
+  const theme = useSelector((state) => state.dataSlicePersisted.theme);
   const cartInfo = useSelector((state) => state.dataSlicePersisted.cartInfo);
   const [expandItem, setExpandItem] = useState(true);
   const renderItemExpand = () => {

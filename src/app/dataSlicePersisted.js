@@ -8,6 +8,16 @@ const initialState = {
   outletName: "edge cafe",
   selectedItemProds: [],
   orderType: "",
+  theme: {
+    success: "#1A883C",
+    warning: "#CF3030",
+    textColor: "#343A4A",
+    disableColor: "#9D9D9D",
+    discountedPrice: "#DDD",
+    backgroundMain: "#F9F9F9",
+    primary: "#00524C",
+    secondary: "#FF4782",
+  },
 };
 
 const dataSlicePersisted = createSlice({
@@ -43,6 +53,9 @@ const dataSlicePersisted = createSlice({
     },
     setOrderType: (state, action) => {
       state.orderType = action.payload;
+    },
+    setTheme: (state, action) => {
+      state.theme = action.payload;
     },
   },
 });

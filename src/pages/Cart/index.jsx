@@ -11,7 +11,8 @@ import { ModalGeneral } from "../../components/ModalGeneral";
 export function Component() {
   const cartInfo = useSelector((state) => state.dataSlicePersisted.cartInfo);
   const [isCartEmpty, setIsCartEmpty] = useState(false);
-  const { theme } = useSelector((state) => state.dataSlice);
+  const { theme } = useSelector((state) => state.dataSlicePersisted);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
   const [isOpenModalAuth, setIsOpenModalAuth] = useState(false);
   const [authScreen, setAuthScreen] = useState("Login");
   const [isOpenModalOtp, setIsOpenModalOtp] = useState(false);

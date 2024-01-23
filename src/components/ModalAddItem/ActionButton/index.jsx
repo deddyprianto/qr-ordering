@@ -11,7 +11,6 @@ import { renderButtonText } from "./GetButtonText";
 import { mapCartAndProduct } from "../../Home/productAndCartMapper";
 import { setMenuSubGroup } from "../../../app/dataSlice";
 
-
 export const RenderButtonAdd = ({ 
   item,
   itemToAdd,

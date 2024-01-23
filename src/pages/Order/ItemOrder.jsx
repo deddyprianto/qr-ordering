@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const ItemOrder = () => {
   const navigate = useNavigate();
 
-  const { theme } = useSelector((state) => state.dataSlice);
+  const { theme } = useSelector((state) => state.dataSlicePersisted);
   return (
     <div className="items-stretch self-stretch border border-[color:var(--Brand-color-Primary,#00524C)] flex w-full flex-col rounded-lg border-solid">
       <div className="justify-center items-stretch border-b-[color:var(--Brand-color-Primary,#00524C)] flex w-full flex-col p-3 border-b border-solid">

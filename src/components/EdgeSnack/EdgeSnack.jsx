@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 
 export const EdgeSnack = ({ type, className, close, content }) => {
-  const theme = useSelector((state) => state.dataSlice.theme);
+  const theme = useSelector((state) => state.dataSlicePersisted.theme);
   useTimeOut(close, 2000);
 
   const getBackGroundColor = () => {

@@ -3,7 +3,7 @@ import { Trans } from "react-i18next";
 import { useSelector } from "react-redux";
 
 export const RenderTermAndCondition = ({ isChecked, handleCheckboxChange }) => {
-  const theme = useSelector((state) => state.dataSlice.theme);
+  const theme = useSelector((state) => state.dataSlicePersisted.theme);
 
   return (
     <div

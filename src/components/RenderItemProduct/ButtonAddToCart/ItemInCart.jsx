@@ -8,7 +8,7 @@ export const RenderButtonItemInCart = ({
   cartLineID,
   handleClickButtonAdd
 }) => {
-  const theme = useSelector((state) => state.dataSlice.theme);
+  const theme = useSelector((state) => state.dataSlicePersisted.theme);
   const handleClickChangeQty = (qty) => {
     handleClickButtonAdd(qty, cartLineID)
   }

@@ -16,7 +16,7 @@ const FooterCart = () => {
     navigate("/payment");
   };
 
-  const theme = useSelector((state) => state.dataSlice.theme);
+  const theme = useSelector((state) => state.dataSlicePersisted.theme);
   return (
     <footer
       className={`fixed bottom-0 left-0 bg-white text-center rounded-t-2xl p-[16px] ${

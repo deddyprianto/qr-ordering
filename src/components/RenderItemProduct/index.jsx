@@ -20,8 +20,10 @@ export const RenderItemProduct = ({
   qtyInCart,
   cartLineID
 }) => {
-  const { theme, menuSubGroup } = useSelector((state) => state.dataSlice);
-  const outletName = useSelector((state) => state.dataSlicePersisted.outletName)
+  const { menuSubGroup } = useSelector((state) => state.dataSlice);
+  const { outletName, theme } = useSelector(
+    (state) => state.dataSlicePersisted,
+  );
   const [openModalAddItem, setOpenModalAddItem] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
