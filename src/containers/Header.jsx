@@ -111,7 +111,10 @@ export default function Header() {
             style={{
               backgroundColor: theme.primary,
             }}
-            className="flex text-white items-center text-[16px] font-medium py-[5px]"
+            onClick={() => {
+              navigate("/");
+            }}
+            className="flex text-white items-center text-[16px] font-medium py-[5px] w-full"
           >
             <IconArrowLeft />
             <div>
@@ -126,7 +129,7 @@ export default function Header() {
             onClick={() => {
               navigate("/cart");
             }}
-            className="justify-between items-stretch border-b-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] flex w-full gap-5 px-4 py-2.5 border-b border-solid"
+            className="flex text-white items-center text-[16px] font-medium py-[5px] w-full"
           >
             <IconArrowLeft />
             <div>
@@ -137,7 +140,8 @@ export default function Header() {
       default:
         return (
           <div
-            className={`justify-between items-stretch border-b-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] bg-[${theme.primary}] flex w-full gap-5 px-4 py-2.5 border-b border-solid`}
+            style={{ backgroundColor: theme.primary }}
+            className={`justify-between items-stretch border-b-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] flex w-full gap-5 px-4 py-2.5 border-b border-solid`}
           >
             {renderConditionally()}
             <button
