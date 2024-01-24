@@ -21,7 +21,7 @@ export const RenderItemProduct = ({
   cartLineID
 }) => {
   const { theme, menuSubGroup } = useSelector((state) => state.dataSlice);
-  const outletName = useSelector((state) => state.dataSlicePersisted.outletName)
+  const { outletName, orderType } = useSelector((state) => state.dataSlicePersisted)
   const [openModalAddItem, setOpenModalAddItem] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
@@ -63,7 +63,7 @@ export const RenderItemProduct = ({
     if (getItemType(item) == "main") {
       setIsLoading(true);
       let curCartID = cartID;
-      if(!curCartID) curCartID = await addNewCart(setIsLoading, outletName, saveNewCartInfo);
+      if(!curCartID) curCartID = await addNewCart(setIsLoading, outletName, saveNewCartInfo, orderType);
       await addItemToCart(
         curCartID, 
         item, 
