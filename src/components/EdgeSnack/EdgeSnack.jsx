@@ -9,9 +9,9 @@ export const EdgeSnack = ({ type, className, close, content }) => {
 
   const getBackGroundColor = () => {
     if (type?.toLowerCase() == "success") {
-      return `bg-[${theme.success}]`;
+      return theme.success;
     } else if (type?.toLowerCase() == "error") {
-      return `bg-[${theme.warning}]`;
+      return theme.warning;
     }
   };
 
@@ -25,7 +25,8 @@ export const EdgeSnack = ({ type, className, close, content }) => {
 
   return (
     <div
-      className={`${getBackGroundColor()} flex justify-start item-start ${className}`}
+      style={{ backgroundColor: getBackGroundColor() }}
+      className={`flex justify-start item-start ${className}`}
     >
       {getIcon()}
       <div className="text-white text-sm font-medium leading-5 tracking-wide grow">

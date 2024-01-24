@@ -79,7 +79,10 @@ export const NavbarMenu = ({
 
   return (
     <div
-      className={`overflow-x-auto flex border-t-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] bg-[${theme.primary}] rounded-b-lg pl-[16px] pr-[16px]`}
+      style={{
+        backgroundColor: theme.primary,
+      }}
+      className="overflow-x-auto flex border-t-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] rounded-b-lg pl-[16px] pr-[16px]"
     >
       {(dtCategoryLength > dataCategory.length || dataCategory.length == 0) &&
       isLoading ? (

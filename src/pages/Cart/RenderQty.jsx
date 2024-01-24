@@ -89,7 +89,10 @@ export const RenderQty = ({
               <IconExpand primary={theme.secondary} />
             )}
             <div
-              className={`text-[${theme.secondary}] text-sm font-medium leading-5 tracking-wide underline self-stretch grow whitespace-nowrap`}
+              style={{
+                color: theme.secondary,
+              }}
+              className="text-sm font-medium leading-5 tracking-wide underline self-stretch grow whitespace-nowrap"
             >
               {expandItem ? "Hide" : "Expand"} Details
             </div>
@@ -103,8 +106,11 @@ export const RenderQty = ({
         >
           <IconEdit primary={theme.secondary} />
           <button
+            style={{
+              color: theme.secondary,
+            }}
             onClick={handleEdit}
-            className={`text-[${theme.secondary}] text-sm font-medium leading-5 tracking-wide underline self-stretch grow whitespace-nowrap ml-1 cursor-pointer`}
+            className="text-sm font-medium leading-5 tracking-wide underline self-stretch grow whitespace-nowrap ml-1 cursor-pointer"
           >
             {isLoading ? "Get your data..." : "Edit"}
           </button>
@@ -113,8 +119,11 @@ export const RenderQty = ({
       {/* col 2 */}
       <div className="flex gap-1 ">
         <button
+          style={{
+            backgroundColor: theme.secondary,
+          }}
           onClick={decreaseQuantity}
-          className={`justify-center items-center bg-[${theme.secondary}] flex flex-col w-9 h-9 px-2 rounded-lg text-white`}
+          className="justify-center items-center flex flex-col w-9 h-9 px-2 rounded-lg text-white"
         >
           -
         </button>
@@ -123,7 +132,10 @@ export const RenderQty = ({
         </div>
         <button
           onClick={increaseQuantity}
-          className={`justify-center items-center bg-[${theme.secondary}] flex flex-col w-9 h-9 px-2 rounded-lg text-white`}
+          style={{
+            backgroundColor: theme.secondary,
+          }}
+          className="justify-center items-center flex flex-col w-9 h-9 px-2 rounded-lg text-white"
         >
           +
         </button>
