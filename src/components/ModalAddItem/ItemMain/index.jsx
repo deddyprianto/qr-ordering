@@ -28,18 +28,14 @@ const RenderItemMain = ({
 
   return (
     <div className="bg-white w-full px-4 object-center overflow-y-auto pb-10">
-      <RenderImage itemImage={item.defaultImageURL}/>
-      {/* <RenderTag/> */}
+      <RenderImage itemImage={item.defaultImageURL} />
       <div className="text-gray-700 text-sm font-medium leading-5 tracking-wide whitespace-nowrap mt-2.5">
         {item.itemName}
       </div>
       <div className="text-gray-700  text-base font-bold leading-6 mt-1">
         {`$ ${item.retailPrice}`}
       </div>
-      <RenderItemCart 
-        itemInCart={itemInCart}
-        setIsLoading={setIsLoading}
-      />
+      <RenderItemCart itemInCart={itemInCart} setIsLoading={setIsLoading} />
     </div>
   );
 };
