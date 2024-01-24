@@ -186,12 +186,24 @@ export const RenderItemProduct = ({
               $ {item?.retailPrice.toFixed(2)}
             </div>
           </div>
-          <RenderButtonAddToCart
-            isLoading={isLoading}
-            qtyInCart={qtyInCart}
-            cartLineID={cartLineID}
-            handleClickButtonAdd={handleClickButtonAdd}
-          />
+
+          {isLoading ? (
+            <button
+              type="button"
+              className="bg-[#9D9D9D] rounded-lg flex justify-center items-center py-[5px] text-white"
+              disabled
+            >
+              <span className="loader"></span>
+              <div>Adding...</div>
+            </button>
+          ) : (
+            <RenderButtonAddToCart
+              isLoading={isLoading}
+              qtyInCart={qtyInCart}
+              cartLineID={cartLineID}
+              handleClickButtonAdd={handleClickButtonAdd}
+            />
+          )}
         </div>
       </div>
       {openModalAddItem && (

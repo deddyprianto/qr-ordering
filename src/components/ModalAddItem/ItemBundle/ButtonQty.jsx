@@ -1,5 +1,6 @@
-import { IconMinus, IconPlus } from "../../../assets/svgIcon"
-import PropTypes from 'prop-types'
+import { useSelector } from "react-redux";
+import { IconMinus, IconPlus } from "../../../assets/svgIcon";
+import PropTypes from "prop-types";
 
 export const RenderButtonQty = ({
   item,
@@ -8,6 +9,7 @@ export const RenderButtonQty = ({
   disableMaxButton,
   itemCartMatchesQty,
 }) => {
+  const { theme } = useSelector((state) => state.dataSlicePersisted);
   const handleChangeQty = (isAddQuantity) => {
     let tmpItem = { ...item };
     let quantity = tmpItem.quantity || 0;
@@ -34,9 +36,12 @@ export const RenderButtonQty = ({
           {item.quantity || itemCartMatchesQty?.quantity || 0}
         </div>
         <button
-          className={`${
-            disableMaxButton ? "bg-[#9D9D9D]" : "bg-pink-500"
-          } justify-center items-center flex aspect-square flex-col w-6 h-6 px-2 rounded-lg`}
+          style={{
+            backgroundColor: disableMaxButton
+              ? "#9D9D9D"
+              : theme?.Color_Secondary,
+          }}
+          className="justify-center items-center flex aspect-square flex-col w-6 h-6 px-2 rounded-lg"
           onClick={() => handleChangeQty(true)}
           disabled={disableMaxButton || false}
         >
