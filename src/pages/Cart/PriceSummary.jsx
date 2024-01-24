@@ -5,9 +5,20 @@ import { numberFormatter } from "../../utilities/numberFormatter";
 import { Trans } from "react-i18next";
 
 export function PriceSummary() {
-  const theme = useSelector((state) => state.dataSlice.theme);
+  const { theme } = useSelector((state) => state.dataSlice);
   const cartInfo = useSelector((state) => state.dataSlicePersisted.cartInfo);
   const [expandItem, setExpandItem] = useState(true);
+
+  /***
+    const calculateServiceCharge = (sc) => {
+      let amount = 0;
+      if(sc.Type == "Percentage")
+        amount = cartInfo.nettAmount * (parseFloat(sc.Value)/100);
+      else 
+        amount = parseFloat(sc.Value);
+      return numberFormatter(amount);
+    }
+  */
   const renderItemExpand = () => {
     return (
       <div
@@ -25,14 +36,19 @@ export function PriceSummary() {
             $ {numberFormatter(cartInfo.grossAmount)}
           </div>
         </div>
-        {/* <div className="items-stretch flex justify-between gap-4 mt-2 ">
-          <div className="justify-center text-gray-700 text-sm font-medium leading-5 tracking-wide grow whitespace-nowrap">
-            Service Charge
-          </div>
-          <div className="text-gray-700 text-right text-base font-bold leading-6 whitespace-nowrap">
-            $ 34.80
-          </div>
-        </div> */}
+        {/*** 
+         {serviceCharge?.map((sc)=>{
+          return (
+            <div className="items-stretch flex justify-between gap-4 mt-2 " key={sc.Name}>
+              <div className="justify-center text-gray-700 text-sm font-medium leading-5 tracking-wide grow whitespace-nowrap">
+                {sc.Name}
+              </div>
+              <div className="text-gray-700 text-right text-base font-bold leading-6 whitespace-nowrap">
+                $ {calculateServiceCharge(sc)}
+              </div>
+            </div>
+          )
+        })} */}
         {cartInfo.gstAmount>0 && <div className="items-stretch flex justify-between gap-4 mt-2 ">
           <div className="justify-center text-gray-700 text-sm font-medium leading-5 tracking-wide grow whitespace-nowrap">
             GST 8%
