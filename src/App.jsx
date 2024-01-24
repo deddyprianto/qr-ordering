@@ -6,8 +6,9 @@ import "./scss/App.scss";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchItemObj, setEnableSearchUsingScroll, setCartInfo, setOutletName } from "./app/dataSlicePersisted";
-import { setIsSearchItem } from "./app/dataSlice";
+import { setIsSearchItem, setOutletSetting, setServiceCharge } from "./app/dataSlice";
 import { apiCart } from "./services/Cart";
+import { apiOutlet } from "./services/Outlet";
 
 const router = createBrowserRouter([
   {
@@ -49,11 +50,12 @@ const router = createBrowserRouter([
 export default function App() {
   const dispatch = useDispatch();
   
-  const cartInfo = useSelector(
-    (state) => state.dataSlicePersisted.cartInfo,
+  const { cartInfo, orderType } = useSelector(
+    (state) => state.dataSlicePersisted,
   );
 
   const getCartInfoRef = useRef();
+  const getOutletSetting = useRef();
 
   getCartInfoRef.current = async () => {
     if (!cartInfo.uniqueID) return;
@@ -69,6 +71,44 @@ export default function App() {
     }
   };
 
+  getOutletSetting.current = async (outletName) => {
+    try {
+      let outletSetting = {};
+      const result = await apiOutlet("GET", `${outletName}/settings`, {});
+      if (result.resultCode === 200) {
+        for(const setting of result.data){
+          switch (setting.settingKey) {
+            case "Enable_QR_DineIn":
+              outletSetting["dineInOption"] = {
+                enable: setting.settingValue.toLowerCase()=="true",
+                displayName: setting.displayName,
+                serviceCharges: JSON.parse((setting.dataOptions||"[]"))
+              }
+              break;
+            case "Enable_QR_TakeAway":
+              outletSetting["takeAwayOption"] = {
+                enable: setting.settingValue.toLowerCase()=="true",
+                displayName: setting.displayName,
+                serviceCharges: JSON.parse((setting.dataOptions||"[]"))
+              }
+              break;
+            default:
+              break;
+          }
+        }
+        dispatch(setOutletSetting(outletSetting));
+      } else {
+        throw result.message;
+      }
+      if(orderType=="DINEIN")
+        dispatch(setServiceCharge((outletSetting["dineInOption"]?.serviceCharges || [])))
+      else
+        dispatch(setServiceCharge((outletSetting["takeAwayOption"]?.serviceCharges || [])))
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(()=>{
     dispatch(setIsSearchItem(false)); 
     dispatch(setSearchItemObj({
@@ -78,7 +118,7 @@ export default function App() {
     })); 
     dispatch(setEnableSearchUsingScroll(false)); 
     dispatch(setOutletName("edge cafe")); 
-
+    getOutletSetting.current("edge cafe");
     getCartInfoRef.current();
   },[dispatch])
   return <RouterProvider router={router} fallbackElement={<Loading />} />;
