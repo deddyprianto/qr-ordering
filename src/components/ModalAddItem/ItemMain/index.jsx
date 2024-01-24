@@ -21,8 +21,7 @@ const RenderItemMain = ({
         cartInfo?.details.filter((det) => det.itemNo === item.itemNo),
       );
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [item]);
+  }, [cartInfo?.details, item]);
   
 
   return (
