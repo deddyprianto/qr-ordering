@@ -1,17 +1,15 @@
 import { IconCheck, IconWarning } from "../../assets/svgIcon";
 import { useTimeOut } from "./utils/useTimeOut";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
 
 export const EdgeSnack = ({ type, className, close, content }) => {
-  const theme = useSelector((state) => state.dataSlicePersisted.theme);
   useTimeOut(close, 2000);
 
   const getBackGroundColor = () => {
     if (type?.toLowerCase() == "success") {
-      return theme.success;
+      return "bg-[#1A883C]";
     } else if (type?.toLowerCase() == "error") {
-      return theme.warning;
+      return "bg-[#CF3030]";
     }
   };
 
@@ -25,8 +23,7 @@ export const EdgeSnack = ({ type, className, close, content }) => {
 
   return (
     <div
-      style={{ backgroundColor: getBackGroundColor() }}
-      className={`flex justify-start item-start ${className}`}
+      className={`${getBackGroundColor()} flex justify-start item-start ${className}`}
     >
       {getIcon()}
       <div className="text-white text-sm font-medium leading-5 tracking-wide grow">

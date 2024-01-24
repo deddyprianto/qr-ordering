@@ -5,9 +5,16 @@ import "./scss/App.scss";
 
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchItemObj, setEnableSearchUsingScroll, setCartInfo, setOutletName } from "./app/dataSlicePersisted";
+import {
+  setSearchItemObj,
+  setEnableSearchUsingScroll,
+  setCartInfo,
+  setOutletName,
+  setTheme,
+} from "./app/dataSlicePersisted";
 import { setIsSearchItem } from "./app/dataSlice";
 import { apiCart } from "./services/Cart";
+import { callAPI } from "./services/services";
 
 const router = createBrowserRouter([
   {
@@ -48,38 +55,57 @@ const router = createBrowserRouter([
 
 export default function App() {
   const dispatch = useDispatch();
-  
-  const cartInfo = useSelector(
-    (state) => state.dataSlicePersisted.cartInfo,
-  );
 
-  const getCartInfoRef = useRef();
+  const cartInfo = useSelector((state) => state.dataSlicePersisted.cartInfo);
 
-  getCartInfoRef.current = async () => {
-    if (!cartInfo.uniqueID) return;
-    try {
-      const result = await apiCart("GET", cartInfo.uniqueID, {});
-      if (result.resultCode === 200) {
-        dispatch(setCartInfo(result.data));
-      } else {
-        throw result.message;
+  useEffect(() => {
+    const getCartInfo = async () => {
+      if (!cartInfo.uniqueID) return;
+      try {
+        const result = await apiCart("GET", cartInfo.uniqueID, {});
+        if (result.resultCode == 200) {
+          dispatch(setCartInfo(result.data));
+        } else throw result.message;
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    };
 
-  useEffect(()=>{
-    dispatch(setIsSearchItem(false)); 
-    dispatch(setSearchItemObj({
-      doSearch: false,
-      searchText: "",
-      isResetList: true
-    })); 
-    dispatch(setEnableSearchUsingScroll(false)); 
-    dispatch(setOutletName("edge cafe")); 
+    const getLayoutSettings = async () => {
+      try {
+        const response = await callAPI(
+          `${import.meta.env.VITE_API_URL}/outlets/layout`,
+          "GET",
+        );
 
-    getCartInfoRef.current();
-  },[dispatch])
+        const stateDefaultTheme = {};
+        response?.data?.forEach((item) => {
+          stateDefaultTheme[item.settingKey] = item.settingValue;
+        });
+
+        dispatch(setTheme(stateDefaultTheme));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const fetchData = async () => {
+      await getLayoutSettings();
+      dispatch(setIsSearchItem(false));
+      dispatch(
+        setSearchItemObj({
+          doSearch: false,
+          searchText: "",
+          isResetList: true,
+        }),
+      );
+      dispatch(setEnableSearchUsingScroll(false));
+      dispatch(setOutletName("edge cafe"));
+      await getCartInfo();
+    };
+
+    fetchData();
+  }, [dispatch, cartInfo.uniqueID]);
+
   return <RouterProvider router={router} fallbackElement={<Loading />} />;
 }

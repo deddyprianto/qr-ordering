@@ -9,14 +9,12 @@ const initialState = {
   selectedItemProds: [],
   orderType: "",
   theme: {
-    success: "#1A883C",
-    warning: "#CF3030",
-    textColor: "#343A4A",
-    disableColor: "#9D9D9D",
-    discountedPrice: "#DDD",
-    backgroundMain: "#F9F9F9",
-    primary: "#00524C",
-    secondary: "#FF4782",
+    Color_Selected: "#343A4A",
+    Color_Unselected: "#9D9D9D",
+    Color_Accent: "#DDD",
+    Color_Tertiary: "#F9F9F9",
+    Color_Primary: "#00524C",
+    Color_Secondary: "#FF4782",
   },
 };
 
@@ -71,5 +69,6 @@ export const {
   setOutletName,
   setOrderType,
   setSelectedItemProds,
+  setTheme,
 } = dataSlicePersisted.actions;
 export default dataSlicePersisted.reducer; // Changed 'dataSlicePersisted.reducer.default' to 'dataSlicePersisted.reducer'

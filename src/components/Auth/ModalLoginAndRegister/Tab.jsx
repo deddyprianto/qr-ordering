@@ -4,7 +4,6 @@ import { Trans } from "react-i18next";
 import { useSelector } from "react-redux";
 export const RenderTab = ({ setIsChecked, tabScreen, setTabScreen }) => {
   const theme = useSelector((state) => state.dataSlicePersisted.theme);
-
   return (
     <div
       style={{
@@ -27,10 +26,11 @@ export const RenderTab = ({ setIsChecked, tabScreen, setTabScreen }) => {
           }
         }}
         style={{
-          color: tabScreen === "mobile" && theme.primary,
+          color: tabScreen === "mobile" && theme.Color_Primary,
           letterSpacing: "0.28px",
           whiteSpace: "nowrap",
-          borderBottom: tabScreen === "mobile" && `2px solid ${theme.primary}`,
+          borderBottom:
+            tabScreen === "mobile" && `2px solid ${theme.Color_Primary}`,
           font: "700 14px/20px Helvetica Neue, sans-serif ",
           paddingBottom: "5px",
         }}
@@ -48,8 +48,8 @@ export const RenderTab = ({ setIsChecked, tabScreen, setTabScreen }) => {
           }
         }}
         style={{
-          color: tabScreen === "email" && theme.primary,
-          borderColor: tabScreen === "email" && theme.primary,
+          color: tabScreen === "email" && theme.Color_Primary,
+          borderColor: tabScreen === "email" && theme.Color_Primary,
         }}
         className={`tracking-tighter whitespace-nowrap font-bold text-base leading-[0.28px] pb-[5px] ${
           tabScreen === "email" && "border-b-2"

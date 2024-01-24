@@ -62,7 +62,7 @@ export const RenderBundleGroup = ({
       } justify-center items-stretch border border-[color:var(--Brand-color-Primary,#00524C)] bg-white flex w-full flex-col mt-4 rounded-lg border-solid`}
     >
       <button
-        style={{ backgroundColor: theme.primary }}
+        style={{ backgroundColor: theme.Color_Primary }}
         className={`${
           isExpanded ? "rounded-tl-md rounded-tr-md" : "rounded-md"
         } justify-between items-center flex w-full gap-5 px-4 py-1`}

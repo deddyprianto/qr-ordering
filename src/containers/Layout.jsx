@@ -77,7 +77,7 @@ export default function Layout() {
           </div>
           <Header />
           <div
-            className="h-full overflow-x-auto"
+            className="h-full overflow-x-auto mt-[5px]"
             ref={childRef}
             onScroll={handleParentScroll}
           >
@@ -120,7 +120,7 @@ export default function Layout() {
               </div>
               <Header />
               <div
-                className="h-full overflow-x-auto"
+                className="h-full overflow-x-auto mt-[5px]"
                 ref={childRef}
                 onScroll={handleParentScroll}
               >

@@ -85,13 +85,13 @@ export const RenderQty = ({
             className="items-center flex justify-between gap-1 "
           >
             {expandItem ? (
-              <IconExpandHide primary={theme.secondary} />
+              <IconExpandHide primary={theme.Color_Secondary} />
             ) : (
-              <IconExpand primary={theme.secondary} />
+              <IconExpand primary={theme.Color_Secondary} />
             )}
             <div
               style={{
-                color: theme.secondary,
+                color: theme.Color_Secondary,
               }}
               className="text-sm font-medium leading-5 tracking-wide underline self-stretch grow whitespace-nowrap"
             >
@@ -105,10 +105,10 @@ export const RenderQty = ({
             !isEmptyArray && "ml-[8px]"
           }`}
         >
-          <IconEdit primary={theme.secondary} />
+          <IconEdit primary={theme.Color_Secondary} />
           <button
             style={{
-              color: theme.secondary,
+              color: theme.Color_Secondary,
             }}
             onClick={handleEdit}
             className="text-sm font-medium leading-5 tracking-wide underline self-stretch grow whitespace-nowrap ml-1 cursor-pointer"
@@ -121,7 +121,7 @@ export const RenderQty = ({
       <div className="flex gap-1 ">
         <button
           style={{
-            backgroundColor: theme.secondary,
+            backgroundColor: theme.Color_Secondary,
           }}
           onClick={decreaseQuantity}
           className="justify-center items-center flex flex-col w-9 h-9 px-2 rounded-lg text-white"
@@ -134,7 +134,7 @@ export const RenderQty = ({
         <button
           onClick={increaseQuantity}
           style={{
-            backgroundColor: theme.secondary,
+            backgroundColor: theme.Color_Secondary,
           }}
           className="justify-center items-center flex flex-col w-9 h-9 px-2 rounded-lg text-white"
         >

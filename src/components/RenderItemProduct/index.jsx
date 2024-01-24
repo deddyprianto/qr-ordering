@@ -61,19 +61,20 @@ export const RenderItemProduct = ({
     dispatch(setCartInfo(data));
   }
 
-  const handleClickButtonAdd = async(qty, lineID) => {
+  const handleClickButtonAdd = async (qty, lineID) => {
     if (getItemType(item) == "main") {
       setIsLoading(true);
       let curCartID = cartID;
-      if(!curCartID) curCartID = await addNewCart(setIsLoading, outletName, saveNewCartInfo);
+      if (!curCartID)
+        curCartID = await addNewCart(setIsLoading, outletName, saveNewCartInfo);
       await addItemToCart(
-        curCartID, 
-        item, 
-        dispatch, 
-        toast, 
+        curCartID,
+        item,
+        dispatch,
+        toast,
         qty,
         lineID,
-        reMapProductAndCart
+        reMapProductAndCart,
       );
       setIsLoading(false);
       return;
@@ -96,7 +97,7 @@ export const RenderItemProduct = ({
         <button
           onClick={() => handleOpenModalAddItem()}
           style={{
-            backgroundImage: `url(${item.defaultImageURL})`,
+            backgroundImage: `url(${item.defaultImageURL || theme.Image_Logo})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             width: "100%",
@@ -168,7 +169,7 @@ export const RenderItemProduct = ({
               <div
                 className="line-through"
                 style={{
-                  color: theme.disableColor,
+                  color: "#9D9D9D",
                   textAlign: "center",
                   textDecorationLine: "strikethrough",
                   whiteSpace: "nowrap",

@@ -37,13 +37,17 @@ export function PaymentMethod() {
         {paymentMethodList.map((item) => {
           return (
             <button
-              onClick={() => dispatch(setPaymentMethod(item))}
-              key={item.paymentMode}
-              className={`w-[160px] flex justify-center items-center border p-[16px] gap-x-2 rounded-lg border-solid ${
-                paymentMethod.paymentMode === item.paymentMode
-                  ? `bg-[#FFF2DF] border-[${theme.primary}]`
-                  : "bg-white border-[#D6D6D6]"
-              } `}
+              onClick={() => setSelectedPaymentMethod(item)}
+              key={item}
+              style={{
+                borderColor:
+                  selectedPaymentMethod === item
+                    ? theme.Color_Primary
+                    : "#D6D6D6",
+                backgroundColor:
+                  selectedPaymentMethod === item ? theme.Color_Accent : "white",
+              }}
+              className="w-[160px] flex justify-center items-center border  p-[16px] gap-x-2 rounded-lg border-solid"
             >
               <div>
                 <IconMasterCard />

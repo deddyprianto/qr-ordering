@@ -35,7 +35,7 @@ export function Component() {
           <Trans i18nKey={"you_order_from"} />
         </h1>
         <p
-          style={{ color: theme.secondary }}
+          style={{ color: theme.Color_Secondary }}
         >{`{company_name @ outlet_name}`}</p>
         <hr
           style={{

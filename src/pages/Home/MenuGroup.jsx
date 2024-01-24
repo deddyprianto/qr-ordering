@@ -1,7 +1,10 @@
 import PropTypes from "prop-types";
 import { ImageOptimization } from "../../components/ImageOptimization";
+import { useSelector } from "react-redux";
 
 export const MenuGroup = ({ label, imageItem, handleSelected, isGlow }) => {
+  const { theme } = useSelector((state) => state.dataSlicePersisted);
+
   const handleClick = () => {
     handleSelected();
   };
@@ -11,21 +14,29 @@ export const MenuGroup = ({ label, imageItem, handleSelected, isGlow }) => {
       onClick={() => handleClick()}
       style={{
         flex: "0 0 auto",
+        borderBottom: isGlow && `6px solid ${theme?.Color_Secondary}`,
       }}
       className={`w-[100px] mt-[10px] grid grid-cols-1 grid-rows-navbarItemCustom gap-y-[12px] px-[16px] py-[8px] ${
-        isGlow &&
-        "border-b-[6px] border-solid border-b-[color:var(--Brand-color-Secondary,#FF4782)] px-[10px] py-[12px]"
+        isGlow && "px-[10px] py-[12px]"
       }`}
     >
       <ImageOptimization
-        customStyle={`rounded-2xl width-[64px] h-[64px] ${
-          isGlow ? "border-4 border-[#FF4782]" : "border-[2px] border-[#FFFFFF]"
-        }`}
-        imageItems={imageItem}
+        customStyle={{
+          borderRadius: "1rem",
+          width: "64px",
+          height: "64px",
+          border: isGlow
+            ? `4px solid ${theme.Color_Secondary}`
+            : "2px solid white",
+        }}
+        imageItems={imageItem || theme?.Image_Logo}
       />
       <div
+        style={{
+          color: isGlow ? theme.Color_Secondary : "white",
+        }}
         className={`flex justify-center items-center text-sm h-full ${
-          isGlow ? "font-bold text-[#FF4782]" : "font-normal text-white"
+          isGlow ? "font-bold" : "font-normal"
         }`}
       >
         <div>{label}</div>

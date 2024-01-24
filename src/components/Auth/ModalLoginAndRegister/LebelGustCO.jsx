@@ -1,6 +1,8 @@
+import { useSelector } from "react-redux";
 import { LoginIcon } from "../../../assets/svgIcon";
 
 export const RenderLabelGuestCO = () => {
+  const { theme } = useSelector((state) => state.dataSlicePersisted);
   return (
     <div
       style={{
@@ -11,7 +13,7 @@ export const RenderLabelGuestCO = () => {
         gap: "8px",
         padding: "16px",
         marginTop: "16px",
-        backgroundColor: "#FFF2DF",
+        backgroundColor: theme.Color_Accent,
       }}
     >
       <LoginIcon />

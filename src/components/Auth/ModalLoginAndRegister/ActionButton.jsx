@@ -27,8 +27,8 @@ export const RenderButton = ({
             whiteSpace: "nowrap",
             borderRadius: "8px",
             backgroundColor: isCanProcess()
-              ?"var(--button-color-active, #E91254)"
-              :"#B7B7B7",
+              ? "var(--button-color-active, #E91254)"
+              : "#9D9D9D",
             width: "100%",
             padding: "11px 0px",
             font: "500 14px/20px Helvetica Neue, sans-serif ",

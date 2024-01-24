@@ -38,13 +38,13 @@ export const RenderTermAndCondition = ({ isChecked, handleCheckboxChange }) => {
         <span style={{ color: "rgba(52,58,74,1" }}>
           <Trans i18nKey={"i_agree_to"} /> {"{company_name}"}{" "}
         </span>
-        <span style={{ color: theme.primary }}>
+        <span style={{ color: theme.Color_Primary }}>
           <Trans i18nKey={"terms_and_conditions"} />{" "}
         </span>
         <span style={{ color: "rgba(52,58,74,1" }}>
           <Trans i18nKey={"and"} />{" "}
         </span>
-        <span style={{ color: theme.primary }}>
+        <span style={{ color: theme.Color_Primary }}>
           <Trans i18nKey={"privacy_policy"} />
         </span>
       </div>

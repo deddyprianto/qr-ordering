@@ -26,7 +26,10 @@ const RenderCartSummary = () => {
     return (
       <button
         onClick={() => navigate("/cart")}
-        className={`w-[95%] lg:w-[42%] flex justify-between items-stretch border-[color:var(--Brand-color-Primary,#00524C)] shadow-lg bg-[rgb(255,71,130)] gap-5 p-[8px] rounded-xl border-[1px] border-solid absolute left-1/2 -translate-x-1/2 -translate-y-1/2 ${
+        style={{
+          backgroundColor: theme.Color_Secondary,
+        }}
+        className={`w-[95%] lg:w-[42%] flex justify-between items-stretch border-[color:var(--Brand-color-Primary,#00524C)] shadow-lg gap-5 p-[8px] rounded-xl border-[1px] border-solid absolute left-1/2 -translate-x-1/2 -translate-y-1/2 ${
           memberInfo?.membershipNo ? "bottom-11" : "-bottom-5"
         } ${isSearchItem ? "hidden" : "z-30"}`}
       >
