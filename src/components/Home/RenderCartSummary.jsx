@@ -29,22 +29,16 @@ const RenderCartSummary = () => {
         style={{
           backgroundColor: theme.Color_Secondary,
         }}
-        className={`w-[95%] lg:w-[42%] flex justify-between items-stretch border-[color:var(--Brand-color-Primary,#00524C)] shadow-lg gap-5 p-[8px] rounded-xl border-[1px] border-solid absolute left-1/2 -translate-x-1/2 -translate-y-1/2 ${
-          memberInfo?.membershipNo ? "bottom-11" : "-bottom-5"
+        className={`ml-4 slide-left-custom w-[95%] lg:w-[44%] flex justify-between items-stretch border-[color:var(--Brand-color-Primary,#00524C)] shadow-lg gap-5 p-[8px] rounded-xl border-[1px] border-solid absolute ${
+          memberInfo?.membershipNo ? "bottom-11" : "bottom-2"
         } ${isSearchItem ? "hidden" : "z-30"}`}
       >
         <div className="items-stretch flex justify-between gap-2.5">
           <div>
             <span className="absolute flex w-[25px] h-[25px] top-1 left-7">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 bg-[#CF3030]"></span>
               <span
-                style={{
-                  backgroundColor: theme.warning,
-                }}
-                className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75`}
-              ></span>
-              <span
-                style={{ backgroundColor: theme.warning }}
-                className={`relative rounded-full w-[25px] h-[25px] text-white text-center leading-[25px] text-[12px]`}
+                className={`relative rounded-full w-[25px] h-[25px] text-white text-center leading-[25px] text-[12px] bg-[#CF3030]`}
               >
                 {totalQuantity}
               </span>
