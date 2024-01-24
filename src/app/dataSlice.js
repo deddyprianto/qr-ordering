@@ -16,6 +16,7 @@ const initialState = {
     secondary: "#FF4782",
   },
   menuSubGroup: [],
+  paymentMethod: {},
   openModalGeneral: false,
 };
 
@@ -41,6 +42,9 @@ const dataSlice = createSlice({
     setMenuSubGroup: (state, action) => {
       state.menuSubGroup = action.payload;
     },
+    setPaymentMethod:  (state, action) => {
+      state.paymentMethod = action.payload;
+    },
     setOpenModalGeneral: (state, action) => {
       state.openModalGeneral = action.payload;
     },
@@ -54,6 +58,7 @@ export const {
   setIsCartSummaryBlink,
   setTheme,
   setMenuSubGroup,
+  setPaymentMethod,
   setOpenModalGeneral,
 } = dataSlice.actions;
 export default dataSlice.reducer;

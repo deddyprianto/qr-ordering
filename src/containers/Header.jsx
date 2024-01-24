@@ -104,32 +104,50 @@ export default function Header() {
   };
 
   const renderMainHeader = () => {
-    if (location.pathname === "/cart") {
-      return (
-        <div
-          className={`bg-[${theme.primary}] flex text-white items-center text-[16px] font-medium py-[5px]`}
-        >
-          <button onClick={() => navigate("/")}>
-            <IconArrowLeft />
-          </button>
-          <div>Order Cart</div>
-        </div>
-      );
-    } else {
-      return (
-        <div
-          className={`justify-between items-stretch border-b-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] bg-[${theme.primary}] flex w-full gap-5 px-4 py-2.5 border-b border-solid`}
-        >
-          {renderConditionally()}
+    switch (location.pathname) {
+      case "/cart":
+        return (
           <button
-            onClick={() => openSearchBar()}
-            style={{ backgroundColor: theme.secondary }}
-            className="justify-center items-center flex aspect-square flex-col w-[46px] h-[46px] px-3 rounded-[1000px]"
+            onClick={() => {
+              navigate("/");
+            }}
+            className={`bg-[${theme.primary}] flex text-white items-center text-[16px] font-medium py-[5px] w-full`}
           >
-            <SearchIcon />
+            <IconArrowLeft />
+            <div><Trans i18nKey={"order_cart"}/></div>
           </button>
-        </div>
-      );
+        );
+      case "/payment":
+        return (
+          <button
+            onClick={() => {
+              navigate("/cart");
+            }}
+            className={`bg-[${theme.primary}] flex text-white items-center text-[16px] font-medium py-[5px] w-full`}
+          >
+            <IconArrowLeft />
+            <div><Trans i18nKey={"order_payment"}/></div>
+          </button>
+        );
+      default:
+        return (
+          <div
+            className={`justify-between items-stretch border-b-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] bg-[${theme.primary}] flex w-full gap-5 px-4 py-2.5 border-b border-solid`}
+          >
+            {renderConditionally()}
+            <button
+              onClick={() => openSearchBar()}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  openSearchBar();
+                }
+              }}
+              className={`justify-center items-center bg-[${theme.secondary}] flex aspect-square flex-col w-[46px] h-[46px] px-3 rounded-[1000px]`}
+            >
+              <SearchIcon />
+            </button>
+          </div>
+        );
     }
   };
 

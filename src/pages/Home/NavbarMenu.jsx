@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {  useSelector } from "react-redux";
 import { MenuGroup } from "./MenuGroup";
 import { GET } from "../../utilities/services";
@@ -22,17 +22,8 @@ export const NavbarMenu = ({
     (state) => state.dataSlicePersisted.outletName,
   );
 
-  useEffect(() => {
-    const timetOutId = setTimeout(() => {
-      mountData();
-    }, 1);
-    return () => {
-      clearTimeout(timetOutId);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const mountData = async () => {
+  const mountData = useRef();
+  mountData.current = async () => {
     if(dataCategory.length>0) return;
     setIsLoading(true);
     let groupList = [];
@@ -48,6 +39,10 @@ export const NavbarMenu = ({
     }
     setIsLoading(false);
   };
+
+  useEffect(() => {
+    mountData.current();
+  }, []);
 
   const getMenuGroup = async (skip = 0, take = 5) => {
     let obj = {

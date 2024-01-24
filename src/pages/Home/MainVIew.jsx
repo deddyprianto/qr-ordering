@@ -42,8 +42,7 @@ export const MainView = () => {
       dispatch(setEnableSearchUsingScroll(false));
       setIsFirstOpenSearchBar(true);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSearchItem]);
+  }, [dispatch, isSearchItem]);
 
   const fetchAllSubGroupItem = async (subGroup) => {
     for (const sb of subGroup) {

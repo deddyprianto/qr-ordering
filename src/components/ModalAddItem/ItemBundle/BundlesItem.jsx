@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { IconCheckSquareFill, IconRectangle } from "../../../assets/svgIcon";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { RenderButtonQty } from "./ButtonQty";
 import RenderItemAttributes from "../ItemAttributes";
 
@@ -16,9 +16,6 @@ export const RenderBundleItem = ({
   isCalledFromCart,
   setItemCartBundles,
 }) => {
-  const hasMatchingBundlesItem = itemCart?.bundles.some(
-    (itemBundle) => itemBundle.itemNo === item.itemNo,
-  );
   const itemCartMatchesQty = itemCart?.bundles.find(
     (itemBundle) => itemBundle.itemNo === item.itemNo,
   );
@@ -27,18 +24,23 @@ export const RenderBundleItem = ({
   const [attList, setAttList] = useState([]);
 
   useEffect(() => {
-    setProductInfo(item.productInfo || {});
-    if (item.isSelected) setAttList(item.productInfo.attributes || []);
-  }, [item]);
+    let tmpProductInfo = JSON.parse(JSON.stringify(item.productInfo));
+    setProductInfo(tmpProductInfo || {});
+    if (item.isSelected) setAttList(tmpProductInfo.attributes || []);
+  }, [item.isSelected, item.productInfo]);
 
+  const updateBundleListRef = useRef();
   useEffect(() => {
     if (attList.length > 0) {
-      let tmpItem = { ...item };
-      tmpItem.productInfo.attributes = attList;
-      updateBundleList(tmpItem);
+      updateBundleListRef.current();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [attList]);
+
+  updateBundleListRef.current = () => {
+    let tmpItem = { ...item };
+    tmpItem.productInfo.attributes = attList;
+    updateBundleList(tmpItem);
+  };
 
   const updateBundleList = (newItemObj) => {
     let tempBundleList = [...bundleList];
@@ -88,7 +90,7 @@ export const RenderBundleItem = ({
           className="fixed-width-content items-center flex justify-start gap-2 w-full"
           onClick={handleSelectItem}
         >
-          {renderCheckListItem(item.isSelected, hasMatchingBundlesItem)}
+          {renderCheckListItem(item.isSelected)}
           <div className="text-gray-700 text-xs font-medium leading-5 tracking-wide text-left">
             <div>{productInfo?.itemName}</div>
           </div>
@@ -96,7 +98,6 @@ export const RenderBundleItem = ({
         <RenderButtonQty
           itemCartMatchesQty={itemCartMatchesQty}
           item={item}
-          hasMatchingBundlesItem={hasMatchingBundlesItem}
           updateBundleList={updateBundleList}
           disableMinButton={disableMinButton}
           disableMaxButton={disableMaxButton}

@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { RenderImage } from "./Image";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { RenderItemCart } from "./Cart";
 
 
@@ -14,15 +14,17 @@ const RenderItemMain = ({
     (state) => state.dataSlicePersisted.cartInfo,
   );
 
-  useEffect(() => {
-    setItemInCart([]);
-    if (cartInfo?.details) {
-      setItemInCart(
-        cartInfo?.details.filter((det) => det.itemNo === item.itemNo),
-      );
-    }
-  }, [cartInfo?.details, item]);
+  const setItemCartRef = useRef();
   
+  useEffect(()=>{
+    setItemInCart([]);
+    setItemCartRef.current();
+  },[item])
+
+  setItemCartRef.current = () => {
+    if(cartInfo?.details)
+      setItemInCart(cartInfo?.details.filter(det => det.itemNo === item.itemNo));
+  }
 
   return (
     <div className="bg-white w-full px-4 object-center overflow-y-auto pb-10">

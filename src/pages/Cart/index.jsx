@@ -12,7 +12,6 @@ export function Component() {
   const cartInfo = useSelector((state) => state.dataSlicePersisted.cartInfo);
   const [isCartEmpty, setIsCartEmpty] = useState(false);
   const { theme } = useSelector((state) => state.dataSlice);
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
   const [isOpenModalAuth, setIsOpenModalAuth] = useState(false);
   const [authScreen, setAuthScreen] = useState("Login");
   const [isOpenModalOtp, setIsOpenModalOtp] = useState(false);
@@ -67,10 +66,7 @@ export function Component() {
             borderTop: "1px solid #D6D6D6",
           }}
         />
-        <PaymentMethod
-          selectedPaymentMethod={selectedPaymentMethod}
-          setSelectedPaymentMethod={setSelectedPaymentMethod}
-        />
+        <PaymentMethod/>
         <hr
           style={{
             margin: "24px 0px",

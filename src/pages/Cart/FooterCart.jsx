@@ -13,7 +13,7 @@ const FooterCart = () => {
   const gadgetScreen = width < 980;
 
   const handlePayment = () => {
-    navigate("/order");
+    navigate("/payment");
   };
 
   const theme = useSelector((state) => state.dataSlice.theme);

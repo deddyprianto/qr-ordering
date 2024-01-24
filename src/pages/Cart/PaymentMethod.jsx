@@ -1,33 +1,46 @@
-import PropTypes from "prop-types";
 import { IconMasterCard } from "../../assets/svgIcon";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Trans } from "react-i18next";
+import { useEffect, useRef, useState } from "react";
+import { apiOutlet } from "../../services/Outlet";
+import { setPaymentMethod } from "../../app/dataSlice";
 
-export function PaymentMethod({
-  selectedPaymentMethod,
-  setSelectedPaymentMethod,
-}) {
-  const theme = useSelector((state) => state.dataSlice.theme);
-  const paymentMethod = [
-    "Credit Card",
-    "After Pay",
-    "Amazon",
-    "Cash App",
-    "PayNow",
-  ];
+export function PaymentMethod() {
+  const dispatch = useDispatch();
+  const { theme, paymentMethod } = useSelector((state) => state.dataSlice);
+  const outletName = useSelector((state) => state.dataSlicePersisted.outletName);
+  const [ paymentMethodList, setPaymentMethodList ] = useState([]);
+
+  const getPaymentMethod = useRef();
+  getPaymentMethod.current = async() => {
+    try {
+      const result = await apiOutlet("GET", `${outletName}/paymentmodes`, {});
+      if(result.resultCode == 200){
+        setPaymentMethodList(result.data);
+      }
+      else throw(result.message);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(()=>{
+    getPaymentMethod.current();
+  },[]);
+  
   return (
     <span className="items-stretch self-stretch flex w-full flex-col">
       <div className="text-gray-700 text-base font-bold leading-6 w-full">
         <Trans i18nKey={"choose_payment_method"}/>
       </div>
-      <div className="items-stretch  flex  gap-x-2 mt-4 scroll-container">
-        {paymentMethod.map((item) => {
+      <div className="items-stretch flex gap-x-2 mt-4 max-h-[300px] overflow-y-auto">
+        {paymentMethodList.map((item) => {
           return (
             <button
-              onClick={() => setSelectedPaymentMethod(item)}
-              key={item}
-              className={`w-[160px] flex justify-center items-center border  p-[16px] gap-x-2 rounded-lg border-solid ${
-                selectedPaymentMethod === item
+              onClick={() => dispatch(setPaymentMethod(item))}
+              key={item.paymentMode}
+              className={`w-[160px] flex justify-center items-center border p-[16px] gap-x-2 rounded-lg border-solid ${
+                paymentMethod.paymentMode === item.paymentMode
                   ? `bg-[#FFF2DF] border-[${theme.primary}]`
                   : "bg-white border-[#D6D6D6]"
               } `}
@@ -35,7 +48,7 @@ export function PaymentMethod({
               <div>
                 <IconMasterCard />
               </div>
-              <div className="text-center">{item}</div>
+              <div className="text-center">{item.displayName}</div>
             </button>
           );
         })}
@@ -43,7 +56,3 @@ export function PaymentMethod({
     </span>
   );
 }
-PaymentMethod.propTypes = {
-  selectedPaymentMethod: PropTypes.string,
-  setSelectedPaymentMethod: PropTypes.func,
-};
