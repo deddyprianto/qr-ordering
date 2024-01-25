@@ -2,8 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Hide scrollbar for WebKit-based browsers */
-.scroll-container::-webkit-scrollbar {
+  .scroll-container::-webkit-scrollbar {
     display: none;
   }
   
@@ -19,15 +18,58 @@
   }
 
 
-// aside
-/* Hide scrollbar for WebKit-based browsers */
-.scroll-containerExpand::-webkit-scrollbar {
-  display: none;
+  .scroll-containerExpand::-webkit-scrollbar {
+    display: none;
+  }
+  .scroll-containerExpand {
+    overflow-y: auto;
+    width: 100%,
+  }
+  
+ .slide-left-custom {
+	-webkit-animation: slide-left-custom 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) infinite alternate-reverse both;
+	animation: slide-left-custom 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) infinite alternate-reverse both;
 }
-/* Set up the containerExpand with overflow and other styles */
-.scroll-containerExpand {
-  overflow-y: auto;
-  width: 100%,
+ @-webkit-keyframes slide-left-custom {
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(-10px);
+            transform: translateX(-10px);
+  }
 }
+@keyframes slide-left-custom {
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(-10px);
+            transform: translateX(-10px);
+  }
+}
+
+.loader {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #FFF;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  margin-right: 10px;
+  }
+
+  @keyframes rotation {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+  } 
 
   

@@ -16,7 +16,7 @@ const FooterCart = () => {
     navigate("/payment");
   };
 
-  const theme = useSelector((state) => state.dataSlice.theme);
+  const theme = useSelector((state) => state.dataSlicePersisted.theme);
   return (
     <footer
       className={`fixed bottom-0 left-0 bg-white text-center rounded-t-2xl p-[16px] ${
@@ -28,10 +28,10 @@ const FooterCart = () => {
     >
       <button
         onClick={handlePayment}
-        style={{ backgroundColor: theme.secondary }}
+        style={{ backgroundColor: theme.Color_Secondary }}
         className="py-[10px] px-[20px]  text-white rounded-lg cursor-pointer text-[16px] w-full"
       >
-        <Trans i18nKey={"pay"}/> - $ {numberFormatter(cartInfo?.nettAmount)}
+        <Trans i18nKey={"pay"} /> - $ {numberFormatter(cartInfo?.nettAmount)}
       </button>
     </footer>
   );

@@ -5,10 +5,21 @@ import "./scss/App.scss";
 
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchItemObj, setEnableSearchUsingScroll, setCartInfo, setOutletName } from "./app/dataSlicePersisted";
-import { setIsSearchItem, setOutletSetting, setServiceCharge } from "./app/dataSlice";
 import { apiCart } from "./services/Cart";
 import { apiOutlet } from "./services/Outlet";
+import {
+  setSearchItemObj,
+  setEnableSearchUsingScroll,
+  setCartInfo,
+  setOutletName,
+  setTheme,
+} from "./app/dataSlicePersisted";
+import { 
+  setIsSearchItem, 
+  setOutletSetting, 
+  setServiceCharge 
+} from "./app/dataSlice";
+import { callAPI } from "./services/services";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +68,26 @@ export default function App() {
   const getCartInfoRef = useRef();
   const getOutletSetting = useRef();
 
+  const getLayoutRef = useRef();
+
+  getLayoutRef.current = async () => {
+    try {
+      const response = await callAPI(
+        `${import.meta.env.VITE_API_URL}/outlets/layout`,
+        "GET",
+      );
+
+      const stateDefaultTheme = {};
+      response?.data?.forEach((item) => {
+        stateDefaultTheme[item.settingKey] = item.settingValue;
+      });
+
+      dispatch(setTheme(stateDefaultTheme));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   getCartInfoRef.current = async () => {
     if (!cartInfo.uniqueID) return;
     try {
@@ -70,7 +101,7 @@ export default function App() {
       console.log(error);
     }
   };
-
+  
   getOutletSetting.current = async (outletName) => {
     try {
       let outletSetting = {};
@@ -109,17 +140,21 @@ export default function App() {
     }
   };
 
-  useEffect(()=>{
-    dispatch(setIsSearchItem(false)); 
-    dispatch(setSearchItemObj({
-      doSearch: false,
-      searchText: "",
-      isResetList: true
-    })); 
-    dispatch(setEnableSearchUsingScroll(false)); 
-    dispatch(setOutletName("edge cafe")); 
-    getOutletSetting.current("edge cafe");
+  useEffect(() => {
+    dispatch(setIsSearchItem(false));
+    dispatch(
+      setSearchItemObj({
+        doSearch: false,
+        searchText: "",
+        isResetList: true,
+      }),
+    );
+    dispatch(setEnableSearchUsingScroll(false));
+    dispatch(setOutletName("edge cafe"));
+
     getCartInfoRef.current();
-  },[dispatch])
+    getOutletSetting.current("edge cafe");
+    getLayoutRef.current();
+  }, [dispatch]);
   return <RouterProvider router={router} fallbackElement={<Loading />} />;
 }

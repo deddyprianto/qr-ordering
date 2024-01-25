@@ -5,7 +5,7 @@ import { numberFormatter } from "../../utilities/numberFormatter";
 import { Trans } from "react-i18next";
 
 export function PriceSummary() {
-  const { theme } = useSelector((state) => state.dataSlice);
+  const theme = useSelector((state) => state.dataSlicePersisted.theme);
   const cartInfo = useSelector((state) => state.dataSlicePersisted.cartInfo);
   const [expandItem, setExpandItem] = useState(true);
 
@@ -30,7 +30,7 @@ export function PriceSummary() {
       >
         <div className="items-stretch flex justify-between gap-4 mt-2 ">
           <div className="justify-center text-gray-700 text-sm font-medium leading-5 tracking-wide grow whitespace-nowrap">
-            <Trans i18nKey={"subtotal"}/>
+            <Trans i18nKey={"subtotal"} />
           </div>
           <div className="text-gray-700 text-right text-base font-bold leading-6 whitespace-nowrap">
             $ {numberFormatter(cartInfo.grossAmount)}
@@ -49,23 +49,22 @@ export function PriceSummary() {
             </div>
           )
         })} */}
-        {cartInfo.gstAmount>0 && <div className="items-stretch flex justify-between gap-4 mt-2 ">
-          <div className="justify-center text-gray-700 text-sm font-medium leading-5 tracking-wide grow whitespace-nowrap">
-            GST 8%
+        {cartInfo.gstAmount > 0 && (
+          <div className="items-stretch flex justify-between gap-4 mt-2 ">
+            <div className="justify-center text-gray-700 text-sm font-medium leading-5 tracking-wide grow whitespace-nowrap">
+              GST 8%
+            </div>
+            <div className="text-gray-700 text-right text-base font-bold leading-6 whitespace-nowrap">
+              $ {numberFormatter(cartInfo.gstAmount)}
+            </div>
           </div>
-          <div className="text-gray-700 text-right text-base font-bold leading-6 whitespace-nowrap">
-            $ {numberFormatter(cartInfo.gstAmount)}
-          </div>
-        </div>}
+        )}
         <div className="bg-zinc-300 min-h-[1px] w-full mt-2" />
         <div className="justify-between flex w-full gap-5 mt-2  items-start">
           <div className="text-gray-700 text-sm font-medium leading-5 tracking-wide">
-            <Trans i18nKey={"total_payment"}/>
+            <Trans i18nKey={"total_payment"} />
           </div>
-          <div
-            style={{ color: theme.primary }}
-            className="text-base font-bold leading-6 self-stretch"
-          >
+          <div className="text-base font-bold leading-6 self-stretch">
             $ {numberFormatter(cartInfo.nettAmount)}
           </div>
         </div>
@@ -76,7 +75,7 @@ export function PriceSummary() {
     <div className="items-stretch self-stretch flex w-full flex-col">
       <div className="justify-between flex w-full gap-5  items-start">
         <div className="text-gray-700 text-base font-bold leading-6">
-          <Trans i18nKey={"payment_summary"}/>
+          <Trans i18nKey={"payment_summary"} />
         </div>
         <button
           onClick={() => setExpandItem(!expandItem)}
@@ -84,18 +83,22 @@ export function PriceSummary() {
         >
           <div>
             {expandItem ? (
-              <IconArrowBottom color={theme.secondary} />
+              <IconArrowBottom color={theme.Color_Secondary} />
             ) : (
-              <IconArrowUp color={theme.secondary} />
+              <IconArrowUp color={theme.Color_Secondary} />
             )}
           </div>
           <div
             style={{
-              color: theme.secondary,
+              color: theme.Color_Secondary,
             }}
             className="text-base font-bold leading-6 grow whitespace-nowrap self-start"
           >
-            {expandItem ? <Trans i18nKey={"show_less"}/> : <Trans i18nKey={"show_more"}/>}
+            {expandItem ? (
+              <Trans i18nKey={"show_less"} />
+            ) : (
+              <Trans i18nKey={"show_more"} />
+            )}
           </div>
         </button>
       </div>

@@ -15,9 +15,10 @@ import { setCartInfo } from "../../../../app/dataSlicePersisted";
 
 export const RenderItemCard = ({ item }) => {
   const dispatch = useDispatch()
+  const { theme } = useSelector((state) => state.dataSlicePersisted);
   const [openModalAddItem, setOpenModalAddItem] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { cartID } = useSelector((state) => state.dataSlicePersisted.cartInfo?.uniqueID)
+  const cartID = useSelector((state) => state.dataSlicePersisted.cartInfo?.uniqueID)
   const { outletName, orderType } = useSelector((state) => state.dataSlicePersisted)
   const { menuSubGroup } = useSelector((state) => state.dataSlice);
   const toast = useEdgeSnack();
@@ -28,29 +29,29 @@ export const RenderItemCard = ({ item }) => {
   const reMapProductCatalogQty = (newCartInfo) => {
     let updatedSubMenu = JSON.parse(JSON.stringify(menuSubGroup));
     for (const menuItem of updatedSubMenu) {
-      let itemReplacer = mapCartAndProduct(menuItem.items, newCartInfo)
-      menuItem.items = itemReplacer
+      let itemReplacer = mapCartAndProduct(menuItem.items, newCartInfo);
+      menuItem.items = itemReplacer;
       dispatch(setMenuSubGroup([...updatedSubMenu]));
     }
   };
 
   const saveNewCartInfo = (data) => {
     dispatch(setCartInfo(data));
-  }
+  };
 
-  const handleClickButtonAdd = async() => {
-    if(getItemType(item)=="main"){
+  const handleClickButtonAdd = async () => {
+    if (getItemType(item) == "main") {
       setIsLoading(true);
       let curCartID = cartID;
       if(!curCartID) curCartID = await addNewCart(setIsLoading, outletName, saveNewCartInfo, orderType);
       await addItemToCart(
-        curCartID, 
-        item, 
-        dispatch, 
+        curCartID,
+        item,
+        dispatch,
         toast,
         1,
         "",
-        reMapProductCatalogQty
+        reMapProductCatalogQty,
       );
       setIsLoading(false);
       return;
@@ -59,10 +60,9 @@ export const RenderItemCard = ({ item }) => {
   };
 
   return (
-    <div
-      className="items-stretch self-stretch shadow-sm bg-white flex justify-between gap-0 mt-4 rounded-2xl"
-    >
-      <button className="flex-col overflow-hidden relative flex aspect-square w-[150px] items-stretch pr-12 pb-2"
+    <div className="items-stretch self-stretch shadow-sm bg-white flex justify-between gap-0 mt-4 rounded-2xl">
+      <button
+        className="flex-col overflow-hidden relative flex aspect-square w-[150px] items-stretch pr-12 pb-2"
         onClick={handleOpenModalAddItem}
       >
         <img
@@ -75,29 +75,28 @@ export const RenderItemCard = ({ item }) => {
         {/* <RenderTagInsight/> */}
       </button>
       <div className="justify-between items-stretch flex grow basis-[0%] flex-col p-2">
-        <button className="text-left"
-          onClick={handleOpenModalAddItem}
-        >
+        <button className="text-left" onClick={handleOpenModalAddItem}>
           <div className="text-gray-700 text-sm font-medium leading-5 tracking-wide">
             {item.itemName}
           </div>
-          <RenderItemPrice
-            isPromo={item.promo?.length>0}
-            item={item}
-          />
+          <RenderItemPrice isPromo={item.promo?.length > 0} item={item} />
         </button>
-        <button className="justify-between items-stretch bg-pink-500 flex gap-2 mt-2 px-20 py-2 rounded-lg"
+        <button
+          className="justify-between items-stretch flex gap-2 mt-2 px-20 py-2 rounded-lg"
           onClick={handleClickButtonAdd}
-          style={{filter: isLoading?"blur(1px)":""}}
+          style={{
+            filter: isLoading ? "blur(1px)" : "",
+            backgroundColor: theme.Color_Secondary,
+          }}
           disabled={isLoading}
         >
-          <IconPlus/>
+          <IconPlus />
           <div className="text-white text-xs font-bold leading-4 self-center my-auto">
-            <Trans i18nKey={"add"}/>
+            <Trans i18nKey={"add"} />
           </div>
         </button>
       </div>
-      
+
       {openModalAddItem && (
         <RenderModalItemDetail
           openModal={openModalAddItem}

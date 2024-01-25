@@ -19,7 +19,7 @@ export const MainView = () => {
   const [isSelectedItem, setIsSelectedItem] = useState("");
   const [dtCategoryLength, setDtCategoryLength] = useState(0);
   const [isFirstOpenSearchBar, setIsFirstOpenSearchBar] = useState(true);
-  const theme = useSelector((state) => state.dataSlice.theme);
+  const theme = useSelector((state) => state.dataSlicePersisted.theme);
   const [isLoading, setIsLoading] = useState(true);
   const [highlights, setHighlights] = useState(true);
   const [selectedSubGroup, setSelectedSubGroup] = useState("");

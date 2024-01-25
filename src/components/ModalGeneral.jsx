@@ -5,7 +5,8 @@ import { setOpenModalGeneral } from "../app/dataSlice";
 import { IconCloseTransparent } from "../assets/svgIcon";
 
 export const ModalGeneral = () => {
-  const { openModalGeneral, theme } = useSelector((state) => state.dataSlice);
+  const { openModalGeneral } = useSelector((state) => state.dataSlice);
+  const { theme } = useSelector((state) => state.dataSlicePersisted);
   const dispatch = useDispatch();
 
   return (
@@ -62,12 +63,18 @@ export const ModalGeneral = () => {
                 <hr />
                 <div className="grid grid-cols-2 gap-4 p-4">
                   <button
-                    className={`text-[${theme.secondary}] text-sm font-medium leading-5 tracking-wide whitespace-nowrap justify-center items-stretch border border-[${theme.secondary}] bg-white py-2 rounded-lg border-solid`}
+                    style={{
+                      color: theme.Color_Secondary,
+                    }}
+                    className={`text-sm font-medium leading-5 tracking-wide whitespace-nowrap justify-center items-stretch border border-[${theme.Color_Secondary}] bg-white py-2 rounded-lg border-solid`}
                   >
                     Skip Order Update
                   </button>
                   <button
-                    className={`text-white text-sm font-medium leading-5 tracking-wide whitespace-nowrap justify-center items-stretch bg-[${theme.secondary}] py-2 rounded-lg`}
+                    style={{
+                      backgroundColor: theme.Color_Secondary,
+                    }}
+                    className="text-white text-sm font-medium leading-5 tracking-wide whitespace-nowrap justify-center items-stretch py-2 rounded-lg"
                   >
                     Continue
                   </button>

@@ -5,7 +5,7 @@ import screen from "../../../../hooks/useWindowSize";
 
 export const RenderButtonSubmit = ({handleSubmit}) => {
   const { width } = screen();
-  const { theme } = useSelector((state)=>state.dataSlice);
+  const { theme } = useSelector((state) => state.dataSlicePersisted);
   
   return (
     <footer
@@ -18,13 +18,13 @@ export const RenderButtonSubmit = ({handleSubmit}) => {
     >
       <button
         onClick={handleSubmit}
-        style={{ backgroundColor: theme.secondary }}
+        style={{ backgroundColor: theme.Color_Secondary }}
         className="py-[10px] px-[20px]  text-white rounded-lg cursor-pointer text-[16px] w-full"
       >
-        <Trans i18nKey={"submit"}/>
+        <Trans i18nKey={"submit"} />
       </button>
     </footer>
-  )
+  );
 }
 
 RenderButtonSubmit.propTypes = {

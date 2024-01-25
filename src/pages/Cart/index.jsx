@@ -11,7 +11,7 @@ import { ModalGeneral } from "../../components/ModalGeneral";
 export function Component() {
   const cartInfo = useSelector((state) => state.dataSlicePersisted.cartInfo);
   const [isCartEmpty, setIsCartEmpty] = useState(false);
-  const { theme } = useSelector((state) => state.dataSlice);
+  const { theme } = useSelector((state) => state.dataSlicePersisted);
   const [isOpenModalAuth, setIsOpenModalAuth] = useState(false);
   const [authScreen, setAuthScreen] = useState("Login");
   const [isOpenModalOtp, setIsOpenModalOtp] = useState(false);
@@ -34,7 +34,7 @@ export function Component() {
           <Trans i18nKey={"you_order_from"} />
         </h1>
         <p
-          style={{ color: theme.secondary }}
+          style={{ color: theme.Color_Secondary }}
         >{`{company_name @ outlet_name}`}</p>
         <hr
           style={{
@@ -56,6 +56,7 @@ export function Component() {
               idCart={cartInfo?.uniqueID}
               key={item?.uniqueID}
               setIsCartEmpty={setIsCartEmpty}
+              totalQuantityCart={totalQuantityCart}
             />
           );
         })}

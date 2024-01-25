@@ -20,8 +20,10 @@ export const RenderItemProduct = ({
   qtyInCart,
   cartLineID
 }) => {
-  const { theme, menuSubGroup } = useSelector((state) => state.dataSlice);
-  const { outletName, orderType } = useSelector((state) => state.dataSlicePersisted)
+  const { menuSubGroup } = useSelector((state) => state.dataSlice);
+  const { outletName, theme, orderType } = useSelector(
+    (state) => state.dataSlicePersisted,
+  );
   const [openModalAddItem, setOpenModalAddItem] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
@@ -59,19 +61,19 @@ export const RenderItemProduct = ({
     dispatch(setCartInfo(data));
   }
 
-  const handleClickButtonAdd = async(qty, lineID) => {
+  const handleClickButtonAdd = async (qty, lineID) => {
     if (getItemType(item) == "main") {
       setIsLoading(true);
       let curCartID = cartID;
       if(!curCartID) curCartID = await addNewCart(setIsLoading, outletName, saveNewCartInfo, orderType);
       await addItemToCart(
-        curCartID, 
-        item, 
-        dispatch, 
-        toast, 
+        curCartID,
+        item,
+        dispatch,
+        toast,
         qty,
         lineID,
-        reMapProductAndCart
+        reMapProductAndCart,
       );
       setIsLoading(false);
       return;
@@ -94,7 +96,7 @@ export const RenderItemProduct = ({
         <button
           onClick={() => handleOpenModalAddItem()}
           style={{
-            backgroundImage: `url(${item.defaultImageURL})`,
+            backgroundImage: `url(${item.defaultImageURL || theme.Image_Logo})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             width: "100%",
@@ -166,7 +168,7 @@ export const RenderItemProduct = ({
               <div
                 className="line-through"
                 style={{
-                  color: theme.disableColor,
+                  color: "#9D9D9D",
                   textAlign: "center",
                   textDecorationLine: "strikethrough",
                   whiteSpace: "nowrap",
@@ -183,12 +185,24 @@ export const RenderItemProduct = ({
               $ {item?.retailPrice.toFixed(2)}
             </div>
           </div>
-          <RenderButtonAddToCart
-            isLoading={isLoading}
-            qtyInCart={qtyInCart}
-            cartLineID={cartLineID}
-            handleClickButtonAdd={handleClickButtonAdd}
-          />
+
+          {isLoading ? (
+            <button
+              type="button"
+              className="bg-[#9D9D9D] rounded-lg flex justify-center items-center py-[5px] text-white"
+              disabled
+            >
+              <span className="loader"></span>
+              <div>Adding...</div>
+            </button>
+          ) : (
+            <RenderButtonAddToCart
+              isLoading={isLoading}
+              qtyInCart={qtyInCart}
+              cartLineID={cartLineID}
+              handleClickButtonAdd={handleClickButtonAdd}
+            />
+          )}
         </div>
       </div>
       {openModalAddItem && (

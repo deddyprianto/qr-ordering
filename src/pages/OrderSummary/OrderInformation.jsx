@@ -1,7 +1,21 @@
+import { useSelector } from "react-redux";
+
 export function OrderInformation() {
+  const { theme } = useSelector((state) => state.dataSlicePersisted);
+
   return (
-    <div className="w-full mt-[24px] justify-center items-stretch self-stretch border border-[color:var(--Brand-color-Primary,#00524C)] bg-white flex  flex-col pb-4 rounded-lg border-solid">
-      <div className="text-white text-sm font-medium leading-5 tracking-wide whitespace-nowrap justify-center bg-emerald-800 w-full pl-4 pr-16 py-1.5 items-start rounded-t-md">
+    <div
+      style={{
+        borderColor: theme.Color_Primary,
+      }}
+      className="w-full mt-[24px] justify-center items-stretch self-stretch border bg-white flex  flex-col pb-4 rounded-lg border-solid"
+    >
+      <div
+        style={{
+          backgroundColor: theme.Color_Primary,
+        }}
+        className="text-white text-sm font-medium leading-5 tracking-wide whitespace-nowrap justify-center  w-full pl-4 pr-16 py-1.5 items-start rounded-t-md"
+      >
         Order Information
       </div>
       <div className="justify-between items-stretch flex gap-5 mt-2.5">

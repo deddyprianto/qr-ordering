@@ -1,8 +1,10 @@
 import { IconArrowLeft, IconTable, SearchIcon } from "../assets/svgIcon";
 import "react-modern-drawer/dist/index.css";
-import logo from "../assets/logo.png";
 import { useSelector, useDispatch } from "react-redux";
-import { setSearchItemObj, setEnableSearchUsingScroll } from "../app/dataSlicePersisted";
+import {
+  setSearchItemObj,
+  setEnableSearchUsingScroll,
+} from "../app/dataSlicePersisted";
 import { setIsSearchItem } from "../app/dataSlice";
 import { Trans } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -10,13 +12,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 export default function Header() {
   const navigate = useNavigate();
   let location = useLocation();
-  const theme = useSelector((state) => state.dataSlice.theme);
   const dispatch = useDispatch();
   const { isSearchItem } = useSelector((state) => state.dataSlice);
-  const { enableSearchUsingScroll, searchItemObj, orderType } = useSelector(
-    (state) => state.dataSlicePersisted,
-  );
-
+  const { enableSearchUsingScroll, searchItemObj, orderType, theme } =
+    useSelector((state) => state.dataSlicePersisted);
   const dispatchIsSearchItem = (val) => {
     dispatch(setIsSearchItem(val));
   };
@@ -53,7 +52,12 @@ export default function Header() {
 
   const renderLabelTableNo = () => {
     return (
-      <div className="justify-center items-center border-b-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] bg-[#00524C] flex w-full flex-col px-16 border-b border-solid">
+      <div
+        style={{
+          backgroundColor: theme.Color_Primary,
+        }}
+        className="justify-center items-center border-b-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] flex w-full flex-col border-b border-solid"
+      >
         <div className="flex items-stretch gap-2 my-1">
           <IconTable />
           <div className="text-white text-center text-sm font-medium leading-5 tracking-wide my-auto">
@@ -93,8 +97,14 @@ export default function Header() {
       );
     } else {
       return (
-        <div className="flex grow basis-[0%] flex-col items-start">
-          <img loading="lazy" src={logo} width={43} height={24} alt="logo" />
+        <div>
+          <img
+            loading="lazy"
+            src={theme?.Image_Logo}
+            width={43}
+            height={24}
+            alt="logo"
+          />
           <div className="text-stone-50 text-sm font-medium leading-5 tracking-wide self-stretch">
             {"{outlet_name}"}
           </div>
@@ -108,13 +118,11 @@ export default function Header() {
       case "/cart":
         return (
           <button
+            onClick={() => navigate("/")}
             style={{
-              backgroundColor: theme.primary,
+              backgroundColor: theme.Color_Primary,
             }}
-            onClick={() => {
-              navigate("/");
-            }}
-            className="flex text-white items-center text-[16px] font-medium py-[5px] w-full"
+            className="w-full flex text-white items-center text-[16px] font-medium py-[5px]"
           >
             <IconArrowLeft />
             <div>
@@ -125,7 +133,7 @@ export default function Header() {
       case "/payment":
         return (
           <button
-            style={{ backgroundColor: theme.primary }}
+            style={{ backgroundColor: theme.Color_Primary }}
             onClick={() => {
               navigate("/cart");
             }}
@@ -140,8 +148,10 @@ export default function Header() {
       default:
         return (
           <div
-            style={{ backgroundColor: theme.primary }}
-            className={`justify-between items-stretch border-b-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] flex w-full gap-5 px-4 py-2.5 border-b border-solid`}
+            style={{
+              backgroundColor: theme.Color_Primary,
+            }}
+            className="justify-between items-center flex w-full gap-5 px-4 py-1"
           >
             {renderConditionally()}
             <button
@@ -151,7 +161,10 @@ export default function Header() {
                   openSearchBar();
                 }
               }}
-              className={`justify-center items-center bg-[${theme.secondary}] flex aspect-square flex-col w-[46px] h-[46px] px-3 rounded-[1000px]`}
+              style={{
+                backgroundColor: theme.Color_Secondary,
+              }}
+              className="justify-center items-center flex aspect-square flex-col w-[46px] h-[46px] px-3 rounded-[1000px]"
             >
               <SearchIcon />
             </button>
@@ -161,7 +174,7 @@ export default function Header() {
   };
 
   const renderMain = () => {
-    if(orderType=="") return<div></div>
+    if (orderType == "") return <div></div>;
     return (
       <div>
         {renderLabelTableNo()}

@@ -11,7 +11,6 @@ import { renderButtonText } from "./GetButtonText";
 import { mapCartAndProduct } from "../../Home/productAndCartMapper";
 import { setMenuSubGroup } from "../../../app/dataSlice";
 
-
 export const RenderButtonAdd = ({ 
   item,
   itemToAdd,
@@ -25,6 +24,7 @@ export const RenderButtonAdd = ({
   isCalledFromCart,
   lineID
  }) => {
+  const { theme } = useSelector((state) => state.dataSlicePersisted);
   const dispatch = useDispatch();
   const toast = useEdgeSnack();
   const { cartInfo, outletName, orderType } = useSelector(
@@ -92,13 +92,22 @@ export const RenderButtonAdd = ({
       }}
     >
       <button
+        style={{
+          backgroundColor: theme.Color_Secondary,
+        }}
         onClick={() => handleClickButton()}
-        className="bg-pink-500 w-full rounded-lg px-[16px] py-[12px] flex justify-center items-center cursor-pointer"
+        className="w-full rounded-lg px-[16px] py-[12px] flex justify-center items-center cursor-pointer"
       >
         <div className="flex items-stretch gap-2">
-          {isCalledFromCart?"":<IconPlus />}
+          {isCalledFromCart ? "" : <IconPlus />}
           <div className="text-white text-xs font-bold leading-4 self-center my-auto">
-            {renderButtonText(itemToAdd.unitPrice, itemType, typeOfModalAddItem, attList, bundleList)}
+            {renderButtonText(
+              itemToAdd.unitPrice,
+              itemType,
+              typeOfModalAddItem,
+              attList,
+              bundleList,
+            )}
           </div>
         </div>
       </button>

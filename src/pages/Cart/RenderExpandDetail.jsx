@@ -1,12 +1,7 @@
 import PropTypes from "prop-types";
 import { hasEmptyElement } from "../../helper";
 
-export const RenderExpandDetail = ({
-  item,
-  expandItem,
-  isEmptyArray,
-  theme,
-}) => {
+export const RenderExpandDetail = ({ item, expandItem, isEmptyArray }) => {
   let heightCustom;
 
   if (item?.attributes?.length > 1 || item?.bundles?.length > 1) {
@@ -27,7 +22,7 @@ export const RenderExpandDetail = ({
         {!hasEmptyElement(item?.attributes) &&
           item?.attributes?.map((attribute) => (
             <div
-              style={{ color: theme.disableColor }}
+              style={{ color: "#9D9D9D" }}
               key={attribute?.uniqueID}
               className="grid grid-cols-[22px_1fr_50px] grid-rows-[1fr] auto-cols-[1fr] gap-[0px_0px] grid-flow-row font-medium text-[12px]"
             >
@@ -40,7 +35,7 @@ export const RenderExpandDetail = ({
         {!hasEmptyElement(item?.bundles) &&
           item?.bundles?.map((attribute) => (
             <div
-              style={{ color: theme.disableColor }}
+              style={{ color: "#9D9D9D" }}
               key={attribute?.uniqueID}
               className="grid grid-cols-[22px_1fr_50px] grid-rows-[1fr] auto-cols-[1fr] gap-[0px_0px] grid-flow-row font-medium text-[12px]"
             >
@@ -60,5 +55,4 @@ RenderExpandDetail.propTypes = {
   item: PropTypes.object,
   expandItem: PropTypes.bool,
   isEmptyArray: PropTypes.bool,
-  theme: PropTypes.object,
 };
