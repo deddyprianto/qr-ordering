@@ -85,7 +85,7 @@ export const RenderBundleItem = ({
 
   return (
     <div>
-      <div className="items-stretch flex justify-between mt-2.5 gap-2 px-4 ">
+      <div className="items-stretch flex justify-between mt-2.5 gap-2 px-4">
         <button
           className="fixed-width-content items-center flex justify-start gap-2 w-full"
           onClick={handleSelectItem}

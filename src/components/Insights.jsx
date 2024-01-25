@@ -1,8 +1,11 @@
 import PropTypes from "prop-types"
 import { IconClose } from "../assets/svgIcon";
 import { Tumbs } from "./Tumbs";
+import { useSelector } from "react-redux";
 
 export const Insights = ({onClick, title, description }) => {
+  const { theme } = useSelector((state) => state.dataSlicePersisted);
+
     return (
       <div className="bg-orange-100 flex max-w-[398px] flex-col pb-2 px-2 rounded-2xl mt-6">
         <div className="flex w-full justify-between gap-5 mt-1.5 items-start">
@@ -18,8 +21,11 @@ export const Insights = ({onClick, title, description }) => {
             </div>
           </div>
           <button
+            style={{
+              backgroundColor: theme.Color_Secondary,
+            }}
             onClick={() => onClick()}
-            className="justify-center items-center bg-[#FF4782] self-stretch flex aspect-square flex-col w-7 h-7 px-1 rounded-[1000px]"
+            className="justify-center items-center bg-[black] self-stretch flex aspect-square flex-col w-7 h-7 px-1 rounded-[1000px]"
           >
             <IconClose />
           </button>
