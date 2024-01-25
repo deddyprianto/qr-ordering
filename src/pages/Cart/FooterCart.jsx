@@ -3,16 +3,28 @@ import screen from "../../../hooks/useWindowSize";
 import { useNavigate } from "react-router-dom";
 import { numberFormatter } from "../../utilities/numberFormatter";
 import { Trans } from "react-i18next";
+import { useEdgeSnack } from "../../components/EdgeSnack/utils/useEdgeSnack";
 
 const FooterCart = () => {
   const { cartInfo } = useSelector((state) => state.dataSlicePersisted);
+
+  const { paymentMethod } = useSelector((state) => state.dataSlice);
+  const toast = useEdgeSnack();
 
   const navigate = useNavigate();
   const { width } = screen();
 
   const gadgetScreen = width < 980;
 
+  const isPaymentMethodSelected = () => {
+    return Object.keys(paymentMethod).length>0;
+  }
+
   const handlePayment = () => {
+    if(!isPaymentMethodSelected()){
+      toast.open("Please select your prefered payment method", "error");
+      return;
+    }
     navigate("/payment");
   };
 
@@ -27,9 +39,10 @@ const FooterCart = () => {
       }}
     >
       <button
+        disabled={!isPaymentMethodSelected()}
         onClick={handlePayment}
         style={{ backgroundColor: theme.Color_Secondary }}
-        className="py-[10px] px-[20px]  text-white rounded-lg cursor-pointer text-[16px] w-full"
+        className={`py-[10px] px-[20px]  text-white rounded-lg cursor-pointer text-[16px] w-full ${!isPaymentMethodSelected()?"opacity-50":"cursor-pointer"}`}
       >
         <Trans i18nKey={"pay"} /> - $ {numberFormatter(cartInfo?.nettAmount)}
       </button>
