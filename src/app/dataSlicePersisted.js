@@ -49,7 +49,7 @@ const dataSlicePersisted = createSlice({
     setSelectedItemProds: (state, action) => {
       state.selectedItemProds = action.payload;
     },
-    setOrderType: (state, action) => {
+setOrderType: (state, action) => {
       state.orderType = action.payload;
     },
     setTheme: (state, action) => {
@@ -67,7 +67,7 @@ export const {
   setMemberInfo,
   setCartInfo,
   setOutletName,
-  setOrderType,
+setOrderType,
   setSelectedItemProds,
   setTheme,
 } = dataSlicePersisted.actions;

@@ -8,6 +8,8 @@ const initialState = {
   menuSubGroup: [],
   paymentMethod: {},
   openModalGeneral: false,
+  outletSetting: {},
+  serviceCharge: []
 };
 
 const dataSlice = createSlice({
@@ -35,6 +37,12 @@ const dataSlice = createSlice({
     setOpenModalGeneral: (state, action) => {
       state.openModalGeneral = action.payload;
     },
+    setOutletSetting: (state, action) => {
+      state.outletSetting = action.payload;
+    },
+    setServiceCharge: (state, action) => {
+      state.serviceCharge = action.payload;
+    },
   },
 });
 
@@ -46,5 +54,7 @@ export const {
   setMenuSubGroup,
   setPaymentMethod,
   setOpenModalGeneral,
+  setOutletSetting,
+  setServiceCharge
 } = dataSlice.actions;
 export default dataSlice.reducer;

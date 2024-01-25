@@ -137,7 +137,7 @@ export default function Header() {
             onClick={() => {
               navigate("/cart");
             }}
-            className="justify-between items-stretch border-b-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] flex w-full gap-5 px-4 py-2.5 border-b border-solid"
+            className="flex text-white items-center text-[16px] font-medium py-[5px] w-full"
           >
             <IconArrowLeft />
             <div>

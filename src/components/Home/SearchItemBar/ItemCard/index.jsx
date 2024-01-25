@@ -18,12 +18,8 @@ export const RenderItemCard = ({ item }) => {
   const { theme } = useSelector((state) => state.dataSlicePersisted);
   const [openModalAddItem, setOpenModalAddItem] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const cartID = useSelector(
-    (state) => state.dataSlicePersisted.cartInfo?.uniqueID,
-  );
-  const outletName = useSelector(
-    (state) => state.dataSlicePersisted.outletName,
-  );
+  const cartID = useSelector((state) => state.dataSlicePersisted.cartInfo?.uniqueID)
+  const { outletName, orderType } = useSelector((state) => state.dataSlicePersisted)
   const { menuSubGroup } = useSelector((state) => state.dataSlice);
   const toast = useEdgeSnack();
   const handleOpenModalAddItem = () => {
@@ -47,8 +43,7 @@ export const RenderItemCard = ({ item }) => {
     if (getItemType(item) == "main") {
       setIsLoading(true);
       let curCartID = cartID;
-      if (!curCartID)
-        curCartID = await addNewCart(setIsLoading, outletName, saveNewCartInfo);
+      if(!curCartID) curCartID = await addNewCart(setIsLoading, outletName, saveNewCartInfo, orderType);
       await addItemToCart(
         curCartID,
         item,

@@ -27,7 +27,7 @@ export const RenderButtonAdd = ({
   const { theme } = useSelector((state) => state.dataSlicePersisted);
   const dispatch = useDispatch();
   const toast = useEdgeSnack();
-  const { cartInfo, outletName } = useSelector(
+  const { cartInfo, outletName, orderType } = useSelector(
     (state) => state.dataSlicePersisted,
   );
   const menuSubGroup = useSelector(
@@ -51,7 +51,7 @@ export const RenderButtonAdd = ({
     
     setIsLoading(true);
     let cartID = cartInfo?.uniqueID;
-    if(!cartID) cartID = await addNewCart(setIsLoading, outletName, resetCartInfo);
+    if(!cartID) cartID = await addNewCart(setIsLoading, outletName, resetCartInfo, orderType);
 
     processAddItem(cartID);
   };  

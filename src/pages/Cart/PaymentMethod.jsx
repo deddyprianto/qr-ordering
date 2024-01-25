@@ -7,8 +7,8 @@ import { setPaymentMethod } from "../../app/dataSlice";
 
 export function PaymentMethod() {
   const dispatch = useDispatch();
-  const { theme, paymentMethod } = useSelector((state) => state.dataSlice);
-  const outletName = useSelector((state) => state.dataSlicePersisted.outletName);
+  const { paymentMethod } = useSelector((state) => state.dataSlice);
+  const { outletName, theme } = useSelector((state) => state.dataSlicePersisted);
   const [ paymentMethodList, setPaymentMethodList ] = useState([]);
 
   const getPaymentMethod = useRef();

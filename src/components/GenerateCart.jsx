@@ -1,9 +1,10 @@
 import { apiCart } from "../services/Cart";
 
-export  const addNewCart = async(setIsLoading, outletName, resetCartInfo)=> {
+export  const addNewCart = async(setIsLoading, outletName, resetCartInfo, orderType)=> {
   try {
     let body = {
-      "outletName": outletName
+      "outletName": outletName,
+      "orderType": orderType
     }
     const result = await apiCart("POST", "", body);
     if(result.resultCode == 200){
