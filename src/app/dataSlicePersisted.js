@@ -16,6 +16,7 @@ const initialState = {
     Color_Primary: "#00524C",
     Color_Secondary: "#FF4782",
   },
+  cartIdToShow: {}
 };
 
 const dataSlicePersisted = createSlice({
@@ -49,11 +50,14 @@ const dataSlicePersisted = createSlice({
     setSelectedItemProds: (state, action) => {
       state.selectedItemProds = action.payload;
     },
-setOrderType: (state, action) => {
+    setOrderType: (state, action) => {
       state.orderType = action.payload;
     },
     setTheme: (state, action) => {
       state.theme = action.payload;
+    },
+    setCartIdToShow: (state, action) => {
+      state.cartIdToShow = action.payload;
     },
   },
 });
@@ -67,8 +71,9 @@ export const {
   setMemberInfo,
   setCartInfo,
   setOutletName,
-setOrderType,
+  setOrderType,
   setSelectedItemProds,
   setTheme,
+  setCartIdToShow,
 } = dataSlicePersisted.actions;
 export default dataSlicePersisted.reducer; // Changed 'dataSlicePersisted.reducer.default' to 'dataSlicePersisted.reducer'
