@@ -58,54 +58,56 @@ export default function App() {
 
   const cartInfo = useSelector((state) => state.dataSlicePersisted.cartInfo);
 
-  useEffect(() => {
-    const getCartInfo = async () => {
-      if (!cartInfo.uniqueID) return;
-      try {
-        const result = await apiCart("GET", cartInfo.uniqueID, {});
-        if (result.resultCode == 200) {
-          dispatch(setCartInfo(result.data));
-        } else throw result.message;
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  const getCartInfoRef = useRef();
 
-    const getLayoutSettings = async () => {
-      try {
-        const response = await callAPI(
-          `${import.meta.env.VITE_API_URL}/outlets/layout`,
-          "GET",
-        );
+  const getLayoutRef = useRef();
 
-        const stateDefaultTheme = {};
-        response?.data?.forEach((item) => {
-          stateDefaultTheme[item.settingKey] = item.settingValue;
-        });
-
-        dispatch(setTheme(stateDefaultTheme));
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    const fetchData = async () => {
-      await getLayoutSettings();
-      dispatch(setIsSearchItem(false));
-      dispatch(
-        setSearchItemObj({
-          doSearch: false,
-          searchText: "",
-          isResetList: true,
-        }),
+  getLayoutRef.current = async () => {
+    try {
+      const response = await callAPI(
+        `${import.meta.env.VITE_API_URL}/outlets/layout`,
+        "GET",
       );
-      dispatch(setEnableSearchUsingScroll(false));
-      dispatch(setOutletName("edge cafe"));
-      await getCartInfo();
-    };
 
-    fetchData();
-  }, [dispatch, cartInfo.uniqueID]);
+      const stateDefaultTheme = {};
+      response?.data?.forEach((item) => {
+        stateDefaultTheme[item.settingKey] = item.settingValue;
+      });
 
+      dispatch(setTheme(stateDefaultTheme));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  getCartInfoRef.current = async () => {
+    if (!cartInfo.uniqueID) return;
+    try {
+      const result = await apiCart("GET", cartInfo.uniqueID, {});
+      if (result.resultCode === 200) {
+        dispatch(setCartInfo(result.data));
+      } else {
+        throw result.message;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    dispatch(setIsSearchItem(false));
+    dispatch(
+      setSearchItemObj({
+        doSearch: false,
+        searchText: "",
+        isResetList: true,
+      }),
+    );
+    dispatch(setEnableSearchUsingScroll(false));
+    dispatch(setOutletName("edge cafe"));
+
+    getCartInfoRef.current();
+    getLayoutRef.current();
+  }, [dispatch]);
   return <RouterProvider router={router} fallbackElement={<Loading />} />;
 }

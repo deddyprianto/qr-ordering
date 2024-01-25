@@ -16,7 +16,6 @@ export const RenderQty = ({
   itemNo,
   item,
   idCart,
-  totalQuantityCart,
 }) => {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(item?.quantity || 0);

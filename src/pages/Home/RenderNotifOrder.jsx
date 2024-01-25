@@ -6,7 +6,7 @@ import {
 } from "../../assets/svgIcon";
 
 export function RenderNotificationOrder() {
-  const { theme } = useSelector((state) => state.dataSlice);
+  const { theme } = useSelector((state) => state.dataSlicePersisted);
   return (
     <div className="items-stretch self-stretch bg-orange-100 flex w-full flex-col p-2 rounded-2xl">
       <div className="justify-between items-stretch flex w-full gap-5">
@@ -42,7 +42,7 @@ export function RenderNotificationOrder() {
               CONFIRMED
             </div>
           </div>
-          <IconArrowRight color={theme.secondary} />
+          <IconArrowRight color={theme.Color_Secondary} />
         </div>
       </div>
     </div>

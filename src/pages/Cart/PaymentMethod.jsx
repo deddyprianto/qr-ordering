@@ -37,15 +37,15 @@ export function PaymentMethod() {
         {paymentMethodList.map((item) => {
           return (
             <button
-              onClick={() => setSelectedPaymentMethod(item)}
+              onClick={() => dispatch(setPaymentMethod(item))}
               key={item}
               style={{
                 borderColor:
-                  selectedPaymentMethod === item
+                  paymentMethod === item
                     ? theme.Color_Primary
                     : "#D6D6D6",
                 backgroundColor:
-                  selectedPaymentMethod === item ? theme.Color_Accent : "white",
+                  paymentMethod === item ? theme.Color_Accent : "white",
               }}
               className="w-[160px] flex justify-center items-center border  p-[16px] gap-x-2 rounded-lg border-solid"
             >
