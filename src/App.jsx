@@ -13,6 +13,7 @@ import {
   setCartInfo,
   setOutletName,
   setTheme,
+  setOrderType
 } from "./app/dataSlicePersisted";
 import { 
   setIsSearchItem, 
@@ -88,12 +89,23 @@ export default function App() {
     }
   };
 
+  const resetCartAndOrderType = (data) => {
+    if(data?.status != 'PENDING'){
+      dispatch(setCartInfo({}));
+      dispatch(setOrderType(""));
+    }
+    else{
+      dispatch(setCartInfo(data));
+      dispatch(setOrderType(data?.orderType));
+    }
+  }
+
   getCartInfoRef.current = async () => {
     if (!cartInfo.uniqueID) return;
     try {
       const result = await apiCart("GET", cartInfo.uniqueID, {});
       if (result.resultCode === 200) {
-        dispatch(setCartInfo(result.data));
+        resetCartAndOrderType(result.data);
       } else {
         throw result.message;
       }
