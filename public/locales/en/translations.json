@@ -42,5 +42,6 @@
   "order_payment": "Order Payment",
   "failed_to_load": "Failed to load element",
   "couldn_load_payment_element": "We couldn't the payment element to continue the payment.",
-  "please_back_to_cart": "Please back to the cart and try again"
+  "please_back_to_cart": "Please back to the cart and try again",
+  "processing": "Processing"
 }
