@@ -25,6 +25,7 @@ const dataSlicePersisted = createSlice({
   reducers: {
     setAccessToken: (state, action) => {
       state.accessToken = action.payload;
+      localStorage.setItem("accessToken", JSON.stringify(action.payload));
     },
     setShowSplashScreen: (state, action) => {
       state.isSplashScreenShow = action.payload;

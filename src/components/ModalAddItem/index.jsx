@@ -50,11 +50,17 @@ const RenderModalItemDetail = ({
         attributes: [],
         bundles: [],
       });
-      setTypeOfModalAddItem(isCalledFromCart?itemType:"main");
-      setLineID(isCalledFromCart?itemCart.uniqueID:"");
+      setTypeOfModalAddItem(isCalledFromCart ? itemType : "main");
+      setLineID(isCalledFromCart ? itemCart.uniqueID : "");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [openModal]);
+  }, [
+    isCalledFromCart,
+    item?.itemNo,
+    item?.retailPrice,
+    itemCart?.uniqueID,
+    itemType,
+    openModal,
+  ]);
 
   const renderItemTypeFromCart = () => {
     if (itemType === "attribute") {
@@ -157,7 +163,7 @@ RenderModalItemDetail.propTypes = {
   setOpenModal: PropTypes.func,
   itemType: PropTypes.string,
   item: PropTypes.object,
-  isCalledFromCart: PropTypes.isCalledFromCart,
+  isCalledFromCart: PropTypes.bool,
   itemCart: PropTypes.object,
 };
 export default RenderModalItemDetail;

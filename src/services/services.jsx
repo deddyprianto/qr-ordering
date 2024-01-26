@@ -1,15 +1,16 @@
 import axios from 'axios';
 
-export const callAPI = async (url, method, body) => {
+export const callAPI = async (url, method, body, auth) => {
   try {
     const axiosConfig = {
       method: method,
       headers: {
-        'Content-Type': 'application/json',
+        Authorization: `Bearer ${auth}`,
+        "Content-Type": "application/json",
       },
     };
 
-    if (method.toUpperCase() === 'GET' && body) {
+    if (method.toUpperCase() === "GET" && body) {
       const queryParams = new URLSearchParams(body);
       url = `${url}?${queryParams.toString()}`;
     } else if (body) {
@@ -24,10 +25,10 @@ export const callAPI = async (url, method, body) => {
       return error.response.data;
     } catch (error) {
       return {
-        "resultCode": 500,
-        "status": "ERROR",
-        "message": `Error on api ${url}`
+        resultCode: 500,
+        status: "ERROR",
+        message: `Error on api ${url}`,
       };
     }
   }
-}
+};

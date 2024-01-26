@@ -13,12 +13,13 @@ import {
   setCartInfo,
   setOutletName,
   setTheme,
-  setOrderType
+  setOrderType,
+  setAccessToken,
 } from "./app/dataSlicePersisted";
-import { 
-  setIsSearchItem, 
-  setOutletSetting, 
-  setServiceCharge 
+import {
+  setIsSearchItem,
+  setOutletSetting,
+  setServiceCharge,
 } from "./app/dataSlice";
 import { callAPI } from "./services/services";
 
@@ -61,14 +62,14 @@ const router = createBrowserRouter([
 
 export default function App() {
   const dispatch = useDispatch();
-  
-  const { cartInfo, orderType } = useSelector(
+
+  const { cartInfo, orderType, accessToken, memberInfo } = useSelector(
     (state) => state.dataSlicePersisted,
   );
 
   const getCartInfoRef = useRef();
   const getOutletSetting = useRef();
-
+  const getAuthUser = useRef();
   const getLayoutRef = useRef();
 
   getLayoutRef.current = async () => {
@@ -103,7 +104,7 @@ export default function App() {
   getCartInfoRef.current = async () => {
     if (!cartInfo.uniqueID) return;
     try {
-      const result = await apiCart("GET", cartInfo.uniqueID, {});
+      const result = await apiCart("GET", cartInfo.uniqueID, {}, accessToken);
       if (result.resultCode === 200) {
         resetCartAndOrderType(result.data);
       } else {
@@ -113,27 +114,27 @@ export default function App() {
       console.log(error);
     }
   };
-  
+
   getOutletSetting.current = async (outletName) => {
     try {
       let outletSetting = {};
       const result = await apiOutlet("GET", `${outletName}/settings`, {});
       if (result.resultCode === 200) {
-        for(const setting of result.data){
+        for (const setting of result.data) {
           switch (setting.settingKey) {
             case "Enable_QR_DineIn":
               outletSetting["dineInOption"] = {
-                enable: setting.settingValue.toLowerCase()=="true",
+                enable: setting.settingValue.toLowerCase() == "true",
                 displayName: setting.displayName,
-                serviceCharges: JSON.parse((setting.dataOptions||"[]"))
-              }
+                serviceCharges: JSON.parse(setting.dataOptions || "[]"),
+              };
               break;
             case "Enable_QR_TakeAway":
               outletSetting["takeAwayOption"] = {
-                enable: setting.settingValue.toLowerCase()=="true",
+                enable: setting.settingValue.toLowerCase() == "true",
                 displayName: setting.displayName,
-                serviceCharges: JSON.parse((setting.dataOptions||"[]"))
-              }
+                serviceCharges: JSON.parse(setting.dataOptions || "[]"),
+              };
               break;
             default:
               break;
@@ -143,12 +144,38 @@ export default function App() {
       } else {
         throw result.message;
       }
-      if(orderType=="DINEIN")
-        dispatch(setServiceCharge((outletSetting["dineInOption"]?.serviceCharges || [])))
+      if (orderType == "DINEIN")
+        dispatch(
+          setServiceCharge(outletSetting["dineInOption"]?.serviceCharges || []),
+        );
       else
-        dispatch(setServiceCharge((outletSetting["takeAwayOption"]?.serviceCharges || [])))
+        dispatch(
+          setServiceCharge(
+            outletSetting["takeAwayOption"]?.serviceCharges || [],
+          ),
+        );
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  getAuthUser.current = async () => {
+    try {
+      const responseAuth = await callAPI(
+        `${import.meta.env.VITE_API_URL}/auth`,
+        "GET",
+      );
+      if (Object.keys(memberInfo).length === 0) {
+        console.log("LOGIN AS GUEST");
+        dispatch(
+          setAccessToken({
+            accessToken: responseAuth?.data?.accessToken,
+            type: "guest",
+          }),
+        );
+      }
+    } catch (error) {
+      console.log("error on auth detected", error);
     }
   };
 
@@ -167,6 +194,7 @@ export default function App() {
     getCartInfoRef.current();
     getOutletSetting.current("edge cafe");
     getLayoutRef.current();
+    getAuthUser.current();
   }, [dispatch]);
   return <RouterProvider router={router} fallbackElement={<Loading />} />;
 }
