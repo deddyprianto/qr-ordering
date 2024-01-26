@@ -12,7 +12,7 @@ export function Component() {
   const cartInfo = useSelector((state) => state.dataSlicePersisted.cartInfo);
   const [isCartEmpty, setIsCartEmpty] = useState(false);
   const { theme } = useSelector((state) => state.dataSlicePersisted);
-  const [isOpenModalAuth, setIsOpenModalAuth] = useState(false);
+  const [isOpenModalAuth, setIsOpenModalAuth] = useState(true);
   const [authScreen, setAuthScreen] = useState("Login");
   const [isOpenModalOtp, setIsOpenModalOtp] = useState(false);
   const handleSuccessOTP = (isSuccess) => {
