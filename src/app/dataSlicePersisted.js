@@ -16,6 +16,7 @@ const initialState = {
     Color_Primary: "#00524C",
     Color_Secondary: "#FF4782",
   },
+  otpRequestInfo: {},
 };
 
 const dataSlicePersisted = createSlice({
