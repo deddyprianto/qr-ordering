@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types"
 import { Trans } from "react-i18next";
 import { numberFormatter } from "../../utilities/numberFormatter";
-import { dateFormatter } from "./DateFormatter";
+import { dateFormatter } from "../../components/Order/DateFormatter";
+import { statusText } from "../../components/Order/StatusText";
 
 const ItemOrder = ({ order }) => {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ const ItemOrder = ({ order }) => {
           <div style={{color: "#888787"}}><Trans i18nKey={"order_date_time"}/></div>
           <div style={{color: "#888787"}}><Trans i18nKey={"queue_no"}/></div>
           <div>{dateFormatter(order.orderDate)} </div>
-          <div>A0231</div>
+          <div>{order.queueNo}</div>
         </div>
       </div>
       {/* 3 */}
@@ -59,7 +60,7 @@ const ItemOrder = ({ order }) => {
       >
         <IconArrowSolid />
         <div className="text-white text-left text-sm font-bold leading-5 tracking-wide self-center grow whitespace-nowrap my-auto">
-          {order.status}
+          {statusText(order.status)}
         </div>
       </button>
     </div>

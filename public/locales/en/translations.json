@@ -54,5 +54,7 @@
   "qty_item": "Qty Item",
   "price": "Price",
   "order_date_time": "Order Date & Time",
-  "order": "Order"
+  "order": "Order",
+  "latest_order": "Latest Order",
+  "view_all": "View All"
 }
