@@ -10,9 +10,6 @@ const RenderCartSummary = () => {
     (state) => state.dataSlicePersisted,
   );
   const { isSearchItem } = useSelector((state) => state.dataSlice);
-  const memberInfo = useSelector(
-    (state) => state.dataSlicePersisted.memberInfo,
-  );
   const { theme } = useSelector((state) => state.dataSlicePersisted);
 
   const totalQuantity = cartInfo?.details.reduce(
@@ -29,9 +26,9 @@ const RenderCartSummary = () => {
         style={{
           backgroundColor: theme.Color_Secondary,
         }}
-        className={`ml-4 slide-left-custom w-[95%] lg:w-[44%] flex justify-between items-stretch border-[color:var(--Brand-color-Primary,#00524C)] shadow-lg gap-5 p-[8px] rounded-xl border-[1px] border-solid absolute ${
-          memberInfo?.membershipNo ? "bottom-11" : "bottom-2"
-        } ${isSearchItem ? "hidden" : "z-30"}`}
+        className={`ml-4 slide-left-custom w-[95%] lg:w-[44%] flex justify-between items-stretch border-[color:var(--Brand-color-Primary,#00524C)] shadow-lg gap-5 p-[8px] rounded-xl border-[1px] border-solid absolute bottom-2 ${
+          isSearchItem ? "hidden" : "z-30"
+        }`}
       >
         <div className="items-stretch flex justify-between gap-2.5">
           <div>

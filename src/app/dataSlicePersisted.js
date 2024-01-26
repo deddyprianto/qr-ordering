@@ -24,6 +24,7 @@ const dataSlicePersisted = createSlice({
   reducers: {
     setAccessToken: (state, action) => {
       state.accessToken = action.payload;
+      localStorage.setItem("accessToken", JSON.stringify(action.payload));
     },
     setShowSplashScreen: (state, action) => {
       state.isSplashScreenShow = action.payload;
@@ -49,7 +50,7 @@ const dataSlicePersisted = createSlice({
     setSelectedItemProds: (state, action) => {
       state.selectedItemProds = action.payload;
     },
-setOrderType: (state, action) => {
+    setOrderType: (state, action) => {
       state.orderType = action.payload;
     },
     setTheme: (state, action) => {
@@ -67,7 +68,7 @@ export const {
   setMemberInfo,
   setCartInfo,
   setOutletName,
-setOrderType,
+  setOrderType,
   setSelectedItemProds,
   setTheme,
 } = dataSlicePersisted.actions;
