@@ -136,6 +136,8 @@ export default function Header() {
         return headerWithNavigation("/", "order_cart");
       case "/payment":
         return headerWithNavigation("/cart", "order_payment");
+      case "/order":
+        return headerWithNavigation("/", "order");
       case "/ordersummary":
         return headerWithNavigation("/order", "order_summary");
       default:

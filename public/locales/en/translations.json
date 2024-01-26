@@ -53,5 +53,6 @@
   "order_summary": "Order Summary",
   "qty_item": "Qty Item",
   "price": "Price",
-  "order_date_time": "Order Date & Time"
+  "order_date_time": "Order Date & Time",
+  "order": "Order"
 }
