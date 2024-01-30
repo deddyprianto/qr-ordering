@@ -16,7 +16,8 @@ const initialState = {
     Color_Primary: "#00524C",
     Color_Secondary: "#FF4782",
   },
-  cartIdToShow: {}
+  cartIdToShow: {},
+  otpRequestInfo: {}
 };
 
 const dataSlicePersisted = createSlice({
