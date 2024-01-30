@@ -3,7 +3,7 @@ import { Trans } from "react-i18next";
 import { useSelector } from "react-redux";
 import screen from "../../../../hooks/useWindowSize";
 
-export const RenderButtonSubmit = ({handleSubmit}) => {
+export const RenderButtonSubmit = ({handleSubmit, loading}) => {
   const { width } = screen();
   const { theme } = useSelector((state) => state.dataSlicePersisted);
   
@@ -19,14 +19,15 @@ export const RenderButtonSubmit = ({handleSubmit}) => {
       <button
         onClick={handleSubmit}
         style={{ backgroundColor: theme.Color_Secondary }}
-        className="py-[10px] px-[20px]  text-white rounded-lg cursor-pointer text-[16px] w-full"
+        className={`py-[10px] px-[20px]  text-white rounded-lg cursor-pointer text-[16px] w-full ${loading?"opacity-50":"cursor-pointer"}`}
       >
-        <Trans i18nKey={"submit"} />
+        {loading?<><Trans i18nKey={"processing"}/>...</>:<Trans i18nKey={"submit"}/>}
       </button>
     </footer>
   );
 }
 
 RenderButtonSubmit.propTypes = {
-  handleSubmit: PropTypes.func
+  handleSubmit: PropTypes.func,
+  loading: PropTypes.bool
 }

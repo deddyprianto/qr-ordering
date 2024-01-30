@@ -1,8 +1,13 @@
 import { useSelector } from "react-redux";
 import { IconArrowSolid } from "../../assets/svgIcon";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types"
+import { Trans } from "react-i18next";
+import { numberFormatter } from "../../utilities/numberFormatter";
+import { dateFormatter } from "../../components/Order/DateFormatter";
+import { statusText } from "../../components/Order/StatusText";
 
-const ItemOrder = () => {
+const ItemOrder = ({ order }) => {
   const navigate = useNavigate();
 
   const { theme } = useSelector((state) => state.dataSlicePersisted);
@@ -11,7 +16,7 @@ const ItemOrder = () => {
       style={{
         borderColor: theme.Color_Primary,
       }}
-      className="items-stretch self-stretch border flex w-full flex-col rounded-lg border-solid"
+      className="items-stretch self-stretch border flex w-full flex-col rounded-lg border-solid mb-4"
     >
       <div
         style={{
@@ -26,23 +31,23 @@ const ItemOrder = () => {
             }}
             className="text-center text-sm font-bold leading-5 tracking-wide"
           >
-            Dine In
+            {order.orderType}
           </div>
           <div className="text-center text-sm font-medium leading-5 tracking-wide">
-            Fusionopolis
+            {order.outletName}
           </div>
         </div>
       </div>
       {/* 2 */}
       <div className="p-[12px]">
         <div className="text-sm font-medium leading-5 tracking-wide w-full mt-3">
-          17 Items - $ 142.25
+          {order.noOfItems} <Trans i18nKey={"items"}/> - $ {numberFormatter(order.amount)}
         </div>
         <div className="grid grid-cols-[1fr_1fr] grid-rows-[1fr_1fr] mt-[8px] gap-y-1">
-          <div>Order Date & Time</div>
-          <div>Queue Number</div>
-          <div>31 Jan 2023 &bull; 15:49 </div>
-          <div>A0231</div>
+          <div style={{color: "#888787"}}><Trans i18nKey={"order_date_time"}/></div>
+          <div style={{color: "#888787"}}><Trans i18nKey={"queue_no"}/></div>
+          <div>{dateFormatter(order.orderDate)} </div>
+          <div>{order.queueNo}</div>
         </div>
       </div>
       {/* 3 */}
@@ -54,12 +59,15 @@ const ItemOrder = () => {
         }}
       >
         <IconArrowSolid />
-        <div className="text-white text-center text-sm font-bold leading-5 tracking-wide self-center grow whitespace-nowrap my-auto">
-          PROCESSING
+        <div className="text-white text-left text-sm font-bold leading-5 tracking-wide self-center grow whitespace-nowrap my-auto">
+          {statusText(order.status)}
         </div>
       </button>
     </div>
   );
 };
 
+ItemOrder.propTypes = {
+  order: PropTypes.ay
+}
 export default ItemOrder;

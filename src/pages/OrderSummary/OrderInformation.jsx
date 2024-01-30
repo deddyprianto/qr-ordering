@@ -1,6 +1,9 @@
 import { useSelector } from "react-redux";
+import PropTypes from "prop-types";
+import { Trans } from "react-i18next";
+import { dateFormatter } from "../../components/Order/DateFormatter";
 
-export function OrderInformation() {
+export function OrderInformation({ order }) {
   const { theme } = useSelector((state) => state.dataSlicePersisted);
 
   return (
@@ -16,30 +19,30 @@ export function OrderInformation() {
         }}
         className="text-white text-sm font-medium leading-5 tracking-wide whitespace-nowrap justify-center  w-full pl-4 pr-16 py-1.5 items-start rounded-t-md"
       >
-        Order Information
+        <Trans i18nKey={"order_information"}/>
       </div>
       <div className="justify-between items-stretch flex gap-5 mt-2.5">
         <div className="justify-center items-stretch flex grow basis-[0%] flex-col">
           <div className="text-gray-700 text-center text-xs font-medium leading-4 tracking-wide">
-            Order ID
+            <Trans i18nKey={"order_id"}/>
           </div>
-          <div className="text-gray-700 text-right text-base font-bold leading-6 whitespace-nowrap">
-            OR23120600790001
+          <div className="text-gray-700 text-center text-base font-bold leading-6 whitespace-nowrap">
+            {order.orderHdrID}
           </div>
         </div>
         <div className="justify-center items-stretch flex grow basis-[0%] flex-col border-l border-[#D6D6D6]">
           <div className="text-gray-700 text-center text-xs font-medium leading-4 tracking-wide">
-            Queue Number
+            <Trans i18nKey={"queue_no"}/>
           </div>
           <div className="text-gray-700 text-right text-base font-bold leading-6 self-center whitespace-nowrap">
-            A0001
+            {order.queueNo}
           </div>
         </div>
       </div>
       <div className="bg-zinc-300 min-h-[1px] w-full mt-2.5" />
       <div className="justify-between items-stretch flex gap-2 mt-2.5 px-4">
         <div className="justify-center text-gray-700 text-sm font-bold leading-5 tracking-wide grow whitespace-nowrap">
-          Name
+          <Trans i18nKey={"name"}/>
         </div>
         <div className="text-gray-700 text-right text-sm font-medium leading-5 tracking-wide whitespace-nowrap">
           GUEST
@@ -47,36 +50,40 @@ export function OrderInformation() {
       </div>
       <div className="justify-between items-stretch flex gap-2 mt-2.5 px-4">
         <div className="justify-center text-gray-700 text-sm font-bold leading-5 tracking-wide grow whitespace-nowrap">
-          Table
+          <Trans i18nKey={"table"}/>
         </div>
         <div className="text-gray-700 text-right text-sm font-medium leading-5 tracking-wide whitespace-nowrap">
-          999
+          {order.tableNo}
         </div>
       </div>
       <div className="justify-between items-stretch flex gap-2 mt-2.5 px-4">
         <div className="justify-center text-gray-700 text-sm font-bold leading-5 tracking-wide grow whitespace-nowrap">
-          Order ID
+          <Trans i18nKey={"order_id"}/>
         </div>
         <div className="text-gray-700 text-right text-sm font-medium leading-5 tracking-wide whitespace-nowrap">
-          OR23120600790001
+          {order.orderHdrID}
         </div>
       </div>
       <div className="justify-between items-stretch flex gap-2 mt-2.5 px-4">
         <div className="justify-center text-gray-700 text-sm font-bold leading-5 tracking-wide grow whitespace-nowrap">
-          Order Type
+          <Trans i18nKey={"order_type"}/>
         </div>
         <div className="text-gray-700 text-right text-sm font-medium leading-5 tracking-wide whitespace-nowrap">
-          Dine In
+          {order.orderType=="DINEIN"?"Dine In": "Take Away"}
         </div>
       </div>
       <div className="justify-between items-stretch flex gap-2 mt-2.5 px-4">
         <div className="justify-center text-gray-700 text-sm font-bold leading-5 tracking-wide grow whitespace-nowrap">
-          Order Time
+          <Trans i18nKey={"order_time"}/>
         </div>
         <div className="text-gray-700 text-right text-sm font-medium leading-5 tracking-wide whitespace-nowrap">
-          07-12-2023 08:26
+          {dateFormatter(order.orderDate)}
         </div>
       </div>
     </div>
   );
+}
+
+OrderInformation.propTypes = {
+  order: PropTypes.any
 }

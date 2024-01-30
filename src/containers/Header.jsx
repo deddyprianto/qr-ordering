@@ -113,38 +113,33 @@ export default function Header() {
     }
   };
 
+  const headerWithNavigation = (redirectPath, transKey) => {
+    return (
+      <button
+        style={{ backgroundColor: theme.Color_Primary }}
+        onClick={() => {
+          navigate(redirectPath);
+        }}
+        className="flex text-white items-center text-[16px] font-medium py-[5px] w-full"
+      >
+        <IconArrowLeft />
+        <div>
+          <Trans i18nKey={transKey} />
+        </div>
+      </button>
+    )
+  }
+
   const renderMainHeader = () => {
-    switch (location.pathname) {
+    switch (location.pathname?.toLocaleLowerCase()) {
       case "/cart":
-        return (
-          <button
-            onClick={() => navigate("/")}
-            style={{
-              backgroundColor: theme.Color_Primary,
-            }}
-            className="w-full flex text-white items-center text-[16px] font-medium py-[5px]"
-          >
-            <IconArrowLeft />
-            <div>
-              <Trans i18nKey={"order_cart"} />
-            </div>
-          </button>
-        );
+        return headerWithNavigation("/", "order_cart");
       case "/payment":
-        return (
-          <button
-            style={{ backgroundColor: theme.Color_Primary }}
-            onClick={() => {
-              navigate("/cart");
-            }}
-            className="flex text-white items-center text-[16px] font-medium py-[5px] w-full"
-          >
-            <IconArrowLeft />
-            <div>
-              <Trans i18nKey={"order_payment"} />
-            </div>
-          </button>
-        );
+        return headerWithNavigation("/cart", "order_payment");
+      case "/order":
+        return headerWithNavigation("/", "order");
+      case "/ordersummary":
+        return headerWithNavigation("/order", "order_summary");
       default:
         return (
           <div
@@ -174,13 +169,15 @@ export default function Header() {
   };
 
   const renderMain = () => {
-    if (orderType == "") return <div></div>;
-    return (
-      <div>
-        {renderLabelTableNo()}
-        {renderMainHeader()}
-      </div>
-    );
+    if (orderType == "" && location.pathname?.toLocaleLowerCase() == "/") 
+      return <div></div>;
+    else 
+      return (
+        <div>
+          {renderLabelTableNo()}
+          {renderMainHeader()}
+        </div>
+      );
   };
 
   return <>{renderMain()}</>;
