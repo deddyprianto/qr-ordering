@@ -1,20 +1,25 @@
 import { useEffect, useRef, useState } from "react";
 import { TopLabel } from "./TopLabel";
 import { RenderFormOTP } from "./FormOtp";
-import { ButtomLabel } from "./ButtonLabel";
+import { CountDownTime } from "./CountDownTime";
 import { ActionButton } from "./ActionButton";
 import PropTypes from "prop-types";
 import { ParentBlur } from "../../ParentBlur";
 
-export const RenderMainComponent = ({ callback, isOpenModal, setIsOpenModal }) => {
+export const RenderMainComponent = ({
+  callback,
+  isOpenModal,
+  setIsOpenModal,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [otp, setOTP] = useState([
-    {id: 1, value:"", ref: useRef()},
-    {id: 2, value:"", ref: useRef()},
-    {id: 3, value:"", ref: useRef()},
-    {id: 4, value:"", ref: useRef()},
-    {id: 5, value:"", ref: useRef()},
-    {id: 6, value:"", ref: useRef()}]);
+    { id: 1, value: "", ref: useRef() },
+    { id: 2, value: "", ref: useRef() },
+    { id: 3, value: "", ref: useRef() },
+    { id: 4, value: "", ref: useRef() },
+    { id: 5, value: "", ref: useRef() },
+    { id: 6, value: "", ref: useRef() },
+  ]);
   const [errMsg, setErrMsg] = useState("");
 
   // Check if all OTP fields are filled
@@ -22,7 +27,7 @@ export const RenderMainComponent = ({ callback, isOpenModal, setIsOpenModal }) =
   const firstOtpRef = otp[0]?.ref;
 
   useEffect(() => {
-    if(isOpenModal){
+    if (isOpenModal) {
       firstOtpRef?.current?.focus();
     }
   }, [isOpenModal, firstOtpRef]);
@@ -35,15 +40,13 @@ export const RenderMainComponent = ({ callback, isOpenModal, setIsOpenModal }) =
         padding: "16px",
       }}
     >
-      {isLoading && <ParentBlur/>}
-      <TopLabel setIsOpenModal={setIsOpenModal}/>
-      <RenderFormOTP
-        otp={otp}
-        setOTP={setOTP}
-        disableForm={isLoading}
-      />
-      <ButtomLabel />
-      {errMsg!="" && <div className="mt-2 text-xs text-red-500">{errMsg}</div>}
+      {isLoading && <ParentBlur />}
+      <TopLabel setIsOpenModal={setIsOpenModal} />
+      <RenderFormOTP otp={otp} setOTP={setOTP} disableForm={isLoading} />
+      <CountDownTime />
+      {errMsg != "" && (
+        <div className="mt-2 text-xs text-red-500">{errMsg}</div>
+      )}
       <ActionButton
         otp={otp}
         isOTPComplete={isOTPComplete}
