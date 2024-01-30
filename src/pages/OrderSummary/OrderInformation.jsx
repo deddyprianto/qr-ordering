@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { Trans } from "react-i18next";
+import { dateFormatter } from "../../components/Order/DateFormatter";
 
 export function OrderInformation({ order }) {
   const { theme } = useSelector((state) => state.dataSlicePersisted);
@@ -52,7 +53,7 @@ export function OrderInformation({ order }) {
           <Trans i18nKey={"table"}/>
         </div>
         <div className="text-gray-700 text-right text-sm font-medium leading-5 tracking-wide whitespace-nowrap">
-          999
+          {order.tableNo}
         </div>
       </div>
       <div className="justify-between items-stretch flex gap-2 mt-2.5 px-4">
@@ -76,7 +77,7 @@ export function OrderInformation({ order }) {
           <Trans i18nKey={"order_time"}/>
         </div>
         <div className="text-gray-700 text-right text-sm font-medium leading-5 tracking-wide whitespace-nowrap">
-          {/* {order.} */}
+          {dateFormatter(order.orderDate)}
         </div>
       </div>
     </div>
