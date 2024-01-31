@@ -38,12 +38,10 @@ export function PaymentMethod() {
           return (
             <button
               onClick={() => dispatch(setPaymentMethod(item))}
-              key={item}
+              key={item?.displayName}
               style={{
                 borderColor:
-                  paymentMethod === item
-                    ? theme.Color_Primary
-                    : "#D6D6D6",
+                  paymentMethod === item ? theme.Color_Primary : "#D6D6D6",
                 backgroundColor:
                   paymentMethod === item ? theme.Color_Accent : "white",
               }}

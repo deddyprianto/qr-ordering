@@ -52,9 +52,9 @@ export function Component() {
         {cartInfo?.details?.map((item) => {
           return (
             <ItemCart
+              key={item?.uniqueID}
               item={item}
               idCart={cartInfo?.uniqueID}
-              key={item?.uniqueID}
               setIsCartEmpty={setIsCartEmpty}
               totalQuantityCart={totalQuantityCart}
             />

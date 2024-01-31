@@ -62,5 +62,5 @@ ItemCart.propTypes = {
   item: PropTypes.object,
   idCart: PropTypes.string,
   setIsCartEmpty: PropTypes.func,
-  totalQuantityCart: PropTypes.func,
+  totalQuantityCart: PropTypes.number,
 };
