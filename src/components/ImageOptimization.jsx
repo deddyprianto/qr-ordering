@@ -10,7 +10,7 @@ function MyImageComponent({ imageItems, customStyle, width, height = "100%" }) {
   return (
     <img
       src={src}
-      alt="SplashScreen"
+      alt="imageComponent"
       style={customStyle}
       width={width}
       height={height}
@@ -20,8 +20,8 @@ function MyImageComponent({ imageItems, customStyle, width, height = "100%" }) {
 MyImageComponent.propTypes = {
   imageItems: PropTypes.string,
   customStyle: PropTypes.object,
-  width: PropTypes.string,
-  height: PropTypes.string,
+  width: PropTypes.any,
+  height: PropTypes.any,
 };
 
 export const ImageOptimization = ({
@@ -45,6 +45,6 @@ export const ImageOptimization = ({
 ImageOptimization.propTypes = {
   imageItems: PropTypes.string,
   customStyle: PropTypes.object,
-  width: PropTypes.string,
-  height: PropTypes.string,
+  width: PropTypes.any,
+  height: PropTypes.any,
 };

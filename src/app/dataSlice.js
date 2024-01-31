@@ -9,7 +9,8 @@ const initialState = {
   paymentMethod: {},
   openModalGeneral: false,
   outletSetting: {},
-  serviceCharge: []
+  serviceCharge: [],
+  isDataOrder: false,
 };
 
 const dataSlice = createSlice({
@@ -31,7 +32,7 @@ const dataSlice = createSlice({
     setMenuSubGroup: (state, action) => {
       state.menuSubGroup = action.payload;
     },
-    setPaymentMethod:  (state, action) => {
+    setPaymentMethod: (state, action) => {
       state.paymentMethod = action.payload;
     },
     setOpenModalGeneral: (state, action) => {
@@ -42,6 +43,9 @@ const dataSlice = createSlice({
     },
     setServiceCharge: (state, action) => {
       state.serviceCharge = action.payload;
+    },
+    setIsDataOrder: (state, action) => {
+      state.isDataOrder = action.payload;
     },
   },
 });
@@ -55,6 +59,7 @@ export const {
   setPaymentMethod,
   setOpenModalGeneral,
   setOutletSetting,
-  setServiceCharge
+  setServiceCharge,
+  setIsDataOrder,
 } = dataSlice.actions;
 export default dataSlice.reducer;
