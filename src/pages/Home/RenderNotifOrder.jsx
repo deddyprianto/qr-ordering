@@ -58,32 +58,36 @@ export function RenderNotificationOrder() {
           <div className="items-center flex justify-between gap-2 p-0.5">
             <TaskListIcon color="black" />
             <div className="text-gray-700 text-sm font-bold leading-5 tracking-wide grow whitespace-nowrap">
-              <Trans i18nKey={"latest_order"}/>
+              <Trans i18nKey={"latest_order"} />
             </div>
           </div>
-          <button className="text-pink-500 text-sm font-bold leading-5 tracking-wide self-center my-auto"
-            onClick={()=>navigate("/order")}
+          <button
+            className="text-pink-500 text-sm font-bold leading-5 tracking-wide self-center my-auto"
+            onClick={() => navigate("/order")}
           >
-            <Trans i18nKey={"view_all"}/>
+            <Trans i18nKey={"view_all"} />
           </button>
         </div>
         {/* RESTRICTION */}
         <div className="justify-between items-stretch bg-white flex w-full gap-5 mt-2 px-4 py-2 rounded-[1000px]">
           <div className="justify-center items-stretch flex grow basis-[0%] flex-col">
             <div className="text-gray-700  text-base font-bold leading-6 whitespace-nowrap">
-              {order.orderHdrID}
+              {order?.orderHdrID}
             </div>
             <div className="flex gap-x-2">
               <div className="text-gray-700  text-sm font-medium leading-5 tracking-wide  whitespace-nowrap">
-                {dateFormatter(order.orderDate)}
+                {dateFormatter(order?.orderDate)}
               </div>
             </div>
           </div>
-          <button onClick={handleClickViewDetail} className="items-stretch self-center flex gap-0 my-auto">
+          <button
+            onClick={handleClickViewDetail}
+            className="items-stretch self-center flex gap-0 my-auto"
+          >
             <div className="items-stretch bg-green-700 flex justify-between gap-1 px-1.5 py-1 rounded-[100px]">
               <IconCheckFill />
               <div className="text-white text-xs font-medium leading-4 tracking-wide self-center grow whitespace-nowrap my-auto">
-                {statusText(order.status)}
+                {statusText(order?.status)}
               </div>
             </div>
             <IconArrowRight color={theme.Color_Secondary} />
