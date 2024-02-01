@@ -82,20 +82,30 @@ export const RenderItemCard = ({ item }) => {
             </div>
             <RenderItemPrice isPromo={item.promo?.length > 0} item={item} />
           </button>
-          <button
-            className="justify-center items-stretch flex gap-2 mt-2 py-2 rounded-lg"
-            onClick={handleClickButtonAdd}
-            style={{
-              filter: isLoading ? "blur(1px)" : "",
-              backgroundColor: theme.Color_Secondary,
-            }}
-            disabled={isLoading}
-          >
-            <IconPlus />
-            <div className="text-white text-xs font-bold leading-4 self-center my-auto">
-              <Trans i18nKey={"add"} />
-            </div>
-          </button>
+          {isLoading ? (
+            <button
+              type="button"
+              className="bg-[#9D9D9D] rounded-lg flex justify-center items-center py-2 text-white"
+              disabled
+            >
+              <span className="loader"></span>
+              <div>Adding...</div>
+            </button>
+          ) : (
+            <button
+              className="justify-center items-stretch flex gap-2 mt-2 py-2 rounded-lg"
+              onClick={handleClickButtonAdd}
+              style={{
+                backgroundColor: theme.Color_Secondary,
+              }}
+              disabled={isLoading}
+            >
+              <IconPlus />
+              <div className="text-white text-xs font-bold leading-4 self-center my-auto">
+                <Trans i18nKey={"add"} />
+              </div>
+            </button>
+          )}
         </div>
       </div>
 

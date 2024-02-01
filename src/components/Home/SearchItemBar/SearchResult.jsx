@@ -2,27 +2,7 @@ import { Trans } from "react-i18next";
 import { PropTypes } from "prop-types"
 import { RenderItemCard } from "./ItemCard";
 
-export const RenderSearchResult = ({
-  searchText,
-  searchItemList
-}) => {
-  const renderPerCategory = (cat, id) => {
-    return (
-      <div id={id} className="w-full">
-        <div className="text-gray-700 text-base font-bold leading-6 self-stretch mt-6">
-          {cat.buttonTitle}
-        </div>
-        {cat?.productInfo?.length > 0 ? (
-          cat?.productInfo?.map((item) => {
-            return <RenderItemCard item={item} key={`${item.itemNo}`} />;
-          })
-        ) : (
-          <RenderItemCard item={cat?.productInfo} />
-        )}
-      </div>
-    );
-  };
-
+export const RenderSearchResult = ({ searchText, searchItemList }) => {
   return (
     <div className="items-start flex w-full flex-col pt-6 px-4">
       <div className="items-stretch flex gap-2 self-start">
@@ -33,12 +13,23 @@ export const RenderSearchResult = ({
           {searchText}
         </div>
       </div>
-      {searchItemList?.map((cat, idx) => {
-        return renderPerCategory(cat, idx);
-      })}
+      {searchItemList?.map((cat, idx) => (
+        <div key={cat.refNo} id={idx} className="w-full">
+          <div className="text-gray-700 text-base font-bold leading-6 self-stretch mt-6">
+            {cat.buttonTitle}
+          </div>
+          {cat?.productInfo?.length > 0 ? (
+            cat?.productInfo?.map((item) => {
+              return <RenderItemCard item={item} key={item.refNo} />;
+            })
+          ) : (
+            <RenderItemCard item={cat?.productInfo} />
+          )}
+        </div>
+      ))}
     </div>
   );
-}
+};
 
 RenderSearchResult.propTypes = {
   searchText: PropTypes.string,

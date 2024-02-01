@@ -15,8 +15,13 @@ export default function Header() {
   let location = useLocation();
   const dispatch = useDispatch();
   const { isSearchItem } = useSelector((state) => state.dataSlice);
-  const { enableSearchUsingScroll, searchItemObj, orderType, theme } =
-    useSelector((state) => state.dataSlicePersisted);
+  const {
+    enableSearchUsingScroll,
+    searchItemObj,
+    orderType,
+    theme,
+    outletName,
+  } = useSelector((state) => state.dataSlicePersisted);
   const dispatchIsSearchItem = (val) => {
     dispatch(setIsSearchItem(val));
   };
@@ -107,7 +112,7 @@ export default function Header() {
             width={43}
           />
           <div className="text-stone-50 text-sm font-medium leading-5 tracking-wide self-stretch">
-            {"{outlet_name}"}
+            {outletName}
           </div>
         </div>
       );

@@ -9,7 +9,9 @@ import { Trans } from "react-i18next";
 import { ModalGeneral } from "../../components/ModalGeneral";
 
 export function Component() {
-  const cartInfo = useSelector((state) => state.dataSlicePersisted.cartInfo);
+  const { cartInfo, outletName } = useSelector(
+    (state) => state.dataSlicePersisted,
+  );
   const [isCartEmpty, setIsCartEmpty] = useState(false);
   const { theme } = useSelector((state) => state.dataSlicePersisted);
   const [isOpenModalAuth, setIsOpenModalAuth] = useState(false);
@@ -35,7 +37,7 @@ export function Component() {
         </h1>
         <p
           style={{ color: theme.Color_Secondary }}
-        >{`{company_name @ outlet_name}`}</p>
+        >{`{company_name @ ${outletName}}`}</p>
         <hr
           style={{
             margin: "24px 0px",
@@ -67,7 +69,7 @@ export function Component() {
             borderTop: "1px solid #D6D6D6",
           }}
         />
-        <PaymentMethod/>
+        <PaymentMethod />
         <hr
           style={{
             margin: "24px 0px",
