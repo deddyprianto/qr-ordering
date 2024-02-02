@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setShowSplashScreen } from "../../app/dataSlicePersisted";
-import { RenderSplashScreen } from "../../components/SplashScreen";
-import { MainView } from "./MainVIew";
-import { RenderOrderType } from "./OrderType";
 import RenderCartSummary from "../../components/Home/RenderCartSummary";
+
+const RenderOrderType = lazy(() => import("./OrderType"));
+const MainView = lazy(() => import("./MainVIew"));
+const RenderSplashScreen = lazy(() => import("../../components/SplashScreen"));
 
 export function Component() {
   const dispatch = useDispatch();
@@ -18,22 +19,32 @@ export function Component() {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       dispatch(setShowSplashScreen(false));
-    }, 2000); // 5000 milliseconds = 5 seconds
+    }, 2000);
     return () => {
       clearTimeout(timeoutId);
     };
   }, [dispatch]);
 
-  const renderMain = () => {
-    if (isSplashScreenShow) return <RenderSplashScreen />;
-    else if (!orderType) return <RenderOrderType />;
-    else return <MainView />;
+  const renderContent = () => {
+    if (isSplashScreenShow) {
+      return <RenderSplashScreen />;
+    } else if (!orderType) {
+      return <RenderOrderType />;
+    } else {
+      return <MainView />;
+    }
   };
 
   return (
-    <React.Fragment>
-      {renderMain()}
+    <Suspense
+      fallback={
+        <div className="text-center font-bold">
+          Pls wait, getting your components...
+        </div>
+      }
+    >
+      {renderContent()}
       {cartInfo?.details?.length > 0 && <RenderCartSummary />}
-    </React.Fragment>
+    </Suspense>
   );
 }

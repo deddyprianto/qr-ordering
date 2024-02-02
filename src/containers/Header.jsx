@@ -8,14 +8,20 @@ import {
 import { setIsSearchItem } from "../app/dataSlice";
 import { Trans } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
+import { ImageOptimization } from "../components/ImageOptimization";
 
 export default function Header() {
   const navigate = useNavigate();
   let location = useLocation();
   const dispatch = useDispatch();
   const { isSearchItem } = useSelector((state) => state.dataSlice);
-  const { enableSearchUsingScroll, searchItemObj, orderType, theme } =
-    useSelector((state) => state.dataSlicePersisted);
+  const {
+    enableSearchUsingScroll,
+    searchItemObj,
+    orderType,
+    theme,
+    outletName,
+  } = useSelector((state) => state.dataSlicePersisted);
   const dispatchIsSearchItem = (val) => {
     dispatch(setIsSearchItem(val));
   };
@@ -98,15 +104,15 @@ export default function Header() {
     } else {
       return (
         <div>
-          <img
-            loading="lazy"
-            src={theme?.Image_Logo}
+          <ImageOptimization
+            imageItems={theme?.Image_Logo}
+            customStyle={{
+              borderRadius: "100%",
+            }}
             width={43}
-            height={24}
-            alt="logo"
           />
           <div className="text-stone-50 text-sm font-medium leading-5 tracking-wide self-stretch">
-            {"{outlet_name}"}
+            {outletName}
           </div>
         </div>
       );
@@ -127,8 +133,8 @@ export default function Header() {
           <Trans i18nKey={transKey} />
         </div>
       </button>
-    )
-  }
+    );
+  };
 
   const renderMainHeader = () => {
     switch (location.pathname?.toLocaleLowerCase()) {
@@ -169,9 +175,9 @@ export default function Header() {
   };
 
   const renderMain = () => {
-    if (orderType == "" && location.pathname?.toLocaleLowerCase() == "/") 
+    if (orderType == "" && location.pathname?.toLocaleLowerCase() == "/")
       return <div></div>;
-    else 
+    else
       return (
         <div>
           {renderLabelTableNo()}

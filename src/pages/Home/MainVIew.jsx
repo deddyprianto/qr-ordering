@@ -14,21 +14,20 @@ import { RenderSearchItemBar } from "../../components/Home/SearchItemBar";
 import { setEnableSearchUsingScroll } from "../../app/dataSlicePersisted";
 import { RenderNotificationOrder } from "./RenderNotifOrder";
 
-export const MainView = () => {
+const MainView = () => {
   const [dataCategory, setDataCategory] = useState([]);
   const [isSelectedItem, setIsSelectedItem] = useState("");
   const [dtCategoryLength, setDtCategoryLength] = useState(0);
   const [isFirstOpenSearchBar, setIsFirstOpenSearchBar] = useState(true);
-  const theme = useSelector((state) => state.dataSlicePersisted.theme);
   const [isLoading, setIsLoading] = useState(true);
   const [highlights, setHighlights] = useState(true);
   const [selectedSubGroup, setSelectedSubGroup] = useState("");
   const [isHasSubGroup, setIsHasSubGroup] = useState([]);
   const dispatch = useDispatch();
-  const { outletName, cartInfo, searchItemObj } = useSelector(
+  const { outletName, cartInfo, searchItemObj, theme } = useSelector(
     (state) => state.dataSlicePersisted,
   );
-  const { isSearchItem, menuSubGroup } = useSelector(
+  const { isSearchItem, menuSubGroup, isDataOrder } = useSelector(
     (state) => state.dataSlice,
   );
   useEffect(() => {
@@ -128,7 +127,8 @@ export const MainView = () => {
         />
 
         <div style={{ padding: "16px 16px 0px 16px" }}>
-          <RenderNotificationOrder />
+          {isDataOrder && <RenderNotificationOrder />}
+
           {!isLoading && highlights && (
             <Insights
               title="Tag Insights"
@@ -167,3 +167,4 @@ export const MainView = () => {
   if (isFirstOpenSearchBar) return renderMainView();
   else return <RenderSearchItemBar searchText={searchItemObj?.searchText} />;
 };
+export default MainView;

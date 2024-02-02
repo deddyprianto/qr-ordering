@@ -1,10 +1,14 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { OrderInformation } from "./OrderInformation";
 import { OrderItemSummary } from "./OrderItemSummary";
 import { useEffect, useRef, useState } from "react";
 import { apiOrder } from "../../services/Order";
 import { ParentBlur } from "../../components/ParentBlur";
+import { setIsDataOrder } from "../../app/dataSlice";
+
 export function Component() {
+  const dispatch = useDispatch();
+  
   const { theme, cartIdToShow } = useSelector((state) => state.dataSlicePersisted);
   const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState({});
@@ -14,6 +18,7 @@ export function Component() {
     try {
       const result = await apiOrder("GET", cartIdToShow, {});
       if (result.resultCode === 200) {
+        dispatch(setIsDataOrder(true));
         setOrder(result.data)
         setLoading(false);
       } else {

@@ -72,7 +72,9 @@ export default function Layout() {
             font: "500 14px/140% Helvetica Neue, sans-serif ",
           }}
         >
-          <div style={{ position: "fixed", top: 0, right: 0 }}>
+          <div
+            style={{ position: "fixed", top: 0, left: "35%", color: "white" }}
+          >
             {navigation.state !== "idle" && <p>Navigation in progress...</p>}
           </div>
           <Header />

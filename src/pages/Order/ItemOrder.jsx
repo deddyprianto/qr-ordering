@@ -46,7 +46,7 @@ const ItemOrder = ({ order }) => {
         <div className="grid grid-cols-[1fr_1fr] grid-rows-[1fr_1fr] mt-[8px] gap-y-1">
           <div style={{color: "#888787"}}><Trans i18nKey={"order_date_time"}/></div>
           <div style={{color: "#888787"}}><Trans i18nKey={"queue_no"}/></div>
-          <div>{dateFormatter(order.orderDate)} </div>
+          <div>{dateFormatter(order?.orderDate)} </div>
           <div>{order.queueNo}</div>
         </div>
       </div>

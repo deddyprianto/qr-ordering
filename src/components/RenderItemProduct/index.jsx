@@ -189,7 +189,7 @@ export const RenderItemProduct = ({
           {isLoading ? (
             <button
               type="button"
-              className="bg-[#9D9D9D] rounded-lg flex justify-center items-center py-[5px] text-white"
+              className="bg-[#9D9D9D] rounded-lg flex justify-center items-center py-[5px] text-white mt-[8px]"
               disabled
             >
               <span className="loader"></span>
