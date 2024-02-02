@@ -89,10 +89,10 @@ export const NavbarMenu = ({
         <SkeletonNavbar />
       ) : (
         <>
-          {dataCategory.map((item, index) => {
+          {dataCategory.map((item) => {
             return (
               <MenuGroup
-                key={index}
+                key={item.refNo}
                 label={item.name}
                 imageItem={item.img}
                 refNo={item.refNo}
