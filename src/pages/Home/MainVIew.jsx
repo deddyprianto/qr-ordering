@@ -43,12 +43,11 @@ const MainView = () => {
     }
   }, [dispatch, isSearchItem]);
 
-  const fetchAllSubGroupItem = async (subGroup) => {
+  const fetchAllSubGroupItem = async (subGroup,isDataSubGroupExist) => {
     for (const sb of subGroup) {
       sb.items = [];
       let dataLength = 1;
-
-      while (sb.items.length < dataLength && dataLength !== 0) {
+      while (sb.items.length < dataLength && isDataSubGroupExist) {
         let result = await getMenuItem(
           sb.buttonType,
           sb.refNo,
@@ -61,7 +60,6 @@ const MainView = () => {
       dispatch(setMenuSubGroup([...subGroup]));
     }
   };
-
   const handleSelectGroup = async (type, refNo) => {
     setIsLoading(true);
     dispatch(setMenuSubGroup([]));
@@ -69,7 +67,7 @@ const MainView = () => {
     setIsHasSubGroup(data.tempSubGroup?.length > 0);
     if (data.tempSubGroup?.length > 0) {
       setSelectedSubGroup(data.tempSubGroup[0].refNo);
-      fetchAllSubGroupItem(data.tempSubGroup);
+      fetchAllSubGroupItem(data.tempSubGroup,true);
     } else {
       let tempSubGroup = [
         {
@@ -78,15 +76,7 @@ const MainView = () => {
           refNo: refNo,
         },
       ];
-      dispatch(
-        setMenuSubGroup([
-          {
-            refNo: "",
-            items: data.tempItem,
-          },
-        ]),
-      );
-      fetchAllSubGroupItem(tempSubGroup);
+      fetchAllSubGroupItem(tempSubGroup,false);
     }
     setIsLoading(false);
   };
@@ -96,7 +86,6 @@ const MainView = () => {
       skip: skip,
       take: take,
     };
-
     return GET(`products/${outletName}/${type}/${refNo}`, obj).then((res) => {
       let tempSubGroup = [];
       let tempItem = [];
@@ -111,7 +100,7 @@ const MainView = () => {
         }
       });
       return { tempItem, tempSubGroup, dataLength };
-    });
+    }).catch(err => console.log(err))
   };
   const renderMainView = () => {
     return (
