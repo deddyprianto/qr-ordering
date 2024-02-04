@@ -43,6 +43,10 @@ const MainView = () => {
     }
   }, [dispatch, isSearchItem]);
 
+  const calculateIsDataSubGroupExist = (items) => {
+    return items.length > 0;
+  };
+  
   const fetchAllSubGroupItem = async (subGroup,isDataSubGroupExist) => {
     for (const sb of subGroup) {
       sb.items = [];
@@ -56,6 +60,7 @@ const MainView = () => {
         dataLength = result.dataLength;
         let addMenu = mapCartAndProduct(result.tempItem, cartInfo);
         sb.items = sb.items.concat(addMenu);
+        isDataSubGroupExist = calculateIsDataSubGroupExist(sb.items);
       }
       dispatch(setMenuSubGroup([...subGroup]));
     }
