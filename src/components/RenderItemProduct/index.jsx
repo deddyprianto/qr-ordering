@@ -14,7 +14,6 @@ import { setCartInfo } from "../../app/dataSlicePersisted";
 import { addNewCart } from "../GenerateCart";
 
 export const RenderItemProduct = ({ 
-  isPromo = false, 
   item, 
   cartID,
   qtyInCart,
@@ -29,10 +28,10 @@ export const RenderItemProduct = ({
   const dispatch = useDispatch();
 
   const labelPromo = {
-    color: theme.disableColor,
     textAlign: "center",
     whiteSpace: "nowrap",
     font: "700 16px/22px Helvetica Neue, sans-serif ",
+    color: "#CF3030"
   };
 
   const toast = useEdgeSnack();
@@ -107,12 +106,12 @@ export const RenderItemProduct = ({
             height: "191px",
           }}
         >
-          {isPromo && (
+          {(item?.isDiscounted || false) && (
             <div
               style={{
                 width: "92px",
                 borderRadius: "16px 0px 16px 0px",
-                backgroundColor: theme.warning,
+                backgroundColor: "var(--semantic-color-error, #CF3030)",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -121,7 +120,7 @@ export const RenderItemProduct = ({
               }}
             >
               <IconPercentage />
-              <div9
+              <div
                 style={{
                   color: "var(--text-color-secondary, #FFF)",
                   textAlign: "center",
@@ -133,7 +132,7 @@ export const RenderItemProduct = ({
                 }}
               >
                 <Trans i18nKey={"promo"} />
-              </div9>
+              </div>
             </div>
           )}
         </button>
@@ -164,7 +163,7 @@ export const RenderItemProduct = ({
               gap: "8px",
             }}
           >
-            {item?.promotions.length > 0 && (
+            {(item?.isDiscounted || false) && (
               <div
                 className="line-through"
                 style={{
@@ -175,14 +174,14 @@ export const RenderItemProduct = ({
                   font: "500 16px/22px Helvetica Neue, sans-serif ",
                 }}
               >
-                $ 9.99
+                $ {item?.retailPrice.toFixed(2)}
               </div>
             )}
 
             <div
-              style={item.promotions.length > 0 ? labelPromo : labelNonPromo}
+              style={item?.isDiscounted? labelPromo : labelNonPromo}
             >
-              $ {item?.retailPrice.toFixed(2)}
+              $ {item?.isDiscounted?item?.discountedPrice.toFixed(2):item?.retailPrice.toFixed(2)}
             </div>
           </div>
 
@@ -218,7 +217,6 @@ export const RenderItemProduct = ({
 };
 
 RenderItemProduct.propTypes = {
-  isPromo: PropTypes.bool,
   item: PropTypes.any,
   cartID: PropTypes.string,
   qtyInCart: PropTypes.number,
