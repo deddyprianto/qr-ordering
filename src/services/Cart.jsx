@@ -1,23 +1,22 @@
 import { callAPI } from "./services";
 
 export const apiCart = async (method, path, body) => {
-  const token = localStorage.getItem("accessToken");
-  const objToken = JSON.parse(token);
+  const tokenLocal = localStorage.getItem("accessToken");
+  const objToken = JSON.parse(tokenLocal);
+
+  let token;
 
   if (objToken.type === "member") {
-    console.log("TOKEN FROM MEMBER");
     const responseAuth = await callAPI(
       `${import.meta.env.VITE_API_URL}/auth`,
       "GET",
     );
-    const tokenAuth = responseAuth?.data?.accessToken;
-    let url = `${import.meta.env.VITE_API_URL}/carts/${path}`;
-    const response = await callAPI(url, method, body, tokenAuth);
-    return response;
+    token = responseAuth?.data?.accessToken;
   } else {
-    console.log("TOKEN FROM GUEST");
-    let url = `${import.meta.env.VITE_API_URL}/carts/${path}`;
-    const response = await callAPI(url, method, body, objToken?.accessToken);
-    return response;
+    token = objToken?.accessToken;
   }
+
+  let url = `${import.meta.env.VITE_API_URL}/carts/${path}`;
+  const response = await callAPI(url, method, body, token);
+  return response;
 };
