@@ -12,9 +12,9 @@ import { setMenuSubGroup } from "../../app/dataSlice";
 import { mapCartAndProduct } from "../Home/productAndCartMapper";
 import { setCartInfo } from "../../app/dataSlicePersisted";
 import { addNewCart } from "../GenerateCart";
+import { RenderRetailPrice } from "./RetailPrice";
 
 export const RenderItemProduct = ({ 
-  isPromo = false, 
   item, 
   cartID,
   qtyInCart,
@@ -28,21 +28,7 @@ export const RenderItemProduct = ({
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const labelPromo = {
-    color: theme.disableColor,
-    textAlign: "center",
-    whiteSpace: "nowrap",
-    font: "700 16px/22px Helvetica Neue, sans-serif ",
-  };
-
   const toast = useEdgeSnack();
-
-  const labelNonPromo = {
-    color: theme.warning,
-    textAlign: "center",
-    whiteSpace: "nowrap",
-    font: "700 16px/22px Helvetica Neue, sans-serif ",
-  };
 
   const handleOpenModalAddItem = () => {
     setOpenModalAddItem(true);
@@ -107,12 +93,12 @@ export const RenderItemProduct = ({
             height: "191px",
           }}
         >
-          {isPromo && (
+          {(item?.isDiscounted || false) && (
             <div
               style={{
                 width: "92px",
                 borderRadius: "16px 0px 16px 0px",
-                backgroundColor: theme.warning,
+                backgroundColor: "var(--semantic-color-error, #CF3030)",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -121,7 +107,7 @@ export const RenderItemProduct = ({
               }}
             >
               <IconPercentage />
-              <div9
+              <div
                 style={{
                   color: "var(--text-color-secondary, #FFF)",
                   textAlign: "center",
@@ -133,7 +119,7 @@ export const RenderItemProduct = ({
                 }}
               >
                 <Trans i18nKey={"promo"} />
-              </div9>
+              </div>
             </div>
           )}
         </button>
@@ -157,34 +143,7 @@ export const RenderItemProduct = ({
             {item?.itemName}
           </div>
 
-          <div
-            style={{
-              display: "flex",
-              marginTop: "18px",
-              gap: "8px",
-            }}
-          >
-            {item?.promotions.length > 0 && (
-              <div
-                className="line-through"
-                style={{
-                  color: "#9D9D9D",
-                  textAlign: "center",
-                  textDecorationLine: "strikethrough",
-                  whiteSpace: "nowrap",
-                  font: "500 16px/22px Helvetica Neue, sans-serif ",
-                }}
-              >
-                $ 9.99
-              </div>
-            )}
-
-            <div
-              style={item.promotions.length > 0 ? labelPromo : labelNonPromo}
-            >
-              $ {item?.retailPrice.toFixed(2)}
-            </div>
-          </div>
+          <RenderRetailPrice item={item}/>
 
           {isLoading ? (
             <button
@@ -218,7 +177,6 @@ export const RenderItemProduct = ({
 };
 
 RenderItemProduct.propTypes = {
-  isPromo: PropTypes.bool,
   item: PropTypes.any,
   cartID: PropTypes.string,
   qtyInCart: PropTypes.number,

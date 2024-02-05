@@ -3,6 +3,7 @@ import { RenderImage } from "./Image";
 import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { RenderItemCart } from "./Cart";
+import { RenderRetailPrice } from "../../RenderItemProduct/RetailPrice";
 
 
 const RenderItemMain = ({ 
@@ -32,9 +33,7 @@ const RenderItemMain = ({
       <div className="text-gray-700 text-sm font-medium leading-5 tracking-wide whitespace-nowrap mt-2.5">
         {item.itemName}
       </div>
-      <div className="text-gray-700  text-base font-bold leading-6 mt-1">
-        {`$ ${item.retailPrice}`}
-      </div>
+      <RenderRetailPrice item={item}/>
       <RenderItemCart itemInCart={itemInCart} setIsLoading={setIsLoading} />
     </div>
   );

@@ -33,7 +33,7 @@ export function PriceSummary() {
             <Trans i18nKey={"subtotal"} />
           </div>
           <div className="text-gray-700 text-right text-base font-bold leading-6 whitespace-nowrap">
-            $ {numberFormatter(cartInfo.grossAmount)}
+            $ {numberFormatter(cartInfo?.subtotalSummary?.GROSS)}
           </div>
         </div>
         {/*** 
@@ -49,13 +49,13 @@ export function PriceSummary() {
             </div>
           )
         })} */}
-        {cartInfo.gstAmount > 0 && (
+        {cartInfo.excGSTAmount > 0 && (
           <div className="items-stretch flex justify-between gap-4 mt-2 ">
             <div className="justify-center text-gray-700 text-sm font-medium leading-5 tracking-wide grow whitespace-nowrap">
-              GST 8%
+              GST {cartInfo?.gstRate}%
             </div>
             <div className="text-gray-700 text-right text-base font-bold leading-6 whitespace-nowrap">
-              $ {numberFormatter(cartInfo.gstAmount)}
+              $ {numberFormatter(cartInfo.excGSTAmount)}
             </div>
           </div>
         )}
@@ -65,9 +65,20 @@ export function PriceSummary() {
             <Trans i18nKey={"total_payment"} />
           </div>
           <div className="text-base font-bold leading-6 self-stretch">
-            $ {numberFormatter(cartInfo.nettAmount)}
+            $ {numberFormatter(cartInfo?.subtotalSummary?.NETT)}
           </div>
         </div>
+        
+        {cartInfo.incGSTAmount > 0 && (
+          <div className="items-stretch flex justify-between gap-4 mt-2 ">
+            <div className="justify-center text-gray-700 text-sm font-medium leading-5 tracking-wide grow whitespace-nowrap">
+              GST (inc) {cartInfo?.gstRate}%
+            </div>
+            <div className="text-gray-700 text-right text-base font-bold leading-6 whitespace-nowrap">
+              $ {numberFormatter(cartInfo.incGSTAmount)}
+            </div>
+          </div>
+        )}
       </div>
     );
   };
