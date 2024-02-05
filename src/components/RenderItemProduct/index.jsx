@@ -12,6 +12,7 @@ import { setMenuSubGroup } from "../../app/dataSlice";
 import { mapCartAndProduct } from "../Home/productAndCartMapper";
 import { setCartInfo } from "../../app/dataSlicePersisted";
 import { addNewCart } from "../GenerateCart";
+import { RenderRetailPrice } from "./RetailPrice";
 
 export const RenderItemProduct = ({ 
   item, 
@@ -27,21 +28,7 @@ export const RenderItemProduct = ({
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const labelPromo = {
-    textAlign: "center",
-    whiteSpace: "nowrap",
-    font: "700 16px/22px Helvetica Neue, sans-serif ",
-    color: "#CF3030"
-  };
-
   const toast = useEdgeSnack();
-
-  const labelNonPromo = {
-    color: theme.warning,
-    textAlign: "center",
-    whiteSpace: "nowrap",
-    font: "700 16px/22px Helvetica Neue, sans-serif ",
-  };
 
   const handleOpenModalAddItem = () => {
     setOpenModalAddItem(true);
@@ -156,34 +143,7 @@ export const RenderItemProduct = ({
             {item?.itemName}
           </div>
 
-          <div
-            style={{
-              display: "flex",
-              marginTop: "18px",
-              gap: "8px",
-            }}
-          >
-            {(item?.isDiscounted || false) && (
-              <div
-                className="line-through"
-                style={{
-                  color: "#9D9D9D",
-                  textAlign: "center",
-                  textDecorationLine: "strikethrough",
-                  whiteSpace: "nowrap",
-                  font: "500 16px/22px Helvetica Neue, sans-serif ",
-                }}
-              >
-                $ {item?.retailPrice.toFixed(2)}
-              </div>
-            )}
-
-            <div
-              style={item?.isDiscounted? labelPromo : labelNonPromo}
-            >
-              $ {item?.isDiscounted?item?.discountedPrice.toFixed(2):item?.retailPrice.toFixed(2)}
-            </div>
-          </div>
+          <RenderRetailPrice item={item}/>
 
           {isLoading ? (
             <button
