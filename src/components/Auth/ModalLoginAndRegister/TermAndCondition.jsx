@@ -3,7 +3,7 @@ import { Trans } from "react-i18next";
 import { useSelector } from "react-redux";
 
 export const RenderTermAndCondition = ({ isChecked, handleCheckboxChange }) => {
-  const theme = useSelector((state) => state.dataSlicePersisted.theme);
+  const { theme, outletDetail} = useSelector((state) => state.dataSlicePersisted);
 
   return (
     <div
@@ -36,7 +36,7 @@ export const RenderTermAndCondition = ({ isChecked, handleCheckboxChange }) => {
         }}
       >
         <span style={{ color: "rgba(52,58,74,1" }}>
-          <Trans i18nKey={"i_agree_to"} /> {"{company_name}"}{" "}
+          <Trans i18nKey={"i_agree_to"} /> {outletDetail?.companyName}{" "}
         </span>
         <span style={{ color: theme.Color_Primary }}>
           <Trans i18nKey={"terms_and_conditions"} />{" "}

@@ -12,7 +12,7 @@ const RenderItemBundles = ({
   isCalledFromCart
 }) => {
   const memoizedCart = useMemo(() => {
-    return itemCart?.bundles.reduce((acc, item) => {
+    return itemCart?.bundles?.reduce((acc, item) => {
       const key = `${item.bundleCode}-${item.bundleItemCode}`;
       acc[key] = item;
       return acc;

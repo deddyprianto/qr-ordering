@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { RenderTopLabel } from "../TopLabel";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RenderButtonSocialMedia } from "../SocialMedia";
 import { RenderDivider } from "../Devider";
 import { RenderTermAndCondition } from "../TermAndCondition";
@@ -25,12 +25,13 @@ export const RenderRegisterComponent = ({
   changeOpenModalAuth 
  }) => {
   const dispatch = useDispatch();
+  const { outletDetail } = useSelector((state)=>state.dataSlicePersisted)
   
   return (
     <div style={{ padding: "16px" }}>
       <RenderTopLabel
         dispatchAction={dispatch}
-        label="Welcome to CHICKY FUN!"
+        label={`Welcome to ${outletDetail.companyName}!`}
         subLabel="Access this cart page by selecting Register, Log In, or Continue as a Guest."
       />
       {isLoading && <ParentBlur/>}
