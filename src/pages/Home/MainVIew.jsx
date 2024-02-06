@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import { NavbarMenu } from "./NavbarMenu";
 import { Insights } from "../../components/Insights";
 import { SubGroupMenu } from "./SubGroupMenu";
-import {  useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "../../scss/animation.scss";
 import { Skeleton } from "../../components/Skeleton";
 import { GET } from "../../utilities/services";
@@ -10,9 +10,12 @@ import { ProductCatalog } from "./ProductCatalog";
 import { Trans } from "react-i18next";
 import { mapCartAndProduct } from "../../components/Home/productAndCartMapper";
 import { setMenuSubGroup } from "../../app/dataSlice";
-import { RenderSearchItemBar } from "../../components/Home/SearchItemBar";
 import { setEnableSearchUsingScroll } from "../../app/dataSlicePersisted";
 import { RenderNotificationOrder } from "./RenderNotifOrder";
+
+const RenderSearchItemBar = lazy(
+  () => import("../../components/Home/SearchItemBar"),
+);
 
 const MainView = () => {
   const [dataCategory, setDataCategory] = useState([]);
@@ -48,8 +51,14 @@ const MainView = () => {
   };
   
   const fetchAllSubGroupItem = async (subGroup,isDataSubGroupExist) => {
+    setIsLoading(true); // Set loading to true before fetching data
+    const firstItems = subGroup[0]?.items || [];
+
     for (const sb of subGroup) {
-      sb.items = [];
+      if (!sb.items) {
+        sb.items = [...firstItems];
+      }
+
       let dataLength = 1;
       while (sb.items.length < dataLength && isDataSubGroupExist) {
         let result = await getMenuItem(
@@ -62,11 +71,12 @@ const MainView = () => {
         sb.items = sb.items.concat(addMenu);
         isDataSubGroupExist = calculateIsDataSubGroupExist(sb.items);
       }
-      dispatch(setMenuSubGroup([...subGroup]));
     }
+
+    dispatch(setMenuSubGroup([...subGroup]));
+    setIsLoading(false); // Set loading to false after fetching data
   };
   const handleSelectGroup = async (type, refNo) => {
-    setIsLoading(true);
     dispatch(setMenuSubGroup([]));
     let data = await getMenuItem(type, refNo);
     setIsHasSubGroup(data.tempSubGroup?.length > 0);
@@ -74,6 +84,7 @@ const MainView = () => {
       setSelectedSubGroup(data.tempSubGroup[0].refNo);
       fetchAllSubGroupItem(data.tempSubGroup,true);
     } else {
+      setIsLoading(true);
       let tempSubGroup = [
         {
           items: data.tempItem,
@@ -81,9 +92,17 @@ const MainView = () => {
           refNo: refNo,
         },
       ];
-      fetchAllSubGroupItem(tempSubGroup,false);
+      dispatch(
+        setMenuSubGroup([
+          {
+            refNo: "",
+            items: data.tempItem,
+          },
+        ]),
+      );
+      fetchAllSubGroupItem(tempSubGroup);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   const getMenuItem = (type, refNo, skip = 0, take = 5) => {

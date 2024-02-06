@@ -3,18 +3,19 @@ import { useSelector } from "react-redux";
 
 export const SubGroupMenu = ({ selectedSubGroup, setSelectedSubGroup }) => {
   const { theme } = useSelector((state) => state.dataSlicePersisted);
-  const menuSubGroup = useSelector((state) => state.dataSlice.menuSubGroup);
-  const handleClick = (refNo, idx) => {
-    setSelectedSubGroup(refNo);
-    scrollToSubMenuItem("sub_" + idx + "_" + refNo);
-  };
+const menuSubGroup = useSelector((state) => state.dataSlice.menuSubGroup);
 
-  const scrollToSubMenuItem = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
+const scrollToSubMenuItem = (id) => {
+  const element = document.getElementById(id);
+  if (element) {
+    element.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+};
+
+const handleClick = (refNo, idx) => {
+  setSelectedSubGroup(refNo);
+  scrollToSubMenuItem("sub_" + idx + "_" + refNo);
+};
 
   return (
     <div className="flex mt-[24px] mb-[24px] gap-[8px] scroll-container">
