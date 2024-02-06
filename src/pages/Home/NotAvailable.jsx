@@ -2,7 +2,7 @@ import { Trans } from "react-i18next";
 import image from "../../assets/outlet_closed.png"
 import PropTypes from "prop-types"
 import { useSelector } from "react-redux";
-import { timeParser } from "../../components/Home/timeparser";
+import { timeParser } from "../../components/Home/timeParser";
 
 export const NotAvailable = ({isOutsideOperational}) => {
   const { outletDetail } = useSelector(
