@@ -6,6 +6,7 @@ const initialState = {
   memberInfo: {},
   cartInfo: {},
   outletName: "edge cafe",
+  outletDetail: {},
   selectedItemProds: [],
   orderType: "",
   theme: {
@@ -61,6 +62,9 @@ const dataSlicePersisted = createSlice({
     setCartIdToShow: (state, action) => {
       state.cartIdToShow = action.payload;
     },
+    setOutletDetail: (state, action) => {
+      state.outletDetail = action.payload;
+    }, 
   },
 });
 
@@ -77,5 +81,6 @@ export const {
   setSelectedItemProds,
   setTheme,
   setCartIdToShow,
+  setOutletDetail
 } = dataSlicePersisted.actions;
 export default dataSlicePersisted.reducer; // Changed 'dataSlicePersisted.reducer.default' to 'dataSlicePersisted.reducer'

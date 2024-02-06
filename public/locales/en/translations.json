@@ -56,5 +56,9 @@
   "order_date_time": "Order Date & Time",
   "order": "Order",
   "latest_order": "Latest Order",
-  "view_all": "View All"
+  "view_all": "View All",
+  "outlet_not_available": "The Outlet is Not Available",
+  "msg_outlet_out_of_operational_hours": "This outlet is currently closed as it's outside the operational hours. Please visit during regular hours.",
+  "msg_outlet_not_available": "This outlet is currently closed. Apologies for any inconvenience.",
+  "operational_hours": "Operational Hours"
 }

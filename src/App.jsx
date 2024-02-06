@@ -15,6 +15,7 @@ import {
   setTheme,
   setOrderType,
   setAccessToken,
+  setOutletDetail,
 } from "./app/dataSlicePersisted";
 import {
   setIsSearchItem,
@@ -71,6 +72,7 @@ export default function App() {
   const getOutletSetting = useRef();
   const getAuthUser = useRef();
   const getLayoutRef = useRef();
+  const getOutletAvailability = useRef();
 
   getLayoutRef.current = async () => {
     try {
@@ -159,6 +161,20 @@ export default function App() {
     }
   };
 
+  getOutletAvailability.current = async (outletName) => {
+    try {
+      const result = await apiOutlet("GET", `${outletName}`, {});
+      if (result.resultCode === 200) {
+        dispatch(setOutletDetail(result.data));
+      } else {
+        throw result.message;
+      }
+    } catch (error) {
+      dispatch(setOutletDetail({}));
+      console.log(error);
+    }
+  };
+
   getAuthUser.current = async () => {
     try {
       const responseAuth = await callAPI(
@@ -193,6 +209,7 @@ export default function App() {
 
     getCartInfoRef.current();
     getOutletSetting.current("edge cafe");
+    getOutletAvailability.current("edge cafe");
     getLayoutRef.current();
     getAuthUser.current();
   }, [dispatch]);
