@@ -13,7 +13,7 @@ export function Component() {
     (state) => state.dataSlicePersisted,
   );
   const [isCartEmpty, setIsCartEmpty] = useState(false);
-  const { theme } = useSelector((state) => state.dataSlicePersisted);
+  const { theme, outletDetail } = useSelector((state) => state.dataSlicePersisted);
   const [isOpenModalAuth, setIsOpenModalAuth] = useState(false);
   const [authScreen, setAuthScreen] = useState("Login");
   const [isOpenModalOtp, setIsOpenModalOtp] = useState(false);
@@ -22,7 +22,7 @@ export function Component() {
     return isSuccess;
   };
 
-  const totalQuantityCart = cartInfo?.details.reduce(
+  const totalQuantityCart = cartInfo?.details?.reduce(
     (accumulator, currentValue) => {
       return accumulator + currentValue.quantity;
     },
@@ -37,7 +37,7 @@ export function Component() {
         </h1>
         <p
           style={{ color: theme.Color_Secondary }}
-        >{`{company_name @ ${outletName}}`}</p>
+        >{`${outletDetail.companyName} @ ${outletName}`}</p>
         <hr
           style={{
             margin: "24px 0px",

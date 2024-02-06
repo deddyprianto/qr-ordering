@@ -21,6 +21,7 @@ export default function Header() {
     orderType,
     theme,
     outletName,
+    outletDetail
   } = useSelector((state) => state.dataSlicePersisted);
   const dispatchIsSearchItem = (val) => {
     dispatch(setIsSearchItem(val));
@@ -175,7 +176,11 @@ export default function Header() {
   };
 
   const renderMain = () => {
-    if (orderType == "" && location.pathname?.toLocaleLowerCase() == "/")
+    if(!outletDetail?.isQrOrderingAvailable)
+      return <div></div>
+    else if(!outletDetail?.isActiveAllDay && !outletDetail?.isInOperationalHours)
+      return <div></div>
+    else if (orderType == "" && location.pathname?.toLocaleLowerCase() == "/")
       return <div></div>;
     else
       return (
