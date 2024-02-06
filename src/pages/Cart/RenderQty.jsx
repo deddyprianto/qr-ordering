@@ -96,25 +96,26 @@ export const RenderQty = ({
             >
               {expandItem ? "Hide" : "Expand"} Details
             </div>
+            {(item.bundles?.length > 0 || item.attributes?.length > 0) && (
+              <div
+                className={`items-center flex justify-between ${
+                  !isEmptyArray && "ml-[8px]"
+                }`}
+              >
+                <IconEdit primary={theme.Color_Secondary} />
+                <button
+                  style={{
+                    color: theme.Color_Secondary,
+                  }}
+                  onClick={handleEdit}
+                  className="text-sm font-medium leading-5 tracking-wide underline self-stretch grow whitespace-nowrap ml-1 cursor-pointer"
+                >
+                  {isLoading ? "Get your data..." : "Edit"}
+                </button>
+              </div>
+            )}
           </button>
         )}
-
-        <div
-          className={`items-center flex justify-between ${
-            !isEmptyArray && "ml-[8px]"
-          }`}
-        >
-          <IconEdit primary={theme.Color_Secondary} />
-          <button
-            style={{
-              color: theme.Color_Secondary,
-            }}
-            onClick={handleEdit}
-            className="text-sm font-medium leading-5 tracking-wide underline self-stretch grow whitespace-nowrap ml-1 cursor-pointer"
-          >
-            {isLoading ? "Get your data..." : "Edit"}
-          </button>
-        </div>
       </div>
       {/* col 2 */}
       <div className="flex gap-1 ">
