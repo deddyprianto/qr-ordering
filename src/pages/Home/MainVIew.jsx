@@ -9,7 +9,7 @@ import { GET } from "../../utilities/services";
 import { ProductCatalog } from "./ProductCatalog";
 import { Trans } from "react-i18next";
 import { mapCartAndProduct } from "../../components/Home/productAndCartMapper";
-import { setMenuSubGroup } from "../../app/dataSlice";
+import { setMenuSubGroup, setHasSubGroup } from "../../app/dataSlice";
 import { setEnableSearchUsingScroll } from "../../app/dataSlicePersisted";
 import { RenderNotificationOrder } from "./RenderNotifOrder";
 
@@ -80,6 +80,7 @@ const MainView = () => {
     dispatch(setMenuSubGroup([]));
     let data = await getMenuItem(type, refNo);
     setIsHasSubGroup(data.tempSubGroup?.length > 0);
+    dispatch(setHasSubGroup(data.tempSubGroup?.length > 0));
     if (data.tempSubGroup?.length > 0) {
       setSelectedSubGroup(data.tempSubGroup[0].refNo);
       fetchAllSubGroupItem(data.tempSubGroup,true);

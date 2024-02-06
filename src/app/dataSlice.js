@@ -11,6 +11,8 @@ const initialState = {
   outletSetting: {},
   serviceCharge: [],
   isDataOrder: false,
+  moveSelected: false,
+  hasSubGroup: false,
 };
 
 const dataSlice = createSlice({
@@ -47,10 +49,18 @@ const dataSlice = createSlice({
     setIsDataOrder: (state, action) => {
       state.isDataOrder = action.payload;
     },
+    setAutoMoveSelected: (state, action) => {
+      state.moveSelected = action.payload;
+    },
+    setHasSubGroup: (state, action) => {
+      state.hasSubGroup = action.payload;
+    },
   },
 });
 
 export const {
+  setHasSubGroup,
+  setAutoMoveSelected,
   setData,
   setIsOpenModalAuth,
   setIsSearchItem,
