@@ -176,7 +176,9 @@ export default function Header() {
   };
 
   const renderMain = () => {
-    if(!outletDetail?.isActiveAllDay && !outletDetail?.isInOperationalHours)
+    if(!outletDetail?.isQrOrderingAvailable)
+      return <div></div>
+    else if(!outletDetail?.isActiveAllDay && !outletDetail?.isInOperationalHours)
       return <div></div>
     else if (orderType == "" && location.pathname?.toLocaleLowerCase() == "/")
       return <div></div>;
