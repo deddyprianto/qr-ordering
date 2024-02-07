@@ -25,13 +25,13 @@ npm install
 
 ```
 
-Create `.env` 
+Create `.env`
 
 ```shell
-VITE_API_URL=https://s2.equipweb.biz/edgecafetraining/ordering/api
+VITE_API_URL=https://t1.equipweb.biz/EdgeCafeTraining/ordering/api
 ```
 
-`VITE_API_URL` is base url for API endpoint. 
+`VITE_API_URL` is base url for API endpoint.
 Please contact your supervisor to ask available endpoint for testing and development.
 
 running project for development
@@ -43,6 +43,7 @@ npm run dev
 ```
 
 ### VS Code Extension recommendations
+
 - ESLint `dbaeumer.vscode-eslint`
 - SonarLint `SonarSource.sonarlint-vscode`
 - GitLens `eamodio.gitlens`
