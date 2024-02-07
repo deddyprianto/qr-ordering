@@ -10,6 +10,12 @@ variable "ENV" {
 
 variable "SSL_CERT_ARN" {
   type        = string
-  default     = "arn:aws:acm:us-east-1:738652141857:certificate/10ccd767-842a-4c43-a656-7337200d2af5"
-  description = "*.qr-ordering.equipweb.biz certificate"
+  default     = "arn:aws:acm:us-east-1:977902117142:certificate/6b4a01b3-9f6d-408d-bb11-2dfd77e1ee24"
+  description = "*.qro.equipweb.biz certificate"
+}
+
+variable "DOMAIN" {
+  type        = string
+  default     = "*.qro-dev.equipweb.biz"
+  description = "Alias domain for CloudFront distribution"
 }
