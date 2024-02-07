@@ -49,7 +49,7 @@ data "aws_iam_policy_document" "read_qrordering_bucket" {
 # S3
 ###################################
 resource "aws_s3_bucket" "qrordering" {
-  bucket = "qrordering-v${var.VERSION}-${var.ENV}"
+  bucket = "ew-qro-${var.ENV}-v${var.VERSION}"
 }
 
 ###################################
@@ -95,7 +95,7 @@ resource "aws_s3_bucket_public_access_block" "qrordering" {
 resource "aws_cloudfront_distribution" "qrordering" {
   enabled             = true
   default_root_object = "index.html"
-  aliases             = ["*.qr-ordering.equipweb.biz", "*.qr-ordering-${var.ENV}.equipweb.biz"]
+  aliases             = ["${var.DOMAIN}"]
 
   default_cache_behavior {
     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
