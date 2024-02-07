@@ -5,23 +5,31 @@ import screen from "../../hooks/useWindowSize";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchItemObj } from "../app/dataSlicePersisted";
 import { EdgeSnackProvider } from "../components/EdgeSnack";
+import { setAutoMoveSelected } from "../app/dataSlice";
 
 export default function Layout() {
   const childRef = useRef(null);
   const dispatch = useDispatch();
-  const isSearchItem = useSelector((state) => state.dataSlice.isSearchItem);
+  const { isSearchItem, hasSubGroup } = useSelector((state) => state.dataSlice);
+
   const { enableSearchUsingScroll, searchItemObj } = useSelector(
     (state) => state.dataSlicePersisted,
   );
 
   const handleParentScroll = () => {
-    if (!isSearchItem || !enableSearchUsingScroll) return;
     const childElement = childRef.current;
+    if (hasSubGroup) {
+      if (childElement.scrollTop <= 250) {
+        dispatch(setAutoMoveSelected(true));
+      } else {
+        dispatch(setAutoMoveSelected(false));
+      }
+    }
+    if (!isSearchItem || !enableSearchUsingScroll) return;
     if (!childElement) return;
     let scrollPosition = parseInt(
       childElement.scrollHeight - childElement.scrollTop,
     );
-
     if (
       scrollPosition - 5 < childElement.clientHeight &&
       childElement.clientHeight < scrollPosition + 5
@@ -45,7 +53,7 @@ export default function Layout() {
         childElement.removeEventListener("scroll", handleParentScroll);
       }
     };
-  }
+  };
 
   useEffect(() => {
     parentScrollRef.current();

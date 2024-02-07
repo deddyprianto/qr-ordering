@@ -8,7 +8,7 @@ import { RenderSearchResult } from "./SearchResult";
 import { SkeletonSearch } from "../../Skeleton";
 import Loader from "../../Loader";
 
-export const RenderSearchItemBar = ({ searchText = "" }) => {
+const RenderSearchItemBar = ({ searchText = "" }) => {
   const [searchItemList, setSearchItemList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [dataLength, setDataLength] = useState(0);
@@ -74,3 +74,4 @@ export const RenderSearchItemBar = ({ searchText = "" }) => {
 RenderSearchItemBar.propTypes = {
   searchText: PropTypes.string,
 };
+export default RenderSearchItemBar
