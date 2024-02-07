@@ -23,10 +23,6 @@ jobs:
       - name: Setup terraform
         uses: hashicorp/setup-terraform@v3
 
-      - name: Extract version from git short sha
-        id: version
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_SHA | cut -c1-7)
-
       - name: Initialize
         id: init
         working-directory: ./infra
@@ -42,5 +38,5 @@ jobs:
         run: terraform apply --auto-approve
         env:
           TF_VAR_ENV: dev
-          TF_VAR_VERSION: ${{ steps.version.outputs.VERSION }}
+          TF_VAR_VERSION: dev
           TF_VAR_DOMAIN: "*.qro-dev.equipweb.biz"
