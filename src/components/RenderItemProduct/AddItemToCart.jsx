@@ -2,36 +2,40 @@ import { setIsCartSummaryBlink } from "../../app/dataSlice";
 import { setCartInfo } from "../../app/dataSlicePersisted";
 import { apiCart } from "../../services/Cart";
 
-export const addItemToCart = async(
-  cartID, 
-  item, 
-  dispatch, 
-  toast, 
-  qty, 
+export const addItemToCart = async (
+  cartID,
+  item,
+  dispatch,
+  toast,
+  qty,
   lineID,
-  reMapProductAndCart
+  reMapProductAndCart,
+  cartInfo,
+  cartId,
 ) => {
   let body = {
-    "itemNo": item.itemNo,
-    "quantity": qty,
-    "unitPrice": item.retailPrice,
-    "remark": "",
-    "referenceNo": "",
-    "lineInfo": "",
-    "attributes": [],
-    "bundles": []
+    itemNo: item.itemNo,
+    quantity: qty,
+    unitPrice: item.retailPrice,
+    remark: "",
+    referenceNo: "",
+    lineInfo: "",
+    attributes: [],
+    bundles: [],
   };
   try {
-    let type = actionType(qty, lineID)
-    const result = await apiService(type, cartID, lineID, body)
-
-    if(result.resultCode == 200){
+    const checkIsCartItemExist = cartInfo.details.find(
+      (itemsDetails) => itemsDetails.productInfo.uniqueID === cartId,
+    );
+    const isCartItemExist = lineID || checkIsCartItemExist?.uniqueID;
+    let type = actionType(qty, lineID, cartInfo);
+    const result = await apiService(type, cartID, isCartItemExist, body);
+    if (result.resultCode == 200) {
       dispatch(setCartInfo(result.data));
       dispatch(setIsCartSummaryBlink(true));
       toastSuccess(type, toast, item.itemName);
       reMapProductAndCart(result.data);
-    }
-    else toast.open(result.message, 'error')
+    } else toast.open(result.message, "error");
     setTimeout(() => {
       dispatch(setIsCartSummaryBlink(false));
     }, 1000);
@@ -40,14 +44,12 @@ export const addItemToCart = async(
   }
 };
 
-const actionType = (qty, lineID) => {
-  if((lineID || "")=="")
-    return "add";
-  else if(qty<1)
-    return "delete";
-  else 
-    return "update";
-}
+const actionType = (qty, lineID, cartInfo) => {
+  if (cartInfo.details.length > 0) return "update";
+  if (!lineID) return "add";
+  else if (qty < 1) return "delete";
+  else return "update";
+};
 
 const apiService = async(type, cartID, lineID, body) => {
   switch (type) {
