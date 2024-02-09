@@ -72,7 +72,7 @@ export default function Layout() {
             width: "100vw",
             display: "grid",
             gridTemplateColumns: "1fr",
-            gridTemplateRows: "100px 1fr",
+            gridTemplateRows: "85px 1fr",
             gap: "0px 0px",
             gridAutoFlow: "row",
             gridTemplateAreas: '"."\n    "."\n    "."',
@@ -87,7 +87,7 @@ export default function Layout() {
           </div>
           <Header />
           <div
-            className="h-full overflow-x-auto mt-[5px]"
+            className="h-full overflow-x-auto mt-[3px]"
             ref={childRef}
             onScroll={handleParentScroll}
           >
@@ -130,7 +130,7 @@ export default function Layout() {
               </div>
               <Header />
               <div
-                className="h-full overflow-x-auto mt-[5px]"
+                className="h-full overflow-x-auto mt-[3px]"
                 ref={childRef}
                 onScroll={handleParentScroll}
               >

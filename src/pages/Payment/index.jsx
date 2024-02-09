@@ -10,7 +10,7 @@ export function Component() {
       case 'stripe':
         return <Stripe/>
       case 'fomo':
-        return <></>
+        return null;
       default:
         return <NotFound/>
     }

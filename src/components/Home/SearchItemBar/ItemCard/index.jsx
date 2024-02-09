@@ -16,7 +16,7 @@ import { RenderTagPromo } from "./TagPromo";
 
 export const RenderItemCard = ({ item }) => {
   const dispatch = useDispatch();
-  const { theme } = useSelector((state) => state.dataSlicePersisted);
+  const { theme, cartInfo } = useSelector((state) => state.dataSlicePersisted);
   const [openModalAddItem, setOpenModalAddItem] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const cartID = useSelector(
@@ -45,7 +45,6 @@ export const RenderItemCard = ({ item }) => {
   };
 
   const handleClickButtonAdd = async () => {
-    console.log("handleClickButtonAdd");
     if (getItemType(item) == "main") {
       setIsLoading(true);
       let curCartID = cartID;
@@ -102,7 +101,11 @@ export const RenderItemCard = ({ item }) => {
               disabled
             >
               <span className="loader"></span>
-              <div>Adding...</div>
+              <div>
+                {cartInfo && cartInfo?.details.length === 0
+                  ? "Adding..."
+                  : "Updating..."}
+              </div>
             </button>
           ) : (
             <button

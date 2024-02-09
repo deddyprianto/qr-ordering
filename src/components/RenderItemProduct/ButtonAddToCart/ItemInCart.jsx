@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { IconMinus, IconPlus } from "../../../assets/svgIcon"
 import PropTypes from 'prop-types'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const RenderButtonItemInCart = ({
   isLoading,
@@ -9,7 +9,10 @@ export const RenderButtonItemInCart = ({
   cartLineID,
   handleClickButtonAdd,
 }) => {
-  const [qty, setQty] = useState(qtyInCart);
+  const [qty, setQty] = useState();
+  useEffect(() => {
+    setQty(qtyInCart);
+  }, [qtyInCart]);
   const theme = useSelector((state) => state.dataSlicePersisted.theme);
   const handleClickChangeQty = (newQuantity) => {
     handleClickButtonAdd(newQuantity, cartLineID);

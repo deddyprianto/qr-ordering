@@ -12,6 +12,7 @@ export const addItemToCart = async (
   reMapProductAndCart,
   cartInfo,
   cartId,
+  isQtyExist,
 ) => {
   let body = {
     itemNo: item.itemNo,
@@ -24,11 +25,11 @@ export const addItemToCart = async (
     bundles: [],
   };
   try {
-    const checkIsCartItemExist = cartInfo.details.find(
+    const checkIsCartItemExist = cartInfo?.details.find(
       (itemsDetails) => itemsDetails.productInfo.uniqueID === cartId,
     );
     const isCartItemExist = lineID || checkIsCartItemExist?.uniqueID;
-    let type = actionType(qty, lineID, cartInfo);
+    let type = actionType(qty, lineID, cartInfo, isQtyExist);
     const result = await apiService(type, cartID, isCartItemExist, body);
     if (result.resultCode == 200) {
       dispatch(setCartInfo(result.data));
@@ -40,12 +41,12 @@ export const addItemToCart = async (
       dispatch(setIsCartSummaryBlink(false));
     }, 1000);
   } catch (error) {
-    console.log(error);
+    console.log("error anda", error);
   }
 };
 
-const actionType = (qty, lineID, cartInfo) => {
-  if (cartInfo.details.length > 0) return "update";
+const actionType = (qty, lineID, cartInfo, isQtyExist) => {
+  if (isQtyExist && cartInfo?.details.length > 0) return "update";
   if (!lineID) return "add";
   else if (qty < 1) return "delete";
   else return "update";

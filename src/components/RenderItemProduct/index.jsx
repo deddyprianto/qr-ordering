@@ -21,9 +21,13 @@ export const RenderItemProduct = ({
   cartLineID,
   cartId,
 }) => {
+
   const { menuSubGroup } = useSelector((state) => state.dataSlice);
   const { outletName, theme, orderType, cartInfo } = useSelector(
     (state) => state.dataSlicePersisted,
+  );
+  const isQtyExist = cartInfo?.details?.some(
+    (itemCart) => itemCart.productInfo.itemNo === item.itemNo,
   );
 
   const [openModalAddItem, setOpenModalAddItem] = useState(false);
@@ -50,7 +54,6 @@ export const RenderItemProduct = ({
   };
 
   const handleClickButtonAdd = async (qty, lineID) => {
-    console.log("LOL LAH");
     if (getItemType(item) == "main") {
       setIsLoading(true);
       let curCartID = cartID;
@@ -62,7 +65,6 @@ export const RenderItemProduct = ({
           orderType,
         );
       }
-
       await addItemToCart(
         curCartID,
         item,
@@ -73,6 +75,7 @@ export const RenderItemProduct = ({
         reMapProductAndCart,
         cartInfo,
         cartId,
+        isQtyExist,
       );
       setIsLoading(false);
       return;
@@ -165,7 +168,11 @@ export const RenderItemProduct = ({
               disabled
             >
               <span className="loader"></span>
-              <div>Adding...</div>
+              <div>
+                {cartInfo && cartInfo?.details.length === 0
+                  ? "Adding..."
+                  : "Updating..."}
+              </div>
             </button>
           ) : (
             <RenderButtonAddToCart
