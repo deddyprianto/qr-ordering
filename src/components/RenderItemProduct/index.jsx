@@ -168,11 +168,7 @@ export const RenderItemProduct = ({
               disabled
             >
               <span className="loader"></span>
-              <div>
-                {cartInfo && cartInfo?.details.length === 0
-                  ? "Adding..."
-                  : "Updating..."}
-              </div>
+              <div>{!isQtyExist ? "Adding..." : "Updating..."}</div>
             </button>
           ) : (
             <RenderButtonAddToCart

@@ -11,7 +11,7 @@ import { renderButtonText } from "./GetButtonText";
 import { mapCartAndProduct } from "../../Home/productAndCartMapper";
 import { setMenuSubGroup } from "../../../app/dataSlice";
 
-export const RenderButtonAdd = ({ 
+export const RenderButtonAdd = ({
   item,
   itemToAdd,
   itemType,
@@ -22,51 +22,66 @@ export const RenderButtonAdd = ({
   setOpenModal,
   setIsLoading,
   isCalledFromCart,
-  lineID
- }) => {
+  lineID,
+  isLoading,
+}) => {
   const { theme } = useSelector((state) => state.dataSlicePersisted);
   const dispatch = useDispatch();
   const toast = useEdgeSnack();
   const { cartInfo, outletName, orderType } = useSelector(
     (state) => state.dataSlicePersisted,
   );
-  const menuSubGroup = useSelector(
-    (state) => state.dataSlice.menuSubGroup,
+  const isQtyExist = cartInfo?.details?.some(
+    (itemCart) => itemCart.productInfo.itemNo === item.itemNo,
   );
-  
+  const menuSubGroup = useSelector((state) => state.dataSlice.menuSubGroup);
+
   const resetCartInfo = (data) => {
     dispatch(setCartInfo(data));
     updateCartQtyProductCatalog(data);
-  }
+  };
 
-  const handleClickButton = async() => {
-    if(itemType=="bundle" && typeOfModalAddItem=='main' && !isCalledFromCart){
+  const handleClickButton = async () => {
+    if (
+      itemType == "bundle" &&
+      typeOfModalAddItem == "main" &&
+      !isCalledFromCart
+    ) {
       setTypeOfModalAddItem("bundle");
       return;
-    }
-    else if(itemType=="attribute" && typeOfModalAddItem!='attribute' && !isCalledFromCart){
+    } else if (
+      itemType == "attribute" &&
+      typeOfModalAddItem != "attribute" &&
+      !isCalledFromCart
+    ) {
       setTypeOfModalAddItem("attribute");
       return;
     }
-    
+
     setIsLoading(true);
     let cartID = cartInfo?.uniqueID;
-    if(!cartID) cartID = await addNewCart(setIsLoading, outletName, resetCartInfo, orderType);
+    if (!cartID)
+      cartID = await addNewCart(
+        setIsLoading,
+        outletName,
+        resetCartInfo,
+        orderType,
+      );
 
     processAddItem(cartID);
-  };  
-  
+  };
+
   const updateCartQtyProductCatalog = (newCartInfo) => {
     let newMenuSubGroup = JSON.parse(JSON.stringify(menuSubGroup));
     for (const sb of newMenuSubGroup) {
-      let itemReplacer = mapCartAndProduct(sb.items, newCartInfo)
-      sb.items = itemReplacer
+      let itemReplacer = mapCartAndProduct(sb.items, newCartInfo);
+      sb.items = itemReplacer;
       dispatch(setMenuSubGroup([...newMenuSubGroup]));
     }
   };
 
-  const processAddItem = async(cartID) => {
-    let body = {...itemToAdd};
+  const processAddItem = async (cartID) => {
+    let body = { ...itemToAdd };
     let res = {};
     switch (typeOfModalAddItem.toLowerCase()) {
       case "attribute":
@@ -74,15 +89,23 @@ export const RenderButtonAdd = ({
         break;
       case "bundle":
         res = generateBundlesBody(bundleList);
-        if(!res.isValidQty) break;
+        if (!res.isValidQty) break;
         body.bundles = res.bundles;
         break;
       default:
         break;
     }
-    await apiCartAddItem(cartID, [body], setOpenModal, resetCartInfo, item.itemName, toast, lineID);
+    await apiCartAddItem(
+      cartID,
+      [body],
+      setOpenModal,
+      resetCartInfo,
+      item.itemName,
+      toast,
+      lineID,
+    );
     setIsLoading(false);
-  }
+  };
 
   return (
     <div
@@ -99,16 +122,29 @@ export const RenderButtonAdd = ({
         className="w-full rounded-lg px-[16px] py-[12px] flex justify-center items-center cursor-pointer"
       >
         <div className="flex items-stretch gap-2">
-          {isCalledFromCart ? "" : <IconPlus />}
-          <div className="text-white text-xs font-bold leading-4 self-center my-auto">
-            {renderButtonText(
-              itemToAdd.unitPrice,
-              itemType,
-              typeOfModalAddItem,
-              attList,
-              bundleList,
-            )}
-          </div>
+          {isLoading ? (
+            <button
+              type="button"
+              className="bg-transparent rounded-lg flex justify-center items-center text-white"
+              disabled
+            >
+              <span className="loader"></span>
+              <div>{!isQtyExist ? "Adding..." : "Updating..."}</div>
+            </button>
+          ) : (
+            <>
+              {isCalledFromCart ? "" : <IconPlus />}
+              <div className="text-white text-xs font-bold leading-4 self-center my-auto">
+                {renderButtonText(
+                  itemToAdd.unitPrice,
+                  itemType,
+                  typeOfModalAddItem,
+                  attList,
+                  bundleList,
+                )}
+              </div>
+            </>
+          )}
         </div>
       </button>
     </div>
@@ -126,5 +162,6 @@ RenderButtonAdd.propTypes = {
   setOpenModal: PropTypes.func,
   setIsLoading: PropTypes.func,
   isCalledFromCart: PropTypes.bool,
-  lineID: PropTypes.string
-}
+  lineID: PropTypes.string,
+  isLoading: PropTypes.bool,
+};

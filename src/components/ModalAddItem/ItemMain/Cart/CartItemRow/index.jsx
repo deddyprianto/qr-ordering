@@ -95,7 +95,7 @@ export const RenderCartItemRow = ({ item }) => {
   };
 
   return (
-    <div className="items-stretch flex justify-between mt-2.5  pl-0 gap-2 px-4">
+    <div className="mt-2.5 pl-0 px-4 grid grid-cols-[1fr_1fr_50px] items-center">
       <div className="fixed-width-content w-full flex flex-row my-auto">
         <div>
           <div className="text-gray-700 text-sm font-medium leading-5 tracking-wide">
@@ -108,41 +108,45 @@ export const RenderCartItemRow = ({ item }) => {
           </div>
         </div>
       </div>
-      {isLoading ? (
-        <button
-          type="button"
-          className="bg-[#9D9D9D] rounded-lg flex justify-center items-center py-2 text-white px-2"
-          disabled
-        >
-          <span className="loader"></span>
-          <div>Updating...</div>
-        </button>
-      ) : (
-        <div className="items-stretch flex gap-1 mt-2">
-          <button
-            className="justify-center items-center flex flex-col px-3 py-1 rounded-lg"
-            style={{ backgroundColor: theme.Color_Secondary }}
-            onClick={decreaseQuantity}
-          >
-            <IconMinus width="16" />
-          </button>
-          <span className="text-gray-700 text-center text-base font-bold leading-6 whitespace-nowrap justify-center items-stretch bg-zinc-300 px-7 py-1 rounded-lg">
-            {quantity}
-          </span>
-          <button
-            className="justify-center items-center flex flex-col px-3 py-1 rounded-lg"
-            style={{ backgroundColor: theme.Color_Secondary }}
-            onClick={increaseQuantity}
-          >
-            <IconPlus width="16" />
-          </button>
-        </div>
-      )}
 
-      <div
-        className="fixed-width-content text-gray-700 text-right text-sm font-bold whitespace-nowrap my-auto"
-        style={{ width: "75px" }}
-      >
+      <div className="w-full">
+        {isLoading ? (
+          <div className="flex items-center">
+            <button
+              type="button"
+              className="bg-[#9D9D9D] rounded-lg flex justify-center items-center py-2 text-white px-2 mt-2"
+              disabled
+            >
+              <span className="loader"></span>
+              <div>Updating...</div>
+            </button>
+          </div>
+        ) : (
+          <div className="flex items-center">
+            <div className="items-stretch flex gap-1 mt-2">
+              <button
+                className="justify-center items-center flex flex-col px-3 py-1 rounded-lg"
+                style={{ backgroundColor: theme.Color_Secondary }}
+                onClick={decreaseQuantity}
+              >
+                <IconMinus width="16" />
+              </button>
+              <span className="text-gray-700 text-center text-base font-bold leading-6 whitespace-nowrap justify-center items-stretch bg-zinc-300 px-7 py-1 rounded-lg">
+                {quantity}
+              </span>
+              <button
+                className="justify-center items-center flex flex-col px-3 py-1 rounded-lg"
+                style={{ backgroundColor: theme.Color_Secondary }}
+                onClick={increaseQuantity}
+              >
+                <IconPlus width="16" />
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="fixed-width-content text-gray-700 text-right text-sm font-bold whitespace-nowrap my-auto mt-[20px]">
         $ {item.amount}
       </div>
     </div>
