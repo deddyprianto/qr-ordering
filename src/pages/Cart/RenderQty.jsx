@@ -20,6 +20,7 @@ export const RenderQty = ({
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(item?.quantity || 0);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingQty, setIsLoadingQty] = useState(false);
   const { outletName } = useSelector((state) => state.dataSlicePersisted);
 
   const handleEdit = async () => {
@@ -43,13 +44,13 @@ export const RenderQty = ({
       quantity: quantityParams,
     };
     if (item.quantity > 1 || increaseQuantity) {
-      setIsLoading(true);
+      setIsLoadingQty(true);
       const result = await apiCart(
         "PATCH",
         `${idCart}/${body.uniqueID}/changeitemqty`,
         body,
       );
-      setIsLoading(false);
+      setIsLoadingQty(false);
       dispatch(setCartInfo(result.data));
     } else {
       const result = await apiCart("DELETE", `${idCart}/${item.uniqueID}`);
@@ -119,7 +120,7 @@ export const RenderQty = ({
           </button>
         )}
       </div>
-      {isLoading ? (
+      {isLoadingQty ? (
         <button
           type="button"
           className="bg-[#9D9D9D] rounded-lg flex justify-center items-center text-white py-[10px] px-[18px]"
