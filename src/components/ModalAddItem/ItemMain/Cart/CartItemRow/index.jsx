@@ -51,7 +51,7 @@ export const RenderCartItemRow = ({ item }) => {
         break;
     }
   };
-  const handleAPIQty = async (quantityParams, increaseQuantity) => {
+  const handleAPIQtyCartItemRow = async (quantityParams, increaseQuantity) => {
     let body = {
       uniqueID: item.uniqueID,
       quantity: quantityParams,
@@ -74,20 +74,20 @@ export const RenderCartItemRow = ({ item }) => {
     }
   };
 
-  const increaseQuantity = () => {
+  const increaseQuantityCartItemRow = () => {
     const increaseQuantity = true;
     setQuantity((prevQuantity) => {
       const newQuantity = prevQuantity + 1;
-      handleAPIQty(newQuantity, increaseQuantity);
+      handleAPIQtyCartItemRow(newQuantity, increaseQuantity);
       return newQuantity;
     });
   };
 
-  const decreaseQuantity = () => {
+  const decreaseQuantityCartItemRow = () => {
     setQuantity((prevQuantity) => {
       if (prevQuantity > 0) {
         const newQuantity = prevQuantity - 1;
-        handleAPIQty(newQuantity);
+        handleAPIQtyCartItemRow(newQuantity);
         return newQuantity;
       }
       return prevQuantity;
@@ -127,7 +127,7 @@ export const RenderCartItemRow = ({ item }) => {
               <button
                 className="justify-center items-center flex flex-col px-3 py-1 rounded-lg"
                 style={{ backgroundColor: theme.Color_Secondary }}
-                onClick={decreaseQuantity}
+                onClick={decreaseQuantityCartItemRow}
               >
                 <IconMinus width="16" />
               </button>
@@ -137,7 +137,7 @@ export const RenderCartItemRow = ({ item }) => {
               <button
                 className="justify-center items-center flex flex-col px-3 py-1 rounded-lg"
                 style={{ backgroundColor: theme.Color_Secondary }}
-                onClick={increaseQuantity}
+                onClick={increaseQuantityCartItemRow}
               >
                 <IconPlus width="16" />
               </button>
@@ -154,5 +154,4 @@ export const RenderCartItemRow = ({ item }) => {
 };
 RenderCartItemRow.propTypes = {
   item: PropTypes.object,
-  updateCartItem: PropTypes.func,
 };
