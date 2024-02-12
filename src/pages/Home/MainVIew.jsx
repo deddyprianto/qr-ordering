@@ -27,7 +27,7 @@ const MainView = () => {
   const [selectedSubGroup, setSelectedSubGroup] = useState("");
   const [isHasSubGroup, setIsHasSubGroup] = useState([]);
   const dispatch = useDispatch();
-  const { outletName, cartInfo, searchItemObj, theme } = useSelector(
+  const { outletName, cartInfo, searchItemObj, theme, insights } = useSelector(
     (state) => state.dataSlicePersisted,
   );
   const { isSearchItem, menuSubGroup, isDataOrder } = useSelector(
@@ -143,7 +143,7 @@ const MainView = () => {
         <div style={{ padding: "16px 16px 0px 16px" }}>
           {isDataOrder && <RenderNotificationOrder />}
 
-          {!isLoading && highlights && (
+          {!isLoading && highlights && insights?.length>0 &&(
             <Insights
               title="Tag Insights"
               description="Explore tags as you navigate the menu. You might encounter these tags
