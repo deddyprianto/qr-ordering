@@ -14,16 +14,22 @@ import { setCartInfo } from "../../app/dataSlicePersisted";
 import { addNewCart } from "../GenerateCart";
 import { RenderRetailPrice } from "./RetailPrice";
 
-export const RenderItemProduct = ({ 
-  item, 
+export const RenderItemProduct = ({
+  item,
   cartID,
   qtyInCart,
-  cartLineID
+  cartLineID,
+  cartId,
 }) => {
+
   const { menuSubGroup } = useSelector((state) => state.dataSlice);
-  const { outletName, theme, orderType } = useSelector(
+  const { outletName, theme, orderType, cartInfo } = useSelector(
     (state) => state.dataSlicePersisted,
   );
+  const isQtyExist = cartInfo?.details?.some(
+    (itemCart) => itemCart.productInfo.itemNo === item.itemNo,
+  );
+
   const [openModalAddItem, setOpenModalAddItem] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
@@ -37,30 +43,40 @@ export const RenderItemProduct = ({
   const reMapProductAndCart = (newCartInfo) => {
     let newMenuSubGroup = JSON.parse(JSON.stringify(menuSubGroup));
     for (const sb of newMenuSubGroup) {
-      let itemReplacer = mapCartAndProduct(sb.items, newCartInfo)
-      sb.items = itemReplacer
+      let itemReplacer = mapCartAndProduct(sb.items, newCartInfo);
+      sb.items = itemReplacer;
       dispatch(setMenuSubGroup([...newMenuSubGroup]));
     }
   };
 
   const saveNewCartInfo = (data) => {
     dispatch(setCartInfo(data));
-  }
+  };
 
   const handleClickButtonAdd = async (qty, lineID) => {
     if (getItemType(item) == "main") {
       setIsLoading(true);
       let curCartID = cartID;
-      if(!curCartID) curCartID = await addNewCart(setIsLoading, outletName, saveNewCartInfo, orderType);
-      await addItemToCart(
-        curCartID,
+      if (!curCartID) {
+        curCartID = await addNewCart(
+          setIsLoading,
+          outletName,
+          saveNewCartInfo,
+          orderType,
+        );
+      }
+      await addItemToCart({
+        cartID: curCartID,
         item,
         dispatch,
         toast,
         qty,
         lineID,
         reMapProductAndCart,
-      );
+        cartInfo,
+        cartId,
+        isQtyExist,
+      });
       setIsLoading(false);
       return;
     }
@@ -143,7 +159,7 @@ export const RenderItemProduct = ({
             {item?.itemName}
           </div>
 
-          <RenderRetailPrice item={item}/>
+          <RenderRetailPrice item={item} />
 
           {isLoading ? (
             <button
@@ -152,12 +168,13 @@ export const RenderItemProduct = ({
               disabled
             >
               <span className="loader"></span>
-              <div>Adding...</div>
+              <div>{!isQtyExist ? "Adding..." : "Updating..."}</div>
             </button>
           ) : (
             <RenderButtonAddToCart
               isLoading={isLoading}
               qtyInCart={qtyInCart}
+              item={item}
               cartLineID={cartLineID}
               handleClickButtonAdd={handleClickButtonAdd}
             />
@@ -180,5 +197,6 @@ RenderItemProduct.propTypes = {
   item: PropTypes.any,
   cartID: PropTypes.string,
   qtyInCart: PropTypes.number,
-  cartLineID: PropTypes.string
+  cartLineID: PropTypes.string,
+  cartId: PropTypes.string,
 };

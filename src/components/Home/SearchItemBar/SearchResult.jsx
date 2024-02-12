@@ -1,6 +1,8 @@
+import { lazy } from "react";
 import { Trans } from "react-i18next";
-import { PropTypes } from "prop-types"
-import { RenderItemCard } from "./ItemCard";
+import { PropTypes } from "prop-types";
+
+const RenderItemCard = lazy(() => import("./ItemCard"));
 
 export const RenderSearchResult = ({ searchText, searchItemList }) => {
   return (
@@ -33,5 +35,5 @@ export const RenderSearchResult = ({ searchText, searchItemList }) => {
 
 RenderSearchResult.propTypes = {
   searchText: PropTypes.string,
-  searchItemList: PropTypes.array
-}
+  searchItemList: PropTypes.array,
+};

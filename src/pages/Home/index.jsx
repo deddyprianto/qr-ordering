@@ -49,7 +49,9 @@ export function Component() {
       }
     >
       {renderContent()}
-      {cartInfo?.details?.length > 0 && <RenderCartSummary />}
+      {outletDetail?.isQrOrderingAvailable && cartInfo?.details?.length > 0 && (
+        <RenderCartSummary />
+      )}
     </Suspense>
   );
 }

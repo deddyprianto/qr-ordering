@@ -12,14 +12,19 @@ import { setMenuSubGroup } from "../../../../app/dataSlice";
 import { mapCartAndProduct } from "../../productAndCartMapper"
 import { addNewCart } from "../../../../components/GenerateCart"
 import { setCartInfo } from "../../../../app/dataSlicePersisted";
+import { RenderTagPromo } from "./TagPromo";
 
-export const RenderItemCard = ({ item }) => {
-  const dispatch = useDispatch()
-  const { theme } = useSelector((state) => state.dataSlicePersisted);
+const RenderItemCard = ({ item }) => {
+  const dispatch = useDispatch();
+  const { theme, cartInfo } = useSelector((state) => state.dataSlicePersisted);
   const [openModalAddItem, setOpenModalAddItem] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const cartID = useSelector((state) => state.dataSlicePersisted.cartInfo?.uniqueID)
-  const { outletName, orderType } = useSelector((state) => state.dataSlicePersisted)
+  const cartID = useSelector(
+    (state) => state.dataSlicePersisted.cartInfo?.uniqueID,
+  );
+  const { outletName, orderType } = useSelector(
+    (state) => state.dataSlicePersisted,
+  );
   const { menuSubGroup } = useSelector((state) => state.dataSlice);
   const toast = useEdgeSnack();
   const handleOpenModalAddItem = () => {
@@ -43,16 +48,24 @@ export const RenderItemCard = ({ item }) => {
     if (getItemType(item) == "main") {
       setIsLoading(true);
       let curCartID = cartID;
-      if(!curCartID) curCartID = await addNewCart(setIsLoading, outletName, saveNewCartInfo, orderType);
-      await addItemToCart(
-        curCartID,
+      if (!curCartID) {
+        curCartID = await addNewCart(
+          setIsLoading,
+          outletName,
+          saveNewCartInfo,
+          orderType,
+        );
+      }
+      await addItemToCart({
+        cartID: curCartID,
         item,
         dispatch,
         toast,
-        1,
-        "",
+        qty: 1,
+        lineID: "",
         reMapProductCatalogQty,
-      );
+      });
+
       setIsLoading(false);
       return;
     }
@@ -72,8 +85,8 @@ export const RenderItemCard = ({ item }) => {
             src={item?.defaultImageURL || theme?.Image_Logo}
             className="absolute h-full w-full object-cover object-center inset-0 rounded-l-xl"
           />
-          {/* <RenderTagPromo/> */}
-          {/* <RenderTagInsight/> */}
+          {item?.isDiscounted && <RenderTagPromo />}{" "}
+          {/* <RenderTagInsight /> */}
         </button>
         <div className="justify-between items-stretch flex grow basis-[0%] flex-col p-2">
           <button className="text-left" onClick={handleOpenModalAddItem}>
@@ -89,7 +102,11 @@ export const RenderItemCard = ({ item }) => {
               disabled
             >
               <span className="loader"></span>
-              <div>Adding...</div>
+              <div>
+                {cartInfo && cartInfo?.details.length === 0
+                  ? "Adding..."
+                  : "Updating..."}
+              </div>
             </button>
           ) : (
             <button
@@ -119,8 +136,8 @@ export const RenderItemCard = ({ item }) => {
       )}
     </>
   );
-}
-
+};
+export default RenderItemCard;
 RenderItemCard.propTypes = {
   item: PropTypes.object
 }

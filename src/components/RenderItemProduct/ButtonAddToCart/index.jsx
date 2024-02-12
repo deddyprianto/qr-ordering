@@ -1,33 +1,41 @@
 import { RenderButtonAdd } from "./ButtonAdd";
-import { RenderButtonItemInCart } from "./ItemInCart"
-import PropTypes from 'prop-types';
+import { RenderButtonItemInCart } from "./ItemInCart";
+import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
-export const RenderButtonAddToCart = ({ 
+export const RenderButtonAddToCart = ({
   isLoading,
-  qtyInCart,
   cartLineID,
-  handleClickButtonAdd
+  handleClickButtonAdd,
+  item,
 }) => {
-  if(qtyInCart==0) 
+  const { cartInfo } = useSelector((state) => state.dataSlicePersisted);
+  const isQtyExist = cartInfo?.details?.find(
+    (itemCart) => itemCart.productInfo.itemNo === item.itemNo,
+  );
+
+
+  if (!isQtyExist)
     return (
       <RenderButtonAdd
         isLoading={isLoading}
         handleClickButtonAdd={handleClickButtonAdd}
       />
-    )
-  else 
+    );
+  else
     return (
-      <RenderButtonItemInCart 
-        qtyInCart={qtyInCart}
+      <RenderButtonItemInCart
+        qtyInCart={isQtyExist.quantity}
         cartLineID={cartLineID}
         isLoading={isLoading}
         handleClickButtonAdd={handleClickButtonAdd}
       />
-    ) 
-}
+    );
+};
+
 RenderButtonAddToCart.propTypes = {
   isLoading: PropTypes.bool,
-  qtyInCart: PropTypes.number,
   cartLineID: PropTypes.string,
   handleClickButtonAdd: PropTypes.func,
-}
+  item: PropTypes.object,
+};

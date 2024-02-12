@@ -20,6 +20,7 @@ export const RenderQty = ({
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(item?.quantity || 0);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingQty, setIsLoadingQty] = useState(false);
   const { outletName } = useSelector((state) => state.dataSlicePersisted);
 
   const handleEdit = async () => {
@@ -43,11 +44,13 @@ export const RenderQty = ({
       quantity: quantityParams,
     };
     if (item.quantity > 1 || increaseQuantity) {
+      setIsLoadingQty(true);
       const result = await apiCart(
         "PATCH",
         `${idCart}/${body.uniqueID}/changeitemqty`,
         body,
       );
+      setIsLoadingQty(false);
       dispatch(setCartInfo(result.data));
     } else {
       const result = await apiCart("DELETE", `${idCart}/${item.uniqueID}`);
@@ -117,30 +120,40 @@ export const RenderQty = ({
           </button>
         )}
       </div>
-      {/* col 2 */}
-      <div className="flex gap-1 ">
+      {isLoadingQty ? (
         <button
-          style={{
-            backgroundColor: theme.Color_Secondary,
-          }}
-          onClick={decreaseQuantity}
-          className="justify-center items-center flex flex-col w-9 h-9 px-2 rounded-lg text-white"
+          type="button"
+          className="bg-[#9D9D9D] rounded-lg flex justify-center items-center text-white py-[10px] px-[18px]"
+          disabled
         >
-          -
+          <span className="loader"></span>
+          <div>Updating...</div>
         </button>
-        <div className="flex text-gray-700 text-center text-base font-bold justify-center items-center bg-zinc-300  px-6 rounded-lg">
-          <div>{quantity}</div>
+      ) : (
+        <div className="flex gap-1 ">
+          <button
+            style={{
+              backgroundColor: theme.Color_Secondary,
+            }}
+            onClick={decreaseQuantity}
+            className="justify-center items-center flex flex-col w-9 h-9 px-2 rounded-lg text-white"
+          >
+            -
+          </button>
+          <div className="flex text-gray-700 text-center text-base font-bold justify-center items-center bg-zinc-300  px-6 rounded-lg">
+            <div>{quantity}</div>
+          </div>
+          <button
+            onClick={increaseQuantity}
+            style={{
+              backgroundColor: theme.Color_Secondary,
+            }}
+            className="justify-center items-center flex flex-col w-9 h-9 px-2 rounded-lg text-white"
+          >
+            +
+          </button>
         </div>
-        <button
-          onClick={increaseQuantity}
-          style={{
-            backgroundColor: theme.Color_Secondary,
-          }}
-          className="justify-center items-center flex flex-col w-9 h-9 px-2 rounded-lg text-white"
-        >
-          +
-        </button>
-      </div>
+      )}
     </div>
   );
 };
