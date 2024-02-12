@@ -18,7 +18,8 @@ const initialState = {
     Color_Secondary: "#FF4782",
   },
   cartIdToShow: {},
-  otpRequestInfo: {}
+  otpRequestInfo: {},
+  insights: []
 };
 
 const dataSlicePersisted = createSlice({
@@ -65,6 +66,9 @@ const dataSlicePersisted = createSlice({
     setOutletDetail: (state, action) => {
       state.outletDetail = action.payload;
     }, 
+    setInsights: (state, action) => {
+      state.insights = action.payload;
+    }, 
   },
 });
 
@@ -81,6 +85,7 @@ export const {
   setSelectedItemProds,
   setTheme,
   setCartIdToShow,
-  setOutletDetail
+  setOutletDetail,
+  setInsights
 } = dataSlicePersisted.actions;
 export default dataSlicePersisted.reducer; // Changed 'dataSlicePersisted.reducer.default' to 'dataSlicePersisted.reducer'

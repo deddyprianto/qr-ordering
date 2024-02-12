@@ -4,7 +4,7 @@ import { Tumbs } from "./Tumbs";
 import { useSelector } from "react-redux";
 
 export const Insights = ({onClick, title, description }) => {
-  const { theme } = useSelector((state) => state.dataSlicePersisted);
+  const { theme, insights } = useSelector((state) => state.dataSlicePersisted);
 
     return (
       <div className="bg-orange-100 flex max-w-[398px] flex-col pb-2 px-2 rounded-2xl mt-6">
@@ -34,23 +34,16 @@ export const Insights = ({onClick, title, description }) => {
           {description}
         </div>
         <div className="flex flex-wrap mt-2 gap-2">
-          <Tumbs
-            bgColor="bg-lime-700"
-            icon="https://cdn.builder.io/api/v1/image/assets/TEMP/0271d4175bcbe9354d8b97e5f1623617c1f73da2ef180946a2ebd96d7d026452?apiKey=7ef2d401d2464e0bb0e4708e7eee43f9&"
-            label="Chef’s Recommendation"
-          />
-
-          <Tumbs
-            bgColor="bg-red-600"
-            icon="https://cdn.builder.io/api/v1/image/assets/TEMP/551ae8011c7dbd3b38d06852e761d994a329f0996c28433dc20bd955cbd76657?apiKey=7ef2d401d2464e0bb0e4708e7eee43f9&"
-            label="Spicy!"
-          />
-
-          <Tumbs
-            bgColor="bg-amber-500"
-            icon="https://cdn.builder.io/api/v1/image/assets/TEMP/d3ac0717d6088c9ce3e26db410d23f6abe1f30171654953eb76260706605014c?apiKey=7ef2d401d2464e0bb0e4708e7eee43f9&"
-            label="Customer Favorites"
-          />
+          {insights?.map((insight)=>{
+            return (
+              <Tumbs
+                key={insight.insightName+''+insight.insightTagIcon}
+                bgColor={insight?.insightTagColor}
+                icon={insight?.insightTagIcon}
+                label={insight.insightName}
+              />
+            )
+          })}
         </div>
       </div>
     );
