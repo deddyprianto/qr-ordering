@@ -6,7 +6,7 @@ import { apiOutlet } from "../../services/Outlet";
 import { setPaymentMethod } from "../../app/dataSlice";
 import { SkeletonPaymentList } from "../../components/Skeleton";
 
-export function PaymentMethod() {
+ function PaymentMethod() {
   const dispatch = useDispatch();
   const { paymentMethod } = useSelector((state) => state.dataSlice);
   const { outletName, theme } = useSelector(
@@ -67,3 +67,4 @@ export function PaymentMethod() {
     </span>
   );
 }
+export default PaymentMethod

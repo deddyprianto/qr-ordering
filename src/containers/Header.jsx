@@ -21,9 +21,8 @@ export default function Header() {
     orderType,
     theme,
     outletName,
-    outletDetail
+    outletDetail,
   } = useSelector((state) => state.dataSlicePersisted);
-  console.log(theme?.Image_Logo || theme?.Image_Item_Place_Holder);
   const dispatchIsSearchItem = (val) => {
     dispatch(setIsSearchItem(val));
   };

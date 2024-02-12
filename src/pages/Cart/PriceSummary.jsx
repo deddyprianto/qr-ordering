@@ -4,7 +4,7 @@ import { useState } from "react";
 import { numberFormatter } from "../../utilities/numberFormatter";
 import { Trans } from "react-i18next";
 
-export function PriceSummary() {
+function PriceSummary() {
   const theme = useSelector((state) => state.dataSlicePersisted.theme);
   const cartInfo = useSelector((state) => state.dataSlicePersisted.cartInfo);
   const [expandItem, setExpandItem] = useState(true);
@@ -117,3 +117,4 @@ export function PriceSummary() {
     </div>
   );
 }
+export default PriceSummary;

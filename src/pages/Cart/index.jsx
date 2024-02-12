@@ -1,19 +1,22 @@
-import { useState } from "react";
+import { Suspense, lazy, useState } from "react";
 import { ModalAuth } from "../../components/Auth";
 import { useSelector } from "react-redux";
-import { PaymentMethod } from "./PaymentMethod";
-import { PriceSummary } from "./PriceSummary";
-import FooterCart from "./FooterCart";
-import ItemCart from "./ItemCart";
 import { Trans } from "react-i18next";
 import { ModalGeneral } from "../../components/ModalGeneral";
+
+const PaymentMethod = lazy(() => import("./PaymentMethod"));
+const PriceSummary = lazy(() => import("./PriceSummary"));
+const FooterCart = lazy(() => import("./FooterCart"));
+const ItemCart = lazy(() => import("./ItemCart"));
 
 export function Component() {
   const { cartInfo, outletName } = useSelector(
     (state) => state.dataSlicePersisted,
   );
   const [isCartEmpty, setIsCartEmpty] = useState(false);
-  const { theme, outletDetail } = useSelector((state) => state.dataSlicePersisted);
+  const { theme, outletDetail } = useSelector(
+    (state) => state.dataSlicePersisted,
+  );
   const [isOpenModalAuth, setIsOpenModalAuth] = useState(false);
   const [authScreen, setAuthScreen] = useState("Login");
   const [isOpenModalOtp, setIsOpenModalOtp] = useState(false);
@@ -30,9 +33,15 @@ export function Component() {
   );
 
   return (
-    <>
+    <Suspense
+      fallback={
+        <div className="text-center font-bold">
+          Pls wait, getting your components...
+        </div>
+      }
+    >
       <div className="px-[16px]" style={{ paddingBottom: 80 }}>
-        <h1>
+        <h1 className="mt-5">
           <Trans i18nKey={"you_order_from"} />
         </h1>
         <p
@@ -95,6 +104,6 @@ export function Component() {
           <div>Redirect to home page, please wait...</div>
         </div>
       )}
-    </>
+    </Suspense>
   );
 }

@@ -14,7 +14,7 @@ import { addNewCart } from "../../../../components/GenerateCart"
 import { setCartInfo } from "../../../../app/dataSlicePersisted";
 import { RenderTagPromo } from "./TagPromo";
 
-export const RenderItemCard = ({ item }) => {
+const RenderItemCard = ({ item }) => {
   const dispatch = useDispatch();
   const { theme, cartInfo } = useSelector((state) => state.dataSlicePersisted);
   const [openModalAddItem, setOpenModalAddItem] = useState(false);
@@ -137,7 +137,7 @@ export const RenderItemCard = ({ item }) => {
     </>
   );
 };
-
+export default RenderItemCard;
 RenderItemCard.propTypes = {
   item: PropTypes.object
 }
