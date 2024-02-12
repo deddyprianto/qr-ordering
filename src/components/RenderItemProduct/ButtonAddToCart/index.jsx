@@ -35,7 +35,6 @@ export const RenderButtonAddToCart = ({
 
 RenderButtonAddToCart.propTypes = {
   isLoading: PropTypes.bool,
-  qtyInCart: PropTypes.number,
   cartLineID: PropTypes.string,
   handleClickButtonAdd: PropTypes.func,
   item: PropTypes.object,
