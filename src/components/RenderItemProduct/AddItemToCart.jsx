@@ -2,7 +2,7 @@ import { setIsCartSummaryBlink } from "../../app/dataSlice";
 import { setCartInfo } from "../../app/dataSlicePersisted";
 import { apiCart } from "../../services/Cart";
 
-export const addItemToCart = async (
+export const addItemToCart = async ({
   cartID,
   item,
   dispatch,
@@ -13,7 +13,7 @@ export const addItemToCart = async (
   cartInfo,
   cartId,
   isQtyExist,
-) => {
+}) => {
   let body = {
     itemNo: item.itemNo,
     quantity: qty,

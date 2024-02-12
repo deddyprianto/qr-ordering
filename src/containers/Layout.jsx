@@ -116,7 +116,7 @@ export default function Layout() {
                 height: "98vh",
                 display: "grid",
                 gridTemplateColumns: "1fr",
-                gridTemplateRows: "100px 1fr",
+                gridTemplateRows: "85px 1fr",
                 gap: "0px 0px",
                 gridAutoFlow: "row",
                 gridTemplateAreas: '"."\n    "."\n    "."',

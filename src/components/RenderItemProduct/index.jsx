@@ -65,8 +65,8 @@ export const RenderItemProduct = ({
           orderType,
         );
       }
-      await addItemToCart(
-        curCartID,
+      await addItemToCart({
+        cartID: curCartID,
         item,
         dispatch,
         toast,
@@ -76,7 +76,7 @@ export const RenderItemProduct = ({
         cartInfo,
         cartId,
         isQtyExist,
-      );
+      });
       setIsLoading(false);
       return;
     }

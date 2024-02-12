@@ -56,15 +56,16 @@ export const RenderItemCard = ({ item }) => {
           orderType,
         );
       }
-      await addItemToCart(
-        curCartID,
+      await addItemToCart({
+        cartID: curCartID,
         item,
         dispatch,
         toast,
-        1,
-        "",
+        qty: 1,
+        lineID: "",
         reMapProductCatalogQty,
-      );
+      });
+
       setIsLoading(false);
       return;
     }
