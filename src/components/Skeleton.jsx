@@ -129,11 +129,13 @@ export const SkeletonSummaryPage = () => {
     );
   };
   return (
-    <div className="px-[16px] w-full mt-2">
+    <div className="w-full mt-2">
       <div className="flex justify-between items-center px-[5px]">
         <div className="h-5 bg-gray-300 rounded-md w-[40%] mt-5 animate-pulse"></div>
         <div className="h-5 bg-gray-300 rounded-md w-[40%] mt-5 animate-pulse"></div>
       </div>
+      {renderSkeletonChild()}
+      {renderSkeletonChild()}
       {renderSkeletonChild()}
     </div>
   );

@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import ItemOrder from "./ItemOrder";
 import { apiOrder } from "../../services/Order";
-import { ParentBlur } from "../../components/ParentBlur";
+import { SkeletonSummaryPage } from "../../components/Skeleton";
 
 export function Component() {
   const [orderHistory, setOrderHistory] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchOrderHistory = useRef();
-  fetchOrderHistory.current = async() => {
+  fetchOrderHistory.current = async () => {
     try {
       let body = {
         search: "",
@@ -16,11 +16,10 @@ export function Component() {
         take: 99999,
         sortBy: "orderDate",
         isDescending: false,
-
-      }
+      };
       const result = await apiOrder("GET", "", body);
       if (result.resultCode === 200) {
-        setOrderHistory(result.data)
+        setOrderHistory(result.data);
         setLoading(false);
       } else {
         throw result.message;
@@ -29,17 +28,22 @@ export function Component() {
       setLoading(false);
       console.log(error);
     }
-  }
-  
-  useEffect(()=>{
+  };
+
+  useEffect(() => {
     fetchOrderHistory.current();
-  },[])
+  }, []);
   return (
     <div className="p-[16px]">
-      {loading && <ParentBlur/>}
-      {orderHistory.map((order)=>{
-        return <ItemOrder key={order.cartID} order={order}/> 
-      })}
+      {loading ? (
+        <SkeletonSummaryPage />
+      ) : (
+        <>
+          {orderHistory.map((order) => {
+            return <ItemOrder key={order.cartID} order={order} />;
+          })}
+        </>
+      )}
     </div>
   );
 }
