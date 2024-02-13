@@ -14,14 +14,7 @@ import { setCartInfo } from "../../app/dataSlicePersisted";
 import { addNewCart } from "../GenerateCart";
 import { RenderRetailPrice } from "./RetailPrice";
 
-export const RenderItemProduct = ({
-  item,
-  cartID,
-  qtyInCart,
-  cartLineID,
-  cartId,
-}) => {
-
+export const RenderItemProduct = ({ item, cartID, qtyInCart, cartLineID, cartId }) => {
   const { menuSubGroup } = useSelector((state) => state.dataSlice);
   const { outletName, theme, orderType, cartInfo } = useSelector(
     (state) => state.dataSlicePersisted,
@@ -162,7 +155,7 @@ export const RenderItemProduct = ({
             </tbody>
           </table>
 
-          <>
+          <div>
             <RenderRetailPrice item={item} />
             {isLoading ? (
               <button
@@ -182,7 +175,7 @@ export const RenderItemProduct = ({
                 handleClickButtonAdd={handleClickButtonAdd}
               />
             )}
-          </>
+          </div>
         </div>
       </div>
       {openModalAddItem && (
