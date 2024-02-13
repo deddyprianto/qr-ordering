@@ -5,8 +5,9 @@ import { apiProduct } from "../../../services/Product";
 import { setEnableSearchUsingScroll } from "../../../app/dataSlicePersisted";
 import { RenderItemNotFound } from "./ItemNotFound";
 import { RenderSearchResult } from "./SearchResult";
-import { SkeletonSearch } from "../../Skeleton";
 import Loader from "../../Loader";
+import { SkeletonSearch } from "../../Skeleton/SkeletonSearch";
+
 
 const RenderSearchItemBar = ({ searchText = "" }) => {
   const [searchItemList, setSearchItemList] = useState([]);

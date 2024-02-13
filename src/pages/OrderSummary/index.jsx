@@ -4,7 +4,7 @@ import { OrderItemSummary } from "./OrderItemSummary";
 import { useEffect, useRef, useState } from "react";
 import { apiOrder } from "../../services/Order";
 import { setIsDataOrder } from "../../app/dataSlice";
-import { SkeletonSummaryPage } from "../../components/Skeleton";
+import { SkeletonSummaryPage } from "../../components/Skeleton/SkeletonSummaryPage";
 
 export function Component() {
   const dispatch = useDispatch();
