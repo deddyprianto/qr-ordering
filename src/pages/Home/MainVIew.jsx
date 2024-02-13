@@ -4,7 +4,7 @@ import { Insights } from "../../components/Insights";
 import { SubGroupMenu } from "./SubGroupMenu";
 import { useDispatch, useSelector } from "react-redux";
 import "../../scss/animation.scss";
-import { Skeleton, SkeletonTagInsight } from "../../components/Skeleton";
+import { Skeleton } from "../../components/Skeleton";
 import { GET } from "../../utilities/services";
 import { ProductCatalog } from "./ProductCatalog";
 import { Trans } from "react-i18next";
@@ -12,6 +12,7 @@ import { mapCartAndProduct } from "../../components/Home/productAndCartMapper";
 import { setMenuSubGroup, setHasSubGroup } from "../../app/dataSlice";
 import { setEnableSearchUsingScroll } from "../../app/dataSlicePersisted";
 import { RenderNotificationOrder } from "./RenderNotifOrder";
+import { SkeletonTagInsight } from "../../components/SkeletonTagInsight";
 
 const RenderSearchItemBar = lazy(
   () => import("../../components/Home/SearchItemBar"),

@@ -4,7 +4,7 @@ import { Trans } from "react-i18next";
 import { useEffect, useRef, useState } from "react";
 import { apiOutlet } from "../../services/Outlet";
 import { setPaymentMethod } from "../../app/dataSlice";
-import { SkeletonPaymentList } from "../../components/Skeleton";
+import { SkeletonPaymentList } from "../../components/SkeletonPaymentList";
 
  function PaymentMethod() {
   const dispatch = useDispatch();

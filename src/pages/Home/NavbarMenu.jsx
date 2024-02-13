@@ -4,7 +4,7 @@ import { MenuGroup } from "./MenuGroup";
 import { GET } from "../../utilities/services";
 import image1 from "../../assets/image1.png";
 import PropTypes from "prop-types";
-import { SkeletonNavbar } from "../../components/Skeleton";
+import { SkeletonNavbar } from "../../components/SkeletonNavbar";
 
 export const NavbarMenu = ({ 
   handleSelectGroup,
