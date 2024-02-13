@@ -147,7 +147,7 @@ const MainView = () => {
           {isDataOrder && <RenderNotificationOrder />}
 
           {!isLoading && highlights && insights?.length>0 ? (
-            <Insights
+            <Insights 
               title="Tag Insights"
               description="Explore tags as you navigate the menu. You might encounter these tags
                             anywhere in our menu."
