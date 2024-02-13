@@ -13,6 +13,7 @@ import { mapCartAndProduct } from "../Home/productAndCartMapper";
 import { setCartInfo } from "../../app/dataSlicePersisted";
 import { addNewCart } from "../GenerateCart";
 import { RenderRetailPrice } from "./RetailPrice";
+import { RenderTagInsight } from "../Home/TagInsight";
 
 export const RenderItemProduct = ({ 
   item, 
@@ -88,6 +89,7 @@ export const RenderItemProduct = ({
             width: "100%",
             display: "flex",
             flexDirection: "column",
+            justifyContent: (item?.isDiscounted || false)?"space-between":"flex-end",
             borderTopLeftRadius: "16px",
             borderTopRightRadius: "16px",
             height: "191px",
@@ -122,6 +124,9 @@ export const RenderItemProduct = ({
               </div>
             </div>
           )}
+          <div className="p-2 flex gap-1">
+            <RenderTagInsight insights={item.insight}/>
+          </div>
         </button>
 
         <div
