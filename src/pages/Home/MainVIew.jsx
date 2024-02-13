@@ -12,6 +12,7 @@ import { mapCartAndProduct } from "../../components/Home/productAndCartMapper";
 import { setMenuSubGroup, setHasSubGroup } from "../../app/dataSlice";
 import { setEnableSearchUsingScroll } from "../../app/dataSlicePersisted";
 import { RenderNotificationOrder } from "./RenderNotifOrder";
+import { SkeletonTagInsight } from "../../components/Skeleton/SkeletonTagInsight";
 
 const RenderSearchItemBar = lazy(
   () => import("../../components/Home/SearchItemBar"),
@@ -49,8 +50,8 @@ const MainView = () => {
   const calculateIsDataSubGroupExist = (items) => {
     return items.length > 0;
   };
-  
-  const fetchAllSubGroupItem = async (subGroup,isDataSubGroupExist) => {
+
+  const fetchAllSubGroupItem = async (subGroup, isDataSubGroupExist) => {
     setIsLoading(true); // Set loading to true before fetching data
     const firstItems = subGroup[0]?.items || [];
 
@@ -83,7 +84,7 @@ const MainView = () => {
     dispatch(setHasSubGroup(data.tempSubGroup?.length > 0));
     if (data.tempSubGroup?.length > 0) {
       setSelectedSubGroup(data.tempSubGroup[0].refNo);
-      fetchAllSubGroupItem(data.tempSubGroup,true);
+      fetchAllSubGroupItem(data.tempSubGroup, true);
     } else {
       setIsLoading(true);
       let tempSubGroup = [
@@ -111,21 +112,23 @@ const MainView = () => {
       skip: skip,
       take: take,
     };
-    return GET(`products/${outletName}/${type}/${refNo}`, obj).then((res) => {
-      let tempSubGroup = [];
-      let tempItem = [];
-      let dataLength = res.dataLength;
-      res.data.map((dt) => {
-        if (dt.buttonType.toLowerCase() == "folder") {
-          tempSubGroup.push(dt);
-        } else if (dt.buttonType.toLowerCase() != "item") {
-          tempSubGroup.push(dt);
-        } else if (dt.buttonType.toLowerCase() == "item") {
-          tempItem.push(dt);
-        }
-      });
-      return { tempItem, tempSubGroup, dataLength };
-    }).catch(err => console.log(err))
+    return GET(`products/${outletName}/${type}/${refNo}`, obj)
+      .then((res) => {
+        let tempSubGroup = [];
+        let tempItem = [];
+        let dataLength = res.dataLength;
+        res.data.map((dt) => {
+          if (dt.buttonType.toLowerCase() == "folder") {
+            tempSubGroup.push(dt);
+          } else if (dt.buttonType.toLowerCase() != "item") {
+            tempSubGroup.push(dt);
+          } else if (dt.buttonType.toLowerCase() == "item") {
+            tempItem.push(dt);
+          }
+        });
+        return { tempItem, tempSubGroup, dataLength };
+      })
+      .catch((err) => console.log(err));
   };
   const renderMainView = () => {
     return (
@@ -143,13 +146,15 @@ const MainView = () => {
         <div style={{ padding: "16px 16px 0px 16px" }}>
           {isDataOrder && <RenderNotificationOrder />}
 
-          {!isLoading && highlights && insights?.length>0 &&(
+          {!isLoading && highlights && insights?.length>0 ? (
             <Insights
               title="Tag Insights"
               description="Explore tags as you navigate the menu. You might encounter these tags
                             anywhere in our menu."
               onClick={() => setHighlights(false)}
             />
+          ) : (
+            <SkeletonTagInsight />
           )}
           {isHasSubGroup && (
             <SubGroupMenu

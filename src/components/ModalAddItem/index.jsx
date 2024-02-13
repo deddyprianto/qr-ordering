@@ -4,7 +4,6 @@ import RenderMainContainer from "./MainConteiner";
 import { RenderButtonAdd } from "./ActionButton";
 import { useEffect, useState } from "react";
 import { RenderTopLabel } from "./TopLabel";
-import { ParentBlur } from "../ParentBlur";
 import RenderItemAttributes from "./ItemAttributes";
 import RenderItemBundles from "./ItemBundle";
 import RenderItemMain from "./ItemMain";
@@ -101,7 +100,6 @@ const RenderModalItemDetail = ({
     <div className="fixed top-0 left-0 w-full h-full bg-modal-popup-container z-50 inset-0 backdrop-filter backdrop-blur-sm bg-[black] bg-opacity-50 ">
       <div className={classNameCustom}>
         <div className="grid grid-cols-[1fr] grid-rows-custom gap-0 grid-flow-row h-full w-full">
-          {isLoading && <ParentBlur />}
           {isCalledFromCart ? (
             <>
               <div className="w-full bg-white flex justify-between items-center px-[16px]">
@@ -151,6 +149,7 @@ const RenderModalItemDetail = ({
             setOpenModal={setOpenModal}
             setIsLoading={setIsLoading}
             isCalledFromCart={isCalledFromCart}
+            isLoading={isLoading}
           />
         </div>
       </div>

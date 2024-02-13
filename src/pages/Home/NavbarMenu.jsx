@@ -3,7 +3,8 @@ import {  useSelector } from "react-redux";
 import { MenuGroup } from "./MenuGroup";
 import { GET } from "../../utilities/services";
 import PropTypes from "prop-types";
-import { SkeletonNavbar } from "../../components/Skeleton";
+import { SkeletonNavbar } from "../../components/Skeleton/SkeletonNavbar";
+
 
 export const NavbarMenu = ({ 
   handleSelectGroup,

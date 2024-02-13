@@ -21,7 +21,7 @@ export default function Header() {
     orderType,
     theme,
     outletName,
-    outletDetail
+    outletDetail,
   } = useSelector((state) => state.dataSlicePersisted);
   const dispatchIsSearchItem = (val) => {
     dispatch(setIsSearchItem(val));
@@ -105,13 +105,16 @@ export default function Header() {
     } else {
       return (
         <div>
-          <ImageOptimization
-            imageItems={theme?.Image_Logo}
-            customStyle={{
-              borderRadius: "100%",
-            }}
-            width={43}
-          />
+          {(theme?.Image_Logo || theme?.Image_Item_Place_Holder) && (
+            <ImageOptimization
+              imageItems={theme?.Image_Logo}
+              customStyle={{
+                borderRadius: "100%",
+              }}
+              width={43}
+            />
+          )}
+
           <div className="text-stone-50 text-sm font-medium leading-5 tracking-wide self-stretch">
             {outletName}
           </div>

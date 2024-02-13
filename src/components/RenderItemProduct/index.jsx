@@ -14,16 +14,15 @@ import { RenderRetailPrice } from "./RetailPrice";
 import { RenderTagInsight } from "../Home/TagInsight";
 import { RenderTagPromo } from "../Home/TagPromo";
 
-export const RenderItemProduct = ({ 
-  item, 
-  cartID,
-  qtyInCart,
-  cartLineID
-}) => {
+export const RenderItemProduct = ({ item, cartID, qtyInCart, cartLineID, cartId }) => {
   const { menuSubGroup } = useSelector((state) => state.dataSlice);
-  const { outletName, theme, orderType } = useSelector(
+  const { outletName, theme, orderType, cartInfo } = useSelector(
     (state) => state.dataSlicePersisted,
   );
+  const isQtyExist = cartInfo?.details?.some(
+    (itemCart) => itemCart.productInfo.itemNo === item.itemNo,
+  );
+
   const [openModalAddItem, setOpenModalAddItem] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
@@ -37,30 +36,40 @@ export const RenderItemProduct = ({
   const reMapProductAndCart = (newCartInfo) => {
     let newMenuSubGroup = JSON.parse(JSON.stringify(menuSubGroup));
     for (const sb of newMenuSubGroup) {
-      let itemReplacer = mapCartAndProduct(sb.items, newCartInfo)
-      sb.items = itemReplacer
+      let itemReplacer = mapCartAndProduct(sb.items, newCartInfo);
+      sb.items = itemReplacer;
       dispatch(setMenuSubGroup([...newMenuSubGroup]));
     }
   };
 
   const saveNewCartInfo = (data) => {
     dispatch(setCartInfo(data));
-  }
+  };
 
   const handleClickButtonAdd = async (qty, lineID) => {
     if (getItemType(item) == "main") {
       setIsLoading(true);
       let curCartID = cartID;
-      if(!curCartID) curCartID = await addNewCart(setIsLoading, outletName, saveNewCartInfo, orderType);
-      await addItemToCart(
-        curCartID,
+      if (!curCartID) {
+        curCartID = await addNewCart(
+          setIsLoading,
+          outletName,
+          saveNewCartInfo,
+          orderType,
+        );
+      }
+      await addItemToCart({
+        cartID: curCartID,
         item,
         dispatch,
         toast,
         qty,
         lineID,
         reMapProductAndCart,
-      );
+        cartInfo,
+        cartId,
+        isQtyExist,
+      });
       setIsLoading(false);
       return;
     }
@@ -102,44 +111,49 @@ export const RenderItemProduct = ({
           </div>
         </button>
 
-        <div
-          style={{
-            justifyContent: "center",
-            display: "flex",
-            width: "100%",
-            flexDirection: "column",
-            padding: "8px",
-          }}
-        >
-          <div
-            style={{
-              color: "var(--text-color-primary, #343A4A)",
-              letterSpacing: "0.28px",
-              font: "500 14px/20px Helvetica Neue, sans-serif ",
-            }}
-          >
-            {item?.itemName}
+        <div className="grid grid-cols-1 grid-rows-[40px_1fr] p-[8px]">
+          <table>
+            <tbody>
+              <tr>
+                <td
+                  style={{
+                    textAlign: "left",
+                    width: "85%",
+                    display: "-webkit-box",
+                    WebkitLineClamp: "3",
+                    WebkitBoxOrient: "vertical",
+                    overflow: "hidden",
+                    padding: 0,
+                    margin: 0,
+                  }}
+                >
+                  {item?.itemName}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div>
+            <RenderRetailPrice item={item} />
+            {isLoading ? (
+              <button
+                type="button"
+                className="bg-[#9D9D9D] rounded-lg flex justify-center items-center py-[5px] text-white mt-[8px]"
+                disabled
+              >
+                <span className="loader"></span>
+                <div>{!isQtyExist ? "Adding..." : "Updating..."}</div>
+              </button>
+            ) : (
+              <RenderButtonAddToCart
+                isLoading={isLoading}
+                qtyInCart={qtyInCart}
+                item={item}
+                cartLineID={cartLineID}
+                handleClickButtonAdd={handleClickButtonAdd}
+              />
+            )}
           </div>
-
-          <RenderRetailPrice item={item}/>
-
-          {isLoading ? (
-            <button
-              type="button"
-              className="bg-[#9D9D9D] rounded-lg flex justify-center items-center py-[5px] text-white mt-[8px]"
-              disabled
-            >
-              <span className="loader"></span>
-              <div>Adding...</div>
-            </button>
-          ) : (
-            <RenderButtonAddToCart
-              isLoading={isLoading}
-              qtyInCart={qtyInCart}
-              cartLineID={cartLineID}
-              handleClickButtonAdd={handleClickButtonAdd}
-            />
-          )}
         </div>
       </div>
       {openModalAddItem && (
@@ -158,5 +172,6 @@ RenderItemProduct.propTypes = {
   item: PropTypes.any,
   cartID: PropTypes.string,
   qtyInCart: PropTypes.number,
-  cartLineID: PropTypes.string
+  cartLineID: PropTypes.string,
+  cartId: PropTypes.string,
 };

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { numberFormatter } from "../../utilities/numberFormatter";
 import { Trans } from "react-i18next";
 
-export function PriceSummary() {
+function PriceSummary() {
   const theme = useSelector((state) => state.dataSlicePersisted.theme);
   const cartInfo = useSelector((state) => state.dataSlicePersisted.cartInfo);
   const [expandItem, setExpandItem] = useState(true);
@@ -49,13 +49,13 @@ export function PriceSummary() {
             </div>
           )
         })} */}
-        {cartInfo.excGSTAmount > 0 && (
+        {cartInfo?.excGSTAmount > 0 && (
           <div className="items-stretch flex justify-between gap-4 mt-2 ">
             <div className="justify-center text-gray-700 text-sm font-medium leading-5 tracking-wide grow whitespace-nowrap">
               GST {cartInfo?.gstRate}%
             </div>
             <div className="text-gray-700 text-right text-base font-bold leading-6 whitespace-nowrap">
-              $ {numberFormatter(cartInfo.excGSTAmount)}
+              $ {numberFormatter(cartInfo?.excGSTAmount)}
             </div>
           </div>
         )}
@@ -68,14 +68,14 @@ export function PriceSummary() {
             $ {numberFormatter(cartInfo?.subtotalSummary?.NETT)}
           </div>
         </div>
-        
-        {cartInfo.incGSTAmount > 0 && (
+
+        {cartInfo?.incGSTAmount > 0 && (
           <div className="items-stretch flex justify-between gap-4 mt-2 ">
             <div className="justify-center text-gray-700 text-sm font-medium leading-5 tracking-wide grow whitespace-nowrap">
               GST (inc) {cartInfo?.gstRate}%
             </div>
             <div className="text-gray-700 text-right text-base font-bold leading-6 whitespace-nowrap">
-              $ {numberFormatter(cartInfo.incGSTAmount)}
+              $ {numberFormatter(cartInfo?.incGSTAmount)}
             </div>
           </div>
         )}
@@ -117,3 +117,4 @@ export function PriceSummary() {
     </div>
   );
 }
+export default PriceSummary;

@@ -39,7 +39,7 @@ const RenderMainContainer = ({
         />
       );
     default:
-      return <div></div>;
+      return null;
   }
 };
 export default RenderMainContainer;
