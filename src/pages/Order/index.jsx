@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import ItemOrder from "./ItemOrder";
 import { apiOrder } from "../../services/Order";
-import { SkeletonSummaryPage } from "../../components/SkeletonSummaryPage";
+import { SkeletonSummaryPage } from "../../components/Skeleton/SkeletonSummaryPage";
+
 
 export function Component() {
   const [orderHistory, setOrderHistory] = useState([]);

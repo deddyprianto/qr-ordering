@@ -12,7 +12,7 @@ import { mapCartAndProduct } from "../../components/Home/productAndCartMapper";
 import { setMenuSubGroup, setHasSubGroup } from "../../app/dataSlice";
 import { setEnableSearchUsingScroll } from "../../app/dataSlicePersisted";
 import { RenderNotificationOrder } from "./RenderNotifOrder";
-import { SkeletonTagInsight } from "../../components/SkeletonTagInsight";
+import { SkeletonTagInsight } from "../../components/Skeleton/SkeletonTagInsight";
 
 const RenderSearchItemBar = lazy(
   () => import("../../components/Home/SearchItemBar"),
