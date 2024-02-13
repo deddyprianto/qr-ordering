@@ -140,45 +140,49 @@ export const RenderItemProduct = ({
           )}
         </button>
 
-        <div
-          style={{
-            justifyContent: "center",
-            display: "flex",
-            width: "100%",
-            flexDirection: "column",
-            padding: "8px",
-          }}
-        >
-          <div
-            style={{
-              color: "var(--text-color-primary, #343A4A)",
-              letterSpacing: "0.28px",
-              font: "500 14px/20px Helvetica Neue, sans-serif ",
-            }}
-          >
-            {item?.itemName}
-          </div>
+        <div className="grid grid-cols-1 grid-rows-[40px_1fr] p-[8px]">
+          <table>
+            <tbody>
+              <tr>
+                <td
+                  style={{
+                    textAlign: "left",
+                    width: "85%",
+                    display: "-webkit-box",
+                    WebkitLineClamp: "3",
+                    WebkitBoxOrient: "vertical",
+                    overflow: "hidden",
+                    padding: 0,
+                    margin: 0,
+                  }}
+                >
+                  {item?.itemName}
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
-          <RenderRetailPrice item={item} />
-
-          {isLoading ? (
-            <button
-              type="button"
-              className="bg-[#9D9D9D] rounded-lg flex justify-center items-center py-[5px] text-white mt-[8px]"
-              disabled
-            >
-              <span className="loader"></span>
-              <div>{!isQtyExist ? "Adding..." : "Updating..."}</div>
-            </button>
-          ) : (
-            <RenderButtonAddToCart
-              isLoading={isLoading}
-              qtyInCart={qtyInCart}
-              item={item}
-              cartLineID={cartLineID}
-              handleClickButtonAdd={handleClickButtonAdd}
-            />
-          )}
+          <>
+            <RenderRetailPrice item={item} />
+            {isLoading ? (
+              <button
+                type="button"
+                className="bg-[#9D9D9D] rounded-lg flex justify-center items-center py-[5px] text-white mt-[8px]"
+                disabled
+              >
+                <span className="loader"></span>
+                <div>{!isQtyExist ? "Adding..." : "Updating..."}</div>
+              </button>
+            ) : (
+              <RenderButtonAddToCart
+                isLoading={isLoading}
+                qtyInCart={qtyInCart}
+                item={item}
+                cartLineID={cartLineID}
+                handleClickButtonAdd={handleClickButtonAdd}
+              />
+            )}
+          </>
         </div>
       </div>
       {openModalAddItem && (
