@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import {  useSelector } from "react-redux";
 import { MenuGroup } from "./MenuGroup";
 import { GET } from "../../utilities/services";
-import image1 from "../../assets/image1.png";
 import PropTypes from "prop-types";
 import { SkeletonNavbar } from "../../components/Skeleton";
 
@@ -15,11 +14,10 @@ export const NavbarMenu = ({
   setIsSelectedItem,
   setDtCategoryLength
 }) => {
-  const theme = useSelector((state) => state.dataSlicePersisted.theme);
   const [isLoading, setIsLoading] = useState(true);
 
-  const outletName = useSelector(
-    (state) => state.dataSlicePersisted.outletName,
+  const { outletName, theme} = useSelector(
+    (state) => state.dataSlicePersisted,
   );
 
   const mountData = useRef();
@@ -59,10 +57,9 @@ export const NavbarMenu = ({
           dt.buttonType.toLowerCase() == "category" ||
           dt.buttonType.toLowerCase() == "folder"
         ) {
-          let imageDefault = image1;
           data.push({
             name: dt.buttonTitle,
-            img: dt.imageURL ? dt.imageURL : imageDefault,
+            img: dt.imageURL || theme.Image_Item_Place_Holder,
             refNo: dt.refNo,
             type: dt.buttonType,
           });

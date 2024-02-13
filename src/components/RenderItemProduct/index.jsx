@@ -82,7 +82,7 @@ export const RenderItemProduct = ({
         <button
           onClick={() => handleOpenModalAddItem()}
           style={{
-            backgroundImage: `url(${item.defaultImageURL || theme.Image_Logo})`,
+            backgroundImage: `url(${item.defaultImageURL || theme.Image_Item_Place_Holder})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             width: "100%",
