@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { RenderItemCart } from "./Cart";
 import { RenderRetailPrice } from "../../RenderItemProduct/RetailPrice";
+import { RenderTag } from "./Tag";
 
 
 const RenderItemMain = ({ 
@@ -30,6 +31,7 @@ const RenderItemMain = ({
   return (
     <div className="bg-white w-full px-4 object-center overflow-y-auto pb-10">
       <RenderImage itemImage={item.defaultImageURL} />
+      <RenderTag insights={item.insight}/>
       <div className="text-gray-700 text-sm font-medium leading-5 tracking-wide whitespace-nowrap mt-2.5">
         {item.itemName}
       </div>
