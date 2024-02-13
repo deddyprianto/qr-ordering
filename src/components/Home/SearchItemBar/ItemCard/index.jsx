@@ -13,6 +13,7 @@ import { mapCartAndProduct } from "../../productAndCartMapper"
 import { addNewCart } from "../../../../components/GenerateCart"
 import { setCartInfo } from "../../../../app/dataSlicePersisted";
 import { RenderTagInsight } from "../../TagInsight";
+import { RenderTagPromo } from "../../TagPromo";
 
 export const RenderItemCard = ({ item }) => {
   const dispatch = useDispatch()
@@ -73,7 +74,9 @@ export const RenderItemCard = ({ item }) => {
             src={item?.defaultImageURL || theme?.Image_Item_Place_Holder}
             className="absolute h-full w-full object-cover object-center inset-0 rounded-l-xl"
           />
-          {/* <RenderTagPromo/> */}
+          {(item?.isDiscounted || false) && (
+            <RenderTagPromo/>
+          )}
           <div className="absolute bottom-1 left-1 right-0">
             <div className="relative items-stretch flex gap-1 mt-16">
               <RenderTagInsight insights={item.insight}/>

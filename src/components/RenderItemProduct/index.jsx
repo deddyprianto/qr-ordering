@@ -2,9 +2,7 @@ import PropTypes from "prop-types";
 import { useEdgeSnack } from "../EdgeSnack/utils/useEdgeSnack";
 import RenderModalItemDetail from "../ModalAddItem";
 import { useState } from "react";
-import { IconPercentage } from "../../assets/svgIcon";
 import { useDispatch, useSelector } from "react-redux";
-import { Trans } from "react-i18next";
 import { getItemType } from "./GetItemType";
 import { addItemToCart } from "./AddItemToCart";
 import { RenderButtonAddToCart } from "./ButtonAddToCart";
@@ -14,6 +12,7 @@ import { setCartInfo } from "../../app/dataSlicePersisted";
 import { addNewCart } from "../GenerateCart";
 import { RenderRetailPrice } from "./RetailPrice";
 import { RenderTagInsight } from "../Home/TagInsight";
+import { RenderTagPromo } from "../Home/TagPromo";
 
 export const RenderItemProduct = ({ 
   item, 
@@ -96,33 +95,7 @@ export const RenderItemProduct = ({
           }}
         >
           {(item?.isDiscounted || false) && (
-            <div
-              style={{
-                width: "92px",
-                borderRadius: "16px 0px 16px 0px",
-                backgroundColor: "var(--semantic-color-error, #CF3030)",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "4px",
-                padding: "4px 16px",
-              }}
-            >
-              <IconPercentage />
-              <div
-                style={{
-                  color: "var(--text-color-secondary, #FFF)",
-                  textAlign: "center",
-                  letterSpacing: "0.24px",
-                  alignSelf: "start",
-                  flexGrow: "1",
-                  whiteSpace: "nowrap",
-                  font: "500 12px/17px Helvetica Neue, sans-serif ",
-                }}
-              >
-                <Trans i18nKey={"promo"} />
-              </div>
-            </div>
+            <RenderTagPromo/>
           )}
           <div className="p-2 flex gap-1">
             <RenderTagInsight insights={item.insight}/>
