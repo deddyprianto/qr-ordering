@@ -16,6 +16,7 @@ import {
   setOrderType,
   setAccessToken,
   setOutletDetail,
+  setInsights,
 } from "./app/dataSlicePersisted";
 import {
   setIsSearchItem,
@@ -23,6 +24,7 @@ import {
   setServiceCharge,
 } from "./app/dataSlice";
 import { callAPI } from "./services/services";
+import { apiInsights } from "./services/Insights";
 
 const router = createBrowserRouter([
   {
@@ -73,6 +75,7 @@ export default function App() {
   const getAuthUser = useRef();
   const getLayoutRef = useRef();
   const getOutletAvailability = useRef();
+  const getInsights = useRef();
 
   getLayoutRef.current = async () => {
     try {
@@ -161,6 +164,19 @@ export default function App() {
     }
   };
 
+  getInsights.current = async () => {
+    try {
+      const result = await apiInsights("GET", ``, {});
+      if (result.resultCode === 200) {
+        dispatch(setInsights(result.data));
+      } else {
+        throw result.message;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   getOutletAvailability.current = async (outletName) => {
     try {
       const result = await apiOutlet("GET", `${outletName}`, {});
@@ -212,6 +228,7 @@ export default function App() {
     getOutletAvailability.current("edge cafe");
     getLayoutRef.current();
     getAuthUser.current();
+    getInsights.current();
   }, [dispatch]);
   return <RouterProvider router={router} fallbackElement={<Loading />} />;
 }

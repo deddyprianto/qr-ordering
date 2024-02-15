@@ -1,5 +1,5 @@
 import { Trans } from "react-i18next";
-import { IconPercentage } from "../../../../assets/svgIcon";
+import { IconPercentage } from "../../assets/svgIcon";
 
 export const RenderTagPromo = () => {
   return (
