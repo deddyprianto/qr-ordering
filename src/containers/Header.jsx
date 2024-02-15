@@ -14,7 +14,12 @@ import { useUpdateURLWithQueryParams } from "../../hooks/usePathCustom";
 export default function Header() {
   const { search } = useLocation();
   const queryParams = new URLSearchParams(search);
-  const tableNo = queryParams.get("tableNo");
+  const queryStr = queryParams.get("input");
+
+  const decodeQueryStr = atob(queryStr);
+  const decodedParams = new URLSearchParams(decodeQueryStr);
+  const tableNo = decodedParams.get("tableNo");
+
   const updateURL = useUpdateURLWithQueryParams();
   let location = useLocation();
   const dispatch = useDispatch();
@@ -181,14 +186,14 @@ export default function Header() {
   };
 
   const renderMain = () => {
-    if (!outletDetail?.isQrOrderingAvailable) return null;
+    if (!outletDetail?.isQrOrderingAvailable) return <div></div>;
     else if (
       !outletDetail?.isActiveAllDay &&
       !outletDetail?.isInOperationalHours
     )
-      return null;
+      return <div></div>;
     else if (orderType == "" && location.pathname?.toLocaleLowerCase() == "/")
-      return null;
+      return <div></div>;
     else
       return (
         <div>
