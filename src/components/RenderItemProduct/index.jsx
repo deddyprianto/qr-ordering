@@ -97,7 +97,7 @@ export const RenderItemProduct = ({ item, cartID, qtyInCart, cartLineID, cartId 
             width: "100%",
             display: "flex",
             flexDirection: "column",
-            justifyContent: (item?.isDiscounted || false)?"space-between":"flex-end",
+            justifyContent: (!item?.isDiscounted)?"flex-end":"space-between",
             borderTopLeftRadius: "16px",
             borderTopRightRadius: "16px",
             height: "191px",
