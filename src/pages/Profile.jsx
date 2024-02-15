@@ -1,10 +1,12 @@
 import { Trans } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useUpdateURLWithQueryParams } from "../../hooks/usePathCustom";
 
 export function Component() {
-  const navigate = useNavigate();
+  const { search } = useLocation();
+  const updateURL = useUpdateURLWithQueryParams();
   return (
-    <button onClick={() => navigate("/auth")}>
+    <button onClick={() => updateURL("/auth", search)}>
       <Trans i18nKey={"login"} />
     </button>
   );

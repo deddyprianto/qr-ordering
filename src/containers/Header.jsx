@@ -7,11 +7,15 @@ import {
 } from "../app/dataSlicePersisted";
 import { setIsSearchItem } from "../app/dataSlice";
 import { Trans } from "react-i18next";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { ImageOptimization } from "../components/ImageOptimization";
+import { useUpdateURLWithQueryParams } from "../../hooks/usePathCustom";
 
 export default function Header() {
-  const navigate = useNavigate();
+  const { search } = useLocation();
+  const queryParams = new URLSearchParams(search);
+  const tableNo = queryParams.get("tableNo");
+  const updateURL = useUpdateURLWithQueryParams();
   let location = useLocation();
   const dispatch = useDispatch();
   const { isSearchItem } = useSelector((state) => state.dataSlice);
@@ -71,7 +75,7 @@ export default function Header() {
             <Trans i18nKey={"you_at_table"} />
           </div>
           <div className="text-white text-center text-sm font-medium leading-5 tracking-wide self-center whitespace-nowrap my-auto">
-            {"{table_no}"}
+            {tableNo}
           </div>
         </div>
       </div>
@@ -127,9 +131,7 @@ export default function Header() {
     return (
       <button
         style={{ backgroundColor: theme.Color_Primary }}
-        onClick={() => {
-          navigate(redirectPath);
-        }}
+        onClick={() => updateURL(redirectPath, search)}
         className="flex text-white items-center text-[16px] font-medium py-[5px] w-full"
       >
         <IconArrowLeft />
@@ -179,12 +181,14 @@ export default function Header() {
   };
 
   const renderMain = () => {
-    if(!outletDetail?.isQrOrderingAvailable)
-      return <div></div>
-    else if(!outletDetail?.isActiveAllDay && !outletDetail?.isInOperationalHours)
-      return <div></div>
+    if (!outletDetail?.isQrOrderingAvailable) return null;
+    else if (
+      !outletDetail?.isActiveAllDay &&
+      !outletDetail?.isInOperationalHours
+    )
+      return null;
     else if (orderType == "" && location.pathname?.toLocaleLowerCase() == "/")
-      return <div></div>;
+      return null;
     else
       return (
         <div>

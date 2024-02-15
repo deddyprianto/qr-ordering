@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setOtpRequestInfo } from "../../../app/dataSlicePersisted";
-
+import { useLocation } from "react-router-dom";
+import { useUpdateURLWithQueryParams } from "../../../../hooks/usePathCustom";
 export function CountdownTimerLabel({ targetDate, onCountdownComplete }) {
   const [timeLeft, setTimeLeft] = useState(getTimeRemaining(targetDate));
 
@@ -92,6 +93,8 @@ CountdownTimerLabel.propTypes = {
 };
 
 export function CountDownTime() {
+  const { search } = useLocation();
+  const updateURL = useUpdateURLWithQueryParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -105,9 +108,9 @@ export function CountDownTime() {
   useEffect(() => {
     if (countdownComplete) {
       dispatch(setOtpRequestInfo({}));
-      navigate("/");
+      updateURL("/", search);
     }
-  }, [countdownComplete, dispatch, navigate]);
+  }, [countdownComplete, dispatch, navigate, search, updateURL]);
 
   return (
     <CountdownTimerLabel
