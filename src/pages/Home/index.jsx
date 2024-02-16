@@ -11,6 +11,9 @@ import { useLocation } from "react-router-dom";
 const RenderOrderType = lazy(() => import("./OrderType"));
 const MainView = lazy(() => import("./MainVIew"));
 const RenderSplashScreen = lazy(() => import("../../components/SplashScreen"));
+const RenderValidityError = lazy(
+  () => import("../../components/RenderValidityError"),
+);
 
 export function Component() {
   const dispatch = useDispatch();
@@ -23,6 +26,9 @@ export function Component() {
   const decodedParams = new URLSearchParams(decodeQueryStr);
 
   const outlet = decodedParams.get("outlet");
+  const validUntil = decodedParams.get("validUntil");
+  const validDate = new Date(parseInt(validUntil));
+  const currentDate = new Date();
 
   const { cartInfo, orderType } = useSelector(
     (state) => state.dataSlicePersisted,
@@ -44,7 +50,9 @@ export function Component() {
   }, [dispatch]);
 
   const renderContent = () => {
-    if (isSplashScreenShow) {
+    if (validUntil && validDate > currentDate) {
+      return <RenderValidityError />;
+    } else if (isSplashScreenShow) {
       return <RenderSplashScreen />;
     } else if (!outletDetail?.isQrOrderingAvailable) {
       return <NotAvailable isOutsideOperational={false} />;
