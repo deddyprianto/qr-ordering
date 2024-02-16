@@ -1,14 +1,16 @@
 import { useSelector } from "react-redux";
 import { IconArrowSolid } from "../../assets/svgIcon";
-import { useNavigate } from "react-router-dom";
-import PropTypes from "prop-types"
+import { useLocation } from "react-router-dom";
+import PropTypes from "prop-types";
 import { Trans } from "react-i18next";
 import { numberFormatter } from "../../utilities/numberFormatter";
 import { dateFormatter } from "../../components/Order/DateFormatter";
 import { statusText } from "../../components/Order/StatusText";
+import { useUpdateURLWithQueryParams } from "../../../hooks/usePathCustom";
 
 const ItemOrder = ({ order }) => {
-  const navigate = useNavigate();
+  const { search } = useLocation();
+  const updateURL = useUpdateURLWithQueryParams();
 
   const { theme } = useSelector((state) => state.dataSlicePersisted);
   return (
@@ -41,18 +43,23 @@ const ItemOrder = ({ order }) => {
       {/* 2 */}
       <div className="p-[12px]">
         <div className="text-sm font-medium leading-5 tracking-wide w-full mt-3">
-          {order.noOfItems} <Trans i18nKey={"items"}/> - $ {numberFormatter(order.amount)}
+          {order.noOfItems} <Trans i18nKey={"items"} /> - ${" "}
+          {numberFormatter(order.amount)}
         </div>
         <div className="grid grid-cols-[1fr_1fr] grid-rows-[1fr_1fr] mt-[8px] gap-y-1">
-          <div style={{color: "#888787"}}><Trans i18nKey={"order_date_time"}/></div>
-          <div style={{color: "#888787"}}><Trans i18nKey={"queue_no"}/></div>
+          <div style={{ color: "#888787" }}>
+            <Trans i18nKey={"order_date_time"} />
+          </div>
+          <div style={{ color: "#888787" }}>
+            <Trans i18nKey={"queue_no"} />
+          </div>
           <div>{dateFormatter(order?.orderDate)} </div>
           <div>{order.queueNo}</div>
         </div>
       </div>
       {/* 3 */}
       <button
-        onClick={() => navigate("/ordersummary")}
+        onClick={() => updateURL("/ordersummary", search)}
         className="items-stretch flex justify-between gap-0 mt-3 px-3 py-2 rounded-b-md"
         style={{
           backgroundColor: theme.Color_Primary,

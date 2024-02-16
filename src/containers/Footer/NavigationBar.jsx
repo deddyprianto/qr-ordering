@@ -1,9 +1,11 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { HomeIcon, ProfileIcon, TaskListIcon } from "../../assets/svgIcon";
-import {  Trans } from 'react-i18next';
+import { Trans } from "react-i18next";
+import { useUpdateURLWithQueryParams } from "../../../hooks/usePathCustom";
 
 export const RenderNavigationBar = () => {
-  const navigate = useNavigate();
+  const { search } = useLocation();
+  const updateURL = useUpdateURLWithQueryParams();
   return (
     <nav
       style={{
@@ -25,10 +27,10 @@ export const RenderNavigationBar = () => {
           flexBasis: "0%",
           flexDirection: "column",
         }}
-        onClick={() => navigate("/")}
+        onClick={() => updateURL("/", search)}
         onKeyDown={(event) => {
           if (event.key === "Enter" || event.key === " ") {
-            navigate("/");
+            updateURL("/", search);
           }
         }}
       >
@@ -43,7 +45,7 @@ export const RenderNavigationBar = () => {
             font: "700 14px/20px Helvetica Neue, sans-serif ",
           }}
         >
-          <Trans i18nKey={"home"}/>
+          <Trans i18nKey={"home"} />
         </div>
       </button>
       <button
@@ -56,10 +58,10 @@ export const RenderNavigationBar = () => {
           flexDirection: "column",
           padding: "2px 0",
         }}
-        onClick={() => navigate("/cart")}
+        onClick={() => updateURL("/cart", search)}
         onKeyDown={(event) => {
           if (event.key === "Enter" || event.key === " ") {
-            navigate("/cart");
+            updateURL("/cart", search);
           }
         }}
       >
@@ -75,7 +77,7 @@ export const RenderNavigationBar = () => {
             font: "700 14px/20px Helvetica Neue, sans-serif ",
           }}
         >
-          <Trans i18nKey={"orders"}/>
+          <Trans i18nKey={"orders"} />
         </div>
       </button>
       <button
@@ -87,10 +89,10 @@ export const RenderNavigationBar = () => {
           flexBasis: "0%",
           flexDirection: "column",
         }}
-        onClick={() => navigate("/profile")}
+        onClick={() => updateURL("/profile", search)}
         onKeyDown={(event) => {
           if (event.key === "Enter" || event.key === " ") {
-            navigate("/profile");
+            updateURL("/profile", search);
           }
         }}
       >
@@ -106,9 +108,9 @@ export const RenderNavigationBar = () => {
             font: "700 14px/20px Helvetica Neue, sans-serif ",
           }}
         >
-          <Trans i18nKey={"profile"}/>
+          <Trans i18nKey={"profile"} />
         </div>
       </button>
     </nav>
   );
-}
+};

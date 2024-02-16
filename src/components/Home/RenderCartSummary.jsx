@@ -1,11 +1,14 @@
 import { useSelector } from "react-redux";
 import { IconArrowRight, IconCart } from "../../assets/svgIcon";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Trans } from "react-i18next";
 import { getCurrencyHelper } from "../../helper";
+import { useUpdateURLWithQueryParams } from "../../../hooks/usePathCustom";
 
 const RenderCartSummary = () => {
-  const navigate = useNavigate();
+  const { search } = useLocation();
+  const updateURL = useUpdateURLWithQueryParams();
+
   const { cartInfo, orderType } = useSelector(
     (state) => state.dataSlicePersisted,
   );
@@ -22,7 +25,7 @@ const RenderCartSummary = () => {
   if (orderType) {
     return (
       <button
-        onClick={() => navigate("/cart")}
+        onClick={() => updateURL("/cart", search)}
         style={{
           backgroundColor: theme.Color_Secondary,
         }}

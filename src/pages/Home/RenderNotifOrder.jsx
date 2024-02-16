@@ -9,18 +9,20 @@ import { apiOrder } from "../../services/Order";
 import { Trans } from "react-i18next";
 import { dateFormatter } from "../../components/Order/DateFormatter";
 import { statusText } from "../../components/Order/StatusText";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { setCartIdToShow } from "../../app/dataSlicePersisted";
+import { useUpdateURLWithQueryParams } from "../../../hooks/usePathCustom";
 
 export function RenderNotificationOrder() {
+  const { search } = useLocation();
+  const updateURL = useUpdateURLWithQueryParams();
   const { theme } = useSelector((state) => state.dataSlicePersisted);
   const [isExist, setIsExist] = useState(false);
   const [order, setOrder] = useState({});
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
   const fetchLatestOrder = useRef();
-  fetchLatestOrder.current = async() => {
+  fetchLatestOrder.current = async () => {
     try {
       let body = {
         search: "",
@@ -28,7 +30,7 @@ export function RenderNotificationOrder() {
         take: 1,
         sortBy: "orderDate",
         isDescending: true,
-      }
+      };
 
       const result = await apiOrder("GET", "", body);
       if (result.resultCode === 200) {
@@ -40,18 +42,18 @@ export function RenderNotificationOrder() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchLatestOrder.current();
-  },[])
+  }, []);
 
   const handleClickViewDetail = () => {
     dispatch(setCartIdToShow(order?.cartID || ""));
-    navigate("/ordersummary");
-  }
+    updateURL("/ordersummary", search);
+  };
 
-  if(isExist)
+  if (isExist)
     return (
       <div className="items-stretch self-stretch bg-orange-100 flex w-full flex-col p-2 rounded-2xl">
         <div className="justify-between items-stretch flex w-full gap-5">
@@ -63,7 +65,7 @@ export function RenderNotificationOrder() {
           </div>
           <button
             className="text-pink-500 text-sm font-bold leading-5 tracking-wide self-center my-auto"
-            onClick={() => navigate("/order")}
+            onClick={() => updateURL("/order", search)}
           >
             <Trans i18nKey={"view_all"} />
           </button>
