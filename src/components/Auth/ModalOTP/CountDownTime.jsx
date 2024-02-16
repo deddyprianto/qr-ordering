@@ -2,9 +2,8 @@ import { Trans } from "react-i18next";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { setOtpRequestInfo } from "../../../app/dataSlicePersisted";
-import { useLocation } from "react-router-dom";
 import { useUpdateURLWithQueryParams } from "../../../../hooks/usePathCustom";
 export function CountdownTimerLabel({ targetDate, onCountdownComplete }) {
   const [timeLeft, setTimeLeft] = useState(getTimeRemaining(targetDate));
