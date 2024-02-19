@@ -189,6 +189,7 @@ export default function Header() {
   };
 
   const renderMain = () => {
+    if (!search || !queryStr) return <div></div>;
     if (validUntil && validDate > currentDate) return <div></div>;
     if (!outletDetail?.isQrOrderingAvailable) return <div></div>;
     else if (

@@ -50,7 +50,9 @@ export function Component() {
   }, [dispatch]);
 
   const renderContent = () => {
-    if (validUntil && validDate > currentDate) {
+    if (!search || !queryStr) {
+      return <RenderValidityError />;
+    } else if (validUntil && validDate > currentDate) {
       return <RenderValidityError />;
     } else if (isSplashScreenShow) {
       return <RenderSplashScreen />;
