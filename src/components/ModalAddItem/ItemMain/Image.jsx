@@ -1,13 +1,16 @@
 import PropTypes from "prop-types";
-import image3 from "../../../assets/image3.png";
+import { useSelector } from "react-redux";
 
 export const RenderImage = ({ itemImage }) => {
+  const { theme } = useSelector(
+    (state) => state.dataSlicePersisted,
+  );
   return( 
     <div className="flex items-center justify-center">
       <img
         alt="itemImage"
         loading="lazy"
-        src={itemImage || image3}
+        src={itemImage || theme.Image_Item_Place_Holder}
         className="rounded-2xl object-cover object-center inset-0"
       />        
     </div>

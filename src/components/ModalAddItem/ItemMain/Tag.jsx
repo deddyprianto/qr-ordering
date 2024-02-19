@@ -1,21 +1,31 @@
+import PropTypes from "prop-types"
 
-import { IconChef, IconStar } from "../../../assets/svgIcon";
-
-export const RenderTag = () => {
+export const RenderTag = ({ insights }) => {
   return( 
-    <div className="items-stretch flex  gap-2.5 mt-[10px]">
-      <div className="flex items-center bg-lime-700 justify-between gap-1 px-2 py-1 rounded-[100px]">
-          <IconChef />
-          <div className="text-white text-xs font-medium leading-4 tracking-wide">
-          Chef’s Recommendation
+    <div className="flex flex-wrap items-stretch gap-2.5 mt-[10px]">
+      {insights?.map((insight)=>{
+        return (
+          <div key={insight.insightName+''+insight.insightTagIcon}
+            className="flex items-center justify-between gap-1 px-2 py-1 rounded-[100px]"
+              style={{backgroundColor: insight.insightTagColor}}
+            >
+               <img
+                alt={insight.insightName}
+                loading="lazy"
+                src={insight.insightTagIcon}
+                className="aspect-square"
+              />
+              <div className="text-white text-xs font-medium leading-4 tracking-wide" 
+              >
+                {insight.insightName}
+              </div>
           </div>
-      </div>
-      <div className="flex items-center bg-amber-500 justify-between gap-1 px-1.5 py-1 rounded-[100px]">
-          <IconStar />
-          <div className="text-white text-xs font-medium leading-4 tracking-wide grow whitespace-nowrap ">
-          Customer Favorites
-          </div>
-      </div>
+        )
+      })}
     </div>
   );
+}
+
+RenderTag.propTypes = {
+  insights: PropTypes.array
 }

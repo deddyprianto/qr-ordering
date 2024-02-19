@@ -1,12 +1,13 @@
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { lazy, useState } from "react";
 import PropTypes from "prop-types";
 import { hasEmptyElement } from "../../helper";
 import { RenderExpandDetail } from "./RenderExpandDetail";
-import { RenderQty } from "./RenderQty";
 import RenderModalItemDetail from "../../components/ModalAddItem";
 import { getItemType } from "../../components/RenderItemProduct/GetItemType";
 import { numberFormatter } from "../../utilities/numberFormatter";
+
+const RenderQty = lazy(() => import("./RenderQty"));
 
 const ItemCart = ({ item, idCart, setIsCartEmpty, totalQuantityCart }) => {
   const [openEditModal, setOpenEditModal] = useState(false);

@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 export const Tumbs = ({ bgColor, label, icon }) => {
     return (
       <div
-        className={`${bgColor} flex justify-between gap-1 pl-1.5 pr-3 py-1 rounded-[100px]`}
+        style={{backgroundColor: bgColor}}
+        className={`flex justify-between gap-1 pl-1.5 pr-3 py-1 rounded-[100px]`}
       >
         <img
           alt=""

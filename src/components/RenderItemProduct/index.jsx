@@ -2,9 +2,7 @@ import PropTypes from "prop-types";
 import { useEdgeSnack } from "../EdgeSnack/utils/useEdgeSnack";
 import RenderModalItemDetail from "../ModalAddItem";
 import { useState } from "react";
-import { IconPercentage } from "../../assets/svgIcon";
 import { useDispatch, useSelector } from "react-redux";
-import { Trans } from "react-i18next";
 import { getItemType } from "./GetItemType";
 import { addItemToCart } from "./AddItemToCart";
 import { RenderButtonAddToCart } from "./ButtonAddToCart";
@@ -13,6 +11,8 @@ import { mapCartAndProduct } from "../Home/productAndCartMapper";
 import { setCartInfo } from "../../app/dataSlicePersisted";
 import { addNewCart } from "../GenerateCart";
 import { RenderRetailPrice } from "./RetailPrice";
+import { RenderTagInsight } from "../Home/TagInsight";
+import { RenderTagPromo } from "../Home/TagPromo";
 
 export const RenderItemProduct = ({ item, cartID, qtyInCart, cartLineID, cartId }) => {
   const { menuSubGroup } = useSelector((state) => state.dataSlice);
@@ -91,46 +91,24 @@ export const RenderItemProduct = ({ item, cartID, qtyInCart, cartLineID, cartId 
         <button
           onClick={() => handleOpenModalAddItem()}
           style={{
-            backgroundImage: `url(${item.defaultImageURL || theme.Image_Logo})`,
+            backgroundImage: `url(${item.defaultImageURL || theme.Image_Item_Place_Holder})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             width: "100%",
             display: "flex",
             flexDirection: "column",
+            justifyContent: (!item?.isDiscounted)?"flex-end":"space-between",
             borderTopLeftRadius: "16px",
             borderTopRightRadius: "16px",
             height: "191px",
           }}
         >
           {(item?.isDiscounted || false) && (
-            <div
-              style={{
-                width: "92px",
-                borderRadius: "16px 0px 16px 0px",
-                backgroundColor: "var(--semantic-color-error, #CF3030)",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "4px",
-                padding: "4px 16px",
-              }}
-            >
-              <IconPercentage />
-              <div
-                style={{
-                  color: "var(--text-color-secondary, #FFF)",
-                  textAlign: "center",
-                  letterSpacing: "0.24px",
-                  alignSelf: "start",
-                  flexGrow: "1",
-                  whiteSpace: "nowrap",
-                  font: "500 12px/17px Helvetica Neue, sans-serif ",
-                }}
-              >
-                <Trans i18nKey={"promo"} />
-              </div>
-            </div>
+            <RenderTagPromo/>
           )}
+          <div className="p-2 flex gap-1">
+            <RenderTagInsight insights={item.insight}/>
+          </div>
         </button>
 
         <div className="grid grid-cols-1 grid-rows-[40px_1fr] p-[8px]">
@@ -160,7 +138,7 @@ export const RenderItemProduct = ({ item, cartID, qtyInCart, cartLineID, cartId 
             {isLoading ? (
               <button
                 type="button"
-                className="bg-[#9D9D9D] rounded-lg flex justify-center items-center py-[5px] text-white mt-[8px]"
+                className="bg-[#9D9D9D] rounded-lg flex justify-center items-center py-[5px] text-white mt-[8px] w-full"
                 disabled
               >
                 <span className="loader"></span>
