@@ -6,7 +6,7 @@ import { useState } from "react";
 import { apiCart } from "../../services/Cart";
 import { setCartInfo } from "../../app/dataSlicePersisted";
 
-export const RenderQty = ({
+const RenderQty = ({
   isEmptyArray,
   expandItem,
   theme,
@@ -157,6 +157,7 @@ export const RenderQty = ({
     </div>
   );
 };
+export default RenderQty;
 RenderQty.propTypes = {
   isEmptyArray: PropTypes.bool,
   theme: PropTypes.object,

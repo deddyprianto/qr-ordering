@@ -19,6 +19,9 @@ export default function Header() {
   const decodeQueryStr = atob(queryStr);
   const decodedParams = new URLSearchParams(decodeQueryStr);
   const tableNo = decodedParams.get("tableNo");
+  const validUntil = decodedParams.get("validUntil");
+  const validDate = new Date(parseInt(validUntil));
+  const currentDate = new Date();
 
   const updateURL = useUpdateURLWithQueryParams();
   let location = useLocation();
@@ -186,6 +189,7 @@ export default function Header() {
   };
 
   const renderMain = () => {
+    if (validUntil && validDate > currentDate) return <div></div>;
     if (!outletDetail?.isQrOrderingAvailable) return <div></div>;
     else if (
       !outletDetail?.isActiveAllDay &&

@@ -11,7 +11,6 @@ import {
   setSearchItemObj,
   setEnableSearchUsingScroll,
   setCartInfo,
-  setOutletName,
   setTheme,
   setOrderType,
   setAccessToken,
@@ -64,9 +63,16 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
+  const url = window.location.href;
+  const params = new URLSearchParams(url.split("?")[1]);
+  const inputKey = params.get("input");
+  const decodeQueryStr = atob(inputKey);
+  const decodedParams = new URLSearchParams(decodeQueryStr);
+  const outlet = decodedParams.get("outlet");
+
   const dispatch = useDispatch();
 
-  const { cartInfo, orderType, accessToken, memberInfo } = useSelector(
+  const { cartInfo, orderType, memberInfo } = useSelector(
     (state) => state.dataSlicePersisted,
   );
 
@@ -96,20 +102,23 @@ export default function App() {
   };
 
   const resetCartAndOrderType = (data) => {
-    if(data?.status != 'PENDING'){
+    if (data?.status != "PENDING") {
       dispatch(setCartInfo({}));
       dispatch(setOrderType(""));
-    }
-    else{
+    } else {
       dispatch(setCartInfo(data));
       dispatch(setOrderType(data?.orderType));
     }
-  }
+  };
 
   getCartInfoRef.current = async () => {
     if (!cartInfo.uniqueID) return;
+    if (outlet !== cartInfo?.outletName?.toLowerCase()) {
+      await apiCart("DELETE", cartInfo?.uniqueID);
+      return dispatch(setCartInfo({}));
+    }
     try {
-      const result = await apiCart("GET", cartInfo.uniqueID, {}, accessToken);
+      const result = await apiCart("GET", cartInfo.uniqueID, {});
       if (result.resultCode === 200) {
         resetCartAndOrderType(result.data);
       } else {
@@ -221,7 +230,6 @@ export default function App() {
       }),
     );
     dispatch(setEnableSearchUsingScroll(false));
-    dispatch(setOutletName("edge cafe"));
 
     getCartInfoRef.current();
     getOutletSetting.current("edge cafe");
