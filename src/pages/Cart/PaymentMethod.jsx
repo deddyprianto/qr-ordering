@@ -54,10 +54,18 @@ import { SkeletonPaymentList } from "../../components/Skeleton/SkeletonPaymentLi
                   backgroundColor:
                     paymentMethod === item ? theme.Color_Accent : "white",
                 }}
-                className="w-[160px] flex justify-center items-center border  p-[16px] gap-x-2 rounded-lg border-solid"
+                className="w-[160px] flex justify-center items-center border  p-[4px] gap-x-2 rounded-lg border-solid"
               >
                 <div>
-                  <IconMasterCard />
+                  {item.iconUrl
+                    ?<img
+                      alt=""
+                      loading="lazy"
+                      src={item.iconUrl}
+                      className="aspect-square object-contain object-center w-10 overflow-hidden max-w-full"
+                    />
+                    :<IconMasterCard />
+                  }
                 </div>
                 <div className="text-center">{item.displayName}</div>
               </button>
