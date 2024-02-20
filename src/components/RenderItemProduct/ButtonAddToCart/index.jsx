@@ -16,13 +16,13 @@ export const RenderButtonAddToCart = ({
 
   const getTotalItemCartQty = (itemList) => {
     let quantity = 0;
-    for(const item of itemList){
+    for(const item of (itemList)){
       quantity += item.quantity;
     }
     return quantity;
   }
 
-  if (listItemInCart?.length<1)
+  if ((listItemInCart || [])?.length<1)
     return (
       <RenderButtonAdd
         isLoading={isLoading}
