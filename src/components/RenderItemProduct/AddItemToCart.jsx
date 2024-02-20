@@ -46,7 +46,11 @@ export const addItemToCart = async ({
 };
 
 const actionType = (qty, lineID, cartInfo, isQtyExist) => {
-  if (isQtyExist && cartInfo?.details.length > 0) return "update";
+  if (isQtyExist && cartInfo?.details?.length > 0) {
+    if (qty < 1) return "delete";
+    return "update";
+  }
+
   if (!lineID) return "add";
   else if (qty < 1) return "delete";
   else return "update";
