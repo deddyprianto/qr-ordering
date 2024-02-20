@@ -92,42 +92,46 @@ const RenderQty = ({
     <div className="justify-between items-center border-t-[color:var(--Grey-Scale-color-Grey-Scale-3,#D6D6D6)] flex border-t border-solid py-2 px-2">
       <div className="items-stretch flex justify-between my-auto">
         {!isEmptyArray && (
-          <button
-            onClick={() => setExpandItem(!expandItem)}
+          <div
             className="items-center flex justify-between gap-1 "
           >
-            {expandItem ? (
-              <IconExpandHide primary={theme.Color_Secondary} />
-            ) : (
-              <IconExpand primary={theme.Color_Secondary} />
-            )}
-            <div
-              style={{
-                color: theme.Color_Secondary,
-              }}
-              className="text-sm font-medium leading-5 tracking-wide underline self-stretch grow whitespace-nowrap"
+            <button
+              className={`items-center flex justify-between`}
+              onClick={() => setExpandItem(!expandItem)}
             >
-              {expandItem ? "Hide" : "Expand"} Details
-            </div>
-            {(item.bundles?.length > 0 || item.attributes?.length > 0) && (
+              {expandItem ? (
+                <IconExpandHide primary={theme.Color_Secondary} />
+              ) : (
+                <IconExpand primary={theme.Color_Secondary} />
+              )}
               <div
+                style={{
+                  color: theme.Color_Secondary,
+                }}
+                className="text-sm font-medium leading-5 tracking-wide underline self-stretch grow whitespace-nowrap"
+              >
+                {expandItem ? "Hide" : "Expand"} Details
+              </div>
+            </button>
+            {(item.bundles?.length > 0 || item.attributes?.length > 0) && (
+              <button
                 className={`items-center flex justify-between ${
                   !isEmptyArray && "ml-[8px]"
                 }`}
+                onClick={handleEdit}
               >
                 <IconEdit primary={theme.Color_Secondary} />
-                <button
+                <div
                   style={{
                     color: theme.Color_Secondary,
                   }}
-                  onClick={handleEdit}
                   className="text-sm font-medium leading-5 tracking-wide underline self-stretch grow whitespace-nowrap ml-1 cursor-pointer"
                 >
                   {isLoading ? "Get your data..." : "Edit"}
-                </button>
-              </div>
+                </div>
+              </button>
             )}
-          </button>
+          </div>
         )}
       </div>
       {isLoadingQty ? (
