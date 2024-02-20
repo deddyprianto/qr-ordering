@@ -10,12 +10,19 @@ export const RenderButtonAddToCart = ({
   item,
 }) => {
   const { cartInfo } = useSelector((state) => state.dataSlicePersisted);
-  const isQtyExist = cartInfo?.details?.find(
+  const listItemInCart = cartInfo?.details?.filter(
     (itemCart) => itemCart.productInfo.itemNo === item.itemNo,
   );
 
+  const getTotalItemCartQty = (itemList) => {
+    let quantity = 0;
+    for(const item of itemList){
+      quantity += item.quantity;
+    }
+    return quantity;
+  }
 
-  if (!isQtyExist)
+  if (listItemInCart?.length<1)
     return (
       <RenderButtonAdd
         isLoading={isLoading}
@@ -25,7 +32,7 @@ export const RenderButtonAddToCart = ({
   else
     return (
       <RenderButtonItemInCart
-        qtyInCart={isQtyExist.quantity}
+        qtyInCart={getTotalItemCartQty(listItemInCart)}
         cartLineID={cartLineID}
         isLoading={isLoading}
         handleClickButtonAdd={handleClickButtonAdd}
