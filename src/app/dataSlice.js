@@ -13,6 +13,9 @@ const initialState = {
   isDataOrder: false,
   moveSelected: false,
   hasSubGroup: false,
+  tableNo: "",
+  validUntil: "",
+  isValidUrl: false
 };
 
 const dataSlice = createSlice({
@@ -55,6 +58,15 @@ const dataSlice = createSlice({
     setHasSubGroup: (state, action) => {
       state.hasSubGroup = action.payload;
     },
+    setTableNo: (state, action) => {
+      state.tableNo = action.payload;
+    },
+    setValidUntil: (state, action) => {
+      state.validUntil = action.payload;
+    },
+    setIsValidUrl: (state, action) => {
+      state.isValidUrl = action.payload;
+    },
   },
 });
 
@@ -71,5 +83,8 @@ export const {
   setOutletSetting,
   setServiceCharge,
   setIsDataOrder,
+  setTableNo,
+  setValidUntil,
+  setIsValidUrl
 } = dataSlice.actions;
 export default dataSlice.reducer;

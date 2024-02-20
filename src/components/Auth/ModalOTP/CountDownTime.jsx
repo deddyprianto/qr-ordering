@@ -107,7 +107,7 @@ export function CountDownTime() {
   useEffect(() => {
     if (countdownComplete) {
       dispatch(setOtpRequestInfo({}));
-      updateURL("/", search);
+      updateURL("/");
     }
   }, [countdownComplete, dispatch, navigate, search, updateURL]);
 

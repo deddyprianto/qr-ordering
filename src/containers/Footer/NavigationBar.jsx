@@ -1,10 +1,8 @@
-import { useLocation } from "react-router-dom";
 import { HomeIcon, ProfileIcon, TaskListIcon } from "../../assets/svgIcon";
 import { Trans } from "react-i18next";
 import { useUpdateURLWithQueryParams } from "../../../hooks/usePathCustom";
 
 export const RenderNavigationBar = () => {
-  const { search } = useLocation();
   const updateURL = useUpdateURLWithQueryParams();
   return (
     <nav
@@ -27,10 +25,10 @@ export const RenderNavigationBar = () => {
           flexBasis: "0%",
           flexDirection: "column",
         }}
-        onClick={() => updateURL("/", search)}
+        onClick={() => updateURL("/")}
         onKeyDown={(event) => {
           if (event.key === "Enter" || event.key === " ") {
-            updateURL("/", search);
+            updateURL("/");
           }
         }}
       >
@@ -58,10 +56,10 @@ export const RenderNavigationBar = () => {
           flexDirection: "column",
           padding: "2px 0",
         }}
-        onClick={() => updateURL("/cart", search)}
+        onClick={() => updateURL("/cart")}
         onKeyDown={(event) => {
           if (event.key === "Enter" || event.key === " ") {
-            updateURL("/cart", search);
+            updateURL("/cart");
           }
         }}
       >
@@ -89,10 +87,10 @@ export const RenderNavigationBar = () => {
           flexBasis: "0%",
           flexDirection: "column",
         }}
-        onClick={() => updateURL("/profile", search)}
+        onClick={() => updateURL("/profile")}
         onKeyDown={(event) => {
           if (event.key === "Enter" || event.key === " ") {
-            updateURL("/profile", search);
+            updateURL("/profile");
           }
         }}
       >

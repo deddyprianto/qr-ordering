@@ -5,25 +5,14 @@ import "./scss/App.scss";
 
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { apiCart } from "./services/Cart";
-import { apiOutlet } from "./services/Outlet";
 import {
   setSearchItemObj,
-  setEnableSearchUsingScroll,
-  setCartInfo,
-  setTheme,
-  setOrderType,
-  setAccessToken,
-  setOutletDetail,
-  setInsights,
+  setEnableSearchUsingScroll
 } from "./app/dataSlicePersisted";
 import {
-  setIsSearchItem,
-  setOutletSetting,
-  setServiceCharge,
+  setIsSearchItem
 } from "./app/dataSlice";
-import { callAPI } from "./services/services";
-import { apiInsights } from "./services/Insights";
+import { fetchAuthMember, fetchCartInfo, fetchInsight, fetchLayout, fetchOutletAvailability, fetchOutletSetting, urlQueryExtractor } from "./components/DataPreparation";
 
 const router = createBrowserRouter([
   {
@@ -63,12 +52,7 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
-  const url = window.location.href;
-  const params = new URLSearchParams(url.split("?")[1]);
-  const inputKey = params.get("input");
-  const decodeQueryStr = atob(inputKey);
-  const decodedParams = new URLSearchParams(decodeQueryStr);
-  const outlet = decodedParams.get("outlet");
+  
 
   const dispatch = useDispatch();
 
@@ -76,148 +60,17 @@ export default function App() {
     (state) => state.dataSlicePersisted,
   );
 
-  const getCartInfoRef = useRef();
-  const getOutletSetting = useRef();
-  const getAuthUser = useRef();
-  const getLayoutRef = useRef();
-  const getOutletAvailability = useRef();
-  const getInsights = useRef();
+  const dataPreparation = useRef();
 
-  getLayoutRef.current = async () => {
-    try {
-      const response = await callAPI(
-        `${import.meta.env.VITE_API_URL}/outlets/layout`,
-        "GET",
-      );
-
-      const stateDefaultTheme = {};
-      response?.data?.forEach((item) => {
-        stateDefaultTheme[item.settingKey] = item.settingValue;
-      });
-
-      dispatch(setTheme(stateDefaultTheme));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const resetCartAndOrderType = (data) => {
-    if (data?.status != "PENDING") {
-      dispatch(setCartInfo({}));
-      dispatch(setOrderType(""));
-    } else {
-      dispatch(setCartInfo(data));
-      dispatch(setOrderType(data?.orderType));
-    }
-  };
-
-  getCartInfoRef.current = async () => {
-    if (!cartInfo.uniqueID) return;
-    if (outlet !== cartInfo?.outletName?.toLowerCase()) {
-      await apiCart("DELETE", cartInfo?.uniqueID);
-      return dispatch(setCartInfo({}));
-    }
-    try {
-      const result = await apiCart("GET", cartInfo.uniqueID, {});
-      if (result.resultCode === 200) {
-        resetCartAndOrderType(result.data);
-      } else {
-        throw result.message;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  getOutletSetting.current = async (outletName) => {
-    try {
-      let outletSetting = {};
-      const result = await apiOutlet("GET", `${outletName}/settings`, {});
-      if (result.resultCode === 200) {
-        for (const setting of result.data) {
-          switch (setting.settingKey) {
-            case "Enable_QR_DineIn":
-              outletSetting["dineInOption"] = {
-                enable: setting.settingValue.toLowerCase() == "true",
-                displayName: setting.displayName,
-                serviceCharges: JSON.parse(setting.dataOptions || "[]"),
-              };
-              break;
-            case "Enable_QR_TakeAway":
-              outletSetting["takeAwayOption"] = {
-                enable: setting.settingValue.toLowerCase() == "true",
-                displayName: setting.displayName,
-                serviceCharges: JSON.parse(setting.dataOptions || "[]"),
-              };
-              break;
-            default:
-              break;
-          }
-        }
-        dispatch(setOutletSetting(outletSetting));
-      } else {
-        throw result.message;
-      }
-      if (orderType == "DINEIN")
-        dispatch(
-          setServiceCharge(outletSetting["dineInOption"]?.serviceCharges || []),
-        );
-      else
-        dispatch(
-          setServiceCharge(
-            outletSetting["takeAwayOption"]?.serviceCharges || [],
-          ),
-        );
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  getInsights.current = async () => {
-    try {
-      const result = await apiInsights("GET", ``, {});
-      if (result.resultCode === 200) {
-        dispatch(setInsights(result.data));
-      } else {
-        throw result.message;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  getOutletAvailability.current = async (outletName) => {
-    try {
-      const result = await apiOutlet("GET", `${outletName}`, {});
-      if (result.resultCode === 200) {
-        dispatch(setOutletDetail(result.data));
-      } else {
-        throw result.message;
-      }
-    } catch (error) {
-      dispatch(setOutletDetail({}));
-      console.log(error);
-    }
-  };
-
-  getAuthUser.current = async () => {
-    try {
-      const responseAuth = await callAPI(
-        `${import.meta.env.VITE_API_URL}/auth`,
-        "GET",
-      );
-      if (Object.keys(memberInfo).length === 0) {
-        console.log("LOGIN AS GUEST");
-        dispatch(
-          setAccessToken({
-            accessToken: responseAuth?.data?.accessToken,
-            type: "guest",
-          }),
-        );
-      }
-    } catch (error) {
-      console.log("error on auth detected", error);
-    }
+  dataPreparation.current = () => {
+    const outlet = urlQueryExtractor(dispatch);
+    if(!outlet) return;
+    fetchLayout(dispatch);
+    fetchCartInfo(dispatch, outlet, cartInfo);
+    fetchOutletSetting(dispatch, outlet, orderType);
+    fetchInsight(dispatch);
+    fetchOutletAvailability(dispatch, outlet);
+    fetchAuthMember(dispatch, memberInfo);
   };
 
   useEffect(() => {
@@ -230,13 +83,7 @@ export default function App() {
       }),
     );
     dispatch(setEnableSearchUsingScroll(false));
-
-    getCartInfoRef.current();
-    getOutletSetting.current("edge cafe");
-    getOutletAvailability.current("edge cafe");
-    getLayoutRef.current();
-    getAuthUser.current();
-    getInsights.current();
+    dataPreparation.current();
   }, [dispatch]);
   return <RouterProvider router={router} fallbackElement={<Loading />} />;
 }
