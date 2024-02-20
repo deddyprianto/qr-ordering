@@ -141,6 +141,7 @@ const MainView = () => {
           setIsSelectedItem={setIsSelectedItem}
           setDtCategoryLength={setDtCategoryLength}
           handleSelectGroup={handleSelectGroup}
+          setIsLoadingParent={setIsLoading}
         />
 
         <div style={{ padding: "16px 16px 0px 16px" }}>
