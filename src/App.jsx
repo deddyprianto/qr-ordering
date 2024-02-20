@@ -63,7 +63,6 @@ export default function App() {
   const dataPreparation = useRef();
 
   dataPreparation.current = () => {
-    console.log(window.location.href)
     const outlet = urlQueryExtractor(dispatch);
     if(!outlet) return;
     fetchLayout(dispatch);

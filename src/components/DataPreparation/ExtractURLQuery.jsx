@@ -1,12 +1,22 @@
 import { setOutletName } from "../../app/dataSlicePersisted";
 import { setIsValidUrl, setTableNo, setValidUntil } from "../../app/dataSlice";
 
+const redirectionOccurred = (path, query) => {
+  if (path !== "/" && path !== "/orderSummary") {
+    window.location.href = '/'+query;
+    return true;
+  }
+  return false;
+}
+
 export const urlQueryExtractor = (dispatch) => {
   try {
-    const url = window.location.href;
-    const queryParams = new URLSearchParams(url.split("?")[1]);
-    const queryStr = queryParams.get("input");
+    const urlPath = window.location.pathname;
+    const urlQuery = window.location.search;
+    redirectionOccurred(urlPath, urlQuery);
 
+    const queryParams = new URLSearchParams(urlQuery);
+    const queryStr = queryParams.get("input");
     const decodeQueryStr = window.atob(queryStr);
     const decodedParams = new URLSearchParams(decodeQueryStr);
 
