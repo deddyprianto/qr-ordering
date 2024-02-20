@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { apiCart } from "../../services/Cart";
 import { setCartInfo } from "../../app/dataSlicePersisted";
+import { useEdgeSnack } from "../../components/EdgeSnack/utils/useEdgeSnack";
 
 const RenderQty = ({
   isEmptyArray,
@@ -18,6 +19,7 @@ const RenderQty = ({
   idCart,
 }) => {
   const dispatch = useDispatch();
+  const toast = useEdgeSnack();
   const [quantity, setQuantity] = useState(item?.quantity || 0);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingQty, setIsLoadingQty] = useState(false);
@@ -39,22 +41,30 @@ const RenderQty = ({
   };
 
   const handleAPIQty = async (quantityParams, increaseQuantity) => {
-    let body = {
-      uniqueID: item.uniqueID,
-      quantity: quantityParams,
-    };
-    if (item.quantity > 1 || increaseQuantity) {
+    try {
       setIsLoadingQty(true);
-      const result = await apiCart(
-        "PATCH",
-        `${idCart}/${body.uniqueID}/changeitemqty`,
-        body,
-      );
+      let body = {
+        uniqueID: item.uniqueID,
+        quantity: quantityParams,
+      };
+      if (item.quantity > 1 || increaseQuantity) {
+        const result = await apiCart(
+          "PATCH",
+          `${idCart}/${body.uniqueID}/changeitemqty`,
+          body,
+        );
+        toast.open(`${item?.productInfo?.itemName} has been updated in cart`, 'success')
+        dispatch(setCartInfo(result.data));
+      } else {
+        const result = await apiCart("DELETE", `${idCart}/${item.uniqueID}`);
+        toast.open(`${item?.productInfo?.itemName} has been removed from cart`, 'error')
+        dispatch(setCartInfo(result.data));
+      }
       setIsLoadingQty(false);
-      dispatch(setCartInfo(result.data));
-    } else {
-      const result = await apiCart("DELETE", `${idCart}/${item.uniqueID}`);
-      dispatch(setCartInfo(result.data));
+    } catch (error) {
+      toast.open(`Failed to modify item quantity`, 'error')
+      setIsLoadingQty(false);
+      console.log(error)
     }
   };
 
