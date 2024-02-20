@@ -9,12 +9,10 @@ import { apiOrder } from "../../services/Order";
 import { Trans } from "react-i18next";
 import { dateFormatter } from "../../components/Order/DateFormatter";
 import { statusText } from "../../components/Order/StatusText";
-import { useLocation } from "react-router-dom";
 import { setCartIdToShow } from "../../app/dataSlicePersisted";
 import { useUpdateURLWithQueryParams } from "../../../hooks/usePathCustom";
 
 export function RenderNotificationOrder() {
-  const { search } = useLocation();
   const updateURL = useUpdateURLWithQueryParams();
   const { theme } = useSelector((state) => state.dataSlicePersisted);
   const [isExist, setIsExist] = useState(false);
@@ -50,7 +48,7 @@ export function RenderNotificationOrder() {
 
   const handleClickViewDetail = () => {
     dispatch(setCartIdToShow(order?.cartID || ""));
-    updateURL("/ordersummary", search);
+    updateURL("/ordersummary");
   };
 
   if (isExist)
@@ -65,7 +63,7 @@ export function RenderNotificationOrder() {
           </div>
           <button
             className="text-pink-500 text-sm font-bold leading-5 tracking-wide self-center my-auto"
-            onClick={() => updateURL("/order", search)}
+            onClick={() => updateURL("/order")}
           >
             <Trans i18nKey={"view_all"} />
           </button>

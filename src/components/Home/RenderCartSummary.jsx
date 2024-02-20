@@ -1,12 +1,10 @@
 import { useSelector } from "react-redux";
 import { IconArrowRight, IconCart } from "../../assets/svgIcon";
-import { useLocation } from "react-router-dom";
 import { Trans } from "react-i18next";
 import { getCurrencyHelper } from "../../helper";
 import { useUpdateURLWithQueryParams } from "../../../hooks/usePathCustom";
 
 const RenderCartSummary = () => {
-  const { search } = useLocation();
   const updateURL = useUpdateURLWithQueryParams();
 
   const { cartInfo, orderType } = useSelector(
@@ -25,7 +23,7 @@ const RenderCartSummary = () => {
   if (orderType) {
     return (
       <button
-        onClick={() => updateURL("/cart", search)}
+        onClick={() => updateURL("/cart")}
         style={{
           backgroundColor: theme.Color_Secondary,
         }}

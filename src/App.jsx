@@ -12,7 +12,7 @@ import {
 import {
   setIsSearchItem
 } from "./app/dataSlice";
-import { fetchAuthMember, fetchCartInfo, fetchInsight, fetchLayout, fetchOutletAvailability, fetchOutletSetting } from "./components/DataPreparation";
+import { fetchAuthMember, fetchCartInfo, fetchInsight, fetchLayout, fetchOutletAvailability, fetchOutletSetting, urlQueryExtractor } from "./components/DataPreparation";
 
 const router = createBrowserRouter([
   {
@@ -52,12 +52,7 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
-  const url = window.location.href;
-  const params = new URLSearchParams(url.split("?")[1]);
-  const inputKey = params.get("input");
-  const decodeQueryStr = atob(inputKey);
-  const decodedParams = new URLSearchParams(decodeQueryStr);
-  const outlet = decodedParams.get("outlet");
+  
 
   const dispatch = useDispatch();
 
@@ -68,12 +63,15 @@ export default function App() {
   const dataPreparation = useRef();
 
   dataPreparation.current = () => {
+    console.log(window.location.href)
+    const outlet = urlQueryExtractor(dispatch);
+    if(!outlet) return;
     fetchLayout(dispatch);
     fetchCartInfo(dispatch, outlet, cartInfo);
     fetchOutletSetting(dispatch, outlet, orderType);
     fetchInsight(dispatch);
     fetchOutletAvailability(dispatch, outlet);
-    fetchAuthMember(dispatch, memberInfo)
+    fetchAuthMember(dispatch, memberInfo);
   };
 
   useEffect(() => {

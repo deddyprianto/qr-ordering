@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import { IconArrowSolid } from "../../assets/svgIcon";
-import { useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Trans } from "react-i18next";
 import { numberFormatter } from "../../utilities/numberFormatter";
@@ -9,7 +8,6 @@ import { statusText } from "../../components/Order/StatusText";
 import { useUpdateURLWithQueryParams } from "../../../hooks/usePathCustom";
 
 const ItemOrder = ({ order }) => {
-  const { search } = useLocation();
   const updateURL = useUpdateURLWithQueryParams();
 
   const { theme } = useSelector((state) => state.dataSlicePersisted);
@@ -59,7 +57,7 @@ const ItemOrder = ({ order }) => {
       </div>
       {/* 3 */}
       <button
-        onClick={() => updateURL("/ordersummary", search)}
+        onClick={() => updateURL("/ordersummary")}
         className="items-stretch flex justify-between gap-0 mt-3 px-3 py-2 rounded-b-md"
         style={{
           backgroundColor: theme.Color_Primary,

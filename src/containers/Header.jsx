@@ -12,21 +12,7 @@ import { ImageOptimization } from "../components/ImageOptimization";
 import { useUpdateURLWithQueryParams } from "../../hooks/usePathCustom";
 
 export default function Header() {
-  const { search } = useLocation();
-  const queryParams = new URLSearchParams(search);
-  const queryStr = queryParams.get("input");
-
-  const decodeQueryStr = atob(queryStr);
-  const decodedParams = new URLSearchParams(decodeQueryStr);
-  const tableNo = decodedParams.get("tableNo");
-  const validUntil = decodedParams.get("validUntil");
-  const validDate = new Date(parseInt(validUntil));
-  const currentDate = new Date();
-
-  const updateURL = useUpdateURLWithQueryParams();
-  let location = useLocation();
-  const dispatch = useDispatch();
-  const { isSearchItem } = useSelector((state) => state.dataSlice);
+  const { isSearchItem, isValidUrl, tableNo } = useSelector((state) => state.dataSlice);
   const {
     enableSearchUsingScroll,
     searchItemObj,
@@ -35,6 +21,11 @@ export default function Header() {
     outletName,
     outletDetail,
   } = useSelector((state) => state.dataSlicePersisted);
+  
+  const updateURL = useUpdateURLWithQueryParams();
+  let location = useLocation();
+  const dispatch = useDispatch();
+
   const dispatchIsSearchItem = (val) => {
     dispatch(setIsSearchItem(val));
   };
@@ -139,7 +130,7 @@ export default function Header() {
     return (
       <button
         style={{ backgroundColor: theme.Color_Primary }}
-        onClick={() => updateURL(redirectPath, search)}
+        onClick={() => updateURL(redirectPath)}
         className="flex text-white items-center text-[16px] font-medium py-[5px] w-full"
       >
         <IconArrowLeft />
@@ -189,9 +180,8 @@ export default function Header() {
   };
 
   const renderMain = () => {
-    if (!search || !queryStr) return <div></div>;
-    if (validUntil && validDate > currentDate) return <div></div>;
-    if (!outletDetail?.isQrOrderingAvailable) return <div></div>;
+    if (!isValidUrl) return <div></div>;
+    else if (!outletDetail?.isQrOrderingAvailable) return <div></div>;
     else if (
       !outletDetail?.isActiveAllDay &&
       !outletDetail?.isInOperationalHours

@@ -1,13 +1,11 @@
 import { useSelector } from "react-redux";
 import screen from "../../../hooks/useWindowSize";
-import { useLocation } from "react-router-dom";
 import { numberFormatter } from "../../utilities/numberFormatter";
 import { Trans } from "react-i18next";
 import { useEdgeSnack } from "../../components/EdgeSnack/utils/useEdgeSnack";
 import { useUpdateURLWithQueryParams } from "../../../hooks/usePathCustom";
 
 const FooterCart = () => {
-  const { search } = useLocation();
   const updateURL = useUpdateURLWithQueryParams();
 
   const { cartInfo } = useSelector((state) => state.dataSlicePersisted);
@@ -28,7 +26,7 @@ const FooterCart = () => {
       toast.open("Please select your prefered payment method", "error");
       return;
     }
-    updateURL("/payment", search);
+    updateURL("/payment");
   };
 
   const theme = useSelector((state) => state.dataSlicePersisted.theme);
