@@ -42,6 +42,7 @@ export const RenderButtonAdd = ({
   };
 
   const handleClickButton = async () => {
+    if(isLoading) return;
     if (
       itemType == "bundle" &&
       typeOfModalAddItem == "main" &&
@@ -116,21 +117,17 @@ export const RenderButtonAdd = ({
     >
       <button
         style={{
-          backgroundColor: theme.Color_Secondary,
+          backgroundColor: isLoading?"#9D9D9D":theme.Color_Secondary,
         }}
         onClick={() => handleClickButton()}
         className="w-full rounded-lg px-[16px] py-[12px] flex justify-center items-center cursor-pointer"
       >
         <div className="flex items-stretch gap-2">
           {isLoading ? (
-            <button
-              type="button"
-              className="bg-transparent rounded-lg flex justify-center items-center text-white"
-              disabled
-            >
+            <span className="flex justify-center items-center">
               <span className="loader"></span>
-              <div>{!isQtyExist ? "Adding..." : "Updating..."}</div>
-            </button>
+              <div className="text-white">{!isQtyExist ? "Adding..." : "Updating..."}</div>
+            </span>
           ) : (
             <>
               {isCalledFromCart ? "" : <IconPlus />}

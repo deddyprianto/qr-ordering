@@ -6,10 +6,12 @@ import { IconMinus, IconPlus } from "../../../../../assets/svgIcon";
 import { useState } from "react";
 import { apiCart } from "../../../../../services/Cart";
 import { setCartInfo } from "../../../../../app/dataSlicePersisted";
+import { useEdgeSnack } from "../../../../EdgeSnack/utils/useEdgeSnack";
 
 export const RenderCartItemRow = ({ item }) => {
   const { cartInfo } = useSelector((state) => state.dataSlicePersisted);
   const dispatch = useDispatch();
+  const toast = useEdgeSnack();
 
   const [quantity, setQuantity] = useState(item.quantity);
   const { theme } = useSelector((state) => state.dataSlicePersisted);
@@ -51,34 +53,41 @@ export const RenderCartItemRow = ({ item }) => {
         break;
     }
   };
-  const handleAPIQtyCartItemRow = async (quantityParams, increaseQuantity) => {
-    let body = {
-      uniqueID: item.uniqueID,
-      quantity: quantityParams,
-    };
-    if (item.quantity > 1 || increaseQuantity) {
+  const handleAPIQtyCartItemRow = async (quantityParams) => {
+    try {
       setIsLoading(true);
-      const result = await apiCart(
-        "PATCH",
-        `${cartInfo.uniqueID}/${body.uniqueID}/changeitemqty`,
-        body,
-      );
+      let body = {
+        uniqueID: item.uniqueID,
+        quantity: quantityParams,
+      };
+      if (quantityParams > 0) {
+        const result = await apiCart(
+          "PATCH",
+          `${cartInfo.uniqueID}/${body.uniqueID}/changeitemqty`,
+          body,
+        );
+        toast.open(`${item?.productInfo?.itemName} has been updated in cart`, 'success')
+        dispatch(setCartInfo(result.data));
+      } else {
+        const result = await apiCart(
+          "DELETE",
+          `${cartInfo.uniqueID}/${item.uniqueID}`,
+        );
+        toast.open(`${item?.productInfo?.itemName} has been removed from cart`, 'error')
+        dispatch(setCartInfo(result.data));
+      }
       setIsLoading(false);
-      dispatch(setCartInfo(result.data));
-    } else {
-      const result = await apiCart(
-        "DELETE",
-        `${cartInfo.uniqueID}/${item.uniqueID}`,
-      );
-      dispatch(setCartInfo(result.data));
+    } catch (error) {
+      toast.open(`Failed to modify item quantity`, 'error')
+      console.log(error)
+      setIsLoading(false);
     }
   };
 
   const increaseQuantityCartItemRow = () => {
-    const increaseQuantity = true;
     setQuantity((prevQuantity) => {
       const newQuantity = prevQuantity + 1;
-      handleAPIQtyCartItemRow(newQuantity, increaseQuantity);
+      handleAPIQtyCartItemRow(newQuantity);
       return newQuantity;
     });
   };
@@ -94,6 +103,7 @@ export const RenderCartItemRow = ({ item }) => {
     });
   };
 
+  if(quantity<1 && !isLoading) return null;
   return (
     <div className="mt-2.5 pl-0 px-4 grid grid-cols-[1fr_1fr_50px] items-center">
       <div className="fixed-width-content w-full flex flex-row my-auto">
