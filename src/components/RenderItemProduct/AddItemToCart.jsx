@@ -25,7 +25,7 @@ export const addItemToCart = async ({
     bundles: [],
   };
   try {
-    const checkIsCartItemExist = cartInfo?.details.find(
+    const checkIsCartItemExist = cartInfo?.details?.find(
       (itemsDetails) => itemsDetails.productInfo.uniqueID === cartId,
     );
     const isCartItemExist = lineID || checkIsCartItemExist?.uniqueID;
