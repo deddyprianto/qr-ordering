@@ -10,6 +10,7 @@ import { generateBundlesBody } from "./ItemBundleBody";
 import { renderButtonText } from "./GetButtonText";
 import { mapCartAndProduct } from "../../Home/productAndCartMapper";
 import { setMenuSubGroup } from "../../../app/dataSlice";
+import { isBundleReadyToSubmit } from "../ItemBundle/CalculateBundleGroupQty";
 
 export const RenderButtonAdd = ({
   item,
@@ -42,7 +43,7 @@ export const RenderButtonAdd = ({
   };
 
   const handleClickButton = async () => {
-    if(isLoading) return;
+    if(isLoading || !isBundleReadyToSubmit(bundleList)) return;
     if (
       itemType == "bundle" &&
       typeOfModalAddItem == "main" &&
@@ -117,7 +118,7 @@ export const RenderButtonAdd = ({
     >
       <button
         style={{
-          backgroundColor: isLoading?"#9D9D9D":theme.Color_Secondary,
+          backgroundColor: isLoading || !isBundleReadyToSubmit(bundleList)?"#9D9D9D":theme.Color_Secondary,
         }}
         onClick={() => handleClickButton()}
         className="w-full rounded-lg px-[16px] py-[12px] flex justify-center items-center cursor-pointer"
