@@ -4,8 +4,9 @@ import { numberFormatter } from "../../utilities/numberFormatter";
 import { Trans } from "react-i18next";
 import { useEdgeSnack } from "../../components/EdgeSnack/utils/useEdgeSnack";
 import { useUpdateURLWithQueryParams } from "../../../hooks/usePathCustom";
+import PropTypes from "prop-types"
 
-const FooterCart = () => {
+const FooterCart = ({isItemExist}) => {
   const updateURL = useUpdateURLWithQueryParams();
 
   const { cartInfo } = useSelector((state) => state.dataSlicePersisted);
@@ -39,12 +40,13 @@ const FooterCart = () => {
         boxShadow: "0px -4px 10px 0px rgba(0, 0, 0, 0.10)",
       }}
     >
+      {console.log(isPaymentMethodSelected())}
       <button
-        disabled={!isPaymentMethodSelected()}
+        disabled={!isPaymentMethodSelected() || !isItemExist}
         onClick={handlePayment}
         style={{ backgroundColor: theme.Color_Secondary }}
         className={`py-[10px] px-[20px]  text-white rounded-lg cursor-pointer text-[16px] w-full ${
-          !isPaymentMethodSelected() ? "opacity-50" : "cursor-pointer"
+          !isPaymentMethodSelected() || !isItemExist ? "opacity-50" : "cursor-pointer"
         }`}
       >
         <Trans i18nKey={"pay"} /> - $ {numberFormatter(cartInfo?.nettAmount)}
@@ -53,4 +55,7 @@ const FooterCart = () => {
   );
 };
 
+FooterCart.propTypes = {
+  isItemExist: PropTypes.bool
+}
 export default FooterCart;
