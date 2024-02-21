@@ -7,12 +7,12 @@ import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setSearchItemObj,
-  setEnableSearchUsingScroll
+  setEnableSearchUsingScroll,
+  setCartToListen
 } from "./app/dataSlicePersisted";
-import {
-  setIsSearchItem
-} from "./app/dataSlice";
+import {setIsSearchItem} from "./app/dataSlice";
 import { fetchAuthMember, fetchCartInfo, fetchInsight, fetchLayout, fetchOutletAvailability, fetchOutletSetting, urlQueryExtractor } from "./components/DataPreparation";
+import { startListeningInterval } from "./helper/fetchOrderStatus";
 
 const router = createBrowserRouter([
   {
@@ -56,7 +56,7 @@ export default function App() {
 
   const dispatch = useDispatch();
 
-  const { cartInfo, orderType, memberInfo } = useSelector(
+  const { cartInfo, orderType, memberInfo, cartToListen } = useSelector(
     (state) => state.dataSlicePersisted,
   );
 
@@ -71,7 +71,25 @@ export default function App() {
     fetchInsight(dispatch);
     fetchOutletAvailability(dispatch, outlet);
     fetchAuthMember(dispatch, memberInfo);
+    listenProcessedcart();
   };
+
+  const listenProcessedcart = () => {
+    try {
+      if(cartToListen?.length < 1) return;
+      for(const cart of cartToListen){
+        if(cart.status == "COMPLETED"){
+          const newCartToListen = cartToListen.filter(cartObj => cartObj.cartID !== cart.cartID);
+          dispatch(setCartToListen(newCartToListen))
+          continue;
+        }
+
+        startListeningInterval(cart.cartID, dispatch);
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   useEffect(() => {
     dispatch(setIsSearchItem(false));
@@ -85,5 +103,6 @@ export default function App() {
     dispatch(setEnableSearchUsingScroll(false));
     dataPreparation.current();
   }, [dispatch]);
+
   return <RouterProvider router={router} fallbackElement={<Loading />} />;
 }
