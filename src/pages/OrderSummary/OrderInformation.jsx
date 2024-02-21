@@ -61,7 +61,7 @@ export function OrderInformation({ order }) {
           <Trans i18nKey={"order_id"} />
         </div>
         <div className="text-gray-700 text-right text-sm font-medium leading-5 tracking-wide whitespace-nowrap">
-          {order?.orderHdrID}
+          {order?.orderRefNo}
         </div>
       </div>
       <div className="justify-between items-stretch flex gap-2 mt-2.5 px-4">
