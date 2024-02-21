@@ -28,7 +28,7 @@ const MainView = () => {
   const [selectedSubGroup, setSelectedSubGroup] = useState("");
   const [isHasSubGroup, setIsHasSubGroup] = useState([]);
   const dispatch = useDispatch();
-  const { outletName, cartInfo, searchItemObj, theme, insights } = useSelector(
+  const { outletName, cartInfo, searchItemObj, theme } = useSelector(
     (state) => state.dataSlicePersisted,
   );
   const { isSearchItem, menuSubGroup, isDataOrder } = useSelector(
@@ -141,18 +141,20 @@ const MainView = () => {
           setIsSelectedItem={setIsSelectedItem}
           setDtCategoryLength={setDtCategoryLength}
           handleSelectGroup={handleSelectGroup}
+          setIsLoadingParent={setIsLoading}
         />
 
         <div style={{ padding: "16px 16px 0px 16px" }}>
           {isDataOrder && <RenderNotificationOrder />}
-
-          {!isLoading && highlights && insights?.length>0 ? (
-            <Insights 
-              title="Tag Insights"
-              description="Explore tags as you navigate the menu. You might encounter these tags
-                            anywhere in our menu."
-              onClick={() => setHighlights(false)}
-            />
+          {!isLoading? (
+            <div style={{display: highlights?"":"none"}}>  
+              <Insights 
+                title="Tag Insights"
+                description="Explore tags as you navigate the menu. You might encounter these tags
+                              anywhere in our menu."
+                onClick={() => setHighlights(false)}
+              />
+            </div>
           ) : (
             <SkeletonTagInsight />
           )}

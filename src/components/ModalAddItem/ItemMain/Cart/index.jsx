@@ -47,7 +47,7 @@ export const RenderItemCart = ({
       {itemInCart.map((item)=>{
         return (
           <RenderCartItemRow 
-            key={item.itemNo}
+            key={item.uniqueID}
             item={item} 
             updateCartItem={updateCartItem}
           />)

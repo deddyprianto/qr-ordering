@@ -12,7 +12,7 @@ const resetCartAndOrderType = (dispatch, data) => {
 };
 
 export const fetchCartInfo = async (dispatch, outlet, cartInfo) => {
-  if (!cartInfo.uniqueID) return;
+  if (!cartInfo?.uniqueID) return;
   if (outlet !== cartInfo?.outletName?.toLowerCase()) {
     await apiCart("DELETE", cartInfo?.uniqueID);
     return dispatch(setCartInfo({}));

@@ -13,7 +13,8 @@ export const NavbarMenu = ({
   dtCategoryLength,
   setDataCategory,
   setIsSelectedItem,
-  setDtCategoryLength
+  setDtCategoryLength,
+  setIsLoadingParent
 }) => {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -71,6 +72,7 @@ export const NavbarMenu = ({
   };
 
   const handleChangeGroup = (type, refNo) => {
+    setIsLoadingParent(true);
     setIsSelectedItem(refNo);
     handleSelectGroup(type, refNo);
   };
@@ -116,4 +118,5 @@ NavbarMenu.propTypes = {
   setDataCategory: PropTypes.func,
   setIsSelectedItem: PropTypes.func,
   setDtCategoryLength: PropTypes.func,
+  setIsLoadingParent: PropTypes.func
 };
