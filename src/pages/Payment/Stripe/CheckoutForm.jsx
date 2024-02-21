@@ -3,7 +3,8 @@ import { RenderButtonSubmit } from "./ButtonSubmit";
 import { useEdgeSnack } from "../../../components/EdgeSnack/utils/useEdgeSnack";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCartIdToShow } from "../../../app/dataSlicePersisted";
+import { setCartIdToShow, setCartInfo } from "../../../app/dataSlicePersisted";
+import { useUpdateURLWithQueryParams } from "../../../../hooks/usePathCustom";
 
 export const RenderCheckoutPage = () => {
   const stripe = useStripe();
@@ -12,23 +13,32 @@ export const RenderCheckoutPage = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const { cartInfo } = useSelector((state)=>state.dataSlicePersisted);
+  const updateURL = useUpdateURLWithQueryParams();
 
   const handleSubmit = async(e) => {
     e.preventDefault();
     setLoading(true);
-    dispatch(setCartIdToShow(cartInfo?.uniqueID || ""));
+    try {
+      const {error} = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: "",
+        },
+        redirect: "if_required",
+      });
 
-    const {error} = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: `${window.location.origin}/ordersummary`,
-      },
-    });
-
-    if (error){
-      dispatch(setCartIdToShow(""));
-      setLoading(false);
-      toast.open(error.message, 'error');	      
+      if (error){
+        throw error;
+      }
+      else{
+        dispatch(setCartIdToShow(cartInfo?.uniqueID || ""));
+        dispatch(setCartInfo({}));
+        updateURL("/ordersummary");
+      }
+    } catch (error) {
+      console.log(error)  
+      toast.open("Payment failed. Please try again later.", 'error');	
+      setLoading(false);  
     }
   }
   return (

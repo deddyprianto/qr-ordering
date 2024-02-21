@@ -40,7 +40,6 @@ const FooterCart = ({isItemExist}) => {
         boxShadow: "0px -4px 10px 0px rgba(0, 0, 0, 0.10)",
       }}
     >
-      {console.log(isPaymentMethodSelected())}
       <button
         disabled={!isPaymentMethodSelected() || !isItemExist}
         onClick={handlePayment}
