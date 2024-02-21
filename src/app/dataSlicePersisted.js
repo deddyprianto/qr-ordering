@@ -19,7 +19,8 @@ const initialState = {
   },
   cartIdToShow: {},
   otpRequestInfo: {},
-  insights: []
+  insights: [],
+  orderStatus: null
 };
 
 const dataSlicePersisted = createSlice({
@@ -65,14 +66,18 @@ const dataSlicePersisted = createSlice({
     },
     setOutletDetail: (state, action) => {
       state.outletDetail = action.payload;
-    }, 
+    },
     setInsights: (state, action) => {
       state.insights = action.payload;
-    }, 
+    },
+    setOrderStatus: (state, action) => {
+      state.orderStatus = action.payload;
+    },
   },
 });
 
 export const {
+  setOrderStatus,
   setAccessToken,
   setShowSplashScreen,
   setSearchItemObj,
