@@ -9,14 +9,15 @@ import { apiOrder } from "../../services/Order";
 import { Trans } from "react-i18next";
 import { dateFormatter } from "../../components/Order/DateFormatter";
 import { statusText } from "../../components/Order/StatusText";
-import { setCartIdToShow } from "../../app/dataSlicePersisted";
+import { setCartIdToShow, setOrderStatus } from "../../app/dataSlicePersisted";
 import { useUpdateURLWithQueryParams } from "../../../hooks/usePathCustom";
 
 export function RenderNotificationOrder() {
   const updateURL = useUpdateURLWithQueryParams();
-  const { theme } = useSelector((state) => state.dataSlicePersisted);
+  const { theme, orderStatus } = useSelector(
+    (state) => state.dataSlicePersisted,
+  );
   const [isExist, setIsExist] = useState(false);
-  const [order, setOrder] = useState({});
   const dispatch = useDispatch();
 
   const fetchLatestOrder = useRef();
@@ -32,7 +33,7 @@ export function RenderNotificationOrder() {
 
       const result = await apiOrder("GET", "", body);
       if (result.resultCode === 200) {
-        setOrder(result.data[0]);
+        dispatch(setOrderStatus(result.data[0]));
         setIsExist(true);
       } else {
         throw result.message;
@@ -47,7 +48,7 @@ export function RenderNotificationOrder() {
   }, []);
 
   const handleClickViewDetail = () => {
-    dispatch(setCartIdToShow(order?.cartID || ""));
+    dispatch(setCartIdToShow(orderStatus?.cartID || ""));
     updateURL("/ordersummary");
   };
 
@@ -72,11 +73,11 @@ export function RenderNotificationOrder() {
         <div className="justify-between items-stretch bg-white flex w-full gap-5 mt-2 px-4 py-2 rounded-[1000px]">
           <div className="justify-center items-stretch flex grow basis-[0%] flex-col">
             <div className="text-gray-700  text-base font-bold leading-6 whitespace-nowrap">
-              {order?.orderHdrID}
+              {orderStatus?.orderHdrID}
             </div>
             <div className="flex gap-x-2">
               <div className="text-gray-700  text-sm font-medium leading-5 tracking-wide  whitespace-nowrap">
-                {dateFormatter(order?.orderDate)}
+                {dateFormatter(orderStatus?.orderDate)}
               </div>
             </div>
           </div>
@@ -87,7 +88,7 @@ export function RenderNotificationOrder() {
             <div className="items-stretch bg-green-700 flex justify-between gap-1 px-1.5 py-1 rounded-[100px]">
               <IconCheckFill />
               <div className="text-white text-xs font-medium leading-4 tracking-wide self-center grow whitespace-nowrap my-auto">
-                {statusText(order?.status)}
+                {statusText(orderStatus?.status)}
               </div>
             </div>
             <IconArrowRight color={theme.Color_Secondary} />

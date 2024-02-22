@@ -13,16 +13,16 @@ export const RenderPricingSummary = ({ order }) => {
           $ {numberFormatter(order.grossAmount)}
         </div>
       </div>
-      {order.gstAmount>0 &&
-        <div className="items-stretch flex justify-between gap-4 mt-2 px-4">
-          <div className="justify-center text-gray-700 text-sm font-medium leading-5 tracking-wide grow whitespace-nowrap">
-            GST X%
+      {order?.excGSTAmount > 0 && (
+          <div className="items-stretch flex justify-between gap-4 mt-2 px-4">
+            <div className="justify-center text-gray-700 text-sm font-medium leading-5 tracking-wide grow whitespace-nowrap">
+              GST {order?.gstRate}%
+            </div>
+            <div className="text-gray-700 text-right text-base font-bold leading-6 whitespace-nowrap">
+              $ {numberFormatter(order?.excGSTAmount)}
+            </div>
           </div>
-          <div className="text-gray-700 text-right text-base font-bold leading-6 whitespace-nowrap">
-            $ {numberFormatter(order.gstAmount)}
-          </div>
-        </div>
-      }
+        )}
       
       <div className="bg-zinc-300 min-h-[1px] w-full mt-4" />
       <div className="justify-between flex w-full gap-5 mt-4 px-4 items-start">
@@ -33,6 +33,16 @@ export const RenderPricingSummary = ({ order }) => {
           $ {numberFormatter(order.nettAmount)}
         </div>
       </div>
+      {order?.incGSTAmount > 0 && (
+        <div className="items-stretch flex justify-between gap-4 mt-2 px-4">
+          <div className="justify-center text-gray-700 text-sm font-medium leading-5 tracking-wide grow whitespace-nowrap">
+            GST (inc) {order?.gstRate}%
+          </div>
+          <div className="text-gray-700 text-right text-base font-bold leading-6 whitespace-nowrap">
+            $ {numberFormatter(order?.incGSTAmount)}
+          </div>
+        </div>
+      )}
     </>
   )
 }

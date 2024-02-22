@@ -17,9 +17,6 @@ export const RenderSearchResult = ({ searchText, searchItemList }) => {
       </div>
       {searchItemList?.map((cat, idx) => (
         <div key={cat.refNo} id={idx} className="w-full">
-          <div className="text-gray-700 text-base font-bold leading-6 self-stretch mt-6">
-            {cat.buttonTitle}
-          </div>
           {cat?.productInfo?.length > 0 ? (
             cat?.productInfo?.map((item) => {
               return <RenderItemCard item={item} key={item.refNo} />;

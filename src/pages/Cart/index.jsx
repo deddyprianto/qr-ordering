@@ -87,7 +87,7 @@ export function Component() {
           }}
         />
         <PriceSummary />
-        <FooterCart />
+        <FooterCart isItemExist={cartInfo?.details?.length>0}/>
         <ModalGeneral />
         <ModalAuth
           isOpenModal={isOpenModalAuth}

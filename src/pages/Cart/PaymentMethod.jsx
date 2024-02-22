@@ -57,17 +57,20 @@ import { SkeletonPaymentList } from "../../components/Skeleton/SkeletonPaymentLi
                 className="w-[160px] flex justify-center items-center border  p-[4px] gap-x-2 rounded-lg border-solid"
               >
                 <div>
-                  {item.iconUrl
-                    ?<img
+                  {item.iconUrl ? (
+                    <img
                       alt=""
                       loading="lazy"
                       src={item.iconUrl}
                       className="aspect-square object-contain object-center w-10 overflow-hidden max-w-full"
                     />
-                    :<IconMasterCard />
-                  }
+                  ) : (
+                    <IconMasterCard />
+                  )}
                 </div>
-                <div className="text-center">{item.displayName}</div>
+                <div className="flex-shrink-0 overflow-x-auto text-center">
+                  {item.displayName}
+                </div>
               </button>
             );
           })

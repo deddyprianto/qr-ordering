@@ -28,9 +28,8 @@ const MainView = () => {
   const [selectedSubGroup, setSelectedSubGroup] = useState("");
   const [isHasSubGroup, setIsHasSubGroup] = useState([]);
   const dispatch = useDispatch();
-  const { outletName, cartInfo, searchItemObj, theme } = useSelector(
-    (state) => state.dataSlicePersisted,
-  );
+  const { outletName, cartInfo, searchItemObj, theme, orderStatus } =
+    useSelector((state) => state.dataSlicePersisted);
   const { isSearchItem, menuSubGroup, isDataOrder } = useSelector(
     (state) => state.dataSlice,
   );
@@ -130,6 +129,7 @@ const MainView = () => {
       })
       .catch((err) => console.log(err));
   };
+
   const renderMainView = () => {
     return (
       <div className="relative pb-20">
@@ -145,10 +145,10 @@ const MainView = () => {
         />
 
         <div style={{ padding: "16px 16px 0px 16px" }}>
-          {isDataOrder && <RenderNotificationOrder />}
-          {!isLoading? (
-            <div style={{display: highlights?"":"none"}}>  
-              <Insights 
+          {(isDataOrder || orderStatus) && <RenderNotificationOrder />}
+          {!isLoading ? (
+            <div style={{ display: highlights ? "" : "none" }}>
+              <Insights
                 title="Tag Insights"
                 description="Explore tags as you navigate the menu. You might encounter these tags
                               anywhere in our menu."
