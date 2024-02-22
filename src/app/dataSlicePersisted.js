@@ -20,6 +20,7 @@ const initialState = {
   cartIdToShow: {},
   otpRequestInfo: {},
   insights: [],
+  cartToListen: [],
   orderStatus: null
 };
 
@@ -69,6 +70,27 @@ const dataSlicePersisted = createSlice({
     },
     setInsights: (state, action) => {
       state.insights = action.payload;
+    }, 
+    setCartToListen: (state, action) => {
+      state.cartToListen = action.payload;
+    }, 
+    updateCartToListen: (state, action) => {
+      let cartToListen = JSON.parse(JSON.stringify((state.cartToListen || [])));
+      let newObj = action.payload;
+      let found = false;
+
+      const newCartToListen = cartToListen.map(item => {
+        if (item.cartID === newObj.cartID) {
+          found = true;
+          return { ...item, status: newObj.status };
+        } else {
+          return item;
+        }
+      });
+      if (!found) {
+        newCartToListen.push(newObj);
+      }
+      state.cartToListen = newCartToListen;
     },
     setOrderStatus: (state, action) => {
       state.orderStatus = action.payload;
@@ -91,6 +113,8 @@ export const {
   setTheme,
   setCartIdToShow,
   setOutletDetail,
-  setInsights
+  setInsights,
+  setCartToListen,
+  updateCartToListen
 } = dataSlicePersisted.actions;
 export default dataSlicePersisted.reducer; // Changed 'dataSlicePersisted.reducer.default' to 'dataSlicePersisted.reducer'

@@ -3,8 +3,9 @@ import { RenderButtonSubmit } from "./ButtonSubmit";
 import { useEdgeSnack } from "../../../components/EdgeSnack/utils/useEdgeSnack";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCartIdToShow, setCartInfo } from "../../../app/dataSlicePersisted";
+import { setCartIdToShow, setCartInfo, updateCartToListen } from "../../../app/dataSlicePersisted";
 import { useUpdateURLWithQueryParams } from "../../../../hooks/usePathCustom";
+import { startListeningInterval } from "../../../helper/fetchOrderStatus";
 
 export const RenderCheckoutPage = () => {
   const stripe = useStripe();
@@ -32,7 +33,12 @@ export const RenderCheckoutPage = () => {
       }
       else{
         dispatch(setCartIdToShow(cartInfo?.uniqueID || ""));
+        dispatch(updateCartToListen({
+          cartID: cartInfo?.uniqueID,
+          status: "PENDING"
+        }));
         dispatch(setCartInfo({}));
+        startListeningInterval(cartInfo?.uniqueID, dispatch);
         updateURL("/ordersummary");
       }
     } catch (error) {
