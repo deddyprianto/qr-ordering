@@ -1,4 +1,18 @@
-export const sendPushNotofocation = async (orderID) => {
+const getMsgBody = (status, orderID) => {
+  if(status=="COMPLETED") return 
+  switch (status) {
+    case "COMPLETED":
+      return `Your order (${orderID}) has been successfully completed`
+    case "VOIDED":
+      return `Your order (${orderID}) has been cancelled`
+    case "CANCELLED":
+      return `Your order (${orderID}) has been cancelled`
+    default:
+      return "";
+  }
+}
+
+export const sendPushNotification = async (orderID) => {
   if ("serviceWorker" in navigator) {
     const registration = await navigator.serviceWorker.ready;
     const subscription = await registration.pushManager.subscribe({
@@ -18,7 +32,7 @@ export const sendPushNotofocation = async (orderID) => {
         "auth": subKey.keys.auth,
         "payload": JSON.stringify({
           title: `QR Ordering Status`,
-          body: `Your order (${orderID}) has been successfully completed`
+          body: getMsgBody(orderID)
         })
       }),
     });

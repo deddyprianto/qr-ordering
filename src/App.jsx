@@ -78,7 +78,7 @@ export default function App() {
     try {
       if(cartToListen?.length < 1) return;
       for(const cart of cartToListen){
-        if(cart.status == "COMPLETED"){
+        if(["COMPLETED", "VOIDED", "CANCELLED"].includes(cart.status)){
           const newCartToListen = cartToListen.filter(cartObj => cartObj.cartID !== cart.cartID);
           dispatch(setCartToListen(newCartToListen))
           continue;

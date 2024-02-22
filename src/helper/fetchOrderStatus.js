@@ -1,13 +1,13 @@
 import { updateCartToListen } from "../app/dataSlicePersisted";
 import { apiOrder } from "../services/Order";
-import { sendPushNotofocation } from "./notification";
+import { sendPushNotification } from "./notification";
 
 const callApiOrder = async (ID, dispatch) => {
   try {
     const result = await apiOrder("GET", ID, {});
     if (result.resultCode === 200) {
-      if(result.data?.status == "COMPLETED"){
-        sendPushNotofocation(result.data?.orderRefNo);
+      if(["COMPLETED", "VOIDED", "CANCELLED"].includes(result.data?.status)){
+        sendPushNotification(result.data?.orderRefNo);
         dispatch(updateCartToListen({
           cartID: ID,
           status: result.data?.status
