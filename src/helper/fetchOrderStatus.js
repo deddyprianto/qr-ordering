@@ -27,7 +27,6 @@ const callApiOrder = async (ID, dispatch) => {
 const getOrderStatus = (ID, dispatch) => {
   setTimeout(async () => {
     const isStopped = await callApiOrder(ID, dispatch);
-    console.log(isStopped)
     if(!isStopped) getOrderStatus(ID, dispatch);
   }, 5000);
 }
