@@ -74,7 +74,7 @@ const dataSlicePersisted = createSlice({
       state.cartToListen = action.payload;
     }, 
     updateCartToListen: (state, action) => {
-      let cartToListen = JSON.parse(JSON.stringify(state.cartToListen));
+      let cartToListen = JSON.parse(JSON.stringify((state.cartToListen || [])));
       let newObj = action.payload;
       let found = false;
 

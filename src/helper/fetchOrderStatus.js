@@ -7,7 +7,7 @@ const callApiOrder = async (ID, dispatch) => {
     const result = await apiOrder("GET", ID, {});
     if (result.resultCode === 200) {
       if(["COMPLETED", "VOIDED", "CANCELLED"].includes(result.data?.status)){
-        sendPushNotification(result.data?.orderRefNo);
+        sendPushNotification(result.data?.orderRefNo, result.data?.status);
         dispatch(updateCartToListen({
           cartID: ID,
           status: result.data?.status

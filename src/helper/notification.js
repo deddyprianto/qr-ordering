@@ -1,5 +1,4 @@
-const getMsgBody = (status, orderID) => {
-  if(status=="COMPLETED") return 
+const getMsgBody = (orderID, status) => {
   switch (status) {
     case "COMPLETED":
       return `Your order (${orderID}) has been successfully completed`
@@ -12,7 +11,7 @@ const getMsgBody = (status, orderID) => {
   }
 }
 
-export const sendPushNotification = async (orderID) => {
+export const sendPushNotification = async (orderID, status) => {
   if ("serviceWorker" in navigator) {
     const registration = await navigator.serviceWorker.ready;
     const subscription = await registration.pushManager.subscribe({
@@ -32,7 +31,7 @@ export const sendPushNotification = async (orderID) => {
         "auth": subKey.keys.auth,
         "payload": JSON.stringify({
           title: `QR Ordering Status`,
-          body: getMsgBody(orderID)
+          body: getMsgBody(orderID, status)
         })
       }),
     });
