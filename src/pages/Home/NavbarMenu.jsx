@@ -18,13 +18,13 @@ export const NavbarMenu = ({
 }) => {
   const [isLoading, setIsLoading] = useState(true);
 
-  const { outletName, theme} = useSelector(
+  const { outletName, theme } = useSelector(
     (state) => state.dataSlicePersisted,
   );
 
   const mountData = useRef();
   mountData.current = async () => {
-    if(dataCategory.length>0) return;
+    if (dataCategory.length > 0) return;
     setIsLoading(true);
     let groupList = [];
     let dataLength = 1;

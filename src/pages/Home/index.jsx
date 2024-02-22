@@ -56,9 +56,9 @@ export function Component() {
       }
     >
       {renderContent()}
-      {outletDetail?.isQrOrderingAvailable && cartInfo?.details?.length > 0 && (
-        <RenderCartSummary />
-      )}
+      {isValidUrl &&
+        outletDetail?.isQrOrderingAvailable &&
+        cartInfo?.details?.length > 0 && <RenderCartSummary />}
     </Suspense>
   );
 }
