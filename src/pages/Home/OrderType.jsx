@@ -32,10 +32,10 @@ import { setServiceCharge } from "../../app/dataSlice";
          {(outletSetting.takeAwayOption?.enable || false) && (
            <button
              className={`${
-               curOrderType == "takeaway" ? bgTypeSelected : bgTypeUnSelected
+               curOrderType == "CASH_CARRY" ? bgTypeSelected : bgTypeUnSelected
              } items-center self-stretch border flex flex-col mt-6 px-4 py-6 rounded-lg border-solid`}
              onClick={() =>
-               handleSelectOrderType("TAKEAWAY", outletSetting.takeAwayOption)
+               handleSelectOrderType("CASH_CARRY", outletSetting.takeAwayOption)
              }
            >
              <IconTakeAway />
@@ -47,7 +47,7 @@ import { setServiceCharge } from "../../app/dataSlice";
          {(outletSetting.dineInOption?.enable || false) && (
            <button
              className={`${
-               curOrderType == "dinein" ? bgTypeSelected : bgTypeUnSelected
+               curOrderType == "DINEIN" ? bgTypeSelected : bgTypeUnSelected
              } justify-center items-center self-stretch border flex flex-col mt-6 px-4 py-6 rounded-lg border-solid`}
              onClick={() =>
                handleSelectOrderType("DINEIN", outletSetting.dineInOption)
