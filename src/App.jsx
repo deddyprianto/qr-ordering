@@ -56,12 +56,10 @@ export default function App() {
 
   const dispatch = useDispatch();
 
-  const { cartInfo, orderType, memberInfo, cartToListen } = useSelector(
-    (state) => state.dataSlicePersisted,
-  );
+  const { cartInfo, orderType, memberInfo, cartToListen } =
+    useSelector((state) => state.dataSlicePersisted);
 
   const dataPreparation = useRef();
-
   dataPreparation.current = () => {
     const outlet = urlQueryExtractor(dispatch);
     if(!outlet) return;

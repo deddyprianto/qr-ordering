@@ -40,7 +40,12 @@ export const RenderExpandDetail = ({ item, expandItem, isEmptyArray }) => {
               className="grid grid-cols-[22px_1fr_50px] grid-rows-[1fr] auto-cols-[1fr] gap-[0px_0px] grid-flow-row font-medium text-[12px]"
             >
               <div>({attribute?.quantity}x)</div>
-              <div>{attribute?.bundleName}</div>
+              <div className="flex flex-col">
+                <div>{attribute?.bundleName}</div>
+                <ul className="list-disc">
+                  <li>{attribute?.productInfo?.itemName}</li>
+                </ul>
+              </div>
               <div className="justify-self-end">+ $ {attribute?.unitPrice}</div>
             </div>
           ))}
