@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  isSplashScreenShow: true,
   data: "",
   isOpenModalAuth: true,
   isCartSummaryBlink: false,
@@ -15,13 +16,16 @@ const initialState = {
   hasSubGroup: false,
   tableNo: "",
   validUntil: "",
-  isValidUrl: false
+  isValidUrl: false,
 };
 
 const dataSlice = createSlice({
   name: "dataSlice",
   initialState,
   reducers: {
+    setShowSplashScreen: (state, action) => {
+      state.isSplashScreenShow = action.payload;
+    },
     setData: (state, action) => {
       state.data = action.payload;
     },
@@ -71,6 +75,7 @@ const dataSlice = createSlice({
 });
 
 export const {
+  setShowSplashScreen,
   setHasSubGroup,
   setAutoMoveSelected,
   setData,
@@ -85,6 +90,6 @@ export const {
   setIsDataOrder,
   setTableNo,
   setValidUntil,
-  setIsValidUrl
+  setIsValidUrl,
 } = dataSlice.actions;
 export default dataSlice.reducer;
