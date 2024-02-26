@@ -31,7 +31,7 @@ const ItemOrder = ({ order }) => {
             }}
             className="text-center text-sm font-bold leading-5 tracking-wide"
           >
-            {order.orderType}
+            {order.orderType == "DINEIN" ? "Dine In" : "Take Away"}
           </div>
           <div className="text-center text-sm font-medium leading-5 tracking-wide">
             {order.outletName}
