@@ -1,6 +1,5 @@
-import { Suspense, lazy, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import {setShowSplashScreen} from "../../app/dataSlicePersisted";
+import { Suspense, lazy } from "react";
+import { useSelector } from "react-redux";
 import RenderCartSummary from "../../components/Home/RenderCartSummary";
 import { NotAvailable } from "./NotAvailable";
 
@@ -12,21 +11,12 @@ const RenderValidityError = lazy(
 );
 
 export function Component() {
-  const dispatch = useDispatch();
-
-  const { cartInfo, orderType, isSplashScreenShow, outletDetail } = useSelector(
+  const { cartInfo, outletDetail, orderType } = useSelector(
     (state) => state.dataSlicePersisted,
   );
-  const { isValidUrl } = useSelector((state) => state.dataSlice);
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      dispatch(setShowSplashScreen(false));
-    }, 2000);
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [dispatch]);
+  const { isValidUrl, isSplashScreenShow } = useSelector(
+    (state) => state.dataSlice,
+  );
 
   const renderContent = () => {
     if (!isValidUrl) {

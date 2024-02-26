@@ -85,7 +85,11 @@ export function RenderNotificationOrder() {
             onClick={handleClickViewDetail}
             className="items-stretch self-center flex gap-0 my-auto"
           >
-            <div className="items-stretch bg-green-700 flex justify-between gap-1 px-1.5 py-1 rounded-[100px]">
+            <div
+              className={`items-stretch ${
+                orderStatus?.status === "VOIDED" ? "#CF3030" : "bg-green-700"
+              }  flex justify-between gap-1 px-1.5 py-1 rounded-[100px]`}
+            >
               <IconCheckFill />
               <div className="text-white text-xs font-medium leading-4 tracking-wide self-center grow whitespace-nowrap my-auto">
                 {statusText(orderStatus?.status)}

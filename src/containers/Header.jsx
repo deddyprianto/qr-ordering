@@ -68,7 +68,10 @@ export default function Header() {
         }}
         className="justify-center items-center border-b-[color:var(--Grey-Scale-color-Grey-Scale-4,#F9F9F9)] flex w-full flex-col border-b border-solid"
       >
-        <div className="flex items-stretch gap-2 my-1">
+        <div
+          className="flex items-stretch gap-2 my-1"
+          style={{ visibility: tableNo ? "visible" : "hidden" }}
+        >
           <IconTable />
           <div className="text-white text-center text-sm font-medium leading-5 tracking-wide my-auto">
             <Trans i18nKey={"you_at_table"} />

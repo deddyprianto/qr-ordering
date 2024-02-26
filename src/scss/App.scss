@@ -71,5 +71,19 @@
       transform: rotate(360deg);
   }
   } 
+// new
+.splash-image {
+  width: 100%; /* Adjust the width as needed */
+  animation: zoomIn 3s; /* Zoom in animation */
+}
+
+@keyframes zoomIn {
+  0% {
+      transform: scale(1.5); /* Initial size (slightly larger) */
+  }
+  100% {
+      transform: scale(1); /* Zoomed in size (original size) */
+  }
+}
 
   

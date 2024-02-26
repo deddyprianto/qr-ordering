@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   accessToken: "",
-  isSplashScreenShow: true,
   memberInfo: {},
   cartInfo: {},
   outletName: "edge cafe",
@@ -21,7 +20,7 @@ const initialState = {
   otpRequestInfo: {},
   insights: [],
   cartToListen: [],
-  orderStatus: null
+  orderStatus: null,
 };
 
 const dataSlicePersisted = createSlice({
@@ -31,9 +30,6 @@ const dataSlicePersisted = createSlice({
     setAccessToken: (state, action) => {
       state.accessToken = action.payload;
       localStorage.setItem("accessToken", JSON.stringify(action.payload));
-    },
-    setShowSplashScreen: (state, action) => {
-      state.isSplashScreenShow = action.payload;
     },
     setSearchItemObj: (state, action) => {
       state.searchItemObj = action.payload;
@@ -70,16 +66,16 @@ const dataSlicePersisted = createSlice({
     },
     setInsights: (state, action) => {
       state.insights = action.payload;
-    }, 
+    },
     setCartToListen: (state, action) => {
       state.cartToListen = action.payload;
-    }, 
+    },
     updateCartToListen: (state, action) => {
-      let cartToListen = JSON.parse(JSON.stringify((state.cartToListen || [])));
+      let cartToListen = JSON.parse(JSON.stringify(state.cartToListen || []));
       let newObj = action.payload;
       let found = false;
 
-      const newCartToListen = cartToListen.map(item => {
+      const newCartToListen = cartToListen.map((item) => {
         if (item.cartID === newObj.cartID) {
           found = true;
           return { ...item, status: newObj.status };
@@ -101,7 +97,6 @@ const dataSlicePersisted = createSlice({
 export const {
   setOrderStatus,
   setAccessToken,
-  setShowSplashScreen,
   setSearchItemObj,
   setEnableSearchUsingScroll,
   setOtpRequestInfo,
@@ -115,6 +110,6 @@ export const {
   setOutletDetail,
   setInsights,
   setCartToListen,
-  updateCartToListen
+  updateCartToListen,
 } = dataSlicePersisted.actions;
 export default dataSlicePersisted.reducer; // Changed 'dataSlicePersisted.reducer.default' to 'dataSlicePersisted.reducer'
