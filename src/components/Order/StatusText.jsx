@@ -13,7 +13,7 @@ export const statusText = (status) => {
     case "VOIDED":
       return "VOIDED";
     case "CANCELLED":
-      return "CAANCELED";
+      return "CANCELLED";
     default:
       break;
   }

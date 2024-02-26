@@ -87,11 +87,13 @@ export function RenderNotificationOrder() {
             className="items-stretch self-center flex gap-0 my-auto"
           >
             <div
-              className={`items-stretch ${
-                orderStatus?.status === "VOIDED" ? "#CF3030" : "bg-green-700"
-              }  flex justify-between gap-1 px-1.5 py-1 rounded-[100px]`}
+              className={`items-center ${
+                orderStatus?.status === "CANCELLED"
+                  ? "bg-[#CF3030]"
+                  : "bg-green-700"
+              }  flex gap-1 py-1 rounded-[100px] px-1`}
             >
-              {orderStatus?.status === "VOIDED" ? (
+              {orderStatus?.status === "CANCELLED" ? (
                 <IconClose color="white" />
               ) : (
                 <IconCheckFill />
@@ -100,7 +102,9 @@ export function RenderNotificationOrder() {
                 {statusText(orderStatus?.status)}
               </div>
             </div>
-            <IconArrowRight color={theme.Color_Secondary} />
+            <div className="flex justify-start items-center">
+              <IconArrowRight color={theme.Color_Secondary} />
+            </div>
           </button>
         </div>
       </div>
