@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   IconArrowRight,
   IconCheckFill,
+  IconClose,
   TaskListIcon,
 } from "../../assets/svgIcon";
 import { useEffect, useRef, useState } from "react";
@@ -90,7 +91,11 @@ export function RenderNotificationOrder() {
                 orderStatus?.status === "VOIDED" ? "#CF3030" : "bg-green-700"
               }  flex justify-between gap-1 px-1.5 py-1 rounded-[100px]`}
             >
-              <IconCheckFill />
+              {orderStatus?.status === "VOIDED" ? (
+                <IconClose color="white" />
+              ) : (
+                <IconCheckFill />
+              )}
               <div className="text-white text-xs font-medium leading-4 tracking-wide self-center grow whitespace-nowrap my-auto">
                 {statusText(orderStatus?.status)}
               </div>
