@@ -1,4 +1,4 @@
-import { setAccessToken } from "../../app/dataSlicePersisted";
+import { setAccessToken, setCartInfo } from "../../app/dataSlicePersisted";
 import { callAPI } from "../../services/services";
 
 export const fetchAuthMember = async (dispatch, memberInfo) => {
@@ -6,6 +6,7 @@ export const fetchAuthMember = async (dispatch, memberInfo) => {
   const currentDate = new Date().toDateString();
   try {
     if (!lastCallTimestamp || lastCallTimestamp !== currentDate) {
+      dispatch(setCartInfo({}));
       const responseAuth = await callAPI(
         `${import.meta.env.VITE_API_URL}/auth`,
         "GET",
