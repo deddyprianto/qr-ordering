@@ -26,7 +26,7 @@ const RenderItemCard = ({ item }) => {
   const { outletName, orderType } = useSelector(
     (state) => state.dataSlicePersisted,
   );
-  const { menuSubGroup } = useSelector((state) => state.dataSlice);
+  const { menuSubGroup, tableNo } = useSelector((state) => state.dataSlice);
   const toast = useEdgeSnack();
   const handleOpenModalAddItem = () => {
     setOpenModalAddItem(true);
@@ -55,6 +55,7 @@ const RenderItemCard = ({ item }) => {
           outletName,
           saveNewCartInfo,
           orderType,
+          tableNo,
         );
       }
       await addItemToCart({

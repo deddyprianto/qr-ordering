@@ -15,7 +15,7 @@ import { RenderTagInsight } from "../Home/TagInsight";
 import { RenderTagPromo } from "../Home/TagPromo";
 
 export const RenderItemProduct = ({ item, cartID, qtyInCart, cartLineID, cartId }) => {
-  const { menuSubGroup } = useSelector((state) => state.dataSlice);
+  const { menuSubGroup, tableNo } = useSelector((state) => state.dataSlice);
   const { outletName, theme, orderType, cartInfo } = useSelector(
     (state) => state.dataSlicePersisted,
   );
@@ -56,6 +56,7 @@ export const RenderItemProduct = ({ item, cartID, qtyInCart, cartLineID, cartId 
           outletName,
           saveNewCartInfo,
           orderType,
+          tableNo,
         );
       }
       await addItemToCart({

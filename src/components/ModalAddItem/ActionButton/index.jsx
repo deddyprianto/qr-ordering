@@ -29,7 +29,7 @@ export const RenderButtonAdd = ({
   const { theme } = useSelector((state) => state.dataSlicePersisted);
   const dispatch = useDispatch();
   const toast = useEdgeSnack();
-  const { cartInfo, outletName, orderType } = useSelector(
+  const { cartInfo, outletName, orderType ,tableNo} = useSelector(
     (state) => state.dataSlicePersisted,
   );
   const isQtyExist = cartInfo?.details?.some(
@@ -68,6 +68,7 @@ export const RenderButtonAdd = ({
         outletName,
         resetCartInfo,
         orderType,
+        tableNo
       );
 
     processAddItem(cartID);

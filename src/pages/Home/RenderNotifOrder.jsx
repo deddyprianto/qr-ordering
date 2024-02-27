@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   IconArrowRight,
   IconCheckFill,
+  IconClose,
   TaskListIcon,
 } from "../../assets/svgIcon";
 import { useEffect, useRef, useState } from "react";
@@ -86,16 +87,24 @@ export function RenderNotificationOrder() {
             className="items-stretch self-center flex gap-0 my-auto"
           >
             <div
-              className={`items-stretch ${
-                orderStatus?.status === "VOIDED" ? "#CF3030" : "bg-green-700"
-              }  flex justify-between gap-1 px-1.5 py-1 rounded-[100px]`}
+              className={`items-center ${
+                orderStatus?.status === "CANCELLED"
+                  ? "bg-[#CF3030]"
+                  : "bg-green-700"
+              }  flex gap-1 py-1 rounded-[100px] px-1`}
             >
-              <IconCheckFill />
+              {orderStatus?.status === "CANCELLED" ? (
+                <IconClose color="white" />
+              ) : (
+                <IconCheckFill />
+              )}
               <div className="text-white text-xs font-medium leading-4 tracking-wide self-center grow whitespace-nowrap my-auto">
                 {statusText(orderStatus?.status)}
               </div>
             </div>
-            <IconArrowRight color={theme.Color_Secondary} />
+            <div className="flex justify-start items-center">
+              <IconArrowRight color={theme.Color_Secondary} />
+            </div>
           </button>
         </div>
       </div>
