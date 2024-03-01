@@ -4,27 +4,65 @@ import { useSelector } from "react-redux";
 export const ProductCatalog = () => {
   const cartInfo = useSelector((state) => state.dataSlicePersisted.cartInfo);
 
-  const menuSubGroup = useSelector((state) => state.dataSlice.menuSubGroup);
+  const { groupCollecting, saveRefNoGroup, menuSubGroup } = useSelector(
+    (state) => state.dataSlice,
+  );
+
+  const viewTypeGroup = groupCollecting.find(
+    (item) => item.refNo === saveRefNoGroup,
+  );
+
+  const handleLayoutStyle = (viewType, viewTypeGroup) => {
+    let styleObj;
+
+    if (
+      viewType === "list" ||
+      (viewTypeGroup && viewTypeGroup.viewType === "list")
+    ) {
+      styleObj = {
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+      };
+    } else if (
+      viewType === "detailed" ||
+      (viewTypeGroup && viewTypeGroup.viewType === "detailed")
+    ) {
+      styleObj = {
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: "white",
+      };
+    } else if (
+      viewType === "grid" ||
+      (viewTypeGroup && viewTypeGroup.viewType === "grid")
+    ) {
+      styleObj = {
+        width: "100%",
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+        gridTemplateRows: "1fr",
+        gap: "16px",
+        gridAutoFlow: "row",
+        gridTemplateAreas: '". ."',
+      };
+    }
+    return styleObj;
+  };
+
   return menuSubGroup?.map((menu, idx) => {
+    const viewType = menu.viewType;
     return (
       <div key={menu.refNo} id={"sub_" + idx + "_" + menu.refNo}>
         <div className="text-gray-700 text-lg font-bold leading-6 mt-6 mb-2">
           {menu.buttonTitle}
         </div>
-        <div
-          style={{
-            width: "100%",
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gridTemplateRows: "1fr",
-            gap: "16px",
-            gridAutoFlow: "row",
-            gridTemplateAreas: '". ."',
-          }}
-        >
+        <div style={handleLayoutStyle(viewType, viewTypeGroup)}>
           {menu.items?.map((item) => {
             return (
               <RenderItemProduct
+                viewType={viewType}
                 cartId={item.productInfo.uniqueID}
                 key={`${item.buttonType}_${item.refNo}`}
                 cartID={cartInfo?.uniqueID}

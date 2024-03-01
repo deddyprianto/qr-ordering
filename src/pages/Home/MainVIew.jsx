@@ -1,7 +1,6 @@
 import { lazy, useEffect, useState } from "react";
 import { NavbarMenu } from "./NavbarMenu";
 import { Insights } from "../../components/Insights";
-import { SubGroupMenu } from "./SubGroupMenu";
 import { useDispatch, useSelector } from "react-redux";
 import "../../scss/animation.scss";
 import { Skeleton } from "../../components/Skeleton";
@@ -9,7 +8,11 @@ import { GET } from "../../utilities/services";
 import { ProductCatalog } from "./ProductCatalog";
 import { Trans } from "react-i18next";
 import { mapCartAndProduct } from "../../components/Home/productAndCartMapper";
-import { setMenuSubGroup, setHasSubGroup } from "../../app/dataSlice";
+import {
+  setMenuSubGroup,
+  setHasSubGroup,
+  setSaveRefNoGroup,
+} from "../../app/dataSlice";
 import { setEnableSearchUsingScroll } from "../../app/dataSlicePersisted";
 import { RenderNotificationOrder } from "./RenderNotifOrder";
 import { SkeletonTagInsight } from "../../components/Skeleton/SkeletonTagInsight";
@@ -17,6 +20,7 @@ import { SkeletonTagInsight } from "../../components/Skeleton/SkeletonTagInsight
 const RenderSearchItemBar = lazy(
   () => import("../../components/Home/SearchItemBar"),
 );
+const SubGroupMenu = lazy(() => import("./SubGroupMenu"));
 
 const MainView = () => {
   const [dataCategory, setDataCategory] = useState([]);
@@ -51,7 +55,7 @@ const MainView = () => {
   };
 
   const fetchAllSubGroupItem = async (subGroup, isDataSubGroupExist) => {
-    setIsLoading(true); // Set loading to true before fetching data
+    setIsLoading(true);
     const firstItems = subGroup[0]?.items || [];
 
     for (const sb of subGroup) {
@@ -77,6 +81,7 @@ const MainView = () => {
     setIsLoading(false); // Set loading to false after fetching data
   };
   const handleSelectGroup = async (type, refNo) => {
+    dispatch(setSaveRefNoGroup(refNo));
     dispatch(setMenuSubGroup([]));
     let data = await getMenuItem(type, refNo);
     setIsHasSubGroup(data.tempSubGroup?.length > 0);
