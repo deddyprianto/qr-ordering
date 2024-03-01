@@ -5,6 +5,7 @@ import { RenderTagPromo } from "../Home/TagPromo";
 import { RenderButtonAddToCart } from "./ButtonAddToCart";
 import { RenderRetailPrice } from "./RetailPrice";
 import PropTypes from "prop-types";
+import RenderButtonImageItemProd from "../RenderButtonImageItemProd";
 
 export const RenderLayoutType = ({
   viewType,
@@ -116,23 +117,12 @@ export const RenderLayoutType = ({
           className="grid grid-cols-1 grid-rows-1 bg-white mt-4 rounded-2xl w-full"
         >
           <div>
-            <button
-              className="flex-col overflow-hidden relative flex aspect-square w-full items-stretch pr-12 pb-2"
-              onClick={handleOpenModalAddItem}
-            >
-              <img
-                alt={"itemImage"}
-                loading="lazy"
-                src={item?.defaultImageURL || theme?.Image_Item_Place_Holder}
-                className="absolute h-full w-full object-cover object-center inset-0 rounded-l-xl"
-              />
-              {(item?.isDiscounted || false) && <RenderTagPromo />}
-              <div className="absolute bottom-1 left-1 right-0">
-                <div className="relative items-stretch flex gap-1 mt-16">
-                  <RenderTagInsight insights={item.insight} />
-                </div>
-              </div>
-            </button>
+            <RenderButtonImageItemProd
+              handleOpenModalAddItem={handleOpenModalAddItem}
+              item={item}
+              theme={theme}
+              width='w-full'
+            />
             <div className="justify-between items-stretch flex grow basis-[0%] flex-col p-2">
               <button className="text-left" onClick={handleOpenModalAddItem}>
                 <div className="text-gray-700 text-sm font-medium leading-5 tracking-wide">
