@@ -8,7 +8,6 @@ function PriceSummary() {
   const theme = useSelector((state) => state.dataSlicePersisted.theme);
   const cartInfo = useSelector((state) => state.dataSlicePersisted.cartInfo);
   const [expandItem, setExpandItem] = useState(true);
-
   /***
     const calculateServiceCharge = (sc) => {
       let amount = 0;
@@ -19,6 +18,7 @@ function PriceSummary() {
       return numberFormatter(amount);
     }
   */
+
   const renderItemExpand = () => {
     return (
       <div
@@ -36,19 +36,21 @@ function PriceSummary() {
             $ {numberFormatter(cartInfo?.subtotalSummary?.GROSS)}
           </div>
         </div>
-        {/*** 
-         {serviceCharge?.map((sc)=>{
+        {cartInfo?.subtotals?.map((sc) => {
           return (
-            <div className="items-stretch flex justify-between gap-4 mt-2 " key={sc.Name}>
+            <div
+              className="items-stretch flex justify-between gap-4 mt-2 "
+              key={sc.refNo}
+            >
               <div className="justify-center text-gray-700 text-sm font-medium leading-5 tracking-wide grow whitespace-nowrap">
-                {sc.Name}
+                {sc?.subtotalNameDisplayed}
               </div>
               <div className="text-gray-700 text-right text-base font-bold leading-6 whitespace-nowrap">
-                $ {calculateServiceCharge(sc)}
+                $ {sc?.subtotalAmount}
               </div>
             </div>
-          )
-        })} */}
+          );
+        })}
         {cartInfo?.excGSTAmount > 0 && (
           <div className="items-stretch flex justify-between gap-4 mt-2 ">
             <div className="justify-center text-gray-700 text-sm font-medium leading-5 tracking-wide grow whitespace-nowrap">
