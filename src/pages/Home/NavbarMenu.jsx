@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from "react";
-import {  useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { MenuGroup } from "./MenuGroup";
 import { GET } from "../../utilities/services";
 import PropTypes from "prop-types";
 import { SkeletonNavbar } from "../../components/Skeleton/SkeletonNavbar";
+import { setGroupCollecting } from "../../app/dataSlice";
 
-
-export const NavbarMenu = ({ 
+export const NavbarMenu = ({
   handleSelectGroup,
   dataCategory,
   isSelectedItem,
@@ -14,8 +14,10 @@ export const NavbarMenu = ({
   setDataCategory,
   setIsSelectedItem,
   setDtCategoryLength,
-  setIsLoadingParent
+  setIsLoadingParent,
 }) => {
+  const dispatch = useDispatch();
+
   const [isLoading, setIsLoading] = useState(true);
 
   const { outletName, theme } = useSelector(
@@ -28,12 +30,12 @@ export const NavbarMenu = ({
     setIsLoading(true);
     let groupList = [];
     let dataLength = 1;
-
     while (groupList.length < dataLength && dataLength !== 0) {
       let result = await getMenuGroup(groupList.length);
       dataLength = result.dataLength;
       groupList = groupList.concat(result.data);
       setDataCategory([...groupList]);
+      dispatch(setGroupCollecting([...groupList]));
       if (isSelectedItem == "")
         handleChangeGroup(groupList[0].type, groupList[0].refNo);
     }
@@ -64,6 +66,7 @@ export const NavbarMenu = ({
             img: dt.imageURL || theme.Image_Item_Place_Holder,
             refNo: dt.refNo,
             type: dt.buttonType,
+            viewType: dt.viewType,
           });
         }
       }

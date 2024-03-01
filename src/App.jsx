@@ -61,10 +61,14 @@ export default function App() {
 
   const dataPreparation = useRef();
   dataPreparation.current = () => {
+    const lastCallTimestamp = localStorage.getItem("lastCallTimestamp");
+    const currentDate = new Date().toDateString();
     const outlet = urlQueryExtractor(dispatch);
-    if(!outlet) return;
+    if (!outlet) return;
     fetchLayout(dispatch);
-    fetchCartInfo(dispatch, outlet, cartInfo);
+    if (lastCallTimestamp || lastCallTimestamp === currentDate) {
+      fetchCartInfo(dispatch, outlet, cartInfo);
+    }
     fetchOutletSetting(dispatch, outlet, orderType);
     fetchInsight(dispatch);
     fetchOutletAvailability(dispatch, outlet);

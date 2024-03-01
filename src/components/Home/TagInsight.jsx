@@ -1,11 +1,12 @@
 import PropTypes from "prop-types"
 
 export const RenderTagInsight = ({ insights }) => {
-  return insights?.map((insight)=>{
+  return insights?.map((insight) => {
     return (
-      <div key={insight.insightName+''+insight.insightTagIcon} 
+      <div
+        key={insight.insightName + "" + insight.insightTagIcon}
         className="items-center flex aspect-[2.8076923076923075] flex-col justify-center p-1 rounded-full"
-        style={{backgroundColor: insight.insightTagColor}}
+        style={{ backgroundColor: insight.insightTagColor }}
       >
         <img
           alt={insight.insightName}
@@ -14,8 +15,8 @@ export const RenderTagInsight = ({ insights }) => {
           className="aspect-square object-contain object-center w-[18px] overflow-hidden"
         />
       </div>
-    )
-  })
+    );
+  });
 }
 
 RenderTagInsight.propTypes = {

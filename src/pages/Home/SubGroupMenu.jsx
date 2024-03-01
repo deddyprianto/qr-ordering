@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
-export const SubGroupMenu = ({ selectedSubGroup, setSelectedSubGroup }) => {
+const SubGroupMenu = ({ selectedSubGroup, setSelectedSubGroup }) => {
   const { theme } = useSelector((state) => state.dataSlicePersisted);
   const { menuSubGroup, moveSelected } = useSelector(
     (state) => state.dataSlice,
@@ -59,3 +59,4 @@ SubGroupMenu.propTypes = {
   selectedSubGroup: PropTypes.string,
   setSelectedSubGroup: PropTypes.func,
 };
+export default SubGroupMenu;

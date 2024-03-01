@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
 
-const renderItemPricePromo = (item) => {
+const renderItemPricePromo = (item, styleMargin) => {
   return (
-    <div className="items-stretch flex gap-2 mt-7">
+    <div className={`items-stretch flex gap-2 ${styleMargin || "mt-7"}`}>
       <div className="text-neutral-400 text-center text-base font-medium leading-6 line-through">
         $ {item?.retailPrice}
       </div>
@@ -10,24 +10,28 @@ const renderItemPricePromo = (item) => {
         $ 5.00
       </div>
     </div>
-  )
+  );
 };
 
-const renderItemPriceNormal = (item) => {
+const renderItemPriceNormal = (item, styleMargin) => {
   return (
-    <div className="text-gray-700 text-base font-bold leading-6 mt-7">
-      {item?.retailPrice?`$ ${item?.retailPrice}`:"FREE"}
+    <div
+      className={`text-gray-700 text-base font-bold leading-6 ${
+        styleMargin || "mt-7"
+      }`}
+    >
+      {item?.retailPrice ? `$ ${item?.retailPrice}` : "FREE"}
     </div>
-    
   );
-}
+};
 
-export const RenderItemPrice = ({isPromo, item}) => {
-  if(isPromo) return renderItemPricePromo(item);
-  else return renderItemPriceNormal(item)
-}
+export const RenderItemPrice = ({ isPromo, item, styleMargin }) => {
+  if (isPromo) return renderItemPricePromo(item, styleMargin);
+  else return renderItemPriceNormal(item, styleMargin);
+};
 
 RenderItemPrice.propTypes = {
   isPromo: PropTypes.bool,
-  item: PropTypes.object
-}
+  item: PropTypes.object,
+  styleMargin: PropTypes.string,
+};

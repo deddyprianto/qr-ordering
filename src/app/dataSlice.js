@@ -17,12 +17,20 @@ const initialState = {
   tableNo: "",
   validUntil: "",
   isValidUrl: false,
+  groupCollecting: [],
+  saveRefNoGroup: ''
 };
 
 const dataSlice = createSlice({
   name: "dataSlice",
   initialState,
   reducers: {
+    setGroupCollecting: (state, action) => {
+      state.groupCollecting = action.payload;
+    },
+    setSaveRefNoGroup: (state, action) => {
+      state.saveRefNoGroup = action.payload;
+    },
     setShowSplashScreen: (state, action) => {
       state.isSplashScreenShow = action.payload;
     },
@@ -75,6 +83,8 @@ const dataSlice = createSlice({
 });
 
 export const {
+  setSaveRefNoGroup,
+  setGroupCollecting,
   setShowSplashScreen,
   setHasSubGroup,
   setAutoMoveSelected,
