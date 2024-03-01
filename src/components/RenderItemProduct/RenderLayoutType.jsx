@@ -5,8 +5,6 @@ import { RenderTagPromo } from "../Home/TagPromo";
 import { RenderButtonAddToCart } from "./ButtonAddToCart";
 import { RenderRetailPrice } from "./RetailPrice";
 import PropTypes from "prop-types";
-import { IconPlus } from "../../assets/svgIcon";
-import { Trans } from "react-i18next";
 
 export const RenderLayoutType = ({
   viewType,
@@ -28,6 +26,35 @@ export const RenderLayoutType = ({
     (item) => item.refNo === saveRefNoGroup,
   );
 
+  const renderButtonAdd = () => {
+    if (isLoading) {
+      return (
+        <button
+          type="button"
+          className="bg-[#9D9D9D] rounded-lg flex justify-center items-center py-2 text-white w-full"
+          disabled
+        >
+          <span className="loader"></span>
+          <div>
+            {cartInfo && cartInfo?.details.length === 0
+              ? "Adding..."
+              : "Updating..."}
+          </div>
+        </button>
+      );
+    } else {
+      return (
+        <RenderButtonAddToCart
+          isLoading={isLoading}
+          qtyInCart={qtyInCart}
+          item={item}
+          cartLineID={cartLineID}
+          handleClickButtonAdd={handleClickButtonAdd}
+        />
+      );
+    }
+  };
+
   const renderViewType = () => {
     let componentUsed;
     if (
@@ -39,7 +66,7 @@ export const RenderLayoutType = ({
           style={{
             boxShadow: "0px 4px 10px 0px rgba(0, 0, 0, 0.10)",
           }}
-          className="grid grid-cols-2  bg-white mt-4 rounded-2xl"
+          className="grid grid-cols-[128px_1fr]  bg-white mt-4 rounded-2xl"
         >
           <button
             className="flex-col overflow-hidden relative flex aspect-square w-[150px] items-stretch pr-12 pb-2"
@@ -52,7 +79,7 @@ export const RenderLayoutType = ({
               className="absolute h-full w-full object-cover object-center inset-0 rounded-l-xl"
             />
             {(item?.isDiscounted || false) && <RenderTagPromo />}
-            <div className="absolute bottom-2 left-1 right-0">
+            <div className="absolute bottom-1 left-1 right-0">
               <div className="relative items-stretch flex gap-2 mt-16">
                 <RenderTagInsight insights={item.insight} />
               </div>
@@ -72,36 +99,7 @@ export const RenderLayoutType = ({
                   styleMargin="mt-0"
                 />
               </div>
-              <div className="w-full">
-                {isLoading ? (
-                  <button
-                    type="button"
-                    className="bg-[#9D9D9D] rounded-lg flex justify-center items-center py-2 text-white"
-                    disabled
-                  >
-                    <span className="loader"></span>
-                    <div>
-                      {cartInfo && cartInfo?.details.length === 0
-                        ? "Adding..."
-                        : "Updating..."}
-                    </div>
-                  </button>
-                ) : (
-                  <button
-                    className="justify-center items-stretch flex gap-2 py-2 rounded-lg w-full"
-                    onClick={handleOpenModalAddItem}
-                    style={{
-                      backgroundColor: theme.Color_Secondary,
-                    }}
-                    disabled={isLoading}
-                  >
-                    <IconPlus />
-                    <div className="text-white text-xs font-bold leading-4 self-center my-auto">
-                      <Trans i18nKey={"add"} />
-                    </div>
-                  </button>
-                )}
-              </div>
+              <div className="w-full">{renderButtonAdd()}</div>
             </div>
           </div>
         </div>
@@ -149,36 +147,7 @@ export const RenderLayoutType = ({
                     styleMargin="mt-0"
                   />
                 </div>
-                <div className="w-1/2">
-                  {isLoading ? (
-                    <button
-                      type="button"
-                      className="bg-[#9D9D9D] rounded-lg flex justify-center items-center py-2 text-white"
-                      disabled
-                    >
-                      <span className="loader"></span>
-                      <div>
-                        {cartInfo && cartInfo?.details.length === 0
-                          ? "Adding..."
-                          : "Updating..."}
-                      </div>
-                    </button>
-                  ) : (
-                    <button
-                      className="justify-center items-stretch flex gap-2 py-2 rounded-lg w-full"
-                      onClick={handleOpenModalAddItem}
-                      style={{
-                        backgroundColor: theme.Color_Secondary,
-                      }}
-                      disabled={isLoading}
-                    >
-                      <IconPlus />
-                      <div className="text-white text-xs font-bold leading-4 self-center my-auto">
-                        <Trans i18nKey={"add"} />
-                      </div>
-                    </button>
-                  )}
-                </div>
+                <div className="w-1/2">{renderButtonAdd()}</div>
               </div>
             </div>
           </div>

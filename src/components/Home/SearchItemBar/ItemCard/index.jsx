@@ -87,12 +87,10 @@ const RenderItemCard = ({ item }) => {
             src={item?.defaultImageURL || theme?.Image_Item_Place_Holder}
             className="absolute h-full w-full object-cover object-center inset-0 rounded-l-xl"
           />
-          {(item?.isDiscounted || false) && (
-            <RenderTagPromo/>
-          )}
+          {(item?.isDiscounted || false) && <RenderTagPromo />}
           <div className="absolute bottom-1 left-1 right-0">
             <div className="relative items-stretch flex gap-1 mt-16">
-              <RenderTagInsight insights={item.insight}/>
+              <RenderTagInsight insights={item.insight} />
             </div>
           </div>
         </button>
