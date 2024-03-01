@@ -8,17 +8,6 @@ function PriceSummary() {
   const theme = useSelector((state) => state.dataSlicePersisted.theme);
   const cartInfo = useSelector((state) => state.dataSlicePersisted.cartInfo);
   const [expandItem, setExpandItem] = useState(true);
-  /***
-    const calculateServiceCharge = (sc) => {
-      let amount = 0;
-      if(sc.Type == "Percentage")
-        amount = cartInfo.nettAmount * (parseFloat(sc.Value)/100);
-      else 
-        amount = parseFloat(sc.Value);
-      return numberFormatter(amount);
-    }
-  */
-
   const renderItemExpand = () => {
     return (
       <div
