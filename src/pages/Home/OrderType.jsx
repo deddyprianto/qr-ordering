@@ -29,33 +29,33 @@ import { setServiceCharge } from "../../app/dataSlice";
          <div className="text-black text-center text-2xl font-semibold leading-8 whitespace-nowrap">
            How Would You Like to Order?
          </div>
-         {(outletSetting.takeAwayOption?.enable || false) && (
+         {(outletSetting.cash_carry_option?.enable || false) && (
            <button
              className={`${
                curOrderType == "CASH_CARRY" ? bgTypeSelected : bgTypeUnSelected
              } items-center self-stretch border flex flex-col mt-6 px-4 py-6 rounded-lg border-solid`}
              onClick={() =>
-               handleSelectOrderType("CASH_CARRY", outletSetting.takeAwayOption)
+               handleSelectOrderType("CASH_CARRY", outletSetting.cash_carry_option)
              }
            >
              <IconTakeAway />
              <div className="justify-center self-stretch text-gray-700 text-center text-2xl font-semibold leading-8 whitespace-nowrap mt-4">
-               {outletSetting.takeAwayOption.displayName}
+               {outletSetting.cash_carry_option.displayName}
              </div>
            </button>
          )}
-         {(outletSetting.dineInOption?.enable || false) && (
+         {(outletSetting.dine_in_option?.enable || false) && (
            <button
              className={`${
                curOrderType == "DINEIN" ? bgTypeSelected : bgTypeUnSelected
              } justify-center items-center self-stretch border flex flex-col mt-6 px-4 py-6 rounded-lg border-solid`}
              onClick={() =>
-               handleSelectOrderType("DINEIN", outletSetting.dineInOption)
+               handleSelectOrderType("DINEIN", outletSetting.dine_in_option)
              }
            >
              <IconDineIn />
              <div className="justify-center self-stretch text-gray-700 text-center text-2xl font-semibold leading-8 whitespace-nowrap mt-4">
-               {outletSetting.dineInOption.displayName}
+               {outletSetting.dine_in_option.displayName}
              </div>
            </button>
          )}

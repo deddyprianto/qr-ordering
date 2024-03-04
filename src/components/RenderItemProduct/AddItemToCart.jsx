@@ -41,7 +41,7 @@ export const addItemToCart = async ({
       dispatch(setIsCartSummaryBlink(false));
     }, 1000);
   } catch (error) {
-    console.log("error anda", error);
+    console.log("error", error);
   }
 };
 
