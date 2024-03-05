@@ -60,5 +60,7 @@
   "outlet_not_available": "The Outlet is Not Available",
   "msg_outlet_out_of_operational_hours": "This outlet is currently closed as it's outside the operational hours. Please visit during regular hours.",
   "msg_outlet_not_available": "This outlet is currently closed. Apologies for any inconvenience.",
-  "operational_hours": "Operational Hours"
+  "operational_hours": "Operational Hours",
+  "something_broken": "Something Broken",
+  "invalid_url_msg": "The page you are looking for is unavailable due to a broken link. Please re-scan the QR code."
 }
