@@ -1,5 +1,6 @@
 import { ImageOptimization } from "./ImageOptimization";
 import imgValidityError from "../assets/validityError.png";
+import { Trans } from "react-i18next";
 
 const RenderValidityError = () => {
   return (
@@ -11,10 +12,9 @@ const RenderValidityError = () => {
           height="246px"
         />
       </div>
-      <div className="text-center mt-5 font-bold">Something Broken</div>
+      <div className="text-center mt-5 font-bold"><Trans i18nKey={"something_broken"}/></div>
       <div className="text-center mt-2">
-        The page you are seeking is currently unavailable. The link may be
-        broken. We apologize for any inconvenience.
+        <Trans i18nKey={"invalid_url_msg"}/>
       </div>
     </div>
   );
