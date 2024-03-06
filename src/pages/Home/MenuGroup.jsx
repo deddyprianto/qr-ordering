@@ -16,7 +16,7 @@ export const MenuGroup = ({ label, imageItem, handleSelected, isGlow }) => {
         flex: "0 0 auto",
         borderBottom: isGlow && `6px solid ${theme?.Color_Secondary}`,
       }}
-      className={`w-[100px] mt-[10px] grid grid-cols-1 grid-rows-navbarItemCustom gap-y-[12px] px-[16px] py-[8px] ${
+      className={`w-[100px] mt-[10px] flex flex-col items-center py-[8px] ${
         isGlow && "px-[10px] py-[12px]"
       }`}
     >
@@ -24,7 +24,6 @@ export const MenuGroup = ({ label, imageItem, handleSelected, isGlow }) => {
         customStyle={{
           borderRadius: "1rem",
           width: "64px",
-          height: "64px",
           border: isGlow
             ? `4px solid ${theme.Color_Secondary}`
             : "2px solid white",
