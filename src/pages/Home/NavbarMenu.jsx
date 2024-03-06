@@ -30,14 +30,17 @@ export const NavbarMenu = ({
     setIsLoading(true);
     let groupList = [];
     let dataLength = 1;
+    let isNeedToChangeGroup = true;
     while (groupList.length < dataLength && dataLength !== 0) {
       let result = await getMenuGroup(groupList.length);
       dataLength = result.dataLength;
       groupList = groupList.concat(result.data);
       setDataCategory([...groupList]);
       dispatch(setGroupCollecting([...groupList]));
-      if (isSelectedItem == "")
+      if (isNeedToChangeGroup) {
+        isNeedToChangeGroup = false;
         handleChangeGroup(groupList[0].type, groupList[0].refNo);
+      }
     }
     setIsLoading(false);
   };

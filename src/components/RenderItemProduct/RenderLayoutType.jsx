@@ -79,10 +79,7 @@ export const RenderLayoutType = ({
           theme={theme}
         />
       );
-    } else if (
-      viewType === "grid" ||
-      (viewTypeGroup && viewTypeGroup.viewType === "grid")
-    ) {
+    } else {
       return (
         <RenderGridView
           handleOpenModalAddItem={handleOpenModalAddItem}

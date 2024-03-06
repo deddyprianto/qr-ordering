@@ -34,10 +34,7 @@ export const ProductCatalog = () => {
         flexDirection: "column",
         backgroundColor: "white",
       };
-    } else if (
-      viewType === "grid" ||
-      (viewTypeGroup && viewTypeGroup.viewType === "grid")
-    ) {
+    } else {
       styleObj = {
         width: "100%",
         display: "grid",
