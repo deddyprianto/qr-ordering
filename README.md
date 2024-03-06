@@ -47,3 +47,14 @@ npm run dev
 - ESLint `dbaeumer.vscode-eslint`
 - SonarLint `SonarSource.sonarlint-vscode`
 - GitLens `eamodio.gitlens`
+
+### For Unit Testing cypress, recomended use vite 5
+- For now cypress not supported for vite v5
+- to fix this we should downgrade the vite to v4
+
+```shell
+npm install vite@4.0.0
+```
+
+### How To run
+- run yarn/npm script test
