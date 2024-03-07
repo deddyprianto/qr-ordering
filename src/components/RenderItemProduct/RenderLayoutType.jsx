@@ -30,7 +30,7 @@ export const RenderLayoutType = ({
       return (
         <button
           type="button"
-          className="bg-[#9D9D9D] rounded-lg flex justify-center items-center py-2 text-white w-full"
+          className="bg-[#9D9D9D] rounded-lg flex justify-center items-center py-2 text-white"
           disabled
         >
           <span className="loader"></span>

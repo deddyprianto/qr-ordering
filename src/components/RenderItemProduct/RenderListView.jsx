@@ -1,7 +1,7 @@
-import { RenderItemPrice } from "../Home/SearchItemBar/ItemCard/ItemPrice";
 import { RenderTagInsight } from "../Home/TagInsight";
 import { RenderTagPromo } from "../Home/TagPromo";
 import PropTypes from "prop-types";
+import { RenderRetailPrice } from "./RetailPrice";
 
 const RenderListView = ({
   handleOpenModalAddItem,
@@ -39,15 +39,11 @@ const RenderListView = ({
             {item.itemName}
           </div>
         </button>
-        <div className="grid grid-cols-[50px_1fr]">
+        <div className="grid grid-cols-2">
           <div className=" flex justify-center items-center">
-            <RenderItemPrice
-              isPromo={item.promo?.length > 0}
-              item={item}
-              styleMargin="mt-0"
-            />
+            <RenderRetailPrice item={item} marginTop="0px" />
           </div>
-          <div className="w-full">{renderButtonAdd()}</div>
+          <div>{renderButtonAdd()}</div>
         </div>
       </div>
     </div>
