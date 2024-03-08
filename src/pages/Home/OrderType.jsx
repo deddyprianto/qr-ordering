@@ -26,16 +26,23 @@ import { setServiceCharge } from "../../app/dataSlice";
    return (
      <div className="bg-white h-full w-full">
        <span className="justify-center items-center flex w-full flex-col px-4">
-         <div className="text-black text-center text-2xl font-semibold leading-8 whitespace-nowrap">
+         <div
+           id="checkHowToOrderLabel"
+           className="text-black text-center text-2xl font-semibold leading-8 whitespace-nowrap"
+         >
            How Would You Like to Order?
          </div>
          {(outletSetting.cash_carry_option?.enable || false) && (
            <button
+             id="takeaway"
              className={`${
                curOrderType == "CASH_CARRY" ? bgTypeSelected : bgTypeUnSelected
              } items-center self-stretch border flex flex-col mt-6 px-4 py-6 rounded-lg border-solid`}
              onClick={() =>
-               handleSelectOrderType("CASH_CARRY", outletSetting.cash_carry_option)
+               handleSelectOrderType(
+                 "CASH_CARRY",
+                 outletSetting.cash_carry_option,
+               )
              }
            >
              <IconTakeAway />
@@ -46,6 +53,7 @@ import { setServiceCharge } from "../../app/dataSlice";
          )}
          {(outletSetting.dine_in_option?.enable || false) && (
            <button
+             id="dinein"
              className={`${
                curOrderType == "DINEIN" ? bgTypeSelected : bgTypeUnSelected
              } justify-center items-center self-stretch border flex flex-col mt-6 px-4 py-6 rounded-lg border-solid`}
