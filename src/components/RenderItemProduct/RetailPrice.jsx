@@ -1,12 +1,12 @@
 import PropTypes from "prop-types"
 
 
-export const RenderRetailPrice = ({ item }) => {
+export const RenderRetailPrice = ({ item, marginTop = "18px" }) => {
   return (
     <div
       style={{
         display: "flex",
-        marginTop: "18px",
+        marginTop: marginTop,
         gap: "8px",
       }}
     >
@@ -34,8 +34,9 @@ export const RenderRetailPrice = ({ item }) => {
       </div>
     </div>
   );
-}
+};
 
 RenderRetailPrice.propTypes = {
-  item: PropTypes.any
-}
+  item: PropTypes.any,
+  marginTop: PropTypes.string,
+};

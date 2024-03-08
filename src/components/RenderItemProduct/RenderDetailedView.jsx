@@ -1,6 +1,6 @@
-import { RenderItemPrice } from "../Home/SearchItemBar/ItemCard/ItemPrice";
 import RenderButtonImageItemProd from "../RenderButtonImageItemProd";
 import PropTypes from "prop-types";
+import { RenderRetailPrice } from "./RetailPrice";
 
 const RenderDetailedView = ({
   handleOpenModalAddItem,
@@ -30,11 +30,7 @@ const RenderDetailedView = ({
           </button>
           <div className="flex justify-between items-center mt-[18px]">
             <div className="flex justify-center items-center">
-              <RenderItemPrice
-                isPromo={item.promo?.length > 0}
-                item={item}
-                styleMargin="mt-0"
-              />
+              <RenderRetailPrice item={item} marginTop="0px" />
             </div>
             <div className="w-1/2">{renderButtonAdd()}</div>
           </div>

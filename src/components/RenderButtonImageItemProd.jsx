@@ -10,7 +10,7 @@ const RenderButtonImageItemProd = ({
 }) => {
   return (
     <button
-      className={`flex-col overflow-hidden relative flex aspect-square w-[150px] items-stretch pr-12 pb-2 ${width}`}
+      className={`flex-col overflow-hidden relative flex aspect-square w-[150px] items-stretch pb-2 ${width}`}
       onClick={handleOpenModalAddItem}
     >
       <img
