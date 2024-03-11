@@ -75,7 +75,10 @@ const RenderItemCard = ({ item }) => {
 
   return (
     <>
-      <div className="grid grid-cols-2 shadow-sm bg-white mt-4 rounded-2xl">
+      <div
+        id="searchResults"
+        className="grid grid-cols-2 shadow-sm bg-white mt-4 rounded-2xl"
+      >
         <RenderButtonImageItemProd
           handleOpenModalAddItem={handleOpenModalAddItem}
           item={item}

@@ -76,7 +76,10 @@ export default function Header() {
           <div className="text-white text-center text-sm font-medium leading-5 tracking-wide my-auto">
             <Trans i18nKey={"you_at_table"} />
           </div>
-          <div className="text-white text-center text-sm font-medium leading-5 tracking-wide self-center whitespace-nowrap my-auto">
+          <div
+            id="tableNo"
+            className="text-white text-center text-sm font-medium leading-5 tracking-wide self-center whitespace-nowrap my-auto"
+          >
             {tableNo}
           </div>
         </div>
@@ -89,6 +92,7 @@ export default function Header() {
       return (
         <div className="flex w-full">
           <button
+            id="btn-back-search"
             className="ml-[-22px]"
             onClick={() => dispatchIsSearchItem(false)}
           >
@@ -121,7 +125,10 @@ export default function Header() {
             />
           )}
 
-          <div className="text-stone-50 text-sm font-medium leading-5 tracking-wide self-stretch">
+          <div
+            id="outletName"
+            className="text-stone-50 text-sm font-medium leading-5 tracking-wide self-stretch"
+          >
             {outletName}
           </div>
         </div>
@@ -164,6 +171,7 @@ export default function Header() {
           >
             {renderConditionally()}
             <button
+              id="buttonSearch"
               onClick={() => openSearchBar()}
               onKeyDown={(event) => {
                 if (event.key === "Enter" || event.key === " ") {
