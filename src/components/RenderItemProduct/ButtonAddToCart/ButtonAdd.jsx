@@ -10,6 +10,7 @@ export const RenderButtonAdd = ({
   const theme = useSelector((state) => state.dataSlicePersisted.theme);
   return (
     <button
+      id="renderButtonAdd"
       style={{
         display: "flex",
         justifyContent: "center",

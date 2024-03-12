@@ -16,6 +16,7 @@ export const RenderAttGroup = ({
         {attGroup.items?.map((att, idx) => {
           return (
             <RenderAttItem
+              id={att.attributesCode}
               key={att.attributesCode}
               att={att}
               idxAttGroup={idxAttGroup}

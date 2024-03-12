@@ -5,7 +5,8 @@ export const RenderAttItem = ({
   idxAttGroup,
   idxAttItem,
   handleClickAttItem,
-  isFromBundle = false
+  id,
+  isFromBundle = false,
 }) => {
   const coloringItem = () => {
     if (att.isSelected) {
@@ -16,6 +17,7 @@ export const RenderAttItem = ({
   };
   return (
     <button
+      id={id}
       onClick={() => {
         handleClickAttItem(idxAttGroup, idxAttItem);
       }}
@@ -48,5 +50,6 @@ RenderAttItem.propTypes = {
   idxAttGroup: PropTypes.number,
   idxAttItem: PropTypes.number,
   handleClickAttItem: PropTypes.func,
-  isFromBundle: PropTypes.bool
+  isFromBundle: PropTypes.bool,
+  id: PropTypes.string,
 };

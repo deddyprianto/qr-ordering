@@ -1,6 +1,7 @@
 import { callAPI } from "./services";
 
 export const apiCart = async (method, path, body) => {
+  console.log("dedd PATH", path);
   const tokenLocal = localStorage.getItem("accessToken");
   const objToken = JSON.parse(tokenLocal);
 

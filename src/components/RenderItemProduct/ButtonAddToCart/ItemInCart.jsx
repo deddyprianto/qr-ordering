@@ -43,6 +43,7 @@ export const RenderButtonItemInCart = ({
       style={{ filter: isLoading ? "blur(1px)" : "" }}
     >
       <button
+        id="button-decreaseQuantity"
         className="justify-center items-center flex flex-col px-3 py-1 rounded-lg"
         style={{ backgroundColor: theme.Color_Secondary }}
         onClick={decreaseQuantity}

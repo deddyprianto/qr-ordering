@@ -43,7 +43,7 @@ export const RenderButtonAdd = ({
   };
 
   const handleClickButton = async () => {
-    if(isLoading || !isBundleReadyToSubmit(bundleList)) return;
+    if (isLoading || !isBundleReadyToSubmit(bundleList)) return;
     if (
       itemType == "bundle" &&
       typeOfModalAddItem == "main" &&
@@ -62,13 +62,14 @@ export const RenderButtonAdd = ({
 
     setIsLoading(true);
     let cartID = cartInfo?.uniqueID;
+
     if (!cartID)
       cartID = await addNewCart(
         setIsLoading,
         outletName,
         resetCartInfo,
         orderType,
-        tableNo
+        tableNo,
       );
 
     processAddItem(cartID);
@@ -118,17 +119,23 @@ export const RenderButtonAdd = ({
       }}
     >
       <button
+        id="actionButtonAdd"
         style={{
-          backgroundColor: isLoading || !isBundleReadyToSubmit(bundleList)?"#9D9D9D":theme.Color_Secondary,
+          backgroundColor:
+            isLoading || !isBundleReadyToSubmit(bundleList)
+              ? "#9D9D9D"
+              : theme.Color_Secondary,
         }}
         onClick={() => handleClickButton()}
-        className="w-full rounded-lg px-[16px] py-[12px] flex justify-center items-center cursor-pointer"
+        className="w-full rounded-lg px-[16px] py-[12px] flex justify-center items-center cursor-pointer bg-black"
       >
         <div className="flex items-stretch gap-2">
           {isLoading ? (
             <span className="flex justify-center items-center">
               <span className="loader"></span>
-              <div className="text-white">{!isQtyExist ? "Adding..." : "Updating..."}</div>
+              <div className="text-white" id="loadingActionButtonAdd">
+                {!isQtyExist ? "Adding..." : "Updating..."}
+              </div>
             </span>
           ) : (
             <>

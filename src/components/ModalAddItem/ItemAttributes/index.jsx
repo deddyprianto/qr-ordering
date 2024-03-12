@@ -36,7 +36,10 @@ const RenderItemAttributes = ({
   };
 
   return (
-    <div className="justify-center bg-[#F9F9F9] flex flex-col p-4 mb-4 pt-0">
+    <div
+      id="renderItemAttributes"
+      className="justify-center bg-[#F9F9F9] flex flex-col p-4 mb-4 pt-0"
+    >
       {attList.map((attGroup, idx) => {
         return (
           <RenderAttGroup
