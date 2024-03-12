@@ -8,8 +8,11 @@ export const RenderSearchResult = ({ searchText, searchItemList }) => {
   return (
     <div className="items-start flex w-full flex-col pt-6 px-4">
       <div className="items-stretch flex gap-2 self-start">
-        <div className="text-gray-700 text-sm font-medium leading-5 tracking-wide grow whitespace-nowrap">
-          <Trans i18nKey={"search_result_for"} />{" "}
+        <div
+          id="searchLabel"
+          className="text-gray-700 text-sm font-medium leading-5 tracking-wide grow whitespace-nowrap"
+        >
+          <Trans i18nKey={"search_result_for"} />
         </div>
         <div className="text-gray-700 text-sm font-bold leading-5 tracking-wide whitespace-nowrap">
           {searchText}
