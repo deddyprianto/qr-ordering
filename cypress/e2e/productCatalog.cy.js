@@ -22,15 +22,18 @@ describe("test ProductCatalog", () => {
     cy.get("#A00001").should("be.visible").should("be.enabled").click();
 
     cy.get("#actionButtonAdd")
-      .should("be.enabled")
       .click()
       .then(() => {
         cy.get("#loadingActionButtonAdd").contains("Adding...");
-        cy.wait(5000);
-        cy.get("#iconCloseAction")
+        cy.wait(8000);
+        cy.get("#renderCartSummary").should("be.visible");
+        cy.get("#button-decreaseQuantity")
           .should("be.visible")
-          .should("be.enabled")
-          .click();
+          .should("be.enabled");
+        cy.get("#quantity").should("be.visible");
+        cy.get("#button-increaseQuantity")
+          .should("be.visible")
+          .should("be.enabled");
       });
   });
 });
