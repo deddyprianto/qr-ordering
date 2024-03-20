@@ -7,7 +7,10 @@ export const Insights = ({onClick, title, description }) => {
   const { theme, insights } = useSelector((state) => state.dataSlicePersisted);
 
     return (
-      <div className="bg-orange-100 flex max-w-[398px] flex-col pb-2 px-2 rounded-2xl mt-6">
+      <div
+        id="TagInsight"
+        className="bg-orange-100 flex max-w-[398px] flex-col pb-2 px-2 rounded-2xl mt-6"
+      >
         <div className="flex w-full justify-between gap-5 mt-1.5 items-start">
           <div className="items-stretch flex gap-1">
             <img
@@ -34,15 +37,15 @@ export const Insights = ({onClick, title, description }) => {
           {description}
         </div>
         <div className="flex flex-wrap mt-2 gap-2">
-          {insights?.map((insight)=>{
+          {insights?.map((insight) => {
             return (
               <Tumbs
-                key={insight.insightName+''+insight.insightTagIcon}
+                key={insight.insightName + "" + insight.insightTagIcon}
                 bgColor={insight?.insightTagColor}
                 icon={insight?.insightTagIcon}
                 label={insight.insightName}
               />
-            )
+            );
           })}
         </div>
       </div>

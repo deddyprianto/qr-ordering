@@ -23,6 +23,7 @@ const RenderCartSummary = () => {
   if (orderType) {
     return (
       <button
+        id="renderCartSummary"
         onClick={() => updateURL("/cart")}
         style={{
           backgroundColor: theme.Color_Secondary,

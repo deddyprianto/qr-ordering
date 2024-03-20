@@ -43,16 +43,21 @@ export const RenderButtonItemInCart = ({
       style={{ filter: isLoading ? "blur(1px)" : "" }}
     >
       <button
+        id="button-decreaseQuantity"
         className="justify-center items-center flex flex-col px-3 py-1 rounded-lg"
         style={{ backgroundColor: theme.Color_Secondary }}
         onClick={decreaseQuantity}
       >
         <IconMinus width="16" />
       </button>
-      <span className="text-gray-700 text-center text-base font-bold leading-6 whitespace-nowrap justify-center items-stretch bg-zinc-300 px-7 py-1 rounded-lg">
+      <span
+        id="quantity"
+        className="text-gray-700 text-center text-base font-bold leading-6 whitespace-nowrap justify-center items-stretch bg-zinc-300 px-7 py-1 rounded-lg"
+      >
         {qty}
       </span>
       <button
+        id="button-increaseQuantity"
         className="justify-center items-center flex flex-col px-3 py-1 rounded-lg"
         style={{ backgroundColor: theme.Color_Secondary }}
         onClick={increaseQuantity}

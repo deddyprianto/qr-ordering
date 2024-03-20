@@ -20,6 +20,7 @@ export const RenderTopLabel = ({
         <RenderLabelAndPrice itemName={itemName} price={price} />
       )}
       <button
+        id="iconCloseAction"
         onClick={() => {
           setOpenModal(false);
         }}
