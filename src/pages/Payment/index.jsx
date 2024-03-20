@@ -3,22 +3,18 @@ import { Stripe } from "./Stripe";
 import { NotFound } from "./NotFound";
 
 export function Component() {
-  const { paymentMethod } = useSelector((state)=>state.dataSlice);
+  const { paymentMethod } = useSelector((state) => state.dataSlice);
 
   const renderPaymentElement = () => {
     switch (paymentMethod.provider?.toLowerCase()) {
-      case 'stripe':
-        return <Stripe/>
-      case 'fomo':
+      case "stripe":
+        return <Stripe />;
+      case "fomo":
         return null;
       default:
-        return <NotFound/>
+        return <NotFound />;
     }
-  }
+  };
 
-  return (
-    <div className="p-[16px]">
-      {renderPaymentElement()}
-    </div>
-  );
+  return <div className="p-[16px]">{renderPaymentElement()}</div>;
 }

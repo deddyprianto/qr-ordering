@@ -92,10 +92,9 @@ const RenderQty = ({
     <div className="justify-between items-center border-t-[color:var(--Grey-Scale-color-Grey-Scale-3,#D6D6D6)] flex border-t border-solid py-2 px-2">
       <div className="items-stretch flex justify-between my-auto">
         {!isEmptyArray && (
-          <div
-            className="items-center flex justify-between gap-1 "
-          >
+          <div className="items-center flex justify-between gap-1 ">
             <button
+              id="expandItemInCart"
               className={`items-center flex justify-between`}
               onClick={() => setExpandItem(!expandItem)}
             >
@@ -115,6 +114,7 @@ const RenderQty = ({
             </button>
             {(item.bundles?.length > 0 || item.attributes?.length > 0) && (
               <button
+                id="buttonEdit"
                 className={`items-center flex justify-between ${
                   !isEmptyArray && "ml-[8px]"
                 }`}
@@ -141,7 +141,7 @@ const RenderQty = ({
           disabled
         >
           <span className="loader"></span>
-          <div>Updating...</div>
+          <div id="labelUpdatingCartItem">Updating...</div>
         </button>
       ) : (
         <div className="flex gap-1 ">
@@ -158,6 +158,7 @@ const RenderQty = ({
             <div>{quantity}</div>
           </div>
           <button
+            id="buttonIncreaseCart"
             onClick={increaseQuantity}
             style={{
               backgroundColor: theme.Color_Secondary,

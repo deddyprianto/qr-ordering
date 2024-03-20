@@ -35,8 +35,11 @@ import { SkeletonPaymentList } from "../../components/Skeleton/SkeletonPaymentLi
   }, []);
 
   return (
-    <span className="items-stretch self-stretch flex w-full flex-col">
-      <div className="text-gray-700 text-base font-bold leading-6 w-full">
+    <div className="items-stretch self-stretch flex w-full flex-col">
+      <div
+        className="text-gray-700 text-base font-bold leading-6 w-full"
+        id="labelChoosePayments"
+      >
         <Trans i18nKey={"choose_payment_method"} />
       </div>
       <div className="items-stretch flex gap-x-2 mt-4 max-h-[300px] overflow-y-auto">
@@ -46,6 +49,7 @@ import { SkeletonPaymentList } from "../../components/Skeleton/SkeletonPaymentLi
           paymentMethodList.map((item) => {
             return (
               <button
+                id={item.displayName}
                 onClick={() => dispatch(setPaymentMethod(item))}
                 key={item?.displayName}
                 style={{
@@ -59,7 +63,7 @@ import { SkeletonPaymentList } from "../../components/Skeleton/SkeletonPaymentLi
                 <div>
                   {item.iconUrl ? (
                     <img
-                      alt=""
+                      alt="IconPayments"
                       loading="lazy"
                       src={item.iconUrl}
                       className="aspect-square object-contain object-center w-10 overflow-hidden max-w-full"
@@ -76,7 +80,7 @@ import { SkeletonPaymentList } from "../../components/Skeleton/SkeletonPaymentLi
           })
         )}
       </div>
-    </span>
+    </div>
   );
 }
 export default PaymentMethod

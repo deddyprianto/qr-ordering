@@ -41,7 +41,7 @@ export function Component() {
       }
     >
       <div className="px-[16px]" style={{ paddingBottom: 80 }}>
-        <h1 className="mt-5">
+        <h1 className="mt-5" id="labelYouAreOrderFrom">
           <Trans i18nKey={"you_order_from"} />
         </h1>
         <p
@@ -87,7 +87,7 @@ export function Component() {
           }}
         />
         <PriceSummary />
-        <FooterCart isItemExist={cartInfo?.details?.length>0}/>
+        <FooterCart isItemExist={cartInfo?.details?.length > 0} />
         <ModalGeneral />
         <ModalAuth
           isOpenModal={isOpenModalAuth}
