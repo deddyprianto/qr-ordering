@@ -25,6 +25,16 @@ function PriceSummary() {
             $ {numberFormatter(cartInfo?.subtotalSummary?.GROSS)}
           </div>
         </div>
+
+        <div className="items-stretch flex justify-between gap-4 mt-2 ">
+          <div className="justify-center text-gray-700 text-sm font-medium leading-5 tracking-wide grow whitespace-nowrap">
+            <Trans i18nKey={"discount"} />
+          </div>
+          <div className="text-[#CF3030] text-right text-base font-bold leading-6 whitespace-nowrap">
+            ($ {numberFormatter(cartInfo?.subtotalSummary?.LINE_DISC)})
+          </div>
+        </div>
+
         {cartInfo?.subtotals?.map((sc) => {
           return (
             <div

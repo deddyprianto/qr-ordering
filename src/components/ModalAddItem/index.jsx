@@ -127,6 +127,7 @@ const RenderModalItemDetail = ({
                 typeOfModalAddItem={typeOfModalAddItem}
                 itemName={item.itemName}
                 price={item.retailPrice}
+                item={item}
               />
               <RenderMainContainer
                 item={item}

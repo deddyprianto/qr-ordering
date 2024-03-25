@@ -2,11 +2,12 @@ import PropTypes from "prop-types";
 import { IconClose } from "../../assets/svgIcon";
 import { RenderLabelAndPrice } from "./LabelAndPrice";
 
-export const RenderTopLabel = ({ 
-  itemName, 
-  price, 
-  setOpenModal, 
-  typeOfModalAddItem 
+export const RenderTopLabel = ({
+  itemName,
+  price,
+  setOpenModal,
+  typeOfModalAddItem,
+  item,
 }) => {
   return (
     <div
@@ -17,7 +18,7 @@ export const RenderTopLabel = ({
       } items-center px-[16px]`}
     >
       {typeOfModalAddItem.toLowerCase() !== "main" && (
-        <RenderLabelAndPrice itemName={itemName} price={price} />
+        <RenderLabelAndPrice item={item} itemName={itemName} price={price} />
       )}
       <button
         id="iconCloseAction"
@@ -29,11 +30,12 @@ export const RenderTopLabel = ({
       </button>
     </div>
   );
-}
+};
 
 RenderTopLabel.propTypes = {
   itemName: PropTypes.string,
   price: PropTypes.number,
   setOpenModal: PropTypes.func,
-  typeOfModalAddItem: PropTypes.string
-}
+  item: PropTypes.object,
+  typeOfModalAddItem: PropTypes.string,
+};
