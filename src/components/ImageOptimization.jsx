@@ -1,27 +1,4 @@
-import { useImage } from "react-image";
 import PropTypes from "prop-types";
-
-function MyImageComponent({ imageItems, customStyle, width, height = "100%" }) {
-  const { src } = useImage({
-    srcList: imageItems,
-  });
-
-  return (
-    <img
-      src={src}
-      alt="imageComponent"
-      style={customStyle}
-      width={width}
-      height={height}
-    />
-  );
-}
-MyImageComponent.propTypes = {
-  imageItems: PropTypes.string,
-  customStyle: PropTypes.object,
-  width: PropTypes.any,
-  height: PropTypes.any,
-};
 
 export const ImageOptimization = ({
   imageItems,
