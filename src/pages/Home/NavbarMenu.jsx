@@ -1,9 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MenuGroup } from "./MenuGroup";
 import { GET } from "../../utilities/services";
 import PropTypes from "prop-types";
-import { SkeletonNavbar } from "../../components/Skeleton/SkeletonNavbar";
 import { setGroupCollecting } from "../../app/dataSlice";
 
 export const NavbarMenu = ({
@@ -18,8 +17,6 @@ export const NavbarMenu = ({
 }) => {
   const dispatch = useDispatch();
 
-  const [isLoading, setIsLoading] = useState(true);
-
   const { outletName, theme } = useSelector(
     (state) => state.dataSlicePersisted,
   );
@@ -27,7 +24,6 @@ export const NavbarMenu = ({
   const mountData = useRef();
   mountData.current = async () => {
     if (dataCategory.length > 0) return;
-    setIsLoading(true);
     let groupList = [];
     let dataLength = 1;
     let isNeedToChangeGroup = true;
@@ -42,7 +38,6 @@ export const NavbarMenu = ({
         handleChangeGroup(groupList[0].type, groupList[0].refNo);
       }
     }
-    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -82,7 +77,7 @@ export const NavbarMenu = ({
     setIsSelectedItem(refNo);
     handleSelectGroup(type, refNo);
   };
-
+  console.log(dtCategoryLength > dataCategory.length);
   return (
     <div
       style={{
@@ -90,10 +85,8 @@ export const NavbarMenu = ({
       }}
       className="overflow-x-auto flex border-t-[#F9F9F9] rounded-b-lg pl-[16px] pr-[16px]"
     >
-      {(dtCategoryLength > dataCategory.length || dataCategory.length == 0) &&
-      isLoading ? (
-        <SkeletonNavbar />
-      ) : (
+      {(dtCategoryLength >= dataCategory.length ||
+        dataCategory.length == 0) && (
         <>
           {dataCategory.map((item) => {
             return (
@@ -124,5 +117,5 @@ NavbarMenu.propTypes = {
   setDataCategory: PropTypes.func,
   setIsSelectedItem: PropTypes.func,
   setDtCategoryLength: PropTypes.func,
-  setIsLoadingParent: PropTypes.func
+  setIsLoadingParent: PropTypes.func,
 };
