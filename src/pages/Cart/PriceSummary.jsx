@@ -90,6 +90,7 @@ function PriceSummary() {
           <Trans i18nKey={"payment_summary"} />
         </div>
         <button
+          id="expandItemInCart"
           onClick={() => setExpandItem(!expandItem)}
           className="items-stretch self-stretch flex justify-between gap-1"
         >

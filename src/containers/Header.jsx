@@ -139,12 +139,13 @@ export default function Header() {
   const headerWithNavigation = (redirectPath, transKey) => {
     return (
       <button
+        id="backButtonCart"
         style={{ backgroundColor: theme.Color_Primary }}
         onClick={() => updateURL(redirectPath)}
-        className="flex text-white items-center text-[16px] font-medium py-[5px] w-full"
+        className="flex text-white items-center text-[16px] font-medium py-[5px] w-full backButtonCart"
       >
         <IconArrowLeft />
-        <div>
+        <div id="LabelOrderPayment">
           <Trans i18nKey={transKey} />
         </div>
       </button>

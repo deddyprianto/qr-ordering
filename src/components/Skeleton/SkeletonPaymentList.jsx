@@ -8,7 +8,7 @@ export const SkeletonPaymentList = () => {
     );
   };
   return (
-    <div className="flex gap-2 py-2">
+    <div id="showSkeletonPaymentMethod" className="flex gap-2 py-2">
       {renderSkeletonChild()}
       {renderSkeletonChild()}
       {renderSkeletonChild()}
