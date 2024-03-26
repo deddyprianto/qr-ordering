@@ -23,6 +23,7 @@ export const EdgeSnack = ({ type, className, close, content }) => {
 
   return (
     <div
+      id="showEdgeSnackNotif"
       className={`${getBackGroundColor()} flex justify-start item-start ${className}`}
     >
       {getIcon()}

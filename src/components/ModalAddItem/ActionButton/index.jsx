@@ -29,13 +29,13 @@ export const RenderButtonAdd = ({
   const { theme } = useSelector((state) => state.dataSlicePersisted);
   const dispatch = useDispatch();
   const toast = useEdgeSnack();
-  const { cartInfo, outletName, orderType ,tableNo} = useSelector(
+  const { cartInfo, outletName, orderType } = useSelector(
     (state) => state.dataSlicePersisted,
   );
   const isQtyExist = cartInfo?.details?.some(
     (itemCart) => itemCart.productInfo.itemNo === item.itemNo,
   );
-  const menuSubGroup = useSelector((state) => state.dataSlice.menuSubGroup);
+  const { menuSubGroup, tableNo } = useSelector((state) => state.dataSlice);
 
   const resetCartInfo = (data) => {
     dispatch(setCartInfo(data));
@@ -62,26 +62,25 @@ export const RenderButtonAdd = ({
 
     setIsLoading(true);
     let cartID = cartInfo?.uniqueID;
-
-    if (!cartID)
+    if (!cartID) {
       cartID = await addNewCart(
         setIsLoading,
         outletName,
         resetCartInfo,
         orderType,
         tableNo,
+        cartInfo?.uniqueID,
       );
-
+    }
     processAddItem(cartID);
   };
 
   const updateCartQtyProductCatalog = (newCartInfo) => {
     let newMenuSubGroup = JSON.parse(JSON.stringify(menuSubGroup));
-    for (const sb of newMenuSubGroup) {
-      let itemReplacer = mapCartAndProduct(sb.items, newCartInfo);
-      sb.items = itemReplacer;
-      dispatch(setMenuSubGroup([...newMenuSubGroup]));
-    }
+    newMenuSubGroup.forEach((sb) => {
+      sb.items = mapCartAndProduct(sb.items, newCartInfo);
+    });
+    dispatch(setMenuSubGroup(newMenuSubGroup));
   };
 
   const processAddItem = async (cartID) => {

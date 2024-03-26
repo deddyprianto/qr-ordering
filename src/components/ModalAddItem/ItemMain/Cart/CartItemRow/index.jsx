@@ -128,7 +128,7 @@ export const RenderCartItemRow = ({ item }) => {
               disabled
             >
               <span className="loader"></span>
-              <div>Updating...</div>
+              <div id="labelUpdating">Updating...</div>
             </button>
           </div>
         ) : (

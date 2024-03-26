@@ -73,12 +73,11 @@ const RenderItemCard = ({ item }) => {
     setOpenModalAddItem(true);
   };
 
+  console.log("itemName =>", item.uniqueID);
+
   return (
     <>
-      <div
-        id="searchResults"
-        className="grid grid-cols-2 shadow-sm bg-white mt-4 rounded-2xl"
-      >
+      <div className="grid grid-cols-2 shadow-sm bg-white mt-4 rounded-2xl">
         <RenderButtonImageItemProd
           handleOpenModalAddItem={handleOpenModalAddItem}
           item={item}
@@ -99,14 +98,15 @@ const RenderItemCard = ({ item }) => {
               disabled
             >
               <span className="loader"></span>
-              <div>
-                {cartInfo && cartInfo?.details.length === 0
+              <div id="labelLoadingSearchBarItem">
+                {cartInfo && cartInfo?.details?.length === 0
                   ? "Adding..."
                   : "Updating..."}
               </div>
             </button>
           ) : (
             <button
+              id={item.uniqueID}
               className="justify-center items-stretch flex gap-2 mt-2 py-2 rounded-lg"
               onClick={handleClickButtonAdd}
               style={{

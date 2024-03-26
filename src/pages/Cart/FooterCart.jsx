@@ -41,11 +41,14 @@ const FooterCart = ({isItemExist}) => {
       }}
     >
       <button
+        id="buttonFooterCart"
         disabled={!isPaymentMethodSelected() || !isItemExist}
         onClick={handlePayment}
         style={{ backgroundColor: theme.Color_Secondary }}
         className={`py-[10px] px-[20px]  text-white rounded-lg cursor-pointer text-[16px] w-full ${
-          !isPaymentMethodSelected() || !isItemExist ? "opacity-50" : "cursor-pointer"
+          !isPaymentMethodSelected() || !isItemExist
+            ? "opacity-50"
+            : "cursor-pointer"
         }`}
       >
         <Trans i18nKey={"pay"} /> - $ {numberFormatter(cartInfo?.nettAmount)}
