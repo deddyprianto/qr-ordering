@@ -101,10 +101,10 @@ export const RenderLayoutType = ({
 RenderLayoutType.propTypes = {
   viewType: PropTypes.string,
   handleOpenModalAddItem: PropTypes.func,
-  item: PropTypes.string,
-  isLoading: PropTypes.func,
+  item: PropTypes.object,
+  isLoading: PropTypes.bool,
   cartLineID: PropTypes.string,
-  qtyInCart: PropTypes.string,
+  qtyInCart: PropTypes.number,
   handleClickButtonAdd: PropTypes.func,
   isQtyExist: PropTypes.bool,
   theme: PropTypes.object,

@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import { useImage } from "react-image";
 import PropTypes from "prop-types";
 
@@ -29,16 +28,25 @@ export const ImageOptimization = ({
   customStyle,
   width,
   height,
+  onAnimationEnding,
+  classNaming,
+  altCustom,
 }) => {
+  const modifiedUrl = imageItems?.replace("t1", "t1-image");
+  const widthCustom = 43;
+  const format = "webp";
+  const fullURL = `${modifiedUrl}?width=${widthCustom}&format=${format}`;
+
   return (
-    <Suspense>
-      <MyImageComponent
-        imageItems={imageItems}
-        customStyle={customStyle}
-        width={width}
-        height={height}
-      />
-    </Suspense>
+    <img
+      src={fullURL}
+      alt={altCustom}
+      width={width}
+      height={height}
+      style={customStyle}
+      onAnimationEnd={onAnimationEnding}
+      className={classNaming}
+    />
   );
 };
 
@@ -47,4 +55,7 @@ ImageOptimization.propTypes = {
   customStyle: PropTypes.object,
   width: PropTypes.any,
   height: PropTypes.any,
+  onAnimationEnding: PropTypes.func,
+  classNaming: PropTypes.string,
+  altCustom: PropTypes.string,
 };
