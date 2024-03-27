@@ -10,13 +10,17 @@ export const ImageOptimization = ({
   altCustom,
 }) => {
   const modifiedUrl = imageItems?.replace("t1", "t1-image");
-  const widthCustom = 43;
-  const format = "webp";
-  const fullURL = `${modifiedUrl}?width=${widthCustom}&format=${format}`;
+  const widthCustom = 40;
+
+  const pgnFormat = `${modifiedUrl}?width=${widthCustom}&format=png`;
+  const webpFormat = `${modifiedUrl}?width=${widthCustom}&format=webp`;
+  const jpgFormat = `${modifiedUrl}?width=${widthCustom}&format=jpg`;
+
+  const srcSet = `${pgnFormat} 1x, ${webpFormat} 2x, ${jpgFormat} 3x`;
 
   return (
     <img
-      src={fullURL}
+      srcSet={srcSet}
       alt={altCustom}
       width={width}
       height={height}
@@ -25,6 +29,7 @@ export const ImageOptimization = ({
       className={classNaming}
     />
   );
+
 };
 
 ImageOptimization.propTypes = {
