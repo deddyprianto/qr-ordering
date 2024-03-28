@@ -23,11 +23,11 @@ export const MenuGroup = ({ label, imageItem, handleSelected, isGlow }) => {
       <ImageOptimization
         customStyle={{
           borderRadius: "1rem",
-          width: "64px",
           border: isGlow
             ? `4px solid ${theme.Color_Secondary}`
             : "2px solid white",
         }}
+        width={64}
         imageItems={imageItem || theme?.Image_Logo}
       />
       <div

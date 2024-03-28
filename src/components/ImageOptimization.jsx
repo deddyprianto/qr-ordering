@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 export const ImageOptimization = ({
   imageItems,
   customStyle,
-  width,
+  width = 40,
   height,
   onAnimationEnding,
   classNaming,
@@ -24,10 +24,9 @@ export const ImageOptimization = ({
     }
   }
 
-  const widthCustom = 40;
-  const pngFormat = `${modifiedUrl}?width=${widthCustom}&format=png`;
-  const webpFormat = `${modifiedUrl}?width=${widthCustom}&format=webp`;
-  const jpgFormat = `${modifiedUrl}?width=${widthCustom}&format=jpg`;
+  const pngFormat = `${modifiedUrl}?width=${width}&format=png`;
+  const webpFormat = `${modifiedUrl}?width=${width}&format=webp`;
+  const jpgFormat = `${modifiedUrl}?width=${width}&format=jpg`;
 
   return (
     <img
@@ -41,7 +40,6 @@ export const ImageOptimization = ({
       loading="lazy"
     />
   );
-
 };
 
 ImageOptimization.propTypes = {
