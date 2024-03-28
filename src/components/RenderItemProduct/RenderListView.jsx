@@ -2,6 +2,7 @@ import { RenderTagInsight } from "../Home/TagInsight";
 import { RenderTagPromo } from "../Home/TagPromo";
 import PropTypes from "prop-types";
 import { RenderRetailPrice } from "./RetailPrice";
+import { ImageOptimization } from "../ImageOptimization";
 
 const RenderListView = ({
   handleOpenModalAddItem,
@@ -14,17 +15,16 @@ const RenderListView = ({
       style={{
         boxShadow: "0px 4px 10px 0px rgba(0, 0, 0, 0.10)",
       }}
-      className="grid grid-cols-[128px_1fr]  bg-white mt-4 rounded-2xl"
+      className="grid grid-cols-[155px_1fr]  bg-white mt-4 rounded-2xl"
     >
       <button
         className="flex-col overflow-hidden relative flex aspect-square w-[150px] items-stretch pr-12 pb-2"
         onClick={handleOpenModalAddItem}
       >
-        <img
-          alt={"itemImage"}
-          loading="lazy"
-          src={item?.defaultImageURL || theme?.Image_Item_Place_Holder}
-          className="absolute h-full w-full object-cover object-center inset-0 rounded-l-xl"
+        <ImageOptimization
+          altCustom={"itemImage"}
+          imageItems={item?.defaultImageURL || theme?.Image_Item_Place_Holder}
+          classNaming="absolute h-full w-full object-cover object-center inset-0 rounded-l-xl"
         />
         {(item?.isDiscounted || false) && <RenderTagPromo />}
         <div className="absolute bottom-1 left-1 right-0">
@@ -40,7 +40,7 @@ const RenderListView = ({
           </div>
         </button>
         <div className="grid grid-cols-2">
-          <div className=" flex justify-center items-center">
+          <div className="flex justify-between items-center">
             <RenderRetailPrice item={item} marginTop="0px" />
           </div>
           <div>{renderButtonAdd()}</div>

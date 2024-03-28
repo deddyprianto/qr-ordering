@@ -9,24 +9,36 @@ export const ImageOptimization = ({
   classNaming,
   altCustom,
 }) => {
-  const modifiedUrl = imageItems?.replace("t1", "t1-image");
-  const widthCustom = 40;
+  const domainMappings = {
+    "t1.equipweb.biz": "t1-image.equipweb.biz",
+    "s1.equipweb.biz": "s1-image.equipweb.biz",
+    "s2.equipweb.biz": "s2-image.equipweb.biz",
+  };
+  let modifiedUrl = imageItems;
+  for (const [originalDomain, imageServerDomain] of Object.entries(
+    domainMappings,
+  )) {
+    if (imageItems?.includes(originalDomain)) {
+      modifiedUrl = modifiedUrl.replace(originalDomain, imageServerDomain);
+      break;
+    }
+  }
 
-  const pgnFormat = `${modifiedUrl}?width=${widthCustom}&format=png`;
+  const widthCustom = 40;
+  const pngFormat = `${modifiedUrl}?width=${widthCustom}&format=png`;
   const webpFormat = `${modifiedUrl}?width=${widthCustom}&format=webp`;
   const jpgFormat = `${modifiedUrl}?width=${widthCustom}&format=jpg`;
 
-  const srcSet = `${pgnFormat} 1x, ${webpFormat} 2x, ${jpgFormat} 3x`;
-
   return (
     <img
-      srcSet={srcSet}
+      srcSet={`${webpFormat}, ${jpgFormat}, ${pngFormat}`}
       alt={altCustom}
       width={width}
       height={height}
       style={customStyle}
       onAnimationEnd={onAnimationEnding}
       className={classNaming}
+      loading="lazy"
     />
   );
 
