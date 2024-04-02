@@ -87,7 +87,7 @@ export const RenderBundleItem = ({
     <div>
       <div className="items-stretch flex justify-between mt-2.5 gap-2 px-4">
         <button
-          className="fixed-width-content items-center flex justify-start gap-2 w-full"
+          className="grid grid-cols-[30px_1fr]"
           onClick={handleSelectItem}
         >
           {renderCheckListItem(item.isSelected)}
