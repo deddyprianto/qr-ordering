@@ -1,51 +1,43 @@
-import { useImage } from "react-image";
 import PropTypes from "prop-types";
-
-function MyImageComponent({ imageItems, customStyle, width, height = "100%" }) {
-  const { src } = useImage({
-    srcList: imageItems,
-  });
-
-  return (
-    <img
-      src={src}
-      alt="imageComponent"
-      style={customStyle}
-      width={width}
-      height={height}
-    />
-  );
-}
-MyImageComponent.propTypes = {
-  imageItems: PropTypes.string,
-  customStyle: PropTypes.object,
-  width: PropTypes.any,
-  height: PropTypes.any,
-};
 
 export const ImageOptimization = ({
   imageItems,
   customStyle,
-  width,
+  width = 40,
   height,
   onAnimationEnding,
   classNaming,
   altCustom,
 }) => {
-  const modifiedUrl = imageItems?.replace("t1", "t1-image");
-  const widthCustom = 43;
-  const format = "webp";
-  const fullURL = `${modifiedUrl}?width=${widthCustom}&format=${format}`;
+  const domainMappings = {
+    "t1.equipweb.biz": "t1-image.equipweb.biz",
+    "s1.equipweb.biz": "s1-image.equipweb.biz",
+    "s2.equipweb.biz": "s2-image.equipweb.biz",
+  };
+  let modifiedUrl = imageItems;
+  for (const [originalDomain, imageServerDomain] of Object.entries(
+    domainMappings,
+  )) {
+    if (imageItems?.includes(originalDomain)) {
+      modifiedUrl = modifiedUrl.replace(originalDomain, imageServerDomain);
+      break;
+    }
+  }
+
+  const pngFormat = `${modifiedUrl}?width=${width}&format=png`;
+  const webpFormat = `${modifiedUrl}?width=${width}&format=webp`;
+  const jpgFormat = `${modifiedUrl}?width=${width}&format=jpg`;
 
   return (
     <img
-      src={fullURL}
+      srcSet={`${webpFormat}, ${jpgFormat}, ${pngFormat}`}
       alt={altCustom}
       width={width}
       height={height}
       style={customStyle}
       onAnimationEnd={onAnimationEnding}
       className={classNaming}
+      loading="lazy"
     />
   );
 };

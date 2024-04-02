@@ -8,13 +8,15 @@ const RenderValidityError = () => {
       <div>
         <ImageOptimization
           imageItems={imgValidityError}
-          width="246px"
+          width={246}
           height="246px"
         />
       </div>
-      <div className="text-center mt-5 font-bold"><Trans i18nKey={"something_broken"}/></div>
+      <div className="text-center mt-5 font-bold">
+        <Trans i18nKey={"something_broken"} />
+      </div>
       <div className="text-center mt-2">
-        <Trans i18nKey={"invalid_url_msg"}/>
+        <Trans i18nKey={"invalid_url_msg"} />
       </div>
     </div>
   );
