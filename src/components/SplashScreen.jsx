@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setShowSplashScreen } from "../app/dataSlice";
+import { ImageOptimization } from "./ImageOptimization";
 
 const RenderSplashScreen = () => {
   const { theme } = useSelector((state) => state.dataSlicePersisted);
@@ -9,12 +10,12 @@ const RenderSplashScreen = () => {
     dispatch(setShowSplashScreen(false));
   };
   return (
-    <img
-      alt="splashScreen"
-      onAnimationEnd={handleAnimationEnd}
-      className="splash-image"
-      src={theme?.Image_Splash_Screen}
-      style={{
+    <ImageOptimization
+      altCustom="splashScreen"
+      onAnimationEnding={handleAnimationEnd}
+      classNaming="splash-image"
+      imageItems={theme?.Image_Splash_Screen}
+      customStyle={{
         zIndex: 999999,
         position: "absolute",
         inset: "0px",
