@@ -40,5 +40,5 @@ export const RenderLabelAndPrice = ({ itemName, item }) => {
 
 RenderLabelAndPrice.propTypes = {
   itemName: PropTypes.string,
-  item: PropTypes.item,
+  item: PropTypes.object,
 };

@@ -51,7 +51,8 @@ const FooterCart = ({isItemExist}) => {
             : "cursor-pointer"
         }`}
       >
-        <Trans i18nKey={"pay"} /> - $ {numberFormatter(cartInfo?.nettAmount)}
+        <Trans i18nKey={"pay"} /> - ${" "}
+        {numberFormatter(cartInfo?.subtotalSummary?.NETT)}
       </button>
     </footer>
   );

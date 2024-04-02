@@ -104,7 +104,7 @@ export default RenderGridView;
 RenderGridView.propTypes = {
   handleOpenModalAddItem: PropTypes.func,
   item: PropTypes.object,
-  theme: PropTypes.theme,
+  theme: PropTypes.object,
   isLoading: PropTypes.bool,
   qtyInCart: PropTypes.number,
   cartLineID: PropTypes.string,

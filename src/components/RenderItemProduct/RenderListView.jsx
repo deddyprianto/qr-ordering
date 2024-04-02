@@ -39,7 +39,7 @@ const RenderListView = ({
             {item.itemName}
           </div>
         </button>
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-1 grid-rows-1 gap-y-2">
           <div className="flex justify-between items-center">
             <RenderRetailPrice item={item} marginTop="0px" />
           </div>

@@ -55,7 +55,10 @@ export function RenderNotificationOrder() {
 
   if (isExist)
     return (
-      <div className="items-stretch self-stretch bg-orange-100 flex w-full flex-col p-2 rounded-2xl">
+      <div
+        id="notificationOrder"
+        className="items-stretch self-stretch bg-orange-100 flex w-full flex-col p-2 rounded-2xl"
+      >
         <div className="justify-between items-stretch flex w-full gap-5">
           <div className="items-center flex justify-between gap-2 p-0.5">
             <TaskListIcon color="black" />
@@ -91,14 +94,16 @@ export function RenderNotificationOrder() {
                 orderStatus?.status === "CANCELLED"
                   ? "bg-[#CF3030]"
                   : "bg-green-700"
-              }  flex gap-1 py-1 rounded-[100px] px-1`}
+              }  flex gap-1 py-1 rounded-2xl px-1`}
             >
-              {orderStatus?.status === "CANCELLED" ? (
-                <IconClose color="white" />
-              ) : (
-                <IconCheckFill />
-              )}
-              <div className="text-white text-xs font-medium leading-4 tracking-wide self-center grow whitespace-nowrap my-auto">
+              <div>
+                {orderStatus?.status === "CANCELLED" ? (
+                  <IconClose color="white" />
+                ) : (
+                  <IconCheckFill />
+                )}
+              </div>
+              <div className="text-white text-xs font-medium leading-4">
                 {statusText(orderStatus?.status)}
               </div>
             </div>
