@@ -13,10 +13,10 @@ const RenderSearchItemBar = ({ searchText = "" }) => {
   const [searchItemList, setSearchItemList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [dataLength, setDataLength] = useState(0);
-  const searchItemObj = useSelector(
-    (state) => state.dataSlicePersisted.searchItemObj,
+  const {searchItemObj, outletName} = useSelector(
+    (state) => state.dataSlicePersisted,
   );
-
+  
   const handleSearchItems = useRef();
   useEffect(() => {
     if (searchItemObj?.doSearch) {
@@ -40,11 +40,11 @@ const RenderSearchItemBar = ({ searchText = "" }) => {
       isDescending: false,
     };
     try {
-      const result = await apiProduct("GET", "BUGIS/ALL", params);
+      const result = await apiProduct("GET", `${outletName}/ALL`, params);
       if (result.resultCode == 200) {
         let newSearchItemList = [];
         if (searchItemObj?.isResetList) newSearchItemList = result.data;
-        else newSearchItemList = searchItemList.concat(result.data);
+        else newSearchItemList = searchItemList.concat(result.data); 
         setDataLength(result.dataLength);
         setSearchItemList(newSearchItemList);
         setEnableSearchUsingScroll(newSearchItemList.length > 0);
