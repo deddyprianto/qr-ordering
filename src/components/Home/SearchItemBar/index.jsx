@@ -46,7 +46,7 @@ const RenderSearchItemBar = ({ searchText = "" }) => {
       if (result.resultCode == 200) {
         let newSearchItemList = [];
         if (searchItemObj?.isResetList) newSearchItemList = result.data;
-        else newSearchItemList = searchItemList.concat(result.data);
+        else newSearchItemList = searchItemList.concat(result.data); 
         setDataLength(result.dataLength);
         setSearchItemList(newSearchItemList);
         setEnableSearchUsingScroll(newSearchItemList.length > 0);
