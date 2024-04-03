@@ -77,7 +77,7 @@ export const NavbarMenu = ({
     setIsSelectedItem(refNo);
     handleSelectGroup(type, refNo);
   };
-  console.log(dtCategoryLength > dataCategory.length);
+
   return (
     <div
       style={{
