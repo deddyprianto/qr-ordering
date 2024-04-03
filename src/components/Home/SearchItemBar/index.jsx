@@ -17,8 +17,6 @@ const RenderSearchItemBar = ({ searchText = "" }) => {
     (state) => state.dataSlicePersisted,
   );
   
-  const {  } = useSelector((state) => state.dataSlicePersisted);
-
   const handleSearchItems = useRef();
   useEffect(() => {
     if (searchItemObj?.doSearch) {
