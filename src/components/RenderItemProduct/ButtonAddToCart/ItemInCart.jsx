@@ -39,12 +39,12 @@ export const RenderButtonItemInCart = ({
 
   return (
     <div
-      className="items-stretch flex gap-1 mt-2"
+      className="grid grid-cols-3 gap-1"
       style={{ filter: isLoading ? "blur(1px)" : "" }}
     >
       <button
         id="button-decreaseQuantity"
-        className="justify-center items-center flex flex-col px-3 py-1 rounded-lg"
+        className="justify-center items-center flex flex-col py-1 rounded-lg"
         style={{ backgroundColor: theme.Color_Secondary }}
         onClick={decreaseQuantity}
       >
@@ -52,13 +52,13 @@ export const RenderButtonItemInCart = ({
       </button>
       <span
         id="quantity"
-        className="text-gray-700 text-center text-base font-bold leading-6 whitespace-nowrap justify-center items-stretch bg-zinc-300 px-7 py-1 rounded-lg"
+        className="text-gray-700 text-center text-base font-bold leading-6 whitespace-nowrap justify-center items-stretch bg-zinc-300 py-1 rounded-lg"
       >
         {qty}
       </span>
       <button
         id="button-increaseQuantity"
-        className="justify-center items-center flex flex-col px-3 py-1 rounded-lg"
+        className="justify-center items-center flex flex-col py-1 rounded-lg"
         style={{ backgroundColor: theme.Color_Secondary }}
         onClick={increaseQuantity}
       >
