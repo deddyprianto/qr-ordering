@@ -12,7 +12,17 @@ const resetCartAndOrderType = (dispatch, data) => {
 };
 
 export const fetchCartInfo = async (dispatch, outlet, cartInfo) => {
-  if (!cartInfo?.uniqueID) return;
+  const lastCallTimestamp = localStorage.getItem("lastCallTimestamp");
+  const currentDate = new Date().toDateString();
+
+  if (
+    lastCallTimestamp ||
+    lastCallTimestamp === currentDate ||
+    !cartInfo?.uniqueID
+  ) {
+    return;
+  }
+
   if (outlet.toLowerCase() !== cartInfo?.outletName?.toLowerCase()) {
     await apiCart("DELETE", cartInfo?.uniqueID);
     return dispatch(setCartInfo({}));
