@@ -13,7 +13,9 @@ export const RenderButtonItemInCart = ({
   useEffect(() => {
     setQty(qtyInCart);
   }, [qtyInCart]);
-  const theme = useSelector((state) => state.dataSlicePersisted.theme);
+  const { theme, outletDetail } = useSelector(
+    (state) => state.dataSlicePersisted,
+  );
   const handleClickChangeQty = (newQuantity) => {
     handleClickButtonAdd(newQuantity, cartLineID);
   };
@@ -40,7 +42,10 @@ export const RenderButtonItemInCart = ({
   return (
     <div
       className="grid grid-cols-3 gap-1"
-      style={{ filter: isLoading ? "blur(1px)" : "" }}
+      style={{
+        filter: isLoading ? "blur(1px)" : "",
+        display: outletDetail?.qrOrderingAvailability === "Hidden" && "none",
+      }}
     >
       <button
         id="button-decreaseQuantity"

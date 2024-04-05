@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { RenderTagInsight } from "../Home/TagInsight";
 import { RenderTagPromo } from "../Home/TagPromo";
 import { RenderButtonAddToCart } from "./ButtonAddToCart";
@@ -14,6 +15,7 @@ const RenderGridView = ({
   handleClickButtonAdd,
   isQtyExist,
 }) => {
+  const { outletDetail } = useSelector((state) => state.dataSlicePersisted);
   return (
     <div
       id={`ITEM_${item.itemNo}`}
@@ -28,6 +30,7 @@ const RenderGridView = ({
       }}
     >
       <button
+        disabled={outletDetail?.qrOrderingAvailability === "Hidden"}
         onClick={() => handleOpenModalAddItem()}
         style={{
           backgroundImage: `url(${

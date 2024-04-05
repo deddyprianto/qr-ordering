@@ -5,7 +5,7 @@ import RenderListView from "./RenderListView";
 import RenderDetailedView from "./RenderDetailedView";
 import RenderGridView from "./RenderGridView";
 
-export const RenderLayoutType = ({
+const RenderLayoutType = ({
   viewType,
   theme,
   handleOpenModalAddItem,
@@ -106,3 +106,4 @@ RenderLayoutType.propTypes = {
   isQtyExist: PropTypes.bool,
   theme: PropTypes.object,
 };
+export default RenderLayoutType;

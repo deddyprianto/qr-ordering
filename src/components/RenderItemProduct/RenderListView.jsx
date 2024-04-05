@@ -3,6 +3,7 @@ import { RenderTagPromo } from "../Home/TagPromo";
 import PropTypes from "prop-types";
 import { RenderRetailPrice } from "./RetailPrice";
 import { ImageOptimization } from "../ImageOptimization";
+import { useSelector } from "react-redux";
 
 const RenderListView = ({
   handleOpenModalAddItem,
@@ -10,6 +11,8 @@ const RenderListView = ({
   theme,
   renderButtonAdd,
 }) => {
+  const { outletDetail } = useSelector((state) => state.dataSlicePersisted);
+
   return (
     <div
       style={{
@@ -20,6 +23,7 @@ const RenderListView = ({
       <button
         className="flex-col overflow-hidden relative flex aspect-square w-[150px] items-stretch pr-12 pb-2"
         onClick={handleOpenModalAddItem}
+        disabled={outletDetail?.qrOrderingAvailability === "Hidden"}
       >
         <ImageOptimization
           altCustom={"itemImage"}

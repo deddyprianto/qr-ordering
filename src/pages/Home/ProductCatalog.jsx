@@ -1,5 +1,9 @@
-import { RenderItemProduct } from "../../components/RenderItemProduct";
+import { lazy } from "react";
 import { useSelector } from "react-redux";
+
+const RenderItemProduct = lazy(
+  () => import("../../components/RenderItemProduct"),
+);
 
 export const ProductCatalog = () => {
   const cartInfo = useSelector((state) => state.dataSlicePersisted.cartInfo);
@@ -70,4 +74,4 @@ export const ProductCatalog = () => {
       </div>
     );
   });
-}
+};
