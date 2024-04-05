@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { RenderTagInsight } from "./Home/TagInsight";
 import { RenderTagPromo } from "./Home/TagPromo";
 import PropTypes from "prop-types";
@@ -8,10 +9,12 @@ const RenderButtonImageItemProd = ({
   theme,
   width,
 }) => {
+  const { outletDetail } = useSelector((state) => state.dataSlicePersisted);
   return (
     <button
       className={`flex-col overflow-hidden relative flex aspect-square w-[150px] items-stretch pb-2 ${width}`}
       onClick={handleOpenModalAddItem}
+      disabled={outletDetail?.qrOrderingAvailability === "Hidden"}
     >
       <img
         alt={"itemImage"}

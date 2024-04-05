@@ -1,6 +1,5 @@
-import { useState } from "react";
-import RenderModalItemDetail from "../../../ModalAddItem";
-import PropTypes from 'prop-types'
+import { lazy, useState } from "react";
+import PropTypes from "prop-types";
 import { getItemType } from "../../../RenderItemProduct/GetItemType";
 import { Trans } from "react-i18next";
 import { IconPlus } from "../../../../assets/svgIcon";
@@ -9,14 +8,18 @@ import { useEdgeSnack } from "../../../EdgeSnack/utils/useEdgeSnack";
 import { RenderItemPrice } from "./ItemPrice";
 import { addItemToCart } from "../../../RenderItemProduct/AddItemToCart";
 import { setMenuSubGroup } from "../../../../app/dataSlice";
-import { mapCartAndProduct } from "../../productAndCartMapper"
-import { addNewCart } from "../../../../components/GenerateCart"
+import { mapCartAndProduct } from "../../productAndCartMapper";
+import { addNewCart } from "../../../../components/GenerateCart";
 import { setCartInfo } from "../../../../app/dataSlicePersisted";
 import RenderButtonImageItemProd from "../../../RenderButtonImageItemProd";
 
+const RenderModalItemDetail = lazy(() => import("../../../ModalAddItem"));
+
 const RenderItemCard = ({ item }) => {
   const dispatch = useDispatch();
-  const { theme, cartInfo } = useSelector((state) => state.dataSlicePersisted);
+  const { theme, cartInfo, outletDetail } = useSelector(
+    (state) => state.dataSlicePersisted,
+  );
   const [openModalAddItem, setOpenModalAddItem] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const cartID = useSelector(
@@ -111,6 +114,8 @@ const RenderItemCard = ({ item }) => {
               onClick={handleClickButtonAdd}
               style={{
                 backgroundColor: theme.Color_Secondary,
+                display:
+                  outletDetail?.qrOrderingAvailability === "Hidden" && "none",
               }}
               disabled={isLoading}
             >
@@ -136,5 +141,5 @@ const RenderItemCard = ({ item }) => {
 };
 export default RenderItemCard;
 RenderItemCard.propTypes = {
-  item: PropTypes.object
-}
+  item: PropTypes.object,
+};

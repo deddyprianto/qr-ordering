@@ -3,13 +3,15 @@ import { lazy, useState } from "react";
 import PropTypes from "prop-types";
 import { hasEmptyElement } from "../../helper";
 import { RenderExpandDetail } from "./RenderExpandDetail";
-import RenderModalItemDetail from "../../components/ModalAddItem";
 import { getItemType } from "../../components/RenderItemProduct/GetItemType";
 import { numberFormatter } from "../../utilities/numberFormatter";
 import { IconPercentage } from "../../assets/svgIcon";
 import { Trans } from "react-i18next";
 
 const RenderQty = lazy(() => import("./RenderQty"));
+const RenderModalItemDetail = lazy(
+  () => import("../../components/ModalAddItem"),
+);
 
 const ItemCart = ({ item, idCart, setIsCartEmpty, totalQuantityCart }) => {
   const [openEditModal, setOpenEditModal] = useState(false);
