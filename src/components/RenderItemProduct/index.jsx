@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import { useEdgeSnack } from "../EdgeSnack/utils/useEdgeSnack";
-import RenderModalItemDetail from "../ModalAddItem";
-import { useState } from "react";
+import { lazy, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getItemType } from "./GetItemType";
 import { addItemToCart } from "./AddItemToCart";
@@ -9,9 +8,11 @@ import { setMenuSubGroup } from "../../app/dataSlice";
 import { mapCartAndProduct } from "../Home/productAndCartMapper";
 import { setCartInfo } from "../../app/dataSlicePersisted";
 import { addNewCart } from "../GenerateCart";
-import { RenderLayoutType } from "./RenderLayoutType";
 
-export const RenderItemProduct = ({
+const RenderLayoutType = lazy(() => import("./RenderLayoutType"));
+const RenderModalItemDetail = lazy(() => import("../ModalAddItem"));
+
+const RenderItemProduct = ({
   item,
   cartID,
   qtyInCart,
@@ -113,3 +114,4 @@ RenderItemProduct.propTypes = {
   cartId: PropTypes.string,
   viewType: PropTypes.string,
 };
+export default RenderItemProduct;

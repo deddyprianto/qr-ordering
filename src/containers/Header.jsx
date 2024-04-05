@@ -193,7 +193,8 @@ export default function Header() {
 
   const renderMain = () => {
     if (!isValidUrl) return <div></div>;
-    else if (!outletDetail?.isQrOrderingAvailable) return <div></div>;
+    else if (outletDetail?.qrOrderingAvailability === "InActive")
+      return <div></div>;
     else if (
       !outletDetail?.isActiveAllDay &&
       !outletDetail?.isInOperationalHours

@@ -11,7 +11,9 @@ const RenderCartSummary = () => {
     (state) => state.dataSlicePersisted,
   );
   const { isSearchItem } = useSelector((state) => state.dataSlice);
-  const { theme } = useSelector((state) => state.dataSlicePersisted);
+  const { outletDetail, theme } = useSelector(
+    (state) => state.dataSlicePersisted,
+  );
 
   const totalQuantity = cartInfo?.details.reduce(
     (accumulator, currentValue) => {
@@ -27,6 +29,7 @@ const RenderCartSummary = () => {
         onClick={() => updateURL("/cart")}
         style={{
           backgroundColor: theme.Color_Secondary,
+          display: outletDetail?.qrOrderingAvailability === "Hidden" && "none",
         }}
         className={`ml-4 slide-left-custom w-[95%] lg:w-[44%] flex justify-between items-stretch border-[color:var(--Brand-color-Primary,#00524C)] shadow-lg gap-5 p-[8px] rounded-xl border-[1px] border-solid absolute bottom-2 ${
           isSearchItem ? "hidden" : "z-30"

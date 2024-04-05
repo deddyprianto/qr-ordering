@@ -7,12 +7,15 @@ export const RenderButtonAdd = ({
   isLoading,
   handleClickButtonAdd
 }) => {
-  const theme = useSelector((state) => state.dataSlicePersisted.theme);
+  const { theme, outletDetail } = useSelector(
+    (state) => state.dataSlicePersisted,
+  );
   return (
     <button
       id="renderButtonAdd"
       style={{
-        display: "flex",
+        display:
+          outletDetail?.qrOrderingAvailability === "Hidden" ? "none" : "flex",
         justifyContent: "center",
         borderRadius: "8px",
         backgroundColor: theme.Color_Secondary,

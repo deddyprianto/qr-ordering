@@ -23,7 +23,7 @@ export function Component() {
       return <RenderValidityError />;
     } else if (isSplashScreenShow) {
       return <RenderSplashScreen />;
-    } else if (!outletDetail?.isQrOrderingAvailable) {
+    } else if (outletDetail?.qrOrderingAvailability === "InActive") {
       return <NotAvailable isOutsideOperational={false} />;
     } else if (
       !outletDetail?.isActiveAllDay &&
@@ -47,7 +47,7 @@ export function Component() {
     >
       {renderContent()}
       {isValidUrl &&
-        outletDetail?.isQrOrderingAvailable &&
+        outletDetail?.qrOrderingAvailability !== "InActive" &&
         cartInfo?.details?.length > 0 && <RenderCartSummary />}
     </Suspense>
   );
