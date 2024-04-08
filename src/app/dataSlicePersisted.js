@@ -21,6 +21,7 @@ const initialState = {
   insights: [],
   cartToListen: [],
   orderStatus: null,
+  isDataOrder: false,
 };
 
 const dataSlicePersisted = createSlice({
@@ -91,10 +92,14 @@ const dataSlicePersisted = createSlice({
     setOrderStatus: (state, action) => {
       state.orderStatus = action.payload;
     },
+    setIsDataOrder: (state, action) => {
+      state.isDataOrder = action.payload;
+    },
   },
 });
 
 export const {
+  setIsDataOrder,
   setOrderStatus,
   setAccessToken,
   setSearchItemObj,

@@ -3,12 +3,12 @@ import { OrderInformation } from "./OrderInformation";
 import { OrderItemSummary } from "./OrderItemSummary";
 import { useEffect, useRef, useState } from "react";
 import { apiOrder } from "../../services/Order";
-import { setIsDataOrder } from "../../app/dataSlice";
 import { SkeletonSummaryPage } from "../../components/Skeleton/SkeletonSummaryPage";
 import PaymentComplete from "../../assets/PaymentComplete.gif";
 import Cancelled from "../../assets/Cancelled.gif";
 import Completed from "../../assets/Completed.gif";
 import Success from "../../assets/Success.gif";
+import { setIsDataOrder } from "../../app/dataSlicePersisted";
 
 export function Component() {
   const dispatch = useDispatch();
