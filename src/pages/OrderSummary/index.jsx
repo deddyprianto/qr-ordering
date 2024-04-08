@@ -28,6 +28,14 @@ export function Component() {
       } else {
         throw result.message;
       }
+
+      setTimeout(() => {
+        if(window.location.pathname?.toLocaleLowerCase() != "/ordersummary")
+          return;
+        else if(!result?.data || order.status == "COMPLETED" || order.status == "CANCELLED")
+          return
+        fetchData.current();
+      }, 10000);
     } catch (error) {
       setLoading(false);
       console.log(error);

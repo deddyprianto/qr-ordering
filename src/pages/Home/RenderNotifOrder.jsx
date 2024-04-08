@@ -39,6 +39,13 @@ export function RenderNotificationOrder() {
       } else {
         throw result.message;
       }
+      setTimeout(() => {
+        if(window.location.pathname?.toLocaleLowerCase() != "/")
+          return;
+        else if(!result.data[0] || result.data[0]?.status == "COMPLETED" || result.data[0]?.status == "CANCELLED")
+          return
+          fetchLatestOrder.current();
+      }, 10000);
     } catch (error) {
       console.log(error);
     }
