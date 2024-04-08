@@ -16,6 +16,7 @@ const ItemOrder = ({ order }) => {
   const { theme } = useSelector((state) => state.dataSlicePersisted);
   return (
     <div
+      id="itemOrder"
       style={{
         borderColor: theme.Color_Primary,
       }}
@@ -60,6 +61,7 @@ const ItemOrder = ({ order }) => {
       </div>
       {/* 3 */}
       <button
+        id="detailOrderStatus"
         onClick={() => {
           dispatch(setCartIdToShow(order?.cartID));
           updateURL("/ordersummary");

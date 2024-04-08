@@ -17,11 +17,21 @@ export const RenderButtonSubmit = ({handleSubmit, loading}) => {
       }}
     >
       <button
+        id="footerButtonSubmit"
         onClick={handleSubmit}
         style={{ backgroundColor: theme.Color_Secondary }}
-        className={`py-[10px] px-[20px]  text-white rounded-lg cursor-pointer text-[16px] w-full ${loading?"opacity-50":"cursor-pointer"}`}
+        className={`py-[10px] px-[20px]  text-white rounded-lg cursor-pointer text-[16px] w-full ${
+          loading ? "opacity-50" : "cursor-pointer"
+        }`}
       >
-        {loading?<><Trans i18nKey={"processing"}/>...</>:<Trans i18nKey={"submit"}/>}
+        {loading ? (
+          <>
+            <Trans i18nKey={"processing"} />
+            ...
+          </>
+        ) : (
+          <Trans i18nKey={"submit"} />
+        )}
       </button>
     </footer>
   );

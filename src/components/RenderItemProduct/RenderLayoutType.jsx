@@ -34,7 +34,7 @@ const RenderLayoutType = ({
           disabled
         >
           <span className="loader"></span>
-          <div>
+          <div id="updatingButtonLabel">
             {cartInfo && cartInfo?.details?.length === 0
               ? "Adding..."
               : "Updating..."}

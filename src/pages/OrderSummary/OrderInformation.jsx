@@ -52,8 +52,11 @@ export function OrderInformation({ order }) {
         <div className="justify-center text-gray-700 text-sm font-bold leading-5 tracking-wide grow whitespace-nowrap">
           <Trans i18nKey={"table"} />
         </div>
-        <div className="text-gray-700 text-right text-sm font-medium leading-5 tracking-wide whitespace-nowrap">
-          {order.tableNo}
+        <div
+          className="text-gray-700 text-right text-sm font-medium leading-5 tracking-wide whitespace-nowrap"
+          id="orderTableNo"
+        >
+          {order?.tableNo}
         </div>
       </div>
       <div className="justify-between items-stretch flex gap-2 mt-2.5 px-4">

@@ -4,7 +4,9 @@
 describe("CART PAGE TESTING", () => {
   it("Should pass testing for every component in cart page scope", () => {
     cy.visit(
-      "http://localhost:4173/?input=b3V0bGV0PUVkZ2UlMjBDYWZlJnRhYmxlTm89QTAwMSZ2YWxpZFVudGlsPTE3MTQxNTA4MDAwMDA=",
+      `http://localhost:5173/?input=${Cypress.env(
+        "QS_TABLE_NO_AND_OUTLET_NAME",
+      )}`,
     );
     cy.get("#takeaway").should("be.visible").should("be.enabled").click();
 

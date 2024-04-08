@@ -3,16 +3,14 @@ import { IconPlus } from "../../../assets/svgIcon"
 import PropTypes from 'prop-types'
 import { useSelector } from "react-redux";
 
-export const RenderButtonAdd = ({
-  isLoading,
-  handleClickButtonAdd
-}) => {
+export const RenderButtonAdd = ({ isLoading, handleClickButtonAdd, id }) => {
   const { theme, outletDetail } = useSelector(
     (state) => state.dataSlicePersisted,
   );
   return (
     <button
-      id="renderButtonAdd"
+      id="idItem"
+      data-id={id}
       style={{
         display:
           outletDetail?.qrOrderingAvailability === "Hidden" ? "none" : "flex",
@@ -41,8 +39,9 @@ export const RenderButtonAdd = ({
       </div>
     </button>
   );
-}
+};
 RenderButtonAdd.propTypes = {
   isLoading: PropTypes.bool,
-  handleClickButtonAdd: PropTypes.func
-}
+  handleClickButtonAdd: PropTypes.func,
+  id: PropTypes.string,
+};
