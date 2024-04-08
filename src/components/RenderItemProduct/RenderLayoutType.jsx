@@ -55,10 +55,10 @@ const RenderLayoutType = ({
   };
 
   const renderViewType = () => {
-    if (
-      viewType === "list" ||
-      (viewTypeGroup && viewTypeGroup.viewType === "list")
-    ) {
+    let usedType = viewType;
+    if(!usedType || usedType=="" || usedType=="inherit")
+      usedType=(viewTypeGroup?.viewType || "grid") 
+    if (usedType === "list") {
       return (
         <RenderListView
           handleOpenModalAddItem={handleOpenModalAddItem}
@@ -67,10 +67,7 @@ const RenderLayoutType = ({
           theme={theme}
         />
       );
-    } else if (
-      viewType === "detailed" ||
-      (viewTypeGroup && viewTypeGroup.viewType === "detailed")
-    ) {
+    } else if (usedType === "detailed") {
       return (
         <RenderDetailedView
           handleOpenModalAddItem={handleOpenModalAddItem}

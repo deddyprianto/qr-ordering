@@ -18,20 +18,17 @@ export const ProductCatalog = () => {
 
   const handleLayoutStyle = (viewType, viewTypeGroup) => {
     let styleObj;
+    let usedType = viewType;
+    if(!usedType || usedType=="" || usedType=="inherit")
+      usedType=(viewTypeGroup?.viewType || "grid") 
 
-    if (
-      viewType === "list" ||
-      (viewTypeGroup && viewTypeGroup.viewType === "list")
-    ) {
+    if (usedType === "list") {
       styleObj = {
         width: "100%",
         display: "flex",
         flexDirection: "column",
       };
-    } else if (
-      viewType === "detailed" ||
-      (viewTypeGroup && viewTypeGroup.viewType === "detailed")
-    ) {
+    } else if (usedType === "detailed") {
       styleObj = {
         width: "100%",
         display: "flex",
