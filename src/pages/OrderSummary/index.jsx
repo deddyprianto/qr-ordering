@@ -3,12 +3,12 @@ import { OrderInformation } from "./OrderInformation";
 import { OrderItemSummary } from "./OrderItemSummary";
 import { useEffect, useRef, useState } from "react";
 import { apiOrder } from "../../services/Order";
-import { setIsDataOrder } from "../../app/dataSlice";
 import { SkeletonSummaryPage } from "../../components/Skeleton/SkeletonSummaryPage";
 import PaymentComplete from "../../assets/PaymentComplete.gif";
 import Cancelled from "../../assets/Cancelled.gif";
 import Completed from "../../assets/Completed.gif";
 import Success from "../../assets/Success.gif";
+import { setIsDataOrder } from "../../app/dataSlicePersisted";
 
 export function Component() {
   const dispatch = useDispatch();
@@ -28,6 +28,14 @@ export function Component() {
       } else {
         throw result.message;
       }
+
+      setTimeout(() => {
+        if(window.location.pathname?.toLocaleLowerCase() != "/ordersummary")
+          return;
+        else if(!result?.data || order.status == "COMPLETED" || order.status == "CANCELLED")
+          return
+        fetchData.current();
+      }, 10000);
     } catch (error) {
       setLoading(false);
       console.log(error);

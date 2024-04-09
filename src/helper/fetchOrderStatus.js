@@ -28,7 +28,7 @@ const getOrderStatus = (ID, dispatch) => {
   setTimeout(async () => {
     const isStopped = await callApiOrder(ID, dispatch);
     if(!isStopped) getOrderStatus(ID, dispatch);
-  }, 5000);
+  }, 10000);
 }
 
 export const startListeningInterval = (ID, dispatch) => {

@@ -25,6 +25,16 @@ export function Component() {
       } else {
         throw result.message;
       }
+      setTimeout(() => {
+        if(window.location.pathname?.toLocaleLowerCase() != "/order")
+          return;
+        for(const dt of result.data){
+          if(dt?.status != "COMPLETED" && dt?.status != "CANCELLED"){
+            fetchOrderHistory.current();
+            return;
+          }
+        }
+      }, 10000);
     } catch (error) {
       setLoading(false);
       console.log(error);

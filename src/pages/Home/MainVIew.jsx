@@ -32,9 +32,15 @@ const MainView = () => {
   const [selectedSubGroup, setSelectedSubGroup] = useState("");
   const [isHasSubGroup, setIsHasSubGroup] = useState([]);
   const dispatch = useDispatch();
-  const { outletName, cartInfo, searchItemObj, theme, orderStatus } =
-    useSelector((state) => state.dataSlicePersisted);
-  const { isSearchItem, menuSubGroup, isDataOrder } = useSelector(
+  const {
+    outletName,
+    cartInfo,
+    searchItemObj,
+    theme,
+    orderStatus,
+    isDataOrder,
+  } = useSelector((state) => state.dataSlicePersisted);
+  const { isSearchItem, menuSubGroup } = useSelector(
     (state) => state.dataSlice,
   );
   useEffect(() => {

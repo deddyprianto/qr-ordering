@@ -11,14 +11,13 @@ const initialState = {
   openModalGeneral: false,
   outletSetting: {},
   serviceCharge: [],
-  isDataOrder: false,
   moveSelected: false,
   hasSubGroup: false,
   tableNo: "",
   validUntil: "",
   isValidUrl: false,
   groupCollecting: [],
-  saveRefNoGroup: ''
+  saveRefNoGroup: "",
 };
 
 const dataSlice = createSlice({
@@ -61,9 +60,6 @@ const dataSlice = createSlice({
     setServiceCharge: (state, action) => {
       state.serviceCharge = action.payload;
     },
-    setIsDataOrder: (state, action) => {
-      state.isDataOrder = action.payload;
-    },
     setAutoMoveSelected: (state, action) => {
       state.moveSelected = action.payload;
     },
@@ -97,7 +93,6 @@ export const {
   setOpenModalGeneral,
   setOutletSetting,
   setServiceCharge,
-  setIsDataOrder,
   setTableNo,
   setValidUntil,
   setIsValidUrl,
