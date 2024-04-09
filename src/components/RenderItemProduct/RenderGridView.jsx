@@ -18,7 +18,6 @@ const RenderGridView = ({
   const { outletDetail } = useSelector((state) => state.dataSlicePersisted);
   return (
     <div
-      id={`ITEM_${item.itemNo}`}
       style={{
         borderRadius: "16px",
         boxShadow: "0px 4px 10px 0px rgba(0, 0, 0, 0.10)",
