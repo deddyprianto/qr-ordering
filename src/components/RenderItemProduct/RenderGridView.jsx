@@ -4,6 +4,7 @@ import { RenderTagPromo } from "../Home/TagPromo";
 import { RenderButtonAddToCart } from "./ButtonAddToCart";
 import { RenderRetailPrice } from "./RetailPrice";
 import PropTypes from "prop-types";
+import { ImageOptimization } from "../ImageOptimization";
 
 const RenderGridView = ({
   handleOpenModalAddItem,
@@ -31,6 +32,30 @@ const RenderGridView = ({
       <button
         disabled={outletDetail?.qrOrderingAvailability === "Hidden"}
         onClick={() => handleOpenModalAddItem()}
+        className="h-[191px] w-full relative"
+        style={{
+          borderTopLeftRadius: "16px",
+          borderTopRightRadius: "16px",
+        }}
+      >
+        <ImageOptimization
+          altCustom={"itemImage"}
+          imageItems={item.defaultImageURL || theme.Image_Item_Place_Holder}
+          classNaming="h-full w-full object-cover object-center"
+          customStyle={{
+            borderTopLeftRadius: "16px",
+            borderTopRightRadius: "16px",
+          }}
+        />
+        {(item?.isDiscounted || false) && <RenderTagPromo />}
+        <div className="flex gap-1 absolute bottom-0">
+          <RenderTagInsight insights={item.insight} />
+        </div>
+      </button>
+
+      {/* <button
+        disabled={outletDetail?.qrOrderingAvailability === "Hidden"}
+        onClick={() => handleOpenModalAddItem()}
         style={{
           backgroundImage: `url(${
             item.defaultImageURL || theme.Image_Item_Place_Holder
@@ -50,7 +75,7 @@ const RenderGridView = ({
         <div className="p-2 flex gap-1">
           <RenderTagInsight insights={item.insight} />
         </div>
-      </button>
+      </button> */}
 
       <div className="grid grid-cols-1 grid-rows-[40px_1fr] p-[8px]">
         <table>
