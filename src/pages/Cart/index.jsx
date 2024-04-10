@@ -8,6 +8,7 @@ const PaymentMethod = lazy(() => import("./PaymentMethod"));
 const PriceSummary = lazy(() => import("./PriceSummary"));
 const FooterCart = lazy(() => import("./FooterCart"));
 const ItemCart = lazy(() => import("./ItemCart"));
+const OrderingMode = lazy(() => import("./OrderingMode"));
 
 export function Component() {
   const { cartInfo, outletName } = useSelector(
@@ -71,6 +72,14 @@ export function Component() {
             />
           );
         })}
+        <hr
+          style={{
+            margin: "24px 0px",
+            width: "100%",
+            borderTop: "1px solid #D6D6D6",
+          }}
+        />
+        <OrderingMode />
         <hr
           style={{
             margin: "24px 0px",
