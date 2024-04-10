@@ -41,9 +41,13 @@ function OrderingMode() {
       {isLoading ? (
         <SkeletonOrderingTypeList />
       ) : (
-        <div className="flex overflow-x-auto gap-4 mt-4 text-sm font-medium tracking-wide">
+        <div
+          className="flex overflow-x-auto gap-4 mt-4 text-sm font-medium tracking-wide"
+          id="containerOrderingMode"
+        >
           {outletSetting.dine_in_option?.enable && (
             <button
+              id="dineInButton"
               onClick={() =>
                 handleClickOrderingMode(
                   outletSetting.dine_in_option.displayName,
@@ -58,7 +62,7 @@ function OrderingMode() {
             >
               <div className="flex gap-4">
                 <IconDineInCart />
-                <div className="flex-1 my-auto">
+                <div id="orderingModeDineIN" className="flex-1 my-auto">
                   {outletSetting.dine_in_option.displayName}
                 </div>
               </div>
@@ -66,6 +70,7 @@ function OrderingMode() {
           )}
           {outletSetting.cash_carry_option?.enable && (
             <button
+              id="takeAwayButton"
               onClick={() =>
                 handleClickOrderingMode(
                   outletSetting.cash_carry_option.displayName,
@@ -80,7 +85,7 @@ function OrderingMode() {
             >
               <div className="flex gap-4">
                 <IconTakeAwayBag />
-                <div className="flex-1 my-auto">
+                <div className="flex-1 my-auto" id="orderingModeTakeAway">
                   {outletSetting.cash_carry_option.displayName}
                 </div>
               </div>

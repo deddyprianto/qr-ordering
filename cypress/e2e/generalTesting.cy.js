@@ -19,6 +19,19 @@ describe("CART PAGE TESTING", () => {
       });
 
     cy.get("#renderCartSummary").should("be.visible").click();
+    cy.get("#takeAwayButton")
+      .click()
+      .then(() => {
+        cy.get("#showSkeletonListOrderingMode").should("exist");
+      });
+
+    cy.get("#dineInButton")
+      .click()
+      .then(() => {
+        cy.get("#showSkeletonListOrderingMode").should("exist");
+      });
+    cy.get("#orderingModeDineIN").contains("Dine In");
+    cy.get("#orderingModeTakeAway").contains("Take Away");
 
     cy.get("#buttonFooterCart").should("have.attr", "disabled");
     cy.get("#Credit\\ Card").should("be.visible").should("be.enabled").click();
