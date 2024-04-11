@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 export const ImageOptimization = ({
   imageItems,
@@ -29,7 +30,7 @@ export const ImageOptimization = ({
   const jpgFormat = `${modifiedUrl}?width=${width}&format=jpg`;
 
   return (
-    <img
+    <LazyLoadImage
       srcSet={`${webpFormat}, ${jpgFormat}, ${pngFormat}`}
       alt={altCustom}
       width={width}
