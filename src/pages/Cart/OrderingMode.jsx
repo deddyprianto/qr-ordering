@@ -3,20 +3,21 @@ import { IconDineInCart, IconTakeAwayBag } from "../../assets/svgIcon";
 import { useSelector, useDispatch } from "react-redux";
 import { apiCart } from "../../services/Cart";
 import { SkeletonOrderingTypeList } from "../../components/Skeleton/SkeletonPaymentList";
-import { setCartInfo } from "../../app/dataSlicePersisted";
+import { setCartInfo, setOrderType } from "../../app/dataSlicePersisted";
 
 function OrderingMode() {
   const dispatch = useDispatch();
-
-  const [isSelectedOrderingMode, setIsSelectedOrderingMode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const { outletSetting } = useSelector((state) => state.dataSlice);
-
-  const { cartInfo } = useSelector((state) => state.dataSlicePersisted);
+  console.log(outletSetting);
+  const { cartInfo, orderType } = useSelector(
+    (state) => state.dataSlicePersisted,
+  );
 
   const handleClickOrderingMode = async (orderingMode) => {
-    setIsSelectedOrderingMode(orderingMode);
+    dispatch(setOrderType(orderingMode));
+
     const payload = {
       orderType: orderingMode.toUpperCase(),
     };
@@ -54,8 +55,7 @@ function OrderingMode() {
                 )
               }
               className={`flex flex-col justify-center p-4  rounded-lg border border-solid  ${
-                isSelectedOrderingMode ===
-                outletSetting.dine_in_option.displayName
+                orderType === outletSetting.dine_in_option.displayName
                   ? "bg-orange-100 border-emerald-800"
                   : "bg-white border-zinc-300"
               }`}
@@ -77,8 +77,7 @@ function OrderingMode() {
                 )
               }
               className={`flex flex-col justify-center p-4  rounded-lg border border-solid  ${
-                isSelectedOrderingMode ===
-                outletSetting.cash_carry_option.displayName
+                orderType === outletSetting.cash_carry_option.displayName
                   ? "bg-orange-100 border-emerald-800"
                   : "bg-white border-zinc-300"
               }`}

@@ -14,11 +14,9 @@ export const MenuGroup = ({ label, imageItem, handleSelected, isGlow }) => {
       onClick={() => handleClick()}
       style={{
         flex: "0 0 auto",
-        borderBottom: isGlow && `6px solid ${theme?.Color_Secondary}`,
+        borderBottom: isGlow && `4px solid ${theme?.Color_Secondary}`,
       }}
-      className={`w-[100px] mt-[10px] flex flex-col items-center py-[8px] ${
-        isGlow && "px-[10px] py-[12px]"
-      }`}
+      className="grid grid-cols-1 grid-rows-[1fr_40px] w-[100px] mt-[10px pt-[8px] place-items-center"
     >
       <ImageOptimization
         customStyle={{
@@ -26,6 +24,7 @@ export const MenuGroup = ({ label, imageItem, handleSelected, isGlow }) => {
           border: isGlow
             ? `4px solid ${theme.Color_Secondary}`
             : "2px solid white",
+          height: "100%",
         }}
         width={64}
         imageItems={imageItem || theme?.Image_Logo}
@@ -34,7 +33,7 @@ export const MenuGroup = ({ label, imageItem, handleSelected, isGlow }) => {
         style={{
           color: isGlow ? theme.Color_Secondary : "white",
         }}
-        className={`flex justify-center items-center text-sm h-full ${
+        className={`text-sm h-full flex items-center leading-4 ${
           isGlow ? "font-bold" : "font-normal"
         }`}
       >

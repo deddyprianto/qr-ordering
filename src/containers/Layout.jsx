@@ -82,7 +82,7 @@ export default function Layout() {
       return (
         <div
           style={{
-            height: "100vh",
+            height: "100dvh",
             width: "100vw",
             display: "grid",
             gridTemplateColumns: "1fr",
