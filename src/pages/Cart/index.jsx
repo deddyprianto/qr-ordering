@@ -3,6 +3,8 @@ import { ModalAuth } from "../../components/Auth";
 import { useSelector } from "react-redux";
 import { Trans } from "react-i18next";
 import { ModalGeneral } from "../../components/ModalGeneral";
+import { LazyLoadComponent } from "react-lazy-load-image-component";
+import { SkeletonPaymentList } from "../../components/Skeleton/SkeletonPaymentList";
 
 const PaymentMethod = lazy(() => import("./PaymentMethod"));
 const PriceSummary = lazy(() => import("./PriceSummary"));
@@ -87,7 +89,9 @@ export function Component() {
             borderTop: "1px solid #D6D6D6",
           }}
         />
-        <PaymentMethod />
+        <LazyLoadComponent placeholder={<SkeletonPaymentList />}>
+          <PaymentMethod />
+        </LazyLoadComponent>
         <hr
           style={{
             margin: "24px 0px",
