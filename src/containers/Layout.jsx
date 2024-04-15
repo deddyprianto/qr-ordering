@@ -1,27 +1,38 @@
 import { Outlet, useNavigation } from "react-router-dom";
 import Header from "./Header";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import screen from "../../hooks/useWindowSize";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchItemObj } from "../app/dataSlicePersisted";
 import { EdgeSnackProvider } from "../components/EdgeSnack";
 import { setAutoMoveSelected } from "../app/dataSlice";
+import { IconArrowUp } from "../assets/svgIcon";
 
 export default function Layout() {
-  const childRef = useRef(null);
   const dispatch = useDispatch();
   const { isSearchItem, hasSubGroup } = useSelector((state) => state.dataSlice);
+  const [isShowButtonScrUp, setIsShowButtonScrUp] = useState(false);
+  const { enableSearchUsingScroll, searchItemObj, theme, cartInfo } =
+    useSelector((state) => state.dataSlicePersisted);
 
-  const { enableSearchUsingScroll, searchItemObj } = useSelector(
-    (state) => state.dataSlicePersisted,
-  );
+  const childRef = useRef(null);
+  const handleScrollBtn = () => {
+    const stickyButton = childRef.current;
+    console.log(stickyButton);
+    stickyButton.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
   const handleParentScroll = () => {
     const childElement = childRef.current;
     if (hasSubGroup) {
       if (childElement.scrollTop <= 250) {
+        setIsShowButtonScrUp(false);
         dispatch(setAutoMoveSelected(true));
       } else {
+        setIsShowButtonScrUp(true);
         dispatch(setAutoMoveSelected(false));
       }
     }
@@ -64,6 +75,9 @@ export default function Layout() {
   const gadgetScreen = width < 980;
 
   const renderResponsiveDesign = () => {
+    const cartInfoDetails =
+      cartInfo?.details && cartInfo?.details?.length !== 0;
+
     if (gadgetScreen) {
       return (
         <div
@@ -72,7 +86,7 @@ export default function Layout() {
             width: "100vw",
             display: "grid",
             gridTemplateColumns: "1fr",
-            gridTemplateRows: "85px 1fr",
+            gridTemplateRows: "102px 1fr",
             gap: "0px 0px",
             gridAutoFlow: "row",
             gridTemplateAreas: '"."\n    "."\n    "."',
@@ -92,6 +106,21 @@ export default function Layout() {
             onScroll={handleParentScroll}
           >
             <Outlet />
+            <button
+              onClick={handleScrollBtn}
+              style={{
+                backgroundColor: theme?.Color_Primary,
+              }}
+              className={`w-[56px] h-[56px] rounded-full absolute ${
+                cartInfoDetails ? "bottom-[70px]" : "bottom-[10px]"
+              } right-[10px] ${
+                isShowButtonScrUp
+                  ? "flex justify-center items-center"
+                  : "hidden"
+              }`}
+            >
+              <IconArrowUp />
+            </button>
           </div>
         </div>
       );
@@ -116,7 +145,7 @@ export default function Layout() {
                 height: "98vh",
                 display: "grid",
                 gridTemplateColumns: "1fr",
-                gridTemplateRows: "85px 1fr",
+                gridTemplateRows: "102px 1fr",
                 gap: "0px 0px",
                 gridAutoFlow: "row",
                 gridTemplateAreas: '"."\n    "."\n    "."',
@@ -135,6 +164,21 @@ export default function Layout() {
                 onScroll={handleParentScroll}
               >
                 <Outlet />
+                <button
+                  onClick={handleScrollBtn}
+                  style={{
+                    backgroundColor: theme?.Color_Primary,
+                  }}
+                  className={`w-[56px] h-[56px] rounded-full absolute ${
+                    cartInfoDetails ? "bottom-[70px]" : "bottom-[10px]"
+                  } right-[10px] ${
+                    isShowButtonScrUp
+                      ? "flex justify-center items-center"
+                      : "hidden"
+                  }`}
+                >
+                  <IconArrowUp />
+                </button>
               </div>
             </div>
           </div>
