@@ -48,6 +48,7 @@ export function Component() {
       {renderContent()}
       {isValidUrl &&
         outletDetail?.qrOrderingAvailability !== "InActive" &&
+        (outletDetail?.isActiveAllDay || outletDetail?.isInOperationalHours) &&
         cartInfo?.details?.length > 0 && <RenderCartSummary />}
     </Suspense>
   );
