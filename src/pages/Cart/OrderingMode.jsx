@@ -10,7 +10,6 @@ function OrderingMode() {
   const [isLoading, setIsLoading] = useState(false);
 
   const { outletSetting } = useSelector((state) => state.dataSlice);
-  console.log(outletSetting);
   const { cartInfo, orderType } = useSelector(
     (state) => state.dataSlicePersisted,
   );

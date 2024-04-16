@@ -8,6 +8,7 @@ export const RenderButtonItemInCart = ({
   qtyInCart,
   cartLineID,
   handleClickButtonAdd,
+  id,
 }) => {
   const [qty, setQty] = useState();
   useEffect(() => {
@@ -49,6 +50,7 @@ export const RenderButtonItemInCart = ({
     >
       <button
         id="button-decreaseQuantity"
+        data-id={id}
         className="justify-center items-center flex flex-col py-1 rounded-lg"
         style={{ backgroundColor: theme.Color_Secondary }}
         onClick={decreaseQuantity}
@@ -63,6 +65,7 @@ export const RenderButtonItemInCart = ({
       </span>
       <button
         id="button-increaseQuantity"
+        data-id={id}
         className="justify-center items-center flex flex-col py-1 rounded-lg"
         style={{ backgroundColor: theme.Color_Secondary }}
         onClick={increaseQuantity}
@@ -76,5 +79,6 @@ RenderButtonItemInCart.propTypes = {
   qtyInCart: PropTypes.number,
   cartLineID: PropTypes.string,
   isLoading: PropTypes.bool,
-  handleClickButtonAdd: PropTypes.func
-}
+  handleClickButtonAdd: PropTypes.func,
+  id: PropTypes.string,
+};

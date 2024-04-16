@@ -17,7 +17,8 @@ export const RenderAttItem = ({
   };
   return (
     <button
-      id={id}
+      id="attributeItem"
+      data-id={id}
       onClick={() => {
         handleClickAttItem(idxAttGroup, idxAttItem);
       }}

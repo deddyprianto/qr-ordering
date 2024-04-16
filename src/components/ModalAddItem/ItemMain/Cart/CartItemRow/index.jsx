@@ -135,6 +135,7 @@ export const RenderCartItemRow = ({ item }) => {
           <div className="flex items-center">
             <div className="items-stretch flex gap-1 mt-2">
               <button
+                id="decreaseQtyAttr"
                 className="justify-center items-center flex flex-col px-3 py-1 rounded-lg"
                 style={{ backgroundColor: theme.Color_Secondary }}
                 onClick={decreaseQuantityCartItemRow}
@@ -145,6 +146,7 @@ export const RenderCartItemRow = ({ item }) => {
                 {quantity}
               </span>
               <button
+                id="increaseQtyAttr"
                 className="justify-center items-center flex flex-col px-3 py-1 rounded-lg"
                 style={{ backgroundColor: theme.Color_Secondary }}
                 onClick={increaseQuantityCartItemRow}

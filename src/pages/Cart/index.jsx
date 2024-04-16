@@ -1,10 +1,11 @@
-import { Suspense, lazy, useState } from "react";
+import { Suspense, lazy, useState, useEffect } from "react";
 import { ModalAuth } from "../../components/Auth";
 import { useSelector } from "react-redux";
 import { Trans } from "react-i18next";
 import { ModalGeneral } from "../../components/ModalGeneral";
 import { LazyLoadComponent } from "react-lazy-load-image-component";
 import { SkeletonPaymentList } from "../../components/Skeleton/SkeletonPaymentList";
+import { useNavigate } from "react-router-dom";
 
 const PaymentMethod = lazy(() => import("./PaymentMethod"));
 const PriceSummary = lazy(() => import("./PriceSummary"));
@@ -13,6 +14,8 @@ const ItemCart = lazy(() => import("./ItemCart"));
 const OrderingMode = lazy(() => import("./OrderingMode"));
 
 export function Component() {
+  const navigate = useNavigate();
+
   const { cartInfo, outletName } = useSelector(
     (state) => state.dataSlicePersisted,
   );
@@ -34,6 +37,12 @@ export function Component() {
     },
     0,
   );
+
+  useEffect(() => {
+    if (totalQuantityCart === 0) {
+      navigate("/");
+    }
+  }, [totalQuantityCart, navigate]);
 
   return (
     <Suspense
