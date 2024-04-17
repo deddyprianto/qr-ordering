@@ -36,18 +36,18 @@ import { setServiceCharge } from "../../app/dataSlice";
            <button
              id="takeaway"
              className={`${
-               curOrderType == "Take Away" ? bgTypeSelected : bgTypeUnSelected
+               curOrderType == "CASH_CARRY" ? bgTypeSelected : bgTypeUnSelected
              } items-center self-stretch border flex flex-col mt-6 px-4 py-6 rounded-lg border-solid`}
              onClick={() =>
                handleSelectOrderType(
-                 outletSetting.cash_carry_option.displayName,
+                 "CASH_CARRY",
                  outletSetting.cash_carry_option,
                )
              }
            >
              <IconTakeAway />
              <div className="justify-center self-stretch text-gray-700 text-center text-2xl font-semibold leading-8 whitespace-nowrap mt-4">
-               {outletSetting?.cash_carry_option?.displayName}
+               {outletSetting.cash_carry_option.displayName}
              </div>
            </button>
          )}
@@ -55,13 +55,10 @@ import { setServiceCharge } from "../../app/dataSlice";
            <button
              id="dinein"
              className={`${
-               curOrderType == "Dine In" ? bgTypeSelected : bgTypeUnSelected
+               curOrderType == "DINEIN" ? bgTypeSelected : bgTypeUnSelected
              } justify-center items-center self-stretch border flex flex-col mt-6 px-4 py-6 rounded-lg border-solid`}
              onClick={() =>
-               handleSelectOrderType(
-                 outletSetting?.dine_in_option?.displayName,
-                 outletSetting.dine_in_option,
-               )
+               handleSelectOrderType("DINEIN", outletSetting.dine_in_option)
              }
            >
              <IconDineIn />

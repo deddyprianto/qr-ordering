@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Trans } from "react-i18next";
 import { ModalGeneral } from "../../components/ModalGeneral";
 import { LazyLoadComponent } from "react-lazy-load-image-component";
-import { SkeletonPaymentList } from "../../components/Skeleton/SkeletonPaymentList";
+import { SkeletonList } from "../../components/Skeleton/SkeletonPaymentList";
 import { useNavigate } from "react-router-dom";
 
 const PaymentMethod = lazy(() => import("./PaymentMethod"));
@@ -98,7 +98,7 @@ export function Component() {
             borderTop: "1px solid #D6D6D6",
           }}
         />
-        <LazyLoadComponent placeholder={<SkeletonPaymentList />}>
+        <LazyLoadComponent placeholder={<SkeletonList />}>
           <PaymentMethod />
         </LazyLoadComponent>
         <hr
