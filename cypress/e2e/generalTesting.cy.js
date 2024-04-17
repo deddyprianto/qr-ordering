@@ -166,12 +166,7 @@ describe("TESTING CART PAGE", () => {
         cy.get("#orderTableNo").should("be.visible");
         cy.get("#backButtonCart").should("be.visible").click();
 
-        cy.get("#detailOrderStatus")
-          .should("be.visible")
-          .click()
-          .then((data) => {
-            console.log(data);
-          });
+        cy.get("#detailOrderStatus").should("be.visible").click();
       });
   });
 });
