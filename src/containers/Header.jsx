@@ -180,7 +180,7 @@ export default function Header() {
                 }
               }}
               style={{
-                backgroundColor: theme.Color_Secondary,
+                backgroundColor: theme?.Color_Secondary,
               }}
               className="justify-center items-center flex aspect-square flex-col w-[46px] h-[46px] px-3 rounded-[1000px]"
             >

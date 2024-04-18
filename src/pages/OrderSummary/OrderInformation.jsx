@@ -9,9 +9,10 @@ export function OrderInformation({ order }) {
   return (
     <div
       style={{
-        borderColor: theme.Color_Primary,
+        borderColor: theme?.Color_Primary,
+        backgroundColor: theme?.Color_Tertiary,
       }}
-      className="w-full mt-[24px] justify-center items-stretch self-stretch border bg-white flex  flex-col pb-4 rounded-lg border-solid"
+      className="w-full mt-[24px] justify-center items-stretch self-stretch border flex  flex-col pb-4 rounded-lg border-solid"
     >
       <div
         style={{

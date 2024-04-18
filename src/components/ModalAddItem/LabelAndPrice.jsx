@@ -13,7 +13,7 @@ export const RenderLabelAndPrice = ({ itemName, item }) => {
       >
         {(item?.isDiscounted || false) && (
           <div
-            className="text-gray-700  text-base font-bold leading-6 mt-1 line-through"
+            className="text-[#9D9D9D]  text-base font-bold leading-6 mt-1 line-through"
             style={{
               color: "#9D9D9D",
               textDecorationLine: "strikethrough",

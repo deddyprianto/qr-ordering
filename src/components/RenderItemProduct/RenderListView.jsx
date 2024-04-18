@@ -17,8 +17,9 @@ const RenderListView = ({
     <div
       style={{
         boxShadow: "0px 4px 10px 0px rgba(0, 0, 0, 0.10)",
+        backgroundColor: theme?.Color_Tertiary,
       }}
-      className="grid grid-cols-[155px_1fr]  bg-white mt-4 rounded-2xl"
+      className="grid grid-cols-[155px_1fr] mt-4 rounded-2xl"
     >
       <button
         className="flex-col overflow-hidden relative flex aspect-square w-[150px] items-stretch pr-12 pb-2"

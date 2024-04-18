@@ -25,9 +25,12 @@ export const RenderButtonQty = ({
     return (
       <div className="items-stretch self-center flex gap-1 my-auto">
         <button
-          className={`${
-            disableMinButton ? "bg-[#9D9D9D]" : "bg-pink-500"
-          } justify-center items-center  flex aspect-square flex-col w-6 h-6 px-2 rounded-lg`}
+          style={{
+            backgroundColor: disableMaxButton
+              ? "#9D9D9D"
+              : theme?.Color_Secondary,
+          }}
+          className="justify-center items-center  flex aspect-square flex-col w-6 h-6 px-2 rounded-lg"
           onClick={() => handleChangeQty(false)}
           disabled={disableMinButton || false}
         >

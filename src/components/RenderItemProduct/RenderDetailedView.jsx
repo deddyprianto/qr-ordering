@@ -12,8 +12,9 @@ const RenderDetailedView = ({
     <div
       style={{
         boxShadow: "0px 4px 10px 0px rgba(0, 0, 0, 0.10)",
+        backgroundColor: theme?.Color_Tertiary,
       }}
-      className="grid grid-cols-1 grid-rows-1 bg-white mt-4 rounded-2xl w-full"
+      className="grid grid-cols-1 grid-rows-1 mt-4 rounded-2xl w-full"
     >
       <div>
         <RenderButtonImageItemProd

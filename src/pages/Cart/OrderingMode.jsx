@@ -9,7 +9,7 @@ function OrderingMode() {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const { outletSetting } = useSelector((state) => state.dataSlice);
-  const { cartInfo, orderType } = useSelector(
+  const { cartInfo, orderType, theme } = useSelector(
     (state) => state.dataSlicePersisted,
   );
 
@@ -47,7 +47,6 @@ function OrderingMode() {
     }
   };
 
-
   return (
     <div className="flex flex-col self-stretch text-gray-700 leading-[140%] max-w-[398px]">
       <div className="w-full text-base font-bold">Choose Ordering Type</div>
@@ -62,11 +61,17 @@ function OrderingMode() {
             <button
               id="dineInButton"
               onClick={() => handleClickOrderingMode("DINEIN")}
-              className={`flex flex-col justify-center p-4  rounded-lg border border-solid  ${
-                orderType === updatedOutletSetting.dine_in_option.displayName
-                  ? "bg-orange-100 border-emerald-800"
-                  : "bg-white border-zinc-300"
-              }`}
+              className="flex flex-col justify-center p-4  rounded-lg border border-solid"
+              style={{
+                backgroundColor:
+                  orderType === updatedOutletSetting.dine_in_option.displayName
+                    ? theme?.Color_Accent
+                    : "white",
+                borderColor:
+                  orderType === updatedOutletSetting.dine_in_option.displayName
+                    ? theme?.Color_Primary
+                    : "rgb(212 212 216)",
+              }}
             >
               <div className="flex gap-4">
                 <IconDineInCart />
@@ -80,11 +85,20 @@ function OrderingMode() {
             <button
               id="takeAwayButton"
               onClick={() => handleClickOrderingMode("CASH_CARRY")}
-              className={`flex flex-col justify-center p-4  rounded-lg border border-solid  ${
-                orderType === updatedOutletSetting.cash_carry_option.displayName
-                  ? "bg-orange-100 border-emerald-800"
-                  : "bg-white border-zinc-300"
-              }`}
+              className="flex flex-col justify-center p-4  rounded-lg border border-solid"
+              style={{
+                backgroundColor:
+                  orderType ===
+                  updatedOutletSetting.cash_carry_option.displayName
+                    ? theme?.Color_Accent
+                    : "white",
+
+                borderColor:
+                  orderType ===
+                  updatedOutletSetting.cash_carry_option.displayName
+                    ? theme?.Color_Primary
+                    : "rgb(212 212 216)",
+              }}
             >
               <div className="flex gap-4">
                 <IconTakeAwayBag />
