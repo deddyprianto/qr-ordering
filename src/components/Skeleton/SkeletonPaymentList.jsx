@@ -1,4 +1,4 @@
-export const SkeletonPaymentList = () => {
+export const SkeletonList = () => {
   const renderSkeletonChild = () => {
     return (
       <div className="bg-transparent shadow-md rounded-lg py-4 px-4 space-y-1 animate-pulse flex items-center">

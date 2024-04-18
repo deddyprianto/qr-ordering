@@ -12,6 +12,7 @@ export const RenderBundleGroup = ({
   setBundleList,
   itemCart,
   isCalledFromCart,
+  id,
 }) => {
   const [itemCartBundles, setItemCartBundles] = useState(itemCart);
   const theme = useSelector((state) => state.dataSlicePersisted.theme);
@@ -22,11 +23,12 @@ export const RenderBundleGroup = ({
   }, [bundleGroup]);
 
   const expandBundeItem = () => {
-    if (!isExpanded) return <></>;
+    if (!isExpanded) return null;
     else
       return bundleGroup.items?.map((item, idx) => {
         return (
           <RenderBundleItem
+            id={item.setMealItemCode}
             key={item.setMealItemCode}
             itemCart={itemCartBundles}
             setItemCartBundles={setItemCartBundles}
@@ -46,7 +48,12 @@ export const RenderBundleGroup = ({
   };
 
   const renderCheckBox = () => {
-    if (isValidBundleQty(bundleGroup)) return <IconCheckFill />;
+    if (isValidBundleQty(bundleGroup))
+      return (
+        <div id="IconCheckPassed" data-id={id}>
+          <IconCheckFill />
+        </div>
+      );
     else
       return (
         <div className="text-emerald-800 text-sm font-medium leading-5 tracking-wide whitespace-nowrap items-stretch bg-white aspect-[1.9] justify-center px-1.5 rounded-[1000px]">
@@ -62,6 +69,8 @@ export const RenderBundleGroup = ({
       } justify-center items-stretch border border-[color:var(--Brand-color-Primary,#00524C)] bg-white flex w-full flex-col mt-4 rounded-lg border-solid`}
     >
       <button
+        id="bundleItemGroups"
+        data-id={id}
         style={{ backgroundColor: theme.Color_Primary }}
         className={`${
           isExpanded ? "rounded-tl-md rounded-tr-md" : "rounded-md"
@@ -73,7 +82,11 @@ export const RenderBundleGroup = ({
           <div className="text-white text-sm font-medium leading-5 tracking-wide">
             {bundleGroup.setMealGroupName}
           </div>
-          <div className="text-white text-sm font-medium leading-5 tracking-wide">
+          <div
+            id="requiredQty"
+            data-id={bundleGroup.max}
+            className="text-white text-sm font-medium leading-5 tracking-wide"
+          >
             {`(Choose ${bundleGroup.max})`}
           </div>
         </div>
@@ -97,4 +110,5 @@ RenderBundleGroup.propTypes = {
   setBundleList: PropTypes.func,
   itemCart: PropTypes.object,
   isCalledFromCart: PropTypes.bool,
+  id: PropTypes.string,
 };

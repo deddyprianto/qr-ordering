@@ -77,12 +77,11 @@ export default function Layout() {
   const renderResponsiveDesign = () => {
     const cartInfoDetails =
       cartInfo?.details && cartInfo?.details?.length !== 0;
-
     if (gadgetScreen) {
       return (
         <div
           style={{
-            height: "100vh",
+            height: "100dvh",
             width: "100vw",
             display: "grid",
             gridTemplateColumns: "1fr",
@@ -107,6 +106,7 @@ export default function Layout() {
           >
             <Outlet />
             <button
+              id="buttonUp"
               onClick={handleScrollBtn}
               style={{
                 backgroundColor: theme?.Color_Primary,
@@ -114,7 +114,7 @@ export default function Layout() {
               className={`w-[56px] h-[56px] rounded-full absolute ${
                 cartInfoDetails ? "bottom-[70px]" : "bottom-[10px]"
               } right-[10px] ${
-                isShowButtonScrUp
+                window.location.pathname === "/" && isShowButtonScrUp
                   ? "flex justify-center items-center"
                   : "hidden"
               }`}

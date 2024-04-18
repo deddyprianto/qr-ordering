@@ -15,6 +15,7 @@ export const RenderBundleItem = ({
   itemCart,
   isCalledFromCart,
   setItemCartBundles,
+  id,
 }) => {
   const itemCartMatchesQty = itemCart?.bundles.find(
     (itemBundle) => itemBundle.itemNo === item.itemNo,
@@ -87,6 +88,8 @@ export const RenderBundleItem = ({
     <div>
       <div className="items-stretch flex justify-between mt-2.5 gap-2 px-4">
         <button
+          id="itemBundle"
+          data-id={id}
           className="grid grid-cols-[30px_1fr]"
           onClick={handleSelectItem}
         >
@@ -101,6 +104,7 @@ export const RenderBundleItem = ({
           updateBundleList={updateBundleList}
           disableMinButton={disableMinButton}
           disableMaxButton={disableMaxButton}
+          id={id}
         />
         <div
           className="fixed-width-content text-gray-700 text-right text-sm font-bold leading-5 tracking-wide self-center grow whitespace-nowrap my-auto"
@@ -125,4 +129,5 @@ RenderBundleItem.propTypes = {
   itemCart: PropTypes.object,
   isCalledFromCart: PropTypes.bool,
   setItemCartBundles: PropTypes.func,
+  id: PropTypes.string,
 };

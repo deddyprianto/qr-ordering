@@ -102,10 +102,7 @@ const RenderModalItemDetail = ({
       className="fixed top-0 left-0 w-full h-full bg-modal-popup-container z-50 inset-0 backdrop-filter backdrop-blur-sm bg-[black] bg-opacity-50"
     >
       <div className={classNameCustom}>
-        <div
-          id="modalCartItem"
-          className="grid grid-cols-[1fr] grid-rows-custom gap-0 grid-flow-row h-full w-full"
-        >
+        <div className="grid grid-cols-[1fr] grid-rows-custom gap-0 grid-flow-row h-full w-full">
           {isCalledFromCart ? (
             <>
               <div className="w-full bg-white flex justify-between items-center px-[16px]">

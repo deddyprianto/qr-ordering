@@ -146,6 +146,7 @@ const RenderQty = ({
       ) : (
         <div className="flex gap-1 ">
           <button
+            id={itemNo}
             style={{
               backgroundColor: theme.Color_Secondary,
             }}

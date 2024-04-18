@@ -8,6 +8,7 @@ export const RenderButtonQty = ({
   disableMinButton,
   disableMaxButton,
   itemCartMatchesQty,
+  id,
 }) => {
   const { theme } = useSelector((state) => state.dataSlicePersisted);
   const handleChangeQty = (isAddQuantity) => {
@@ -36,6 +37,8 @@ export const RenderButtonQty = ({
           {item.quantity || itemCartMatchesQty?.quantity || 0}
         </div>
         <button
+          id="qtyPlusBundle"
+          data-id={id}
           style={{
             backgroundColor: disableMaxButton
               ? "#9D9D9D"
@@ -59,4 +62,5 @@ RenderButtonQty.propTypes = {
   disableMinButton: PropTypes.bool,
   disableMaxButton: PropTypes.bool,
   itemCartMatchesQty: PropTypes.object,
+  id: PropTypes.string,
 };

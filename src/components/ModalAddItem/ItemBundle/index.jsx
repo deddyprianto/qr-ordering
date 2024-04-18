@@ -47,11 +47,14 @@ const RenderItemBundles = ({
     setBundleList(tempBundleList);
   };
   return (
-    <div className="justify-center bg-[#F9F9F9] flex flex-col p-4 mb-4">
+    <div
+      id="renderItemBundle"
+      className="justify-center bg-[#F9F9F9] flex flex-col p-4 mb-4"
+    >
       {bundleList.map((bundleGroup, idx) => {
         return (
           <RenderBundleGroup
-            key={bundleGroup.setMealGroupCode}
+            key={bundleGroup?.setMealGroupCode}
             bundleList={bundleList}
             groupIdx={idx}
             bundleGroup={bundleGroup}
@@ -60,6 +63,7 @@ const RenderItemBundles = ({
             handleClickAttItem={handleClickAttItem}
             isCalledFromCart={isCalledFromCart}
             itemCart={itemCart}
+            id={bundleGroup?.setMealGroupCode}
           />
         );
       })}

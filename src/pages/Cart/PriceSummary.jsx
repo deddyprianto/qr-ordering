@@ -71,7 +71,10 @@ function PriceSummary() {
         </div>
 
         {cartInfo?.incGSTAmount > 0 && (
-          <div className="items-stretch flex justify-between gap-4 mt-2 ">
+          <div
+            id="containerGST"
+            className="items-stretch flex justify-between gap-4 mt-2 "
+          >
             <div className="justify-center text-gray-700 text-sm font-medium leading-5 tracking-wide grow whitespace-nowrap">
               GST (inc) {cartInfo?.gstRate}%
             </div>
