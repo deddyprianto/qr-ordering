@@ -22,7 +22,7 @@ const RenderGridView = ({
       style={{
         borderRadius: "16px",
         boxShadow: "0px 4px 10px 0px rgba(0, 0, 0, 0.10)",
-        backgroundColor: "var(--brand-color-tertiary, #FFF)",
+        backgroundColor: theme?.Color_Tertiary,
         display: "flex",
         flexDirection: "column",
         width: "100%",

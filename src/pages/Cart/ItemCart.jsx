@@ -40,7 +40,7 @@ const ItemCart = ({ item, idCart, setIsCartEmpty, totalQuantityCart }) => {
         <div className="text-center flex">
           {item?.discount > 0 && (
             <div
-              className="text-gray-700  text-base font-bold leading-6 line-through mr-[8px]"
+              className="text-[#9D9D9D]  text-base font-bold leading-6 line-through mr-[8px]"
               style={{
                 color: "#9D9D9D",
                 textDecorationLine: "strikethrough",

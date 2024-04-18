@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 const renderItemPricePromo = (item, styleMargin) => {
   return (
     <div className={`items-stretch flex gap-2 ${styleMargin || "mt-7"}`}>
-      <div className="text-neutral-400 text-center text-base font-medium leading-6 line-through">
+      <div className="text-[#9D9D9D] text-center text-base font-medium leading-6 line-through">
         $ {item?.retailPrice}
       </div>
       <div className="text-red-600 text-center text-base font-bold leading-6">

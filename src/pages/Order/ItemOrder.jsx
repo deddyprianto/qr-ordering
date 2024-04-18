@@ -18,7 +18,8 @@ const ItemOrder = ({ order }) => {
     <div
       id="itemOrder"
       style={{
-        borderColor: theme.Color_Primary,
+        borderColor: theme?.Color_Primary,
+        backgroundColor: theme?.Color_Tertiary,
       }}
       className="items-stretch self-stretch border flex w-full flex-col rounded-lg border-solid mb-4"
     >

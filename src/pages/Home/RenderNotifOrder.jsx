@@ -63,8 +63,11 @@ export function RenderNotificationOrder() {
   if (isExist)
     return (
       <div
+        style={{
+          backgroundColor: theme?.Color_Accent,
+        }}
         id="notificationOrder"
-        className="items-stretch self-stretch bg-orange-100 flex w-full flex-col p-2 rounded-2xl"
+        className="items-stretch self-stretch flex w-full flex-col p-2 rounded-2xl"
       >
         <div className="justify-between items-stretch flex w-full gap-5">
           <div className="items-center flex justify-between gap-2 p-0.5">
@@ -74,14 +77,20 @@ export function RenderNotificationOrder() {
             </div>
           </div>
           <button
-            className="text-pink-500 text-sm font-bold leading-5 tracking-wide self-center my-auto"
+            style={{ color: theme.Color_Secondary }}
+            className="text-sm font-bold leading-5 tracking-wide self-center my-auto"
             onClick={() => updateURL("/order")}
           >
             <Trans i18nKey={"view_all"} />
           </button>
         </div>
         {/* RESTRICTION */}
-        <div className="justify-between items-stretch bg-white flex w-full gap-5 mt-2 px-4 py-2 rounded-[1000px]">
+        <div
+          style={{
+            backgroundColor: theme?.Color_Tertiary,
+          }}
+          className="justify-between items-stretch  flex w-full gap-5 mt-2 px-4 py-2 rounded-[1000px]"
+        >
           <div className="justify-center items-stretch flex grow basis-[0%] flex-col">
             <div className="text-gray-700  text-base font-bold leading-6 whitespace-nowrap">
               {orderStatus?.orderHdrID}

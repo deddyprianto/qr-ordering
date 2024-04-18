@@ -13,9 +13,10 @@ export function OrderItemSummary({ order }) {
   return (
     <div
       style={{
-        borderColor: theme.Color_Primary,
+        borderColor: theme?.Color_Primary,
+        backgroundColor: theme?.Color_Tertiary,
       }}
-      className="mt-[24px] justify-center items-stretch self-stretch border bg-white flex w-full flex-col mx-auto pb-4 rounded-lg border-solid"
+      className="mt-[24px] justify-center items-stretch self-stretch border flex w-full flex-col mx-auto pb-4 rounded-lg border-solid"
     >
       <div
         style={{
@@ -23,22 +24,22 @@ export function OrderItemSummary({ order }) {
         }}
         className="text-white text-sm font-medium leading-5 tracking-wide whitespace-nowrap justify-center  w-full pl-4 pr-16 py-1.5 items-start rounded-t-md"
       >
-        <Trans i18nKey={"order_summary"}/>
+        <Trans i18nKey={"order_summary"} />
       </div>
       <div className="items-stretch flex w-full flex-col mt-4 px-4 rounded-lg">
         <div className="items-stretch bg-zinc-300 flex gap-1 p-2">
           <div className="text-gray-700 text-sm font-medium leading-5 tracking-wide grow shrink basis-auto">
-            <Trans i18nKey={"qty_item"}/>
+            <Trans i18nKey={"qty_item"} />
           </div>
           <div className="text-gray-700 text-right text-sm font-bold leading-5 tracking-wide whitespace-nowrap">
-            <Trans i18nKey={"price"}/>
+            <Trans i18nKey={"price"} />
           </div>
         </div>
-        {details?.map((item)=>{
-          return <RenderItem item={item} key={item.itemNo}></RenderItem>
+        {details?.map((item) => {
+          return <RenderItem item={item} key={item.itemNo}></RenderItem>;
         })}
       </div>
-      <RenderPricingSummary order={order}/>
+      <RenderPricingSummary order={order} />
     </div>
   );
 }
