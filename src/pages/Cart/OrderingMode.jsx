@@ -1,15 +1,17 @@
-import { useState } from "react";
-import { IconDineInCart, IconTakeAwayBag } from "../../assets/svgIcon";
+import { IconDineInCart, IconTakeAway } from "../../assets/svgIcon";
 import { useSelector, useDispatch } from "react-redux";
 import { apiCart } from "../../services/Cart";
 import { SkeletonList } from "../../components/Skeleton/SkeletonPaymentList";
-import { setCartInfo, setOrderType } from "../../app/dataSlicePersisted";
+import {
+  setCartInfo,
+  setCartInfoLoading,
+  setOrderType,
+} from "../../app/dataSlicePersisted";
 
 function OrderingMode() {
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(false);
   const { outletSetting } = useSelector((state) => state.dataSlice);
-  const { cartInfo, orderType, theme } = useSelector(
+  const { cartInfoLoading, cartInfo, orderType, theme } = useSelector(
     (state) => state.dataSlicePersisted,
   );
 
@@ -34,13 +36,13 @@ function OrderingMode() {
       orderType: orderingMode.toUpperCase(),
     };
     try {
-      setIsLoading(true);
+      dispatch(setCartInfoLoading(true));
       const result = await apiCart(
         "POST",
         `${cartInfo?.uniqueID}/switchordertype`,
         payload,
       );
-      setIsLoading(false);
+      dispatch(setCartInfoLoading(false));
       dispatch(setCartInfo(result.data));
     } catch (error) {
       console.log(error);
@@ -50,7 +52,7 @@ function OrderingMode() {
   return (
     <div className="flex flex-col self-stretch text-gray-700 leading-[140%] max-w-[398px]">
       <div className="w-full text-base font-bold">Choose Ordering Type</div>
-      {isLoading ? (
+      {cartInfoLoading ? (
         <SkeletonList />
       ) : (
         <div
@@ -76,7 +78,7 @@ function OrderingMode() {
               <div className="flex gap-4">
                 <IconDineInCart />
                 <div id="orderingModeDineIN" className="flex-1 my-auto">
-                  {updatedOutletSetting.dine_in_option.displayName}
+                  Dine In
                 </div>
               </div>
             </button>
@@ -101,9 +103,9 @@ function OrderingMode() {
               }}
             >
               <div className="flex gap-4">
-                <IconTakeAwayBag />
+                <IconTakeAway />
                 <div className="flex-1 my-auto" id="orderingModeTakeAway">
-                  {updatedOutletSetting.cash_carry_option.displayName}
+                  Take Away
                 </div>
               </div>
             </button>

@@ -4,6 +4,7 @@ const initialState = {
   accessToken: "",
   memberInfo: {},
   cartInfo: {},
+  cartInfoLoading: false,
   outletName: "edge cafe",
   outletDetail: {},
   selectedItemProds: [],
@@ -46,6 +47,9 @@ const dataSlicePersisted = createSlice({
     },
     setCartInfo: (state, action) => {
       state.cartInfo = action.payload;
+    },
+    setCartInfoLoading: (state, action) => {
+      state.cartInfoLoading = action.payload;
     },
     setOutletName: (state, action) => {
       state.outletName = action.payload;
@@ -99,6 +103,7 @@ const dataSlicePersisted = createSlice({
 });
 
 export const {
+  setCartInfoLoading,
   setIsDataOrder,
   setOrderStatus,
   setAccessToken,
