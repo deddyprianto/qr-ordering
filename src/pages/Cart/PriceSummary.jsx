@@ -3,10 +3,13 @@ import { IconArrowBottom, IconArrowUp } from "../../assets/svgIcon";
 import { useState } from "react";
 import { numberFormatter } from "../../utilities/numberFormatter";
 import { Trans } from "react-i18next";
+import PaymentSummarySkeleton from "../../components/Skeleton/SkeletonPriceSummary";
 
 function PriceSummary() {
   const theme = useSelector((state) => state.dataSlicePersisted.theme);
-  const cartInfo = useSelector((state) => state.dataSlicePersisted.cartInfo);
+  const { cartInfo, cartInfoLoading } = useSelector(
+    (state) => state.dataSlicePersisted,
+  );
   const [expandItem, setExpandItem] = useState(true);
   const renderItemExpand = () => {
     return (
@@ -86,40 +89,44 @@ function PriceSummary() {
       </div>
     );
   };
-  return (
-    <div className="items-stretch self-stretch flex w-full flex-col">
-      <div className="justify-between flex w-full gap-5  items-start">
-        <div className="text-gray-700 text-base font-bold leading-6">
-          <Trans i18nKey={"payment_summary"} />
-        </div>
-        <button
-          id="expandItemInCart"
-          onClick={() => setExpandItem(!expandItem)}
-          className="items-stretch self-stretch flex justify-between gap-1"
-        >
-          <div>
-            {expandItem ? (
-              <IconArrowBottom color={theme.Color_Secondary} />
-            ) : (
-              <IconArrowUp color={theme.Color_Secondary} />
-            )}
+  if (cartInfoLoading) {
+    return <PaymentSummarySkeleton />;
+  } else {
+    return (
+      <div className="items-stretch self-stretch flex w-full flex-col">
+        <div className="justify-between flex w-full gap-5  items-start">
+          <div className="text-gray-700 text-base font-bold leading-6">
+            <Trans i18nKey={"payment_summary"} />
           </div>
-          <div
-            style={{
-              color: theme.Color_Secondary,
-            }}
-            className="text-base font-bold leading-6 grow whitespace-nowrap self-start"
+          <button
+            id="expandItemInCart"
+            onClick={() => setExpandItem(!expandItem)}
+            className="items-stretch self-stretch flex justify-between gap-1"
           >
-            {expandItem ? (
-              <Trans i18nKey={"show_less"} />
-            ) : (
-              <Trans i18nKey={"show_more"} />
-            )}
-          </div>
-        </button>
+            <div>
+              {expandItem ? (
+                <IconArrowBottom color={theme.Color_Secondary} />
+              ) : (
+                <IconArrowUp color={theme.Color_Secondary} />
+              )}
+            </div>
+            <div
+              style={{
+                color: theme.Color_Secondary,
+              }}
+              className="text-base font-bold leading-6 grow whitespace-nowrap self-start"
+            >
+              {expandItem ? (
+                <Trans i18nKey={"show_less"} />
+              ) : (
+                <Trans i18nKey={"show_more"} />
+              )}
+            </div>
+          </button>
+        </div>
+        {renderItemExpand()}
       </div>
-      {renderItemExpand()}
-    </div>
-  );
+    );
+  }
 }
 export default PriceSummary;

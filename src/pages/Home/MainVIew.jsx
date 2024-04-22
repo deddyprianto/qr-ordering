@@ -13,7 +13,10 @@ import {
   setHasSubGroup,
   setSaveRefNoGroup,
 } from "../../app/dataSlice";
-import { setEnableSearchUsingScroll } from "../../app/dataSlicePersisted";
+import {
+  setEnableSearchUsingScroll,
+  setIsDataOrder,
+} from "../../app/dataSlicePersisted";
 import { RenderNotificationOrder } from "./RenderNotifOrder";
 import { SkeletonTagInsight } from "../../components/Skeleton/SkeletonTagInsight";
 
@@ -48,6 +51,13 @@ const MainView = () => {
       setIsFirstOpenSearchBar(false);
     }
   }, [searchItemObj]);
+
+  useEffect(() => {
+    if (!orderStatus) {
+      dispatch(setIsDataOrder(false));
+    }
+  }, [dispatch, orderStatus]);
+  
 
   useEffect(() => {
     if (!isSearchItem) {

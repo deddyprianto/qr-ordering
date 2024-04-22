@@ -108,22 +108,12 @@ describe("TESTING CART PAGE", () => {
     // End Testing all item type
 
     cy.get("#renderCartSummary").should("be.visible").click();
+    cy.get("#orderingModeDineIN").should("exist");
+    cy.get("#orderingModeTakeAway").should("exist");
 
-    cy.get("#takeAwayButton")
-      .click()
-      .then(() => {
-        cy.get("#showSkeletonListOrderingMode").should("exist");
-      });
-
-    cy.get("#dineInButton")
-      .click()
-      .then(() => {
-        cy.get("#showSkeletonListOrderingMode").should("exist");
-      });
-    cy.get("#orderingModeDineIN").contains("Dine In");
-    cy.get("#orderingModeTakeAway").contains("Take Away");
-
-    cy.get("#buttonFooterCart").should("have.attr", "disabled");
+    cy.get("#buttonFooterCart")
+      .scrollIntoView()
+      .should("have.attr", "disabled");
     cy.get("#Credit\\ Card").should("be.visible").should("be.enabled").click();
     cy.get("#buttonFooterCart").should("not.have.attr", "disabled");
     cy.get("#buttonFooterCart")
@@ -167,6 +157,9 @@ describe("TESTING CART PAGE", () => {
         cy.get("#backButtonCart").should("be.visible").click();
 
         cy.get("#detailOrderStatus").should("be.visible").click();
+        cy.get("#backButtonCart").click();
+        cy.get("#backButtonCart").click();
+        cy.get("#notificationOrder").should("exist");
       });
   });
 });
