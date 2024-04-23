@@ -50,10 +50,10 @@ jobs:
 
   grype-scan-repo:
     name: grype-scan-repo
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Scan current project
         id: grype-scan-repo
@@ -63,17 +63,17 @@ jobs:
 
       - name: upload Grype repo vulnerability assessment sarif report
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: grype-repo-vulnerability-assessment-report
           path: ${{ steps.grype-scan-repo.outputs.sarif }}
 
   trivy-scan-repo:
     name: trivy-scan-repo
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Run Trivy vulnerability scanner in repo mode
         uses: aquasecurity/trivy-action@master
@@ -81,31 +81,33 @@ jobs:
           scan-type: "fs"
           format: "json"
           exit-code: "1"
-          scan-ref: "./package-lock.json"
+          scan-ref: "./package.json"
           ignore-unfixed: false
           list-all-pkgs: true
+          image-ref:
 
-  # trivy-scan-config:
-  #   name: trivy-scan-config
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v3
+  trivy-scan-config:
+    name: trivy-scan-config
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-  #     - name: Run Trivy vulnerability scanner in IaC mode
-  #       uses: aquasecurity/trivy-action@master
-  #       with:
-  #         scan-type: "config"
-  #         hide-progress: false
-  #         format: "sarif"
-  #         output: "trivy-config-scan-results.sarif"
-  #         exit-code: "1"
-  #         ignore-unfixed: false
-  #         severity: "CRITICAL,HIGH"
+      - name: Run Trivy vulnerability scanner in IaC mode
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: "config"
+          hide-progress: false
+          format: "sarif"
+          output: "trivy-config-scan-results.sarif"
+          exit-code: "1"
+          ignore-unfixed: false
+          severity: "CRITICAL"
+          image-ref:
 
-  #     - name: upload trivy iac config vulnerability assessment report
-  #       if: always()
-  #       uses: actions/upload-artifact@v3
-  #       with:
-  #         name: trivy-iac-config-vulnerability-assessment-report
-  #         path: "trivy-config-scan-results.sarif"
+      - name: upload trivy iac config vulnerability assessment report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-iac-config-vulnerability-assessment-report
+          path: "trivy-config-scan-results.sarif"
