@@ -5,17 +5,17 @@ variable "VERSION" {
 
 variable "ENV" {
   type        = string
-  description = "dev, testing or prod"
+  description = "dev, demo or prod"
 }
 
 variable "SSL_CERT_ARN" {
   type        = string
-  default     = "arn:aws:acm:us-east-1:977902117142:certificate/6b4a01b3-9f6d-408d-bb11-2dfd77e1ee24"
+  default     = "arn:aws:acm:us-east-1:977902117142:certificate/2b3b73c7-fa59-4288-858e-f4d035f37d0e"
   description = "*.qro.equipweb.biz certificate"
 }
 
 variable "DOMAIN" {
   type        = string
-  default     = "*.qro-dev.equipweb.biz"
+  default     = "edgecafetraining.qro-dev.equipweb.biz"
   description = "Alias domain for CloudFront distribution"
 }

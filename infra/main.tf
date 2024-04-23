@@ -49,7 +49,7 @@ data "aws_iam_policy_document" "read_qrordering_bucket" {
 # S3
 ###################################
 resource "aws_s3_bucket" "qrordering" {
-  bucket = "ew-qro-${var.ENV}-v${var.VERSION}"
+  bucket = "${replace(var.DOMAIN, ".", "-")}"
 }
 
 ###################################
