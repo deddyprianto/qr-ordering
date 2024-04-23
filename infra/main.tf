@@ -60,7 +60,17 @@ resource "aws_s3_bucket" "qrordering" {
 }
 
 ###################################
-# S3 Website Encryption
+# S3 Versioning
+###################################
+resource "aws_s3_bucket_versioning" "qrordering" {
+  bucket = aws_s3_bucket.qrordering.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+###################################
+# S3 Encryption
 ###################################
 resource "aws_s3_bucket_server_side_encryption_configuration" "qrordering_encrypt" {
   bucket = aws_s3_bucket.qrordering.id
