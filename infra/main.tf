@@ -46,6 +46,13 @@ data "aws_iam_policy_document" "read_qrordering_bucket" {
 }
 
 ###################################
+# KMS Key
+###################################
+resource "aws_kms_key" "qrordering" {
+  enable_key_rotation = true
+}
+
+###################################
 # S3
 ###################################
 resource "aws_s3_bucket" "qrordering" {
@@ -60,7 +67,8 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "qrordering_encryp
 
   rule {
     apply_server_side_encryption_by_default {
-      sse_algorithm     = "AES256"
+      kms_master_key_id = aws_kms_key.qrordering.arn
+      sse_algorithm     = "aws:kms"
     }
   }
 }
