@@ -53,6 +53,19 @@ resource "aws_s3_bucket" "qrordering" {
 }
 
 ###################################
+# S3 Website Encryption
+###################################
+resource "aws_s3_bucket_server_side_encryption_configuration" "qrordering_encrypt" {
+  bucket = aws_s3_bucket.qrordering.id
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm     = "AES256"
+    }
+  }
+}
+
+###################################
 # S3 Website Configuration
 ###################################
 resource "aws_s3_bucket_website_configuration" "qrordering" {
@@ -171,5 +184,11 @@ resource "aws_cloudfront_distribution" "qrordering" {
     error_code            = 404
     response_code         = 200
     response_page_path    = "/index.html"
+  }
+
+  logging_config {
+    bucket         = aws_s3_bucket.qrordering.id
+    include_cookies = false
+    prefix         = "logs/"
   }
 }
