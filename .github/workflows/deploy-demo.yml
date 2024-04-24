@@ -19,12 +19,6 @@ on:
         description: "Webpush public key"
         required: false
         type: string
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - "**.md"
-      - "docs/**"
 
 jobs:
   deploy:
@@ -35,8 +29,7 @@ jobs:
         run: |
           # Extract the build version from the copy_from_url
           BUILD_VERSION=$(curl -sSL "${{ inputs.copy_from_url || vars.COPY_FROM_URL_DEMO }}/build_version.txt")
-          FULL_SHA=$(git rev-parse ${BUILD_VERSION})
-          echo "full_sha=$FULL_SHA" >> $GITHUB_OUTPUT
+          echo "full_sha=$BUILD_VERSION" >> $GITHUB_OUTPUT
 
       - name: Checkout
         uses: actions/checkout@v4
@@ -99,12 +92,12 @@ jobs:
           echo "bucket_name=$BUCKET_NAME" >> $GITHUB_OUTPUT
         env:
           TF_VAR_ENV: demo
-          TF_VAR_VERSION: ${{ steps.build_version.outputs.build_version }}
+          TF_VAR_VERSION: ${{ steps.build_version.outputs.full_sha }}
           TF_VAR_DOMAIN: ${{ steps.vars.outputs.domain_name }}
 
       - name: Create version file
         run: |
-          echo "${{ steps.build_version.outputs.build_version }}" > ./dist/build_version.txt
+          echo "${{ steps.build_version.outputs.full_sha }}" > ./dist/build_version.txt
 
       - name: Upload to S3
         run: |

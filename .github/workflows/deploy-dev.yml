@@ -35,7 +35,6 @@ jobs:
           echo "domain_name=${{ inputs.domain_name || vars.DOMAIN_NAME_DEV }}" >> $GITHUB_OUTPUT
           echo "api_url=${{ inputs.api_url || vars.API_URL_DEV }}" >> $GITHUB_OUTPUT
           echo "webpush_public_key=${{ inputs.webpush_public_key || secrets.WEBPUSH_PUBLIC_KEY_DEV }}" >> $GITHUB_OUTPUT
-          echo "build_version=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Configure AWS credentials from Production Account
         uses: aws-actions/configure-aws-credentials@v4
@@ -86,12 +85,12 @@ jobs:
           echo "bucket_name=$BUCKET_NAME" >> $GITHUB_OUTPUT
         env:
           TF_VAR_ENV: dev
-          TF_VAR_VERSION: ${{ steps.vars.outputs.build_version }}
+          TF_VAR_VERSION: ${{ github.sha }}
           TF_VAR_DOMAIN: ${{ steps.vars.outputs.domain_name }}
 
       - name: Create version file
         run: |
-          echo "${{ steps.vars.outputs.build_version }}" > ./dist/build_version.txt
+          echo "${{ github.sha }}" > ./dist/build_version.txt
 
       - name: Upload to S3
         run: |
