@@ -1,10 +1,26 @@
 name: Deploy to Dev
 
 on:
+  workflow_dispatch:
+    inputs:
+      domain_name:
+        description: "Domain name"
+        required: false
+        type: string
+      api_url:
+        description: "API URL"
+        required: false
+        type: string
+      webpush_public_key:
+        description: "Webpush public key"
+        required: false
+        type: string
   push:
     branches:
       - main
-  workflow_dispatch:
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
 
 jobs:
   deploy:
@@ -12,6 +28,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Set vars
+        id: vars
+        run: |
+          echo "domain_name=${{ inputs.domain_name || vars.DOMAIN_NAME_DEV }}" >> $GITHUB_OUTPUT
+          echo "api_url=${{ inputs.api_url || vars.API_URL_DEV }}" >> $GITHUB_OUTPUT
+          echo "webpush_public_key=${{ inputs.webpush_public_key || vars.WEBPUSH_PUBLIC_KEY_DEV }}" >> $GITHUB_OUTPUT
+          echo "build_version=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Configure AWS credentials from Production Account
         uses: aws-actions/configure-aws-credentials@v4
@@ -34,8 +58,36 @@ jobs:
       - name: Run build
         run: npm run build --if-present
         env:
-          VITE_API_URL: https://t1.equipweb.biz/EdgeCafeTraining/ordering/api
-          VITE_WEBPUSH_PUBLIC_KEY: ${{ secrets.VITE_WEBPUSH_PUBLIC_KEY }}
+          VITE_API_URL: ${{ steps.vars.outputs.api_url }}
+          VITE_WEBPUSH_PUBLIC_KEY: ${{ steps.vars.outputs.webpush_public_key }}
+
+      - name: Setup terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Initialize
+        id: init
+        working-directory: ./infra
+        run: |
+          sed -i 's/terraform\.tfstate/${{ steps.vars.outputs.domain_name }}\.tfstate/g' backend/dev.conf
+          terraform init -backend-config=backend/dev.conf
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+
+      - name: Terraform Apply
+        id: apply
+        working-directory: ./infra
+        run: |
+          terraform apply --auto-approve | tee apply_output.txt
+          DISTRIBUTION_ID=$(grep -oP '(?<=cloudfront_distribution_id = ).*' apply_output.txt | tr -d '\n')
+          echo "distribution_id=$DISTRIBUTION_ID" >> $GITHUB_OUTPUT
+          BUCKET_NAME=$(grep -oP '(?<=s3_bucket_name = ).*' apply_output.txt | tr -d '\n')
+          echo "bucket_name=$BUCKET_NAME" >> $GITHUB_OUTPUT
+        env:
+          TF_VAR_ENV: dev
+          TF_VAR_VERSION: ${{ steps.vars.outputs.build_version }}
+          TF_VAR_DOMAIN: ${{ steps.vars.outputs.domain_name }}
 
       - name: Upload to S3
         run: |
@@ -44,7 +96,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
           AWS_DEFAULT_REGION: "ap-southeast-1"
-          BUCKET_NAME: ew-qro-dev-vdev
+          BUCKET_NAME: ${{ steps.apply.outputs.bucket_name }}
 
       - name: Invalidate CloudFront cache
         run: |
@@ -53,4 +105,4 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
           AWS_DEFAULT_REGION: "ap-southeast-1"
-          DISTRIBUTION_ID: E1GAJZI5XI0YD5
+          DISTRIBUTION_ID: ${{ steps.apply.outputs.distribution_id }}
