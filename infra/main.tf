@@ -25,22 +25,24 @@ resource "aws_cloudfront_origin_access_identity" qrordering {
 ###################################
 data "aws_iam_policy_document" "read_qrordering_bucket" {
   statement {
-    actions   = ["s3:PutObject", "s3:GetObject"]
-    resources = ["${aws_s3_bucket.qrordering.arn}/*"]
-
     principals {
-      type        = "AWS"
-      identifiers = [aws_cloudfront_origin_access_identity.qrordering.iam_arn]
+      type        = "Service"
+      identifiers = ["cloudfront.amazonaws.com"]
     }
-  }
 
-  statement {
-    actions   = ["s3:ListBucket"]
-    resources = [aws_s3_bucket.qrordering.arn]
+    actions = [
+      "s3:GetObject"
+    ]
 
-    principals {
-      type        = "AWS"
-      identifiers = [aws_cloudfront_origin_access_identity.qrordering.iam_arn]
+    resources = [
+      aws_s3_bucket.qrordering.arn,
+      "${aws_s3_bucket.qrordering.arn}/*"
+    ]
+
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:SourceArn"
+      values   = [aws_cloudfront_distribution.qrordering.arn]
     }
   }
 }
@@ -60,6 +62,26 @@ data "aws_iam_policy_document" "kms_key" {
     principals {
       type        = "Service"
       identifiers = ["cloudfront.amazonaws.com"]
+    }
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:SourceArn"
+      values   = [aws_cloudfront_distribution.qrordering.arn]
+    }
+  }
+
+  statement {
+    actions   = [
+        "kms:*"
+    ]
+    resources = ["*"]
+
+    principals {
+      type        = "AWS"
+      identifiers = [
+        "arn:aws:iam::977902117142:user/ian",
+        "arn:aws:iam::977902117142:user/github-qr-ordering-web",
+      ]
     }
   }
 
