@@ -85,11 +85,10 @@ jobs:
         id: apply
         working-directory: ./infra
         run: |
-          terraform apply --auto-approve | tee apply_output.txt
-          cat apply_output.txt
-          DISTRIBUTION_ID=$(grep -oP '(?<=cloudfront_distribution_id = ).*' apply_output.txt | tr -d '\n')
+          terraform apply --auto-approve
+          DISTRIBUTION_ID=$(cat distribution_id.txt)
           echo "distribution_id=$DISTRIBUTION_ID" >> $GITHUB_OUTPUT
-          BUCKET_NAME=$(grep -oP '(?<=s3_bucket_name = ).*' apply_output.txt | tr -d '\n')
+          BUCKET_NAME=$(cat bucket_name.txt)
           echo "bucket_name=$BUCKET_NAME" >> $GITHUB_OUTPUT
         env:
           TF_VAR_ENV: prod
