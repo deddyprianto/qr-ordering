@@ -193,7 +193,7 @@ resource "aws_cloudfront_distribution" "qrordering" {
   enabled             = true
   default_root_object = "index.html"
   aliases             = ["${var.DOMAIN}"]
-  depends_on          = [aws_s3_bucket.qrordering]
+  depends_on          = [aws_s3_bucket.qrordering, aws_s3_bucket_acl.qrordering]
 
   default_cache_behavior {
     allowed_methods        = ["GET", "HEAD", "OPTIONS"]

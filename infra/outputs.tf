@@ -11,5 +11,15 @@ output "s3_bucket_arn" {
 }
 
 output "s3_bucket_name" {
-  value       = aws_s3_bucket.qrordering.id
+  value = aws_s3_bucket.qrordering.id
+}
+
+resource "local_file" "cloudfront_distribution_id" {
+    content  = aws_cloudfront_distribution.qrordering.id
+    filename = "distribution_id.txt"
+}
+
+resource "local_file" "bucket_name" {
+    content  = aws_s3_bucket.qrordering.id
+    filename = "bucket_name.txt"
 }
