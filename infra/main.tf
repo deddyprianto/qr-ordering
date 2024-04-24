@@ -25,7 +25,7 @@ resource "aws_cloudfront_origin_access_identity" qrordering {
 ###################################
 data "aws_iam_policy_document" "read_qrordering_bucket" {
   statement {
-    actions   = ["s3:GetObject"]
+    actions   = ["s3:PutObject", "s3:GetObject"]
     resources = ["${aws_s3_bucket.qrordering.arn}/*"]
 
     principals {
@@ -106,8 +106,6 @@ resource "aws_s3_bucket_policy" "read_qrordering" {
   policy = data.aws_iam_policy_document.read_qrordering_bucket.json
 }
 
-
-
 ###################################
 # S3 Bucket Public Access Block
 ###################################
@@ -121,12 +119,33 @@ resource "aws_s3_bucket_public_access_block" "qrordering" {
 }
 
 ###################################
+# S3 Bucket Ownership Controls
+###################################
+resource "aws_s3_bucket_ownership_controls" "qrordering" {
+  bucket = aws_s3_bucket.qrordering.id
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
+###################################
+# S3 Bucket ACL
+###################################
+resource "aws_s3_bucket_acl" "qrordering" {
+  depends_on = [aws_s3_bucket_ownership_controls.qrordering]
+
+  bucket = aws_s3_bucket.qrordering.id
+  acl    = "private"
+}
+
+###################################
 # CloudFront
 ###################################
 resource "aws_cloudfront_distribution" "qrordering" {
   enabled             = true
   default_root_object = "index.html"
   aliases             = ["${var.DOMAIN}"]
+  depends_on          = [aws_s3_bucket.qrordering]
 
   default_cache_behavior {
     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
@@ -205,7 +224,7 @@ resource "aws_cloudfront_distribution" "qrordering" {
   }
 
   logging_config {
-    bucket         = aws_s3_bucket.qrordering.id
+    bucket         = "${aws_s3_bucket.qrordering.id}.s3.amazonaws.com"
     include_cookies = false
     prefix         = "logs/"
   }
