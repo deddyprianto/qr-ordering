@@ -19,12 +19,6 @@ on:
         description: "Webpush public key"
         required: false
         type: string
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - "**.md"
-      - "docs/**"
 
 jobs:
   deploy:
