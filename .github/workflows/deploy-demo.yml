@@ -1,8 +1,12 @@
-name: Deploy to Dev
+name: Deploy to Demo
 
 on:
   workflow_dispatch:
     inputs:
+      copy_from_url:
+        description: "The URL where to copy the git version from"
+        required: false
+        type: string
       domain_name:
         description: "Domain name"
         required: false
@@ -26,16 +30,24 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Get build version
+        id: build_version
+        run: |
+          # Extract the build version from the copy_from_url
+          BUILD_VERSION=$(curl -sSL "${{ inputs.copy_from_url || vars.COPY_FROM_URL_DEMO }}/build_version.txt")
+          echo "build_version=$BUILD_VERSION" >> $GITHUB_OUTPUT
+
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.build_version.outputs.build_version }}
 
       - name: Set vars
         id: vars
         run: |
-          echo "domain_name=${{ inputs.domain_name || vars.DOMAIN_NAME_DEV }}" >> $GITHUB_OUTPUT
-          echo "api_url=${{ inputs.api_url || vars.API_URL_DEV }}" >> $GITHUB_OUTPUT
-          echo "webpush_public_key=${{ inputs.webpush_public_key || vars.WEBPUSH_PUBLIC_KEY_DEV }}" >> $GITHUB_OUTPUT
-          echo "build_version=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "domain_name=${{ inputs.domain_name || vars.DOMAIN_NAME_DEMO }}" >> $GITHUB_OUTPUT
+          echo "api_url=${{ inputs.api_url || vars.API_URL_DEMO }}" >> $GITHUB_OUTPUT
+          echo "webpush_public_key=${{ inputs.webpush_public_key || vars.WEBPUSH_PUBLIC_KEY_DEMO }}" >> $GITHUB_OUTPUT
 
       - name: Configure AWS credentials from Production Account
         uses: aws-actions/configure-aws-credentials@v4
@@ -68,8 +80,8 @@ jobs:
         id: init
         working-directory: ./infra
         run: |
-          sed -i 's/terraform\.tfstate/${{ steps.vars.outputs.domain_name }}\.tfstate/g' backend/dev.conf
-          terraform init -backend-config=backend/dev.conf
+          sed -i 's/terraform\.tfstate/${{ steps.vars.outputs.domain_name }}\.tfstate/g' backend/demo.conf
+          terraform init -backend-config=backend/demo.conf
 
       - name: Terraform Validate
         id: validate
@@ -85,13 +97,13 @@ jobs:
           BUCKET_NAME=$(grep -oP '(?<=s3_bucket_name = ).*' apply_output.txt | tr -d '\n')
           echo "bucket_name=$BUCKET_NAME" >> $GITHUB_OUTPUT
         env:
-          TF_VAR_ENV: dev
-          TF_VAR_VERSION: ${{ steps.vars.outputs.build_version }}
+          TF_VAR_ENV: demo
+          TF_VAR_VERSION: ${{ steps.build_version.outputs.build_version }}
           TF_VAR_DOMAIN: ${{ steps.vars.outputs.domain_name }}
 
       - name: Create version file
         run: |
-          echo "${{ steps.vars.outputs.build_version }}" > ./dist/build_version.txt
+          echo "${{ steps.build_version.outputs.build_version }}" > ./dist/build_version.txt
 
       - name: Upload to S3
         run: |
