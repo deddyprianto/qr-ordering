@@ -1,0 +1,124 @@
+name: Deploy to Demo
+
+on:
+  workflow_dispatch:
+    inputs:
+      copy_from_url:
+        description: "The URL where to copy the git version from"
+        required: false
+        type: string
+      domain_name:
+        description: "Domain name"
+        required: false
+        type: string
+      api_url:
+        description: "API URL"
+        required: false
+        type: string
+      webpush_public_key:
+        description: "Webpush public key"
+        required: false
+        type: string
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get build version
+        id: build_version
+        run: |
+          # Extract the build version from the copy_from_url
+          BUILD_VERSION=$(curl -sSL "${{ inputs.copy_from_url || vars.COPY_FROM_URL_DEMO }}/build_version.txt")
+          echo "build_version=$BUILD_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.build_version.outputs.build_version }}
+
+      - name: Set vars
+        id: vars
+        run: |
+          echo "domain_name=${{ inputs.domain_name || vars.DOMAIN_NAME_DEMO }}" >> $GITHUB_OUTPUT
+          echo "api_url=${{ inputs.api_url || vars.API_URL_DEMO }}" >> $GITHUB_OUTPUT
+          echo "webpush_public_key=${{ inputs.webpush_public_key || vars.WEBPUSH_PUBLIC_KEY_DEMO }}" >> $GITHUB_OUTPUT
+
+      - name: Configure AWS credentials from Production Account
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+          aws-region: ap-southeast-1
+
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Run build
+        run: npm run build --if-present
+        env:
+          VITE_API_URL: ${{ steps.vars.outputs.api_url }}
+          VITE_WEBPUSH_PUBLIC_KEY: ${{ steps.vars.outputs.webpush_public_key }}
+
+      - name: Setup terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Initialize
+        id: init
+        working-directory: ./infra
+        run: |
+          sed -i 's/terraform\.tfstate/${{ steps.vars.outputs.domain_name }}\.tfstate/g' backend/demo.conf
+          terraform init -backend-config=backend/demo.conf
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+
+      - name: Terraform Apply
+        id: apply
+        working-directory: ./infra
+        run: |
+          terraform apply --auto-approve | tee apply_output.txt
+          DISTRIBUTION_ID=$(grep -oP '(?<=cloudfront_distribution_id = ).*' apply_output.txt | tr -d '\n')
+          echo "distribution_id=$DISTRIBUTION_ID" >> $GITHUB_OUTPUT
+          BUCKET_NAME=$(grep -oP '(?<=s3_bucket_name = ).*' apply_output.txt | tr -d '\n')
+          echo "bucket_name=$BUCKET_NAME" >> $GITHUB_OUTPUT
+        env:
+          TF_VAR_ENV: demo
+          TF_VAR_VERSION: ${{ steps.vars.outputs.build_version }}
+          TF_VAR_DOMAIN: ${{ steps.vars.outputs.domain_name }}
+
+      - name: Create version file
+        run: |
+          echo "${{ steps.build_version.outputs.build_version }}" > ./dist/build_version.txt
+
+      - name: Upload to S3
+        run: |
+          aws s3 sync ./dist s3://${{ env.BUCKET_NAME }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+          AWS_DEFAULT_REGION: "ap-southeast-1"
+          BUCKET_NAME: ${{ steps.apply.outputs.bucket_name }}
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation --distribution-id ${{ env.DISTRIBUTION_ID }} --paths "/*"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+          AWS_DEFAULT_REGION: "ap-southeast-1"
+          DISTRIBUTION_ID: ${{ steps.apply.outputs.distribution_id }}
