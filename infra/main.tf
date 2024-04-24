@@ -21,7 +21,7 @@ resource "aws_cloudfront_origin_access_identity" qrordering {
 }
 
 ###################################
-# IAM Policy Document
+# S3 IAM Policy Document
 ###################################
 data "aws_iam_policy_document" "read_qrordering_bucket" {
   statement {
@@ -46,6 +46,26 @@ data "aws_iam_policy_document" "read_qrordering_bucket" {
 }
 
 ###################################
+# KMS IAM Policy Document
+###################################
+data "aws_iam_policy_document" "kms_key" {
+  statement {
+    actions   = [
+        "kms:Decrypt",
+        "kms:Encrypt",
+        "kms:GenerateDataKey*"
+    ]
+    resources = ["*"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["cloudfront.amazonaws.com"]
+    }
+  }
+
+}
+
+###################################
 # KMS Key
 ###################################
 resource "aws_kms_key" "qrordering" {
@@ -53,10 +73,23 @@ resource "aws_kms_key" "qrordering" {
 }
 
 ###################################
+# KMS Key Policy
+###################################
+resource "aws_kms_key_policy" "kms_key" {
+  key_id      = aws_kms_key.qrordering.key_id
+  policy      = data.aws_iam_policy_document.kms_key.json
+}
+
+###################################
 # S3
 ###################################
 resource "aws_s3_bucket" "qrordering" {
   bucket = "${replace(var.DOMAIN, ".", "-")}"
+
+  tags = {
+    Environment = "${var.ENV}"
+    Terraform   = true
+  }
 }
 
 ###################################
@@ -80,21 +113,6 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "qrordering_encryp
       kms_master_key_id = aws_kms_key.qrordering.arn
       sse_algorithm     = "aws:kms"
     }
-  }
-}
-
-###################################
-# S3 Website Configuration
-###################################
-resource "aws_s3_bucket_website_configuration" "qrordering" {
-  bucket = aws_s3_bucket.qrordering.id
-
-  index_document {
-    suffix = "index.html"
-  }
-
-  error_document {
-    key = "index.html"
   }
 }
 
@@ -136,6 +154,14 @@ resource "aws_s3_bucket_acl" "qrordering" {
 
   bucket = aws_s3_bucket.qrordering.id
   acl    = "private"
+}
+
+resource "aws_cloudfront_origin_access_control" "qrordering" {
+  name                              = "${replace(var.DOMAIN, ".", "-")}"
+  description                       = "qrordering Policy for ${var.DOMAIN}"
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
 }
 
 ###################################
@@ -191,10 +217,7 @@ resource "aws_cloudfront_distribution" "qrordering" {
   origin {
     domain_name = aws_s3_bucket.qrordering.bucket_regional_domain_name
     origin_id   = aws_s3_bucket.qrordering.bucket
-
-    s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.qrordering.cloudfront_access_identity_path
-    }
+    origin_access_control_id = aws_cloudfront_origin_access_control.qrordering.id
   }
 
   restrictions {
@@ -227,5 +250,10 @@ resource "aws_cloudfront_distribution" "qrordering" {
     bucket         = "${aws_s3_bucket.qrordering.id}.s3.amazonaws.com"
     include_cookies = false
     prefix         = "logs/"
+  }
+
+  tags = {
+    Environment = "${var.ENV}"
+    Terraform   = true
   }
 }
