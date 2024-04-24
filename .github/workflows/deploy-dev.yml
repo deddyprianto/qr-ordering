@@ -34,7 +34,7 @@ jobs:
         run: |
           echo "domain_name=${{ inputs.domain_name || vars.DOMAIN_NAME_DEV }}" >> $GITHUB_OUTPUT
           echo "api_url=${{ inputs.api_url || vars.API_URL_DEV }}" >> $GITHUB_OUTPUT
-          echo "webpush_public_key=${{ inputs.webpush_public_key || vars.WEBPUSH_PUBLIC_KEY_DEV }}" >> $GITHUB_OUTPUT
+          echo "webpush_public_key=${{ inputs.webpush_public_key || secrets.WEBPUSH_PUBLIC_KEY_DEV }}" >> $GITHUB_OUTPUT
           echo "build_version=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Configure AWS credentials from Production Account
