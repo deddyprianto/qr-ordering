@@ -89,6 +89,10 @@ jobs:
           TF_VAR_VERSION: ${{ steps.vars.outputs.build_version }}
           TF_VAR_DOMAIN: ${{ steps.vars.outputs.domain_name }}
 
+      - name: Create version file
+        run: |
+          echo "${{ steps.vars.outputs.build_version }}" > ./dist/build_version.txt
+
       - name: Upload to S3
         run: |
           aws s3 sync ./dist s3://${{ env.BUCKET_NAME }}
