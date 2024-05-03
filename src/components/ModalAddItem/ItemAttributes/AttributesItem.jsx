@@ -24,26 +24,20 @@ export const RenderAttItem = ({
       }}
       className={`grid grid-cols-1 grid-rows-2 border gap-2.5 mt-2 mr-2 w-[94px] ${coloringItem()} rounded-lg border-solid w-[120px] h-[80px] p-[8px]`}
     >
-      <table>
-        <tbody>
-          <tr>
-            <td
-              style={{
-                textAlign: "left",
-                width: "100%",
-                display: "-webkit-box",
-                WebkitLineClamp: "2",
-                WebkitBoxOrient: "vertical",
-                overflow: "hidden",
-                padding: 0,
-                margin: 0,
-              }}
-            >
-              {att.attributesName}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div
+        style={{
+          textAlign: "left",
+          width: "100%",
+          display: "-webkit-box",
+          WebkitLineClamp: "2",
+          WebkitBoxOrient: "vertical",
+          overflow: "hidden",
+          padding: 0,
+          margin: 0,
+        }}
+      >
+        {att.attributesName}
+      </div>
       <div
         className={`text-gray-700 text-left ${
           isFromBundle ? "text-xs" : "text-sm"
