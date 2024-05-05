@@ -63,7 +63,7 @@ const RenderSearchItemBar = ({ searchText = "" }) => {
           searchItemList={searchItemList}
           isLoading={isLoading}
         />
-        ;{isLoading && <SkeletonSearch />}
+        {isLoading && <SkeletonSearch />}
       </>
     );
   } else return <RenderItemNotFound />;

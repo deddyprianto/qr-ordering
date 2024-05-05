@@ -33,12 +33,12 @@ export default function Header() {
   const openSearchBar = () => {
     if (isSearchItem) {
       let tempSearchItemObj = JSON.parse(JSON.stringify(searchItemObj));
+
       if (enableSearchUsingScroll) {
-        let inputElement = document.getElementById("input-search");
-        tempSearchItemObj.searchText = inputElement.value;
         tempSearchItemObj.isResetList = true;
       }
-
+      let inputElement = document.getElementById("input-search");
+      tempSearchItemObj.searchText = inputElement.value;
       tempSearchItemObj.doSearch = true;
       dispatch(setSearchItemObj(tempSearchItemObj));
       dispatch(setEnableSearchUsingScroll(true));

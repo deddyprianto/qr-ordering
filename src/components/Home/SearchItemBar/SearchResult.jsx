@@ -21,9 +21,9 @@ export const RenderSearchResult = ({ searchText, searchItemList }) => {
       {searchItemList?.map((cat, idx) => (
         <div key={cat.refNo} id={idx} className="w-full">
           {cat?.productInfo?.length > 0 ? (
-            cat?.productInfo?.map((item) => {
-              return <RenderItemCard item={item} key={item.refNo} />;
-            })
+            cat?.productInfo?.map((item) => (
+              <RenderItemCard item={item} key={item.refNo} />
+            ))
           ) : (
             <RenderItemCard item={cat?.productInfo} />
           )}
