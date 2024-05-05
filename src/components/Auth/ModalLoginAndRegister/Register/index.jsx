@@ -7,9 +7,8 @@ import { RenderTermAndCondition } from "../TermAndCondition";
 import { RenderButton } from "../ActionButton";
 import { RenderLabelGuestCO } from "../LebelGustCO";
 import { RenderForm } from "./Form";
-import { ParentBlur } from "../../../ParentBlur";
 
-export const RenderRegisterComponent = ({ 
+export const RenderRegisterComponent = ({
   isLoading,
   setIsChecked,
   tabScreen,
@@ -22,11 +21,11 @@ export const RenderRegisterComponent = ({
   handleCheckboxChange,
   isCanProcess,
   handleButtonClick,
-  changeOpenModalAuth 
- }) => {
+  changeOpenModalAuth,
+}) => {
   const dispatch = useDispatch();
-  const { outletDetail } = useSelector((state)=>state.dataSlicePersisted)
-  
+  const { outletDetail } = useSelector((state) => state.dataSlicePersisted);
+
   return (
     <div style={{ padding: "16px" }}>
       <RenderTopLabel
@@ -34,18 +33,21 @@ export const RenderRegisterComponent = ({
         label={`Welcome to ${outletDetail.companyName}!`}
         subLabel="Access this cart page by selecting Register, Log In, or Continue as a Guest."
       />
-      {isLoading && <ParentBlur/>}
+      {isLoading && <div>Loading...</div>}
+
       <RenderButtonSocialMedia />
       <RenderDivider />
-      <RenderForm 
-        setIsChecked={setIsChecked} 
-        tabScreen={tabScreen} 
-        setTabScreen={setTabScreen} 
-        setMobileField={setMobileField} 
+      <RenderForm
+        setIsChecked={setIsChecked}
+        tabScreen={tabScreen}
+        setTabScreen={setTabScreen}
+        setMobileField={setMobileField}
         setEmailField={setEmailField}
         setNameField={setNameField}
       />
-      {errMsg!="" && <div className="mt-2 text-xs text-red-500">{errMsg}</div>}
+      {errMsg != "" && (
+        <div className="mt-2 text-xs text-red-500">{errMsg}</div>
+      )}
       <RenderTermAndCondition
         isChecked={isChecked}
         handleCheckboxChange={handleCheckboxChange}

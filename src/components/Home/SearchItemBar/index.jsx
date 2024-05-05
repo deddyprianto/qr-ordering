@@ -5,18 +5,16 @@ import { apiProduct } from "../../../services/Product";
 import { setEnableSearchUsingScroll } from "../../../app/dataSlicePersisted";
 import { RenderItemNotFound } from "./ItemNotFound";
 import { RenderSearchResult } from "./SearchResult";
-import Loader from "../../Loader";
 import { SkeletonSearch } from "../../Skeleton/SkeletonSearch";
-
 
 const RenderSearchItemBar = ({ searchText = "" }) => {
   const [searchItemList, setSearchItemList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [dataLength, setDataLength] = useState(0);
-  const {searchItemObj, outletName} = useSelector(
+  const { searchItemObj, outletName } = useSelector(
     (state) => state.dataSlicePersisted,
   );
-  
+
   const handleSearchItems = useRef();
   useEffect(() => {
     if (searchItemObj?.doSearch) {
@@ -26,11 +24,11 @@ const RenderSearchItemBar = ({ searchText = "" }) => {
 
   handleSearchItems.current = async () => {
     if (isLoading) return;
-    if(searchItemObj.isResetList) setDataLength(0);
-    if((dataLength == searchItemList.length) && !searchItemObj.isResetList) return;
-    
+    if (searchItemObj.isResetList) setDataLength(0);
+    if (dataLength == searchItemList.length && !searchItemObj.isResetList)
+      return;
+
     setIsLoading(true);
-    
 
     let params = {
       search: searchItemObj?.searchText,
@@ -44,7 +42,7 @@ const RenderSearchItemBar = ({ searchText = "" }) => {
       if (result.resultCode == 200) {
         let newSearchItemList = [];
         if (searchItemObj?.isResetList) newSearchItemList = result.data;
-        else newSearchItemList = searchItemList.concat(result.data); 
+        else newSearchItemList = searchItemList.concat(result.data);
         setDataLength(result.dataLength);
         setSearchItemList(newSearchItemList);
         setEnableSearchUsingScroll(newSearchItemList.length > 0);
@@ -56,20 +54,19 @@ const RenderSearchItemBar = ({ searchText = "" }) => {
     }
   };
 
-  if(isLoading && searchItemObj?.isResetList) return <Loader/>
+  if (isLoading && searchItemObj?.isResetList) return <SkeletonSearch />;
   else if (searchItemList.length > 0) {
     return (
       <>
-        <RenderSearchResult 
-          searchText={searchText} 
+        <RenderSearchResult
+          searchText={searchText}
           searchItemList={searchItemList}
-          isLoading={isLoading}/>;
-          
-        {isLoading && <SkeletonSearch />}
+          isLoading={isLoading}
+        />
+        ;{isLoading && <SkeletonSearch />}
       </>
-    ); 
-  }
-  else return <RenderItemNotFound/>;
+    );
+  } else return <RenderItemNotFound />;
 };
 
 RenderSearchItemBar.propTypes = {

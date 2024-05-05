@@ -4,7 +4,6 @@ import { RenderFormOTP } from "./FormOtp";
 import { CountDownTime } from "./CountDownTime";
 import { ActionButton } from "./ActionButton";
 import PropTypes from "prop-types";
-import { ParentBlur } from "../../ParentBlur";
 
 export const RenderMainComponent = ({
   callback,
@@ -40,7 +39,7 @@ export const RenderMainComponent = ({
         padding: "16px",
       }}
     >
-      {isLoading && <ParentBlur />}
+      {isLoading && <div>Loading...</div>}
       <TopLabel setIsOpenModal={setIsOpenModal} />
       <RenderFormOTP otp={otp} setOTP={setOTP} disableForm={isLoading} />
       <CountDownTime />
