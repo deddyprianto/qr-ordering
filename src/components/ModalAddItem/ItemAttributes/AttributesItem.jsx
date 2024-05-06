@@ -22,25 +22,28 @@ export const RenderAttItem = ({
       onClick={() => {
         handleClickAttItem(idxAttGroup, idxAttItem);
       }}
-      className="justify-between items-stretch flex gap-2.5 mt-2 mr-2 w-[94px] text-left"
+      className={`grid grid-cols-1 grid-rows-2 border gap-2.5 mt-2 mr-2 w-[94px] ${coloringItem()} rounded-lg border-solid w-[120px] h-[80px] p-[8px]`}
     >
       <div
-        className={`items-stretch border flex grow basis-[0%] flex-col px-3.5 py-1 rounded-lg border-solid ${coloringItem()}`}
+        style={{
+          textAlign: "left",
+          width: "100%",
+          display: "-webkit-box",
+          WebkitLineClamp: "2",
+          WebkitBoxOrient: "vertical",
+          overflow: "hidden",
+          padding: 0,
+          margin: 0,
+        }}
       >
-        <div
-          className={`text-gray-700 ${
-            isFromBundle ? "text-xs" : "text-sm"
-          } font-medium leading-5 tracking-wide`}
-        >
-          {att.attributesName}
-        </div>
-        <div
-          className={`text-gray-700 ${
-            isFromBundle ? "text-xs" : "text-sm"
-          } font-bold leading-5 tracking-wide mt-2`}
-        >
-          {att.calAmount ? `+ $ ${att.calAmount}` : "FREE"}
-        </div>
+        {att.attributesName}
+      </div>
+      <div
+        className={`text-gray-700 text-left ${
+          isFromBundle ? "text-xs" : "text-sm"
+        } font-bold leading-5 tracking-wide mt-2`}
+      >
+        {att.calAmount ? `+ $ ${att.calAmount}` : "FREE"}
       </div>
     </button>
   );

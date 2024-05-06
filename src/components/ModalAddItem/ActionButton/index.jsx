@@ -112,7 +112,7 @@ export const RenderButtonAdd = ({
 
   return (
     <div
-      className="w-full flex items-center px-4 shadow-xl h-[75px]"
+      className="flex items-center px-4 shadow-xl h-[75px]"
       style={{
         boxShadow: "0px -4px 10px 0px rgba(0, 0, 0, 0.10)",
       }}
