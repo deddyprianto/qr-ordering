@@ -76,8 +76,6 @@ const RenderItemCard = ({ item }) => {
     setOpenModalAddItem(true);
   };
 
-  console.log("itemName =>", item.uniqueID);
-
   return (
     <>
       <div className="grid grid-cols-2 shadow-sm bg-white mt-4 rounded-2xl">
