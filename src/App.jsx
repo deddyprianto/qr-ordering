@@ -52,12 +52,29 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
-  
-
   const dispatch = useDispatch();
+  const { cartInfo, orderType, memberInfo, cartToListen } = useSelector(
+    (state) => state.dataSlicePersisted,
+  );
 
-  const { cartInfo, orderType, memberInfo, cartToListen } =
-    useSelector((state) => state.dataSlicePersisted);
+  const listenProcessedCart = () => {
+    try {
+      if (cartToListen?.length < 1) return;
+      for (const cart of cartToListen) {
+        if (["COMPLETED", "VOIDED", "CANCELLED"].includes(cart.status)) {
+          const newCartToListen = cartToListen.filter(
+            (cartObj) => cartObj.cartID !== cart.cartID,
+          );
+          dispatch(setCartToListen(newCartToListen));
+          continue;
+        }
+
+        startListeningInterval(cart.cartID, dispatch);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const dataPreparation = useRef();
   dataPreparation.current = () => {
@@ -69,25 +86,8 @@ export default function App() {
     fetchOutletSetting(dispatch, outlet, orderType);
     fetchInsight(dispatch);
     fetchOutletAvailability(dispatch, outlet);
-    listenProcessedcart();
+    listenProcessedCart();
   };
-
-  const listenProcessedcart = () => {
-    try {
-      if(cartToListen?.length < 1) return;
-      for(const cart of cartToListen){
-        if(["COMPLETED", "VOIDED", "CANCELLED"].includes(cart.status)){
-          const newCartToListen = cartToListen.filter(cartObj => cartObj.cartID !== cart.cartID);
-          dispatch(setCartToListen(newCartToListen))
-          continue;
-        }
-
-        startListeningInterval(cart.cartID, dispatch);
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
   useEffect(() => {
     dispatch(setIsSearchItem(false));

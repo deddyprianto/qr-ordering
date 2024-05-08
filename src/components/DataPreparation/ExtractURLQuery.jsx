@@ -13,7 +13,11 @@ export const urlQueryExtractor = (dispatch) => {
   try {
     const urlPath = window.location.pathname;
     const urlQuery = window.location.search;
-    redirectionOccurred(urlPath, urlQuery);
+    const params = new URLSearchParams(window.location.search);
+    const cartToListenExists = params.has("cartID");
+    if (!cartToListenExists) {
+      redirectionOccurred(urlPath, urlQuery);
+    }
 
     const queryParams = new URLSearchParams(urlQuery);
     const queryStr = queryParams.get("input");
@@ -27,7 +31,9 @@ export const urlQueryExtractor = (dispatch) => {
     dispatch(setOutletName(outlet));
     dispatch(setValidUntil(validUntil));
     dispatch(setTableNo(tableNo || ""));
-    dispatch(setIsValidUrl(validUntil && (new Date(parseInt(validUntil)) > new Date())));
+    dispatch(
+      setIsValidUrl(validUntil && new Date(parseInt(validUntil)) > new Date()),
+    );
     return outlet;
   } catch (error) {
     console.log(error)
