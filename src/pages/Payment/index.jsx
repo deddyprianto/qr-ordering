@@ -5,6 +5,7 @@ import { NotFound } from "./NotFound";
 export function Component() {
   const { paymentMethod } = useSelector((state) => state.dataSlice);
 
+
   const renderPaymentElement = () => {
     switch (paymentMethod.provider?.toLowerCase()) {
       case "stripe":

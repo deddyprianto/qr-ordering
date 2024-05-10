@@ -8,19 +8,41 @@ import PaymentComplete from "../../assets/PaymentComplete.gif";
 import Cancelled from "../../assets/Cancelled.gif";
 import Completed from "../../assets/Completed.gif";
 import Success from "../../assets/Success.gif";
-import { setIsDataOrder } from "../../app/dataSlicePersisted";
+import {
+  setCartIdToShow,
+  setCartInfo,
+  setIsDataOrder,
+  updateCartToListen,
+} from "../../app/dataSlicePersisted";
+import { startListeningInterval } from "../../helper/fetchOrderStatus";
 
 export function Component() {
   const dispatch = useDispatch();
 
   const { cartIdToShow } = useSelector((state) => state.dataSlicePersisted);
+
   const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState({});
 
   const fetchData = useRef();
   fetchData.current = async () => {
+    const params = new URLSearchParams(window.location.search);
+    const cartParamsIsExist = params.get("cartID");
+
+    if (params.has("cartID")) {
+      dispatch(setCartIdToShow(cartParamsIsExist || ""));
+      dispatch(
+        updateCartToListen({
+          cartID: cartParamsIsExist,
+          status: "PENDING",
+        }),
+      );
+      dispatch(setCartInfo({}));
+      startListeningInterval(cartParamsIsExist, dispatch);
+    }
+    const cartIDInfo = cartIdToShow || cartParamsIsExist;
     try {
-      const result = await apiOrder("GET", cartIdToShow, {});
+      const result = await apiOrder("GET", cartIDInfo, {});
       if (result.resultCode === 200) {
         dispatch(setIsDataOrder(true));
         setOrder(result.data);
@@ -30,10 +52,14 @@ export function Component() {
       }
 
       setTimeout(() => {
-        if(window.location.pathname?.toLocaleLowerCase() != "/ordersummary")
+        if (window.location.pathname?.toLocaleLowerCase() != "/ordersummary")
           return;
-        else if(!result?.data || order.status == "COMPLETED" || order.status == "CANCELLED")
-          return
+        else if (
+          !result?.data ||
+          order.status == "COMPLETED" ||
+          order.status == "CANCELLED"
+        )
+          return;
         fetchData.current();
       }, 10000);
     } catch (error) {
