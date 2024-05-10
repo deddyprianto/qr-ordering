@@ -28,6 +28,8 @@ const FooterCart = ({ isItemExist }) => {
   };
 
   const handlePayment = async () => {
+    const params = new URLSearchParams(window.location.search);
+    const queryStringGeneral = params.get("input");
     if (!isPaymentMethodSelected()) {
       toast.open("Please select your prefered payment method", "error");
       return;
@@ -38,9 +40,8 @@ const FooterCart = ({ isItemExist }) => {
         provider: paymentMethod.provider,
         paymentMode: paymentMethod.paymentMode,
         amount: cartInfo.subtotalSummary.NETT,
-        returnURL: `http://localhost:5173/ordersummary/?input=b3V0bGV0PUVkZ2UlMjBDYWZlJnRhYmxlTm89QTAwMSZ2YWxpZFVudGlsPTE3MTcyNjEyMDAwMDA=&cartID=${cartInfo.uniqueID}`,
-        backURL:
-          "http://localhost:5173/cart?input=b3V0bGV0PUVkZ2UlMjBDYWZlJnRhYmxlTm89QTAwMSZ2YWxpZFVudGlsPTE3MTcyNjEyMDAwMDA=&cartID=listenCart",
+        returnURL: `https://edgecafetraining.qro-dev.equipweb.biz/ordersummary/?input=${queryStringGeneral}&cartID=${cartInfo.uniqueID}`,
+        backURL: `https://edgecafetraining.qro-dev.equipweb.biz/cart/?input=${queryStringGeneral}&cartID=backToCart`,
       };
       try {
         setIsLoading(true);
