@@ -32,8 +32,6 @@ export const RenderBundleGroup = ({
     }
   }, [bundleList, groupIdx]);
 
-  console.log("isExpanded =>", isExpanded);
-  
   const expandBundeItem = () => {
     if (!isExpanded) return null;
     else
