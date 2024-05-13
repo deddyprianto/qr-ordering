@@ -10,10 +10,17 @@ describe("TESTING CART PAGE", () => {
     );
     cy.get("#takeaway").should("be.visible").should("be.enabled").click();
     cy.get("#TagInsight").should("be.visible");
+
+    cy.get("#buttonSearch").click();
+    cy.get("#input-search").type("imp").type("{enter}");
+    cy.get("div#groupingSearchItem").first().contains("Western");
+    cy.get("#btn-back-search").click();
     // sequence Item mainItem,attrItem,bundleItem
+
     cy.get("button#idItem").first().as("firstAddButtonForMainItem");
     cy.get("button#idItem").eq(1).as("secondAddButtonForBundle");
     cy.get("button#idItem").eq(2).as("thirdAddButtonForAttr");
+
     // TESTING ADD ITEM (main)
     cy.get("@firstAddButtonForMainItem")
       .click()
@@ -23,6 +30,7 @@ describe("TESTING CART PAGE", () => {
         cy.get("#button-decreaseQuantity").should("be.visible").click();
       });
     cy.wait(3000);
+
     // TESTING ADD ITEM(attr)
     cy.get("@thirdAddButtonForAttr")
       .click()
@@ -121,6 +129,7 @@ describe("TESTING CART PAGE", () => {
       .should("be.enabled")
       .click();
 
+    cy.get("#SkeletonPaymentInput").should("exist");
     cy.get("#LabelOrderPayment").contains("Order Payment");
 
     cy.get("#payment-form").should("exist");

@@ -5,8 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import { apiOrder } from "../../services/Order";
 import { SkeletonSummaryPage } from "../../components/Skeleton/SkeletonSummaryPage";
 import PaymentComplete from "../../assets/PaymentComplete.gif";
-import Cancelled from "../../assets/Cancelled.gif";
-import Completed from "../../assets/Completed.gif";
 import Success from "../../assets/Success.gif";
 import {
   setCartIdToShow,
@@ -80,7 +78,7 @@ export function Component() {
   } else if (order.status === "CANCELLED") {
     message = "Your order has been cancelled.";
   } else {
-    message = "Your order has been successfully completed.";
+    message = "You have received your items.";
   }
 
   let imageIconSrc;
@@ -89,9 +87,9 @@ export function Component() {
   } else if (order.status === "PROCESSING") {
     imageIconSrc = Success;
   } else if (order.status === "CANCELLED") {
-    imageIconSrc = Cancelled;
+    imageIconSrc = null;
   } else {
-    imageIconSrc = Completed;
+    imageIconSrc = null;
   }
 
   let backgroundColorCustom;
@@ -116,10 +114,18 @@ export function Component() {
             style={{ backgroundColor: backgroundColorCustom }}
           >
             <div>
-              <img src={imageIconSrc} alt="success" />
+              {imageIconSrc && (
+                <img
+                  style={{ width: "54px", height: "54px" }}
+                  src={imageIconSrc}
+                  alt="success"
+                />
+              )}
             </div>
             <div>
-              <div className="text-center">{message}</div>
+              <div className={`text-center ${!imageIconSrc && "p-[16px]"}`}>
+                {message}
+              </div>
             </div>
           </div>
 
