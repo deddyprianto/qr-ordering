@@ -22,6 +22,16 @@ export const RenderBundleGroup = ({
     setIsExpanded(false);
   }, [bundleGroup]);
 
+  useEffect(() => {
+    if (bundleList.length > 0) {
+      if (groupIdx === 0) {
+        setIsExpanded(true);
+      } else {
+        setIsExpanded(false);
+      }
+    }
+  }, [bundleList, groupIdx]);
+
   const expandBundeItem = () => {
     if (!isExpanded) return null;
     else
