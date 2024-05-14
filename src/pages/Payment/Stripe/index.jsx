@@ -11,7 +11,7 @@ import { SkeletonPaymentInput } from "../../../components/Skeleton/SkeletonPayme
 
 export const Stripe = () => {
   const { paymentMethod } = useSelector((state) => state.dataSlice);
-  const { cartInfo } = useSelector((state) => state.dataSlicePersisted);
+  const { cartInfo, theme } = useSelector((state) => state.dataSlicePersisted);
   const [stripePromise, setStripePromise] = useState();
   const [options, setOptions] = useState({});
   const [loading, setLoading] = useState(true);
@@ -65,7 +65,7 @@ export const Stripe = () => {
     }
   };
 
-  if (loading) return <SkeletonPaymentInput />;
+  if (loading) return <SkeletonPaymentInput color={theme} />;
   if (failedRender) return <NotFound />;
   else {
     return (

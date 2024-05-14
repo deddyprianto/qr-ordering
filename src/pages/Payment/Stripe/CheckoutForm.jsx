@@ -12,15 +12,15 @@ export const RenderCheckoutPage = () => {
   const elements = useElements();
   const toast = useEdgeSnack();
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
-  const { cartInfo } = useSelector((state)=>state.dataSlicePersisted);
+  const [loading, setLoading] = useState  (false);
+  const { cartInfo } = useSelector((state) => state.dataSlicePersisted);
   const updateURL = useUpdateURLWithQueryParams();
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const {error} = await stripe.confirmPayment({
+      const { error } = await stripe.confirmPayment({
         elements,
         confirmParams: {
           return_url: "",
@@ -28,35 +28,38 @@ export const RenderCheckoutPage = () => {
         redirect: "if_required",
       });
 
-      if (error){
+      if (error) {
         throw error;
-      }
-      else{
+      } else {
         dispatch(setCartIdToShow(cartInfo?.uniqueID || ""));
-        dispatch(updateCartToListen({
-          cartID: cartInfo?.uniqueID,
-          status: "PENDING"
-        }));
+        dispatch(
+          updateCartToListen({
+            cartID: cartInfo?.uniqueID,
+            status: "PENDING",
+          }),
+        );
         dispatch(setCartInfo({}));
         startListeningInterval(cartInfo?.uniqueID, dispatch);
         updateURL("/ordersummary");
       }
     } catch (error) {
-      console.log(error)  
-      toast.open("Payment failed. Please try again later.", 'error');	
-      setLoading(false);  
+      console.log(error);
+      toast.open("Payment failed. Please try again later.", "error");
+      setLoading(false);
     }
-  }
+  };
   return (
     <form id={"payment-form"}>
-      <PaymentElement options={{
+      <PaymentElement
+        options={{
           style: {
             base: {
-              fontSize: '50px', // Adjust the font size as needed
+              fontSize: "50px", // Adjust the font size as needed
             },
           },
-        }}/>
-      <RenderButtonSubmit handleSubmit={handleSubmit} loading={loading}/>
+        }}
+      />
+      <RenderButtonSubmit handleSubmit={handleSubmit} loading={loading} />
     </form>
-  )
-}
+  );
+};
