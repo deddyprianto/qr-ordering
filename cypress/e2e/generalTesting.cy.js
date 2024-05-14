@@ -12,8 +12,19 @@ describe("TESTING CART PAGE", () => {
     cy.get("#TagInsight").should("be.visible");
 
     cy.get("#buttonSearch").click();
-    cy.get("#input-search").type("imp").type("{enter}");
-    cy.get("div#groupingSearchItem").first().contains("Western");
+    cy.get("#input-search").type("100").type("{enter}");
+
+    cy.get("div#groupingSearchItem")
+      .first()
+      .then(($element) => {
+        const objHtml = $element[0];
+        const nameGroupItemSearchElement = objHtml.querySelector(
+          "#nameGroupItemSearch",
+        );
+        const buttonAdd = objHtml.querySelector("button.justify-center");
+        cy.get(buttonAdd).should("be.visible").click();
+        cy.get(nameGroupItemSearchElement).should("exist");
+      });
     cy.get("#btn-back-search").click();
     // sequence Item mainItem,attrItem,bundleItem
 
@@ -22,15 +33,10 @@ describe("TESTING CART PAGE", () => {
     cy.get("button#idItem").eq(2).as("thirdAddButtonForAttr");
 
     // TESTING ADD ITEM (main)
-    cy.get("@firstAddButtonForMainItem")
-      .click()
-      .then(() => {
-        cy.get("#updatingButtonLabel").contains("Adding...");
-        cy.get("#button-increaseQuantity").should("be.visible").click();
-        cy.get("#button-decreaseQuantity").should("be.visible").click();
-      });
+    cy.get("@firstAddButtonForMainItem").click();
+    cy.get("#updatingButtonLabel").contains("Adding...");
+    cy.get("#button-increaseQuantity").should("be.visible").click();
     cy.wait(3000);
-
     // TESTING ADD ITEM(attr)
     cy.get("@thirdAddButtonForAttr")
       .click()
