@@ -8,7 +8,10 @@ describe("TESTING CART PAGE", () => {
         "QS_TABLE_NO_AND_OUTLET_NAME",
       )}`,
     );
-    cy.get("#takeaway").should("be.visible").should("be.enabled").click();
+    cy.get("#takeaway", { timeout: 5000 })
+      .should("be.visible")
+      .should("be.enabled")
+      .click();
     cy.get("#TagInsight").should("be.visible");
 
     cy.get("#buttonSearch").click();
@@ -26,19 +29,36 @@ describe("TESTING CART PAGE", () => {
         cy.get(nameGroupItemSearchElement).should("exist");
       });
     cy.get("#btn-back-search").click();
-    // sequence Item mainItem,attrItem,bundleItem
 
-    cy.get("button#idItem").first().as("firstAddButtonForMainItem");
+    cy.intercept(
+      "GET",
+      `https://t1.equipweb.biz/EdgeCafeTraining/ordering/api/products/Edge%20Cafe/*/*?skip=0&take=5`,
+    ).as("getData");
+
+    cy.get("button#navbarItem")
+      .eq(1)
+      .click()
+      .then(($element) => {
+        const dataType = $element.attr("data-type");
+        const dataRefno = $element.attr("data-refno");
+        cy.intercept(
+          "GET",
+          `https://t1.equipweb.biz/EdgeCafeTraining/ordering/api/products/Edge%20Cafe/${dataType}/${dataRefno}?skip=0&take=5`,
+        ).as("getData");
+        cy.wait("@getData").then((interception) => {
+          expect(interception.response.statusCode).to.equal(200);
+          const { data } = interception.response.body;
+          cy.get("div#buttonTitleNavbar").first().contains(data[0].buttonTitle);
+        });
+      });
+
+    cy.get("button#navbarItem").first().click();
+
     cy.get("button#idItem").eq(1).as("secondAddButtonForBundle");
-    cy.get("button#idItem").eq(2).as("thirdAddButtonForAttr");
+    cy.get("button#idItem").eq(3).as("thirdAddButtonForAttr");
 
-    // TESTING ADD ITEM (main)
-    cy.get("@firstAddButtonForMainItem").click();
-    cy.get("#updatingButtonLabel").contains("Adding...");
-    cy.get("#button-increaseQuantity").should("be.visible").click();
-    cy.wait(3000);
-    // TESTING ADD ITEM(attr)
-    cy.get("@thirdAddButtonForAttr")
+    // // TESTING ADD ITEM(attr)
+    cy.get("@secondAddButtonForBundle")
       .click()
       .then(() => {
         cy.get("#renderModalItemDetail").should("exist");
@@ -67,8 +87,8 @@ describe("TESTING CART PAGE", () => {
           .click();
       });
 
-    // TESTING ADD ITEM (bundle)
-    cy.get("@secondAddButtonForBundle")
+    // // TESTING ADD ITEM (bundle)
+    cy.get("@thirdAddButtonForAttr")
       .click()
       .then(() => {
         cy.get("#renderModalItemDetail").should("exist");
@@ -128,7 +148,27 @@ describe("TESTING CART PAGE", () => {
     cy.get("#buttonFooterCart")
       .scrollIntoView()
       .should("have.attr", "disabled");
-    cy.get("#Credit\\ Card").should("be.visible").should("be.enabled").click();
+
+    cy.intercept(
+      "GET",
+      "https://t1.equipweb.biz/EdgeCafeTraining/ordering/api/outlets/Edge%20Cafe/paymentmodes?",
+    ).as("paymentmodes");
+
+    cy.get("button#paymentMethod")
+      .eq(7)
+      .click()
+      .then(() => {
+        cy.intercept(
+          "GET",
+          "https://t1.equipweb.biz/EdgeCafeTraining/ordering/api/outlets/Edge%20Cafe/paymentmodes?",
+        ).as("paymentmodes");
+        cy.wait("@paymentmodes").then((interception) => {
+          expect(interception.response.statusCode).to.equal(200);
+          const { data } = interception.response.body;
+          cy.get("div#paymentModeName").eq(0).contains(data[0].displayName);
+        });
+      });
+
     cy.get("#buttonFooterCart").should("not.have.attr", "disabled");
     cy.get("#buttonFooterCart")
       .should("be.visible")

@@ -89,7 +89,7 @@ const RenderQty = ({
   };
 
   return (
-    <div className="justify-between items-center border-t-[color:var(--Grey-Scale-color-Grey-Scale-3,#D6D6D6)] flex border-t border-solid py-2 px-2">
+    <div className="justify-between items-center border-t-[color:var(--Grey-Scale-color-Grey-Scale-3,#D6D6D6)] flex border-t border-solid py-1 px-1">
       <div className="items-stretch flex justify-between my-auto">
         {!isEmptyArray && (
           <div className="items-center flex justify-between gap-1 ">

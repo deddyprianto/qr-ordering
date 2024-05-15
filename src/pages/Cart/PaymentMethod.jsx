@@ -48,7 +48,7 @@ function PaymentMethod() {
             paymentMethodList.map((item) => {
               return (
                 <button
-                  id={item.displayName}
+                  id="paymentMethod"
                   onClick={() => dispatch(setPaymentMethod(item))}
                   key={item?.displayName}
                   style={{
@@ -71,7 +71,10 @@ function PaymentMethod() {
                       <IconMasterCard />
                     )}
                   </div>
-                  <div className="flex-shrink-0 overflow-x-auto text-center">
+                  <div
+                    id="paymentModeName"
+                    className="flex-shrink-0 overflow-x-auto text-center"
+                  >
                     {item.displayName}
                   </div>
                 </button>
