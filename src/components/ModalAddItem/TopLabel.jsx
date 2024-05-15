@@ -11,7 +11,7 @@ export const RenderTopLabel = ({
 }) => {
   return (
     <div
-      className={`w-full bg-re flex ${
+      className={`w-full bg-white flex ${
         typeOfModalAddItem.toLowerCase() != "main"
           ? "justify-between"
           : "justify-end"
