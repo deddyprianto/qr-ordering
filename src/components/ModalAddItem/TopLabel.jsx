@@ -11,11 +11,11 @@ export const RenderTopLabel = ({
 }) => {
   return (
     <div
-      className={`w-full bg-white flex ${
+      className={`w-full bg-re flex ${
         typeOfModalAddItem.toLowerCase() != "main"
           ? "justify-between"
           : "justify-end"
-      } items-center px-[16px]`}
+      } items-center px-[16px] mt-[16px]`}
     >
       {typeOfModalAddItem.toLowerCase() !== "main" && (
         <RenderLabelAndPrice item={item} itemName={itemName} price={price} />
@@ -25,6 +25,7 @@ export const RenderTopLabel = ({
         onClick={() => {
           setOpenModal(false);
         }}
+        style={{ marginTop: "-20px" }}
       >
         <IconClose color="black" width="30" height="50" />
       </button>

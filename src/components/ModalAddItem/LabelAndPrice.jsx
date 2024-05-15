@@ -7,8 +7,7 @@ export const RenderLabelAndPrice = ({ itemName, item }) => {
       <div
         style={{
           display: "flex",
-          marginTop: "8px",
-          gap: "8px",
+
         }}
       >
         {(item?.isDiscounted || false) && (
