@@ -16,11 +16,6 @@ export const RenderBundleGroup = ({
 }) => {
   const [itemCartBundles, setItemCartBundles] = useState(itemCart);
   const theme = useSelector((state) => state.dataSlicePersisted.theme);
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  useEffect(() => {
-    setIsExpanded(false);
-  }, [bundleGroup]);
 
   const expandFirstBundle = useRef();
   useEffect(() => {
@@ -31,14 +26,30 @@ export const RenderBundleGroup = ({
     if (bundleList.length > 0) {
       if (groupIdx === 0) {
         setIsExpanded(true);
-      } else {
-        setIsExpanded(false);
       }
     }
   }
 
+  const expandBundleItems = () => {
+    for (const [index, bundle] of bundleList.entries()){
+      if(index == groupIdx) bundle.isExpanded=true;
+      else bundle.isExpanded=false;
+    }
+  }
+
+  const setIsExpanded = (value) => {
+    if(value)
+      expandBundleItems();
+    else
+      bundleList[groupIdx].isExpanded=value;
+    
+    let tempBundleList = [...bundleList];
+    tempBundleList[groupIdx] = bundleList[groupIdx];
+    setBundleList(tempBundleList);
+  }
+
   const expandBundeItem = () => {
-    if (!isExpanded) return null;
+    if (!bundleList[groupIdx].isExpanded) return null;
     else
       return bundleGroup.items?.map((item, idx) => {
         return (
@@ -80,7 +91,7 @@ export const RenderBundleGroup = ({
   return (
     <div
       className={`${
-        isExpanded ? "pb-4" : ""
+        bundleList[groupIdx].isExpanded ? "pb-4" : ""
       } justify-center items-stretch border border-[color:var(--Brand-color-Primary,#00524C)] bg-white flex w-full flex-col mt-4 rounded-lg border-solid`}
     >
       <button
@@ -88,9 +99,9 @@ export const RenderBundleGroup = ({
         data-id={id}
         style={{ backgroundColor: theme.Color_Primary }}
         className={`${
-          isExpanded ? "rounded-tl-md rounded-tr-md" : "rounded-md"
+          bundleList[groupIdx].isExpanded ? "rounded-tl-md rounded-tr-md" : "rounded-md"
         } justify-between items-center flex w-full gap-5 px-4 py-1`}
-        onClick={() => setIsExpanded(!isExpanded)}
+        onClick={() => setIsExpanded(!bundleList[groupIdx].isExpanded)}
       >
         <div className="items-stretch flex gap-2 my-auto">
           {renderCheckBox()}
@@ -106,7 +117,7 @@ export const RenderBundleGroup = ({
           </div>
         </div>
         <div>
-          {isExpanded ? (
+          {bundleList[groupIdx].isExpanded ? (
             <IconArrowUp color={"white"} />
           ) : (
             <IconArrowBottom color={"white"} />
