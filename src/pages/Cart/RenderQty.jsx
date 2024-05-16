@@ -146,7 +146,7 @@ const RenderQty = ({
       ) : (
         <div className="flex gap-1 ">
           <button
-            id={itemNo}
+            id="qtyCartDecrease"
             style={{
               backgroundColor: theme.Color_Secondary,
             }}

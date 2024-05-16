@@ -41,7 +41,7 @@ function PaymentMethod() {
         >
           <Trans i18nKey={"choose_payment_method"} />
         </div>
-        <div className="items-stretch flex gap-x-2 mt-4 max-h-[300px] overflow-y-auto">
+        <div className="flex gap-4 mt-4 max-h-[300px] overflow-y-auto">
           {isLoading ? (
             <SkeletonList />
           ) : (
@@ -57,25 +57,23 @@ function PaymentMethod() {
                     backgroundColor:
                       paymentMethod === item ? theme.Color_Accent : "white",
                   }}
-                  className="w-[160px] flex justify-center items-center border  p-[4px] gap-x-2 rounded-lg border-solid"
+                  className="flex items-center border rounded-lg border-solid px-[16px]"
                 >
-                  <div>
-                    {item.iconUrl ? (
+                  {item.iconUrl ? (
+                    <div className="w-16">
                       <img
                         alt="IconPayments"
                         loading="lazy"
                         src={item.iconUrl}
-                        className="aspect-square object-contain object-center w-10 overflow-hidden max-w-full"
+                        className="flex-shrink-0 h-full w-full"
                       />
-                    ) : (
-                      <IconMasterCard />
-                    )}
-                  </div>
-                  <div
-                    id="paymentModeName"
-                    className="flex-shrink-0 overflow-x-auto text-center"
-                  >
-                    {item.displayName}
+                    </div>
+                  ) : (
+                    <IconMasterCard />
+                  )}
+
+                  <div id="paymentModeName" className="flex-shrink-0">
+                    <p>{item.displayName}</p>
                   </div>
                 </button>
               );
