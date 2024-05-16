@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { IconArrowBottom, IconArrowUp, IconCheckFill } from "../../../assets/svgIcon";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { RenderBundleItem } from "./BundlesItem";
 import { calculateBundleGroupQty, isValidBundleQty } from "./CalculateBundleGroupQty";
 import { useSelector } from "react-redux";
@@ -22,7 +22,12 @@ export const RenderBundleGroup = ({
     setIsExpanded(false);
   }, [bundleGroup]);
 
+  const expandFirstBundle = useRef();
   useEffect(() => {
+    expandFirstBundle.current();
+  }, []);
+
+  expandFirstBundle.current = () => {
     if (bundleList.length > 0) {
       if (groupIdx === 0) {
         setIsExpanded(true);
@@ -30,7 +35,7 @@ export const RenderBundleGroup = ({
         setIsExpanded(false);
       }
     }
-  }, [bundleList, groupIdx]);
+  }
 
   const expandBundeItem = () => {
     if (!isExpanded) return null;
