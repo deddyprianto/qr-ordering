@@ -53,7 +53,11 @@ export const ProductCatalog = () => {
     const viewType = menu.viewType;
     return (
       <div key={menu.refNo} id={"sub_" + idx + "_" + menu.refNo}>
-        <div className="text-gray-700 text-lg font-bold leading-6 mt-6 mb-2">
+        <div
+          id="buttonTitleNavbar"
+          data-title={menu.buttonTitle}
+          className="text-gray-700 text-lg font-bold leading-6 mt-6 mb-2"
+        >
           {menu.buttonTitle}
         </div>
         <div style={handleLayoutStyle(viewType, viewTypeGroup)}>

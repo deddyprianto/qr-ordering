@@ -40,8 +40,8 @@ const FooterCart = ({ isItemExist }) => {
         provider: paymentMethod.provider,
         paymentMode: paymentMethod.paymentMode,
         amount: cartInfo.subtotalSummary.NETT,
-        returnURL: `https://edgecafetraining.qro-dev.equipweb.biz/ordersummary/?input=${queryStringGeneral}&cartID=${cartInfo.uniqueID}`,
-        backURL: `https://edgecafetraining.qro-dev.equipweb.biz/cart/?input=${queryStringGeneral}&cartID=backToCart`,
+        returnURL: `https://edgecafetraining.qro-dev.equipweb.biz/ordersummary?input=${queryStringGeneral}&cartID=${cartInfo.uniqueID}`,
+        backURL: `https://edgecafetraining.qro-dev.equipweb.biz/cart?input=${queryStringGeneral}&cartID=backToCart`,
       };
       try {
         setIsLoading(true);
