@@ -50,6 +50,7 @@ export const RenderBundleItem = ({
   };
 
   const handleSelectItem = () => {
+    if(disableMaxButton && item.quantity==0) return;
     if (isCalledFromCart) {
       const removeItem = { ...itemCart, bundles: [] };
       setItemCartBundles(removeItem);
