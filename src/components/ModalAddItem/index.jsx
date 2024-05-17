@@ -42,7 +42,7 @@ const RenderModalItemDetail = ({
       setItemToAdd({
         itemNo: item.itemNo,
         quantity: 1,
-        unitPrice: item.retailPrice,
+        unitPrice: item?.isDiscounted?item?.discountedPrice:item?.retailPrice,
         remark: "",
         referenceNo: "",
         lineInfo: "",
@@ -57,6 +57,8 @@ const RenderModalItemDetail = ({
     item?.itemNo,
     item?.retailPrice,
     itemCart?.uniqueID,
+    item?.isDiscounted,
+    item?.discountedPrice,
     itemType,
     openModal,
   ]);
