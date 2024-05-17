@@ -7,7 +7,6 @@ const RenderItemCard = lazy(() => import("./ItemCard"));
 
 export const RenderSearchResult = ({ searchText, searchItemList }) => {
   const { menuSubGroup } = useSelector((state) => state.dataSlice);
-
   const groupingSearchItem = menuSubGroup
     .map(({ buttonTitle, items }) => {
       const matchedItems = items.filter(({ refNo }) => {
@@ -50,10 +49,19 @@ export const RenderSearchResult = ({ searchText, searchItemList }) => {
             <div key={cat.refNo} id={idx} className="w-full">
               {cat?.productInfo?.length > 0 ? (
                 cat?.productInfo?.map((item) => (
-                  <RenderItemCard item={item} key={item.refNo} />
+                  <RenderItemCard
+                    cartLineID={cat?.cartLineID}
+                    item={item}
+                    key={item.refNo}
+                    qtyCart={cat?.cartQuantity}
+                  />
                 ))
               ) : (
-                <RenderItemCard item={cat?.productInfo} />
+                <RenderItemCard
+                  cartLineID={cat?.cartLineID}
+                  item={cat?.productInfo}
+                  qtyCart={cat?.cartQuantity}
+                />
               )}
             </div>
           ))}

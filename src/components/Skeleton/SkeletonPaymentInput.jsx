@@ -36,7 +36,7 @@ export const SkeletonPaymentInput = ({ color }) => {
   };
 
   return (
-    <div id="SkeletonPaymentInput" className="flex flex-col w-full">
+    <div id="SkeletonPaymentInput" className="flex flex-col w-full px-[16px]">
       <div className="w-[115px] h-[10.5px] rounded-xl bg-gradient-to-r from-transparent via-gray-300 to-gray-300 animate-pulse" />
       <div className="mt-2 w-[269px] h-[10.5px] rounded-xl bg-gradient-to-r from-transparent via-gray-300 to-gray-300 animate-pulse" />
       <div className="p-[8px] my-4 flex justify-between items-center">

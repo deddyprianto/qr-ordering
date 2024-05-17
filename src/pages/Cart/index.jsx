@@ -6,6 +6,7 @@ import { ModalGeneral } from "../../components/ModalGeneral";
 import { LazyLoadComponent } from "react-lazy-load-image-component";
 import { SkeletonList } from "../../components/Skeleton/SkeletonPaymentList";
 import { useUpdateURLWithQueryParams } from "../../../hooks/usePathCustom";
+import { SkeletonPaymentInput } from "../../components/Skeleton/SkeletonPaymentInput";
 
 const PaymentMethod = lazy(() => import("./PaymentMethod"));
 const PriceSummary = lazy(() => import("./PriceSummary"));
@@ -46,13 +47,7 @@ export function Component() {
   }, [totalQuantityCart, updateURL]);
 
   return (
-    <Suspense
-      fallback={
-        <div className="text-center font-bold">
-          Pls wait, getting your components...
-        </div>
-      }
-    >
+    <Suspense fallback={<SkeletonPaymentInput color={theme} />}>
       <div className="px-[16px]" style={{ paddingBottom: 80 }}>
         <h1 className="mt-5" id="labelYouAreOrderFrom">
           <Trans i18nKey={"you_order_from"} />

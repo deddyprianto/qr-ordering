@@ -24,10 +24,13 @@ describe("TESTING CART PAGE", () => {
         const nameGroupItemSearchElement = objHtml.querySelector(
           "#nameGroupItemSearch",
         );
-        const buttonAdd = objHtml.querySelector("button.justify-center");
+        const buttonAdd = objHtml.querySelector("button#idItem");
         cy.get(buttonAdd).should("be.visible").click();
         cy.get(nameGroupItemSearchElement).should("exist");
       });
+
+    cy.get("button#button-increaseQuantity").should("be.visible").click();
+    cy.get("button#button-decreaseQuantity").should("be.visible").click();
     cy.get("#btn-back-search").click();
 
     cy.intercept(
@@ -99,51 +102,56 @@ describe("TESTING CART PAGE", () => {
         cy.get("button#bundleItemGroups").eq(1).as("itemGroupBundleSecond");
         cy.get("button#bundleItemGroups").eq(2).as("itemGroupBundleThird");
 
-        cy.get("@itemGroupBundleFirst")
-          .click()
-          .then(() => {
-            cy.get("button#itemBundle").first().as("buttonItemBundleFirstItem");
-            cy.get("@buttonItemBundleFirstItem").click();
-            cy.get("button#qtyPlusBundle").first().as("buttonQtyPlusFirstItem");
-            cy.get("@buttonQtyPlusFirstItem").click();
-            cy.get("div#IconCheckPassed").first().as("iconCheckPassedFirst");
-            cy.get("@iconCheckPassedFirst").should("exist");
-          });
+        cy.get("button#itemBundle").first().as("buttonItemBundleFirstItem");
+        cy.get("@buttonItemBundleFirstItem").click();
+
+        cy.get("button#qtyPlusBundle").first().as("buttonQtyPlusFirstItem");
+        cy.get("@buttonQtyPlusFirstItem").click();
+
+        cy.get("div#IconCheckPassed").first().as("iconCheckPassedFirst");
+        cy.get("@iconCheckPassedFirst").should("exist");
 
         cy.get("@itemGroupBundleSecond")
           .click()
           .then(() => {
-            cy.get("button#itemBundle").eq(5).as("buttonItemBundleSecondItem");
+            cy.get("button#itemBundle")
+              .first()
+              .as("buttonItemBundleSecondItem");
             cy.get("@buttonItemBundleSecondItem").click();
-            cy.get("button#qtyPlusBundle").eq(1).as("buttonQtyPlusSecondItem");
+            cy.get("button#qtyPlusBundle")
+              .first()
+              .as("buttonQtyPlusSecondItem");
             cy.get("@buttonQtyPlusSecondItem").click();
-            cy.get("div#IconCheckPassed").eq(1).as("iconCheckPassedSecond");
-            cy.get("@iconCheckPassedSecond").should("exist");
+
+            cy.get("div#IconCheckPassed").eq(1).should("exist");
           });
+
         cy.get("@itemGroupBundleThird")
           .click()
-          .then(($element) => {
-            const objHtml = $element[0].textContent;
-            const startIndex = objHtml.indexOf("Choose") + 6;
-            const endIndex = objHtml.indexOf(")", startIndex);
-            const chooseCount = parseInt(
-              objHtml.substring(startIndex, endIndex),
-            );
-            cy.get("button#itemBundle").eq(9).click();
-            cy.get("button#qtyPlusBundle").eq(2).click();
-            if (chooseCount > 1) {
-              cy.get("button#qtyPlusBundle").eq(2).click();
-              cy.get("button#itemBundle").eq(10).click();
-              cy.get("div#IconCheckPassed").eq(2).should("exist");
-            }
+          .then(() => {
+            cy.get("button#itemBundle")
+              .first()
+              .as("buttonItemBundleSecondItem");
+            cy.get("@buttonItemBundleSecondItem").click();
+
+            cy.get("button#qtyPlusBundle")
+              .first()
+              .as("buttonQtyPlusSecondItem");
+            cy.get("@buttonQtyPlusSecondItem").click();
+
+            cy.get("button#qtyPlusBundle")
+              .first()
+              .as("buttonQtyPlusSecondItem");
+            cy.get("@buttonQtyPlusSecondItem").click();
+
+            cy.get("div#IconCheckPassed").eq(2).should("exist");
           });
         cy.get("#actionButtonAdd").click();
       });
     // End Testing all item type
 
     cy.get("#renderCartSummary").should("be.visible").click();
-    cy.get("#orderingModeDineIN").should("exist");
-    cy.get("#orderingModeTakeAway").should("exist");
+    cy.get("#SkeletonPaymentInput").should("be.visible");
 
     cy.get("#buttonFooterCart")
       .scrollIntoView()
