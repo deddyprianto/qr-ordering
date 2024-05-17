@@ -5,7 +5,7 @@ import { Trans } from "react-i18next";
 import { ModalGeneral } from "../../components/ModalGeneral";
 import { LazyLoadComponent } from "react-lazy-load-image-component";
 import { SkeletonList } from "../../components/Skeleton/SkeletonPaymentList";
-import { useNavigate } from "react-router-dom";
+import { useUpdateURLWithQueryParams } from "../../../hooks/usePathCustom";
 
 const PaymentMethod = lazy(() => import("./PaymentMethod"));
 const PriceSummary = lazy(() => import("./PriceSummary"));
@@ -14,7 +14,7 @@ const ItemCart = lazy(() => import("./ItemCart"));
 const OrderingMode = lazy(() => import("./OrderingMode"));
 
 export function Component() {
-  const navigate = useNavigate();
+  const updateURL = useUpdateURLWithQueryParams();
 
   const { cartInfo, outletName } = useSelector(
     (state) => state.dataSlicePersisted,
@@ -38,11 +38,12 @@ export function Component() {
     0,
   );
 
+
   useEffect(() => {
     if (totalQuantityCart === 0) {
-      navigate("/");
+      updateURL("/");
     }
-  }, [totalQuantityCart, navigate]);
+  }, [totalQuantityCart, updateURL]);
 
   return (
     <Suspense
