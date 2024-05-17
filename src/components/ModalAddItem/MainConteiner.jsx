@@ -15,15 +15,10 @@ const RenderMainContainer = ({
 }) => {
   switch (typeOfModalAddItem.toLowerCase()) {
     case "main":
-      return (
-        <RenderItemMain 
-          item={item} 
-          setIsLoading={setIsLoading}
-        />
-      );
+      return <RenderItemMain item={item} setIsLoading={setIsLoading} />;
     case "bundle":
       return (
-        <RenderItemBundles  
+        <RenderItemBundles
           bundles={item.bundles}
           bundleList={bundleList}
           setItemToAdd={setItemToAdd}
@@ -32,7 +27,7 @@ const RenderMainContainer = ({
       );
     case "attribute":
       return (
-        <RenderItemAttributes  
+        <RenderItemAttributes
           attributes={item.attributes}
           attList={attList}
           setAttList={setAttList}

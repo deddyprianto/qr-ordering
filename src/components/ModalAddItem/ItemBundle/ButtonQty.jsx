@@ -26,7 +26,7 @@ export const RenderButtonQty = ({
       <div className="items-stretch self-center flex gap-1 my-auto">
         <button
           style={{
-            backgroundColor: disableMaxButton
+            backgroundColor: disableMinButton
               ? "#9D9D9D"
               : theme?.Color_Secondary,
           }}

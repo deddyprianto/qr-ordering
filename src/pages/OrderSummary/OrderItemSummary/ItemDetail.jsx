@@ -38,15 +38,14 @@ export const RenderItem = ({item}) => {
           $ {numberFormatter(item.amount)}
         </div>
       </div>
-      {item.bundles?.map((bundle)=>{
-        return renderModifier(bundle)
+      {item.bundles?.map((bundle) => {
+        return renderModifier(bundle);
       })}
-      {item.attributes?.map((att)=>{
-        return renderModifier(att)
+      {item.attributes?.map((att) => {
+        return renderModifier(att);
       })}
-      {item.attributes?.length>0?renderModifier(item.attributes):""}
     </div>
-  )
+  );
 }
 
 RenderItem.propTypes = {

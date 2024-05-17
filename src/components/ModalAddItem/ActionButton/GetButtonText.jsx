@@ -4,7 +4,7 @@ const bundlesAmount = (bundleList) => {
     for(const item of bundleGroup.items){
       let quantity = (item.quantity || 0)
       if(quantity<=0) continue;
-      amount += (item.productInfo.retailPrice || 0) * quantity
+      amount += (item.bundlePrice || 0) * quantity
       if(item.productInfo?.attributes?.length>0)
         amount += attributeAmount(item.productInfo?.attributes)
     }

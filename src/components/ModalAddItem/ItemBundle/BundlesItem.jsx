@@ -50,6 +50,7 @@ export const RenderBundleItem = ({
   };
 
   const handleSelectItem = () => {
+    if(disableMaxButton && item.quantity==0) return;
     if (isCalledFromCart) {
       const removeItem = { ...itemCart, bundles: [] };
       setItemCartBundles(removeItem);
@@ -110,7 +111,7 @@ export const RenderBundleItem = ({
           className="fixed-width-content text-gray-700 text-right text-sm font-bold leading-5 tracking-wide self-center grow whitespace-nowrap my-auto"
           style={{ width: "75px" }}
         >
-          {productInfo?.retailPrice ? `$ ${productInfo.retailPrice}` : "FREE"}
+          {item?.bundlePrice ? `$ ${item.bundlePrice}` : "FREE"}
         </div>
       </div>
       {item.isSelected ? renderBundleAttribute(productInfo.attributes) : ""}

@@ -11,7 +11,7 @@ export const RenderAttGroup = ({
 }) => {
   return (
     <div style={{ width: "90vw" }}>
-      <div className="text-black text-xs font-medium leading-5 tracking-wide pt-2">
+      <div className="text-black text-xs font-medium leading-5 tracking-wide pt-2 ">
         {attGroup.attributesGroupName}
       </div>
       <Swiper
@@ -19,7 +19,7 @@ export const RenderAttGroup = ({
           width: "100%",
         }}
         slidesPerView="auto"
-        spaceBetween={12}
+        spaceBetween={1}
       >
         {attGroup.items?.map((att, idx) => {
           return (

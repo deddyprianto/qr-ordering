@@ -1,8 +1,6 @@
 import { lazy, useState } from "react";
 import PropTypes from "prop-types";
 import { getItemType } from "../../../RenderItemProduct/GetItemType";
-import { Trans } from "react-i18next";
-import { IconPlus } from "../../../../assets/svgIcon";
 import { useDispatch, useSelector } from "react-redux";
 import { useEdgeSnack } from "../../../EdgeSnack/utils/useEdgeSnack";
 import { RenderItemPrice } from "./ItemPrice";
@@ -12,14 +10,17 @@ import { mapCartAndProduct } from "../../productAndCartMapper";
 import { addNewCart } from "../../../../components/GenerateCart";
 import { setCartInfo } from "../../../../app/dataSlicePersisted";
 import RenderButtonImageItemProd from "../../../RenderButtonImageItemProd";
+import { RenderButtonAddToCart } from "../../../RenderItemProduct/ButtonAddToCart";
 
 const RenderModalItemDetail = lazy(() => import("../../../ModalAddItem"));
 
-const RenderItemCard = ({ item }) => {
+const RenderItemCard = ({ item, qtyCart, cartLineID }) => {
   const dispatch = useDispatch();
-  const { theme, cartInfo, outletDetail } = useSelector(
-    (state) => state.dataSlicePersisted,
+  const { theme, cartInfo } = useSelector((state) => state.dataSlicePersisted);
+  const isQtyExist = cartInfo?.details?.some(
+    (itemCart) => itemCart.productInfo.itemNo === item.itemNo,
   );
+
   const [openModalAddItem, setOpenModalAddItem] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const cartID = useSelector(
@@ -47,7 +48,7 @@ const RenderItemCard = ({ item }) => {
     dispatch(setCartInfo(data));
   };
 
-  const handleClickButtonAdd = async () => {
+  const handleClickButtonAdd = async (qty, lineID) => {
     if (getItemType(item) == "main") {
       setIsLoading(true);
       let curCartID = cartID;
@@ -60,14 +61,17 @@ const RenderItemCard = ({ item }) => {
           tableNo,
         );
       }
+
       await addItemToCart({
         cartID: curCartID,
         item,
         dispatch,
         toast,
-        qty: 1,
-        lineID: "",
-        reMapProductCatalogQty,
+        qty,
+        lineID,
+        reMapProductAndCart: reMapProductCatalogQty,
+        isQtyExist,
+        cartInfo,
       });
 
       setIsLoading(false);
@@ -106,22 +110,13 @@ const RenderItemCard = ({ item }) => {
               </div>
             </button>
           ) : (
-            <button
-              id={item.uniqueID}
-              className="justify-center items-stretch flex gap-2 mt-2 py-2 rounded-lg"
-              onClick={handleClickButtonAdd}
-              style={{
-                backgroundColor: theme.Color_Secondary,
-                display:
-                  outletDetail?.qrOrderingAvailability === "Hidden" && "none",
-              }}
-              disabled={isLoading}
-            >
-              <IconPlus />
-              <div className="text-white text-xs font-bold leading-4 self-center my-auto">
-                <Trans i18nKey={"add"} />
-              </div>
-            </button>
+            <RenderButtonAddToCart
+              isLoading={isLoading}
+              qtyInCart={qtyCart}
+              item={item}
+              cartLineID={cartLineID}
+              handleClickButtonAdd={handleClickButtonAdd}
+            />
           )}
         </div>
       </div>
@@ -140,4 +135,6 @@ const RenderItemCard = ({ item }) => {
 export default RenderItemCard;
 RenderItemCard.propTypes = {
   item: PropTypes.object,
+  qtyCart: PropTypes.number,
+  cartLineID: PropTypes.string,
 };
