@@ -50,7 +50,6 @@ const RenderItemCard = ({ item, qtyCart, cartLineID }) => {
 
   const handleClickButtonAdd = async (qty, lineID) => {
     if (getItemType(item) == "main") {
-      console.log(getItemType(item));
       setIsLoading(true);
       let curCartID = cartID;
       if (!curCartID) {
