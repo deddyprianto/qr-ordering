@@ -81,6 +81,9 @@ jobs:
         id: validate
         run: terraform validate -no-color
 
+      - name: Terraform diff
+        run: terraform diff
+
       - name: Terraform Apply
         id: apply
         working-directory: ./infra
