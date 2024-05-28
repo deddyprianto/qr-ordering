@@ -72,9 +72,11 @@ jobs:
 
       - name: Terraform Validate
         id: validate
+        working-directory: ./infra
         run: terraform validate -no-color
 
       - name: Terraform diff
+        working-directory: ./infra
         run: terraform diff
 
       - name: Terraform Apply
