@@ -12,46 +12,76 @@ graph LR
 
 ### Naming convention
 
-POS API URL format: `https://<server-domain>/<client-name>/ordering/api`
-QRO(QR Ordering) domain name: `https://<client-name>(-<stage-name>).qro.equipweb.biz`
+`edgecafetraining.qro-dev.equipweb.biz` - Used by developers to test in S3 and Cloudfront.
 
-During build time, we will pass the `VITE_API_URL` template:
+`edgecafetraining.qro-uat.equipweb.biz` - Used by QA to test a set of new features and bug fixes. This will allow the developers to continue working on new features without changing the code base that QA team is testing.
 
-```env
-VITE_API_URL=https://t1.equipweb.biz/<client-name>/ordering/api
+`edgecafetraining.qro.equipweb.biz` - This is the latest stable version tested by QA. It will be used for creating/updating client production websites.
+
+`<clientname>.qro.equipweb.biz` - Client production website.
+
+### Deployment Cycle
+
+```mermaid
+graph TB
+ DEV["`DEV
+ edgecafetraining.qro-dev`"] --> UAT
+ UAT["`UAT
+ edgecafetraining.qro-uat`"] --> Prod
+ Prod["`Prod
+ edgecafetraining.qro`"] --> Clients
+ Clients["`Clients
+ clientname.qro`"]
 ```
 
-**\<server-name\>** - Domain name of the server. We currently have 3 of the:
-
-- s1.equipweb.biz
-- s2.equipweb.biz
-- t1.equipweb.biz
-
-**\<client-name\>** - The folder name of the client in POS server.
-
-**\<stage-name\>** - Optional stage name. It can be `-demo` or `-dev`. If empty, it would be production.
-
-We will setup demo and prod for each server.
-
-| Server          | Client    | Stage | S3 bucket      | Cloudfront              | Domain name                     |
-| --------------- | --------- | ----- | -------------- | ----------------------- | ------------------------------- |
-| s1.equipweb.biz | EdgeCafe  | prod  | ew-qro-prod-s1 | ds1-prod.cloudfront.net | EdgeCafe.qro.equipweb.biz       |
-| s2.equipweb.biz | WorksCafe | prod  | ew-qro-prod-s2 | ds2-prod.cloudfront.net | WorksCafe.qro.equipweb.biz      |
-| t1.equipweb.biz | EWCafe    | prod  | ew-qro-prod-t1 | dt1-prod.cloudfront.net | EWCafe.qro.equipweb.biz         |
-| s1.equipweb.biz | EdgeCafe  | demo  | ew-qro-demo-s1 | ds1-demo.cloudfront.net | EdgeCafe.qro-demo.equipweb.biz  |
-| s2.equipweb.biz | WorksCafe | demo  | ew-qro-demo-s2 | ds2-demo.cloudfront.net | WorksCafe.qro-demo.equipweb.biz |
-| t1.equipweb.biz | EWCafe    | demo  | ew-qro-demo-t1 | dt1-demo.cloudfront.net | EWCafe.qro-demo.equipweb.biz    |
-| s1.equipweb.biz | YohanFood | prod  | ew-qro-prod-s1 | ds1-prod.cloudfront.net | YohanFood.qro.equipweb.biz      |
-| s1.equipweb.biz | IanDrinks | prod  | ew-qro-prod-s1 | ds1-prod.cloudfront.net | IanDrinks.qro.equipweb.biz      |
-
-### Deployment
+#### Deploy to Dev
 
 ```mermaid
 graph LR
- Github --> |PR Merged|Dev --> |manual trigger|Demo
- Demo --> |manual trigger|Prod
+ Developer --> | Push code | Github --> |  PR Approved |GA(Github Action) --> | Auto deploy |Dev
+ Dev
 ```
 
 - Every time a PR is merged, Github action will auto run and deploy to `Dev` environment
-- To deploy to `Demo`, you'll need manually trigger the `Deploy to Demo` Github action. It will take the version in `Dev` environment and deploy the same version to `Demo`.
-- To deploy to `Prod` after QA approval, you'll need manually trigger the `Deploy to Prod` Github action. It will take the version in `Demo` environment and deploy the same version to `Prod`.
+
+#### Deploy to UAT
+
+```mermaid
+graph LR
+ Developer --> | manual trigger | GA["`Github Action
+ Deploy to UAT`"]
+ GA --> | deploy |UAT
+```
+
+- To deploy to `UAT`, you'll need manually trigger the `Deploy to UAT` Github action.
+- This will take the version in `Dev` environment and deploy the same version to `UAT`.
+
+#### Deploy to Prod
+
+```mermaid
+graph LR
+ Developer --> | manual trigger | GA["`Github Action
+ Deploy to Prod`"]
+ GA --> | deploy |Prod
+```
+
+- To deploy to `Prod` after QA approval, you'll need manually trigger the `Deploy to Prod` Github action.
+- This will take the version in `UAT` environment and deploy the same version to `Prod`.
+
+### Deploy to Clients
+
+```mermaid
+graph LR
+ Deployment[Deployment Team] --> | manual trigger | GA["`Github Action
+ Deploy to Client`"]
+ GA --> | deploy |Client
+```
+
+- To deploy to `Client`, you'll need to manually trigger the `Deploy to Client` Github action and specify the domain name and API URL.
+
+  Example values:
+
+  - Domain name: `edgecafetraining.qro.equipweb.biz`
+  - API URL: `https://t1.equipweb.biz/EdgeCafeTraining/ordering/api`
+
+- This will copy the most stable version(edgecafetraining.qro.equipweb.biz) of the app to the client website.

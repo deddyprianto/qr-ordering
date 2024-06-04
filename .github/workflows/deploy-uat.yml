@@ -1,27 +1,30 @@
-name: Deploy to Dev
+name: Deploy to UAT
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - "**.md"
-      - "docs/**"
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Get build version
+        id: build_version
+        run: |
+          # Extract the build version from the copy_from_url
+          BUILD_VERSION=$(curl -sSL "${{ vars.COPY_FROM_URL_UAT }}/build_version.txt")
+          echo "full_sha=$BUILD_VERSION" >> $GITHUB_OUTPUT
+
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.build_version.outputs.full_sha }}
 
       - name: Set vars
         id: vars
         run: |
-          echo "domain_name=${{ vars.DOMAIN_NAME_DEV }}" >> $GITHUB_OUTPUT
-          echo "api_url=${{ vars.API_URL_DEV }}" >> $GITHUB_OUTPUT
-          echo "webpush_public_key=${{ secrets.WEBPUSH_PUBLIC_KEY_DEV }}" >> $GITHUB_OUTPUT
+          echo "domain_name=${{ vars.DOMAIN_NAME_UAT }}" >> $GITHUB_OUTPUT
+          echo "api_url=${{ vars.API_URL_UAT }}" >> $GITHUB_OUTPUT
+          echo "webpush_public_key=${{ secrets.WEBPUSH_PUBLIC_KEY_UAT }}" >> $GITHUB_OUTPUT
 
       - name: Configure AWS credentials from Production Account
         uses: aws-actions/configure-aws-credentials@v4
@@ -54,8 +57,8 @@ jobs:
         id: init
         working-directory: ./infra
         run: |
-          sed -i 's/terraform\.tfstate/${{ steps.vars.outputs.domain_name }}\.tfstate/g' backend/dev.conf
-          terraform init -backend-config=backend/dev.conf
+          sed -i 's/terraform\.tfstate/${{ steps.vars.outputs.domain_name }}\.tfstate/g' backend/uat.conf
+          terraform init -backend-config=backend/uat.conf
 
       - name: Terraform Validate
         id: validate
@@ -66,8 +69,8 @@ jobs:
         working-directory: ./infra
         run: terraform plan
         env:
-          TF_VAR_ENV: dev
-          TF_VAR_VERSION: ${{ github.sha }}
+          TF_VAR_ENV: uat
+          TF_VAR_VERSION: ${{ steps.build_version.outputs.full_sha }}
           TF_VAR_DOMAIN: ${{ steps.vars.outputs.domain_name }}
 
       - name: Terraform Apply
@@ -80,13 +83,13 @@ jobs:
           BUCKET_NAME=$(cat bucket_name.txt)
           echo "bucket_name=$BUCKET_NAME" >> $GITHUB_OUTPUT
         env:
-          TF_VAR_ENV: dev
-          TF_VAR_VERSION: ${{ github.sha }}
+          TF_VAR_ENV: uat
+          TF_VAR_VERSION: ${{ steps.build_version.outputs.full_sha }}
           TF_VAR_DOMAIN: ${{ steps.vars.outputs.domain_name }}
 
       - name: Create version file
         run: |
-          echo "${{ github.sha }}" > ./dist/build_version.txt
+          echo "${{ steps.build_version.outputs.full_sha }}" > ./dist/build_version.txt
 
       - name: Upload to S3
         run: |

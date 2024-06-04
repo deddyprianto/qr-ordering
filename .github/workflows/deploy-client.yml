@@ -1,23 +1,15 @@
-name: Deploy to Demo
+name: Deploy to Client
 
 on:
   workflow_dispatch:
     inputs:
-      copy_from_url:
-        description: "The URL where to copy the git version from"
-        required: false
-        type: string
       domain_name:
         description: "Domain name"
-        required: false
+        required: true
         type: string
       api_url:
         description: "API URL"
-        required: false
-        type: string
-      webpush_public_key:
-        description: "Webpush public key"
-        required: false
+        required: true
         type: string
 
 jobs:
@@ -28,7 +20,7 @@ jobs:
         id: build_version
         run: |
           # Extract the build version from the copy_from_url
-          BUILD_VERSION=$(curl -sSL "${{ inputs.copy_from_url || vars.COPY_FROM_URL_DEMO }}/build_version.txt")
+          BUILD_VERSION=$(curl -sSL "${{ vars.COPY_FROM_URL_CLIENT }}/build_version.txt")
           echo "full_sha=$BUILD_VERSION" >> $GITHUB_OUTPUT
 
       - name: Checkout
@@ -39,9 +31,9 @@ jobs:
       - name: Set vars
         id: vars
         run: |
-          echo "domain_name=${{ inputs.domain_name || vars.DOMAIN_NAME_DEMO }}" >> $GITHUB_OUTPUT
-          echo "api_url=${{ inputs.api_url || vars.API_URL_DEMO }}" >> $GITHUB_OUTPUT
-          echo "webpush_public_key=${{ inputs.webpush_public_key || secrets.WEBPUSH_PUBLIC_KEY_DEMO }}" >> $GITHUB_OUTPUT
+          echo "domain_name=${{ inputs.domain_name }}" >> $GITHUB_OUTPUT
+          echo "api_url=${{ inputs.api_url }}" >> $GITHUB_OUTPUT
+          echo "webpush_public_key=${{ secrets.WEBPUSH_PUBLIC_KEY_CLIENT }}" >> $GITHUB_OUTPUT
 
       - name: Configure AWS credentials from Production Account
         uses: aws-actions/configure-aws-credentials@v4
@@ -74,8 +66,8 @@ jobs:
         id: init
         working-directory: ./infra
         run: |
-          sed -i 's/terraform\.tfstate/${{ steps.vars.outputs.domain_name }}\.tfstate/g' backend/demo.conf
-          terraform init -backend-config=backend/demo.conf
+          sed -i 's/terraform\.tfstate/${{ steps.vars.outputs.domain_name }}\.tfstate/g' backend/prod.conf
+          terraform init -backend-config=backend/prod.conf
 
       - name: Terraform Validate
         id: validate
@@ -86,7 +78,7 @@ jobs:
         working-directory: ./infra
         run: terraform plan
         env:
-          TF_VAR_ENV: demo
+          TF_VAR_ENV: prod
           TF_VAR_VERSION: ${{ steps.build_version.outputs.full_sha }}
           TF_VAR_DOMAIN: ${{ steps.vars.outputs.domain_name }}
 
@@ -94,13 +86,13 @@ jobs:
         id: apply
         working-directory: ./infra
         run: |
-          terraform apply --auto-approve | tee apply_output.txt
+          terraform apply --auto-approve
           DISTRIBUTION_ID=$(cat distribution_id.txt)
           echo "distribution_id=$DISTRIBUTION_ID" >> $GITHUB_OUTPUT
           BUCKET_NAME=$(cat bucket_name.txt)
           echo "bucket_name=$BUCKET_NAME" >> $GITHUB_OUTPUT
         env:
-          TF_VAR_ENV: demo
+          TF_VAR_ENV: prod
           TF_VAR_VERSION: ${{ steps.build_version.outputs.full_sha }}
           TF_VAR_DOMAIN: ${{ steps.vars.outputs.domain_name }}
 
