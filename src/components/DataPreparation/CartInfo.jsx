@@ -15,18 +15,13 @@ export const fetchCartInfo = async (dispatch, outlet, cartInfo) => {
   const lastCallTimestamp = localStorage.getItem("lastCallTimestamp");
   const currentDate = new Date().toDateString();
 
-  if (
-    lastCallTimestamp ||
-    lastCallTimestamp === currentDate ||
-    !cartInfo?.uniqueID
-  ) {
-    return;
-  }
-
-  if (outlet.toLowerCase() !== cartInfo?.outletName?.toLowerCase()) {
+  if (outlet.toLowerCase() !== cartInfo?.outletName?.toLowerCase() 
+      || lastCallTimestamp !== currentDate) {
     await apiCart("DELETE", cartInfo?.uniqueID);
     return dispatch(setCartInfo({}));
   }
+  else if(!cartInfo?.uniqueID) return;
+
   try {
     const result = await apiCart("GET", cartInfo.uniqueID, {});
     if (result.resultCode === 200) {
