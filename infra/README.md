@@ -16,7 +16,7 @@ graph LR
 
 `edgecafetraining.qro-uat.equipweb.biz` - Used by QA to test a set of new features and bug fixes. This will allow the developers to continue working on new features without changing the code base that QA team is testing.
 
-`edgecafetraining.qro.equipweb.biz` - This is the latest stable version tested by QA. It will be used for creating/updating client production websites.
+`edgecafe.qro.equipweb.biz` - This is the latest stable version tested by QA. It will be used for creating/updating client production websites.
 
 `<clientname>.qro.equipweb.biz` - Client production website.
 
@@ -29,7 +29,7 @@ graph TB
  UAT["`UAT
  edgecafetraining.qro-uat`"] --> Prod
  Prod["`Prod
- edgecafetraining.qro`"] --> Clients
+ edgecafe.qro`"] --> Clients
  Clients["`Clients
  clientname.qro`"]
 ```
@@ -81,7 +81,7 @@ graph LR
 
   Example values:
 
-  - Domain name: `edgecafetraining.qro.equipweb.biz`
+  - Domain name: `amazingcafe.qro.equipweb.biz`
   - API URL: `https://t1.equipweb.biz/EdgeCafeTraining/ordering/api`
 
-- This will copy the most stable version(edgecafetraining.qro.equipweb.biz) of the app to the client website.
+- This will copy the most stable version(edgecafe.qro.equipweb.biz) of the app to the client website.
