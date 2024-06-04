@@ -2,7 +2,7 @@ import Layout from "./containers/Layout";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Loading from "./components/Loading";
 import "./scss/App.scss";
-
+import PropTypes from "prop-types";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -13,6 +13,7 @@ import {
 import {setIsSearchItem} from "./app/dataSlice";
 import { fetchAuthMember, fetchCartInfo, fetchInsight, fetchLayout, fetchOutletAvailability, fetchOutletSetting, urlQueryExtractor } from "./components/DataPreparation";
 import { startListeningInterval } from "./helper/fetchOrderStatus";
+import {builderNumberVersion} from '../build-version.json';
 
 const router = createBrowserRouter([
   {
@@ -51,7 +52,9 @@ const router = createBrowserRouter([
   },
 ]);
 
-export default function App() {
+ function App({version}) {
+  console.log({builderNumberVersion})
+  console.log({version})
   const dispatch = useDispatch();
   const { cartInfo, orderType, memberInfo, cartToListen } = useSelector(
     (state) => state.dataSlicePersisted,
@@ -104,3 +107,9 @@ export default function App() {
 
   return <RouterProvider router={router} fallbackElement={<Loading />} />;
 }
+
+
+App.propTypes = {
+  version: PropTypes.any,
+};
+export default App;

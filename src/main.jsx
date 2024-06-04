@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import { persistor, store } from "../src/app/store";
 import { PersistGate } from "redux-persist/integration/react";
 import './i18n';
+import packageJson from '../package.json'
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
@@ -26,7 +27,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <React.StrictMode>
-        <App />
+      <App version={packageJson.version} />
       </React.StrictMode>
     </PersistGate>
   </Provider>,
