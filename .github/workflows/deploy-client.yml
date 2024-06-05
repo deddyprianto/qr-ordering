@@ -31,6 +31,16 @@ jobs:
       - name: Set vars
         id: vars
         run: |
+          pattern="^.*\.qro\.equipweb\.biz$"
+          domain_name="${{ inputs.domain_name }}"
+          # Check if the variable matches the regex pattern
+          if [[ $domain_name =~ $pattern ]]; then
+              echo "Domain name matches the regex pattern."
+          else
+              echo "Domain name does not match the regex pattern."
+              exit 1
+          fi
+
           echo "domain_name=${{ inputs.domain_name }}" >> $GITHUB_OUTPUT
           echo "api_url=${{ inputs.api_url }}" >> $GITHUB_OUTPUT
           echo "webpush_public_key=${{ secrets.WEBPUSH_PUBLIC_KEY_CLIENT }}" >> $GITHUB_OUTPUT
