@@ -70,7 +70,7 @@ graph LR
 - To deploy to `Prod` after QA approval, you'll need manually trigger the `Deploy to Prod` Github action.
 - This will take the version in `UAT` environment and deploy the same version to `Prod`.
 
-### Deploy to Clients
+#### Deploy to Clients
 
 ```mermaid
 graph LR
@@ -115,7 +115,7 @@ flowchart TB
 
 ```
 
-### Deploy to RC
+#### Deploy to RC
 
 ```mermaid
 graph LR
@@ -134,7 +134,7 @@ graph LR
 - The branch name cannot be `main`.
 - After QA have approved the RC, the `recommended` flow would be to PR(merge) the changes to the `main` branch and follow the normal cycle. For cases that this cannot be followed, use the 'Deploy from RC to Client`.
 
-### Deploy from RC to Client
+#### Deploy from RC to Client
 
 ```mermaid
 graph LR
