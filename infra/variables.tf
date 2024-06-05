@@ -10,7 +10,7 @@ variable "ENV" {
 
 variable "SSL_CERT_ARN" {
   type        = string
-  default     = "arn:aws:acm:us-east-1:977902117142:certificate/a4d03694-d5f8-4544-a224-1e282a9d0982"
+  default     = "arn:aws:acm:us-east-1:977902117142:certificate/c8612b38-89e3-44d0-b799-72a26fe603ad"
   description = "*.qro.equipweb.biz certificate"
 }
 
