@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { Stripe } from "./Stripe";
 import { NotFound } from "./NotFound";
+import { Fomo } from "./Fomo";
 
 export function Component() {
   const { paymentMethod } = useSelector((state) => state.dataSlice);
@@ -11,9 +12,9 @@ export function Component() {
       case "stripe":
         return <Stripe />;
       case "fomo":
-        return null;
+        return <Fomo />;
       default:
-        return <NotFound />;
+        return <NotFound msg={"No payment mode selected."}/>;
     }
   };
 
