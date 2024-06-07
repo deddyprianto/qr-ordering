@@ -6,7 +6,7 @@ export const apiCart = async (method, path, body) => {
 
   let token;
 
-  if (objToken.type === "member") {
+  if (objToken?.type === "member") {
     const responseAuth = await callAPI(
       `${import.meta.env.VITE_API_URL}/auth`,
       "GET",
