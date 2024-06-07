@@ -8,7 +8,7 @@ describe("TESTING CART PAGE", () => {
         "QS_TABLE_NO_AND_OUTLET_NAME",
       )}`,
     );
-    cy.get("#takeaway", { timeout: 5000 })
+    cy.get("#dinein", { timeout: 5000 })
       .should("be.visible")
       .should("be.enabled")
       .click();
@@ -153,6 +153,8 @@ describe("TESTING CART PAGE", () => {
     cy.get("#renderCartSummary").should("be.visible").click();
     cy.get("#SkeletonPaymentInput").should("be.visible");
 
+    // https://t1.equipweb.biz/EdgeCafeTraining/ordering/api/outlets/Edge%20Cafe/paymentmodes?
+
     cy.get("#buttonFooterCart")
       .scrollIntoView()
       .should("have.attr", "disabled");
@@ -163,7 +165,7 @@ describe("TESTING CART PAGE", () => {
     ).as("paymentmodes");
 
     cy.get("button#paymentMethod")
-      .eq(7)
+      .first()
       .click()
       .then(() => {
         cy.intercept(
@@ -174,41 +176,52 @@ describe("TESTING CART PAGE", () => {
           expect(interception.response.statusCode).to.equal(200);
           const { data } = interception.response.body;
           cy.get("div#paymentModeName").eq(0).contains(data[0].displayName);
+
+          const stripe = data.find((item) => item.provider === "Stripe");
+          const fomo = data.find((item) => item.provider === "FOMO");
+
+          if (stripe?.provider === "Stripe") {
+            cy.get("#buttonFooterCart").should("not.have.attr", "disabled");
+            cy.get("#buttonFooterCart")
+              .should("be.visible")
+              .should("be.enabled")
+              .click();
+            cy.get("#SkeletonPaymentInput").should("exist");
+            cy.get("#payment-form").should("exist");
+            cy.get('iframe[name^="__privateStripeFrame"]')
+              .first()
+              .then(($iframe) => {
+                cy.wait(5000);
+                cy.wrap($iframe).should("be.visible");
+                cy.wrap($iframe).its("0.contentDocument").should("exist");
+                cy.wrap($iframe)
+                  .its("0.contentDocument")
+                  .then(cy.wrap)
+                  .find('input[name="number"]')
+                  .type("4242424242424242");
+
+                cy.wrap($iframe)
+                  .its("0.contentDocument")
+                  .then(cy.wrap)
+                  .find('input[name="expiry"]')
+                  .type("333");
+                cy.wrap($iframe)
+                  .its("0.contentDocument")
+                  .then(cy.wrap)
+                  .find('input[name="cvc"]')
+                  .type("333");
+              });
+          } else if (fomo?.provider === "FOMO") {
+            cy.get("#buttonFooterCart").should("not.have.attr", "disabled");
+            cy.get("#buttonFooterCart").should("be.visible").click();
+            cy.get("#SkeletonPaymentInput").should("exist");
+
+            cy.url().then((url) => {
+              cy.log("Current URL:", url);
+            });
+            cy.interactWithFomoPayIframe();
+          }
         });
-      });
-
-    cy.get("#buttonFooterCart").should("not.have.attr", "disabled");
-    cy.get("#buttonFooterCart")
-      .should("be.visible")
-      .should("be.enabled")
-      .click();
-
-    cy.get("#SkeletonPaymentInput").should("exist");
-    cy.get("#LabelOrderPayment").contains("Order Payment");
-
-    cy.get("#payment-form").should("exist");
-    cy.get('iframe[name^="__privateStripeFrame"]')
-      .first()
-      .then(($iframe) => {
-        cy.wait(5000);
-        cy.wrap($iframe).should("be.visible");
-        cy.wrap($iframe).its("0.contentDocument").should("exist");
-        cy.wrap($iframe)
-          .its("0.contentDocument")
-          .then(cy.wrap)
-          .find('input[name="number"]')
-          .type("4242424242424242");
-
-        cy.wrap($iframe)
-          .its("0.contentDocument")
-          .then(cy.wrap)
-          .find('input[name="expiry"]')
-          .type("333");
-        cy.wrap($iframe)
-          .its("0.contentDocument")
-          .then(cy.wrap)
-          .find('input[name="cvc"]')
-          .type("333");
       });
 
     cy.get("#footerButtonSubmit")

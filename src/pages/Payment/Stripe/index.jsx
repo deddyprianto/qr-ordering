@@ -5,7 +5,6 @@ import {RenderCheckoutPage} from './CheckoutForm';
 import { useSelector } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
 import { apiCart } from "../../../services/Cart";
-import { useEdgeSnack } from "../../../components/EdgeSnack/utils/useEdgeSnack";
 import { NotFound } from "../NotFound";
 import { SkeletonPaymentInput } from "../../../components/Skeleton/SkeletonPaymentInput";
 
@@ -16,7 +15,7 @@ export const Stripe = () => {
   const [options, setOptions] = useState({});
   const [loading, setLoading] = useState(true);
   const [failedRender, setFailedRender] = useState(false);
-  const toast = useEdgeSnack();
+  const [paymentErrorMsg, setPaymentErrorMsg] = useState("");
 
   useEffect(() => {
     preparation.current();
@@ -56,7 +55,7 @@ export const Stripe = () => {
         });
       } else {
         setFailedRender(true);
-        toast.open(result.message, "error");
+        setPaymentErrorMsg(result.message);
       }
       setLoading(false);
     } catch (error) {
@@ -66,7 +65,7 @@ export const Stripe = () => {
   };
 
   if (loading) return <SkeletonPaymentInput color={theme} />;
-  if (failedRender) return <NotFound />;
+  else if (failedRender) return <NotFound msg={paymentErrorMsg}/>;
   else {
     return (
       <Elements stripe={stripePromise} options={options}>
