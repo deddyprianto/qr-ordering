@@ -53,61 +53,60 @@ const router = createBrowserRouter([
 ]);
 
  function App({version}) {
-  // this console.log just only log the information about builderNumberVersion and version the qr-ordering
-  console.log({builderNumberVersion})
-  console.log({version})
-  const dispatch = useDispatch();
-  const { cartInfo, orderType, memberInfo, cartToListen } = useSelector(
-    (state) => state.dataSlicePersisted,
-  );
+   // this console.log just only log the information about builderNumberVersion and version the qr-ordering
+   console.log({ builderNumberVersion });
+   console.log({ version });
+   const dispatch = useDispatch();
+   const { cartInfo, orderType, memberInfo, cartToListen } = useSelector(
+     (state) => state.dataSlicePersisted,
+   );
+   const listenProcessedCart = () => {
+     try {
+       if (cartToListen?.length < 1) return;
+       for (const cart of cartToListen) {
+         if (["COMPLETED", "VOIDED", "CANCELLED"].includes(cart.status)) {
+           const newCartToListen = cartToListen.filter(
+             (cartObj) => cartObj.cartID !== cart.cartID,
+           );
+           dispatch(setCartToListen(newCartToListen));
+           continue;
+         }
 
-  const listenProcessedCart = () => {
-    try {
-      if (cartToListen?.length < 1) return;
-      for (const cart of cartToListen) {
-        if (["COMPLETED", "VOIDED", "CANCELLED"].includes(cart.status)) {
-          const newCartToListen = cartToListen.filter(
-            (cartObj) => cartObj.cartID !== cart.cartID,
-          );
-          dispatch(setCartToListen(newCartToListen));
-          continue;
-        }
+         startListeningInterval(cart.cartID, dispatch);
+       }
+     } catch (error) {
+       console.log(error);
+     }
+   };
 
-        startListeningInterval(cart.cartID, dispatch);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+   const dataPreparation = useRef();
+   dataPreparation.current = () => {
+     const outlet = urlQueryExtractor(dispatch);
+     if (!outlet) return;
+     fetchLayout(dispatch);
+     fetchAuthMember(dispatch, memberInfo);
+     fetchCartInfo(dispatch, outlet, cartInfo);
+     fetchOutletSetting(dispatch, outlet, orderType);
+     fetchInsight(dispatch);
+     fetchOutletAvailability(dispatch, outlet);
+     listenProcessedCart();
+   };
 
-  const dataPreparation = useRef();
-  dataPreparation.current = () => {
-    const outlet = urlQueryExtractor(dispatch);
-    if (!outlet) return;
-    fetchLayout(dispatch);
-    fetchAuthMember(dispatch, memberInfo);
-    fetchCartInfo(dispatch, outlet, cartInfo);
-    fetchOutletSetting(dispatch, outlet, orderType);
-    fetchInsight(dispatch);
-    fetchOutletAvailability(dispatch, outlet);
-    listenProcessedCart();
-  };
+   useEffect(() => {
+     dispatch(setIsSearchItem(false));
+     dispatch(
+       setSearchItemObj({
+         doSearch: false,
+         searchText: "",
+         isResetList: true,
+       }),
+     );
+     dispatch(setEnableSearchUsingScroll(false));
+     dataPreparation.current();
+   }, [dispatch]);
 
-  useEffect(() => {
-    dispatch(setIsSearchItem(false));
-    dispatch(
-      setSearchItemObj({
-        doSearch: false,
-        searchText: "",
-        isResetList: true,
-      }),
-    );
-    dispatch(setEnableSearchUsingScroll(false));
-    dataPreparation.current();
-  }, [dispatch]);
-
-  return <RouterProvider router={router} fallbackElement={<Loading />} />;
-}
+   return <RouterProvider router={router} fallbackElement={<Loading />} />;
+ }
 
 
 App.propTypes = {
