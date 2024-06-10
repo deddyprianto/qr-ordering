@@ -85,7 +85,8 @@ export default function Layout() {
             width: "100vw",
             display: "grid",
             gridTemplateColumns: "1fr",
-            gridTemplateRows: isSearchItem ? "85px 1fr" : "102px 1fr",
+            gridTemplateRows:
+              isSearchItem || !theme?.Image_Logo ? "85px 1fr" : "102px 1fr",
             gap: "0px 0px",
             gridAutoFlow: "row",
             gridTemplateAreas: '"."\n    "."\n    "."',
