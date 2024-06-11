@@ -30,6 +30,7 @@ export const fetchCartInfo = async (dispatch, outlet, cartInfo) => {
 
   if (shouldDeleteCart) {
     if (cartInfo?.uniqueID) {
+      dispatch(setOrderType(""));
       await apiCart("DELETE", cartInfo?.uniqueID);
       console.log("DELETE SUCCESS");
     }

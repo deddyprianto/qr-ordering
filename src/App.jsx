@@ -13,7 +13,6 @@ import {
 import {setIsSearchItem} from "./app/dataSlice";
 import { fetchAuthMember, fetchCartInfo, fetchInsight, fetchLayout, fetchOutletAvailability, fetchOutletSetting, urlQueryExtractor } from "./components/DataPreparation";
 import { startListeningInterval } from "./helper/fetchOrderStatus";
-import {builderNumberVersion} from '../build-version.json';
 
 const router = createBrowserRouter([
   {
@@ -54,8 +53,7 @@ const router = createBrowserRouter([
 
  function App({version}) {
    // this console.log just only log the information about builderNumberVersion and version the qr-ordering
-   console.log({ builderNumberVersion });
-   console.log({ version });
+   console.log({ builderNumberVersion: 1718101965, version });
    const dispatch = useDispatch();
    const { cartInfo, orderType, memberInfo, cartToListen } = useSelector(
      (state) => state.dataSlicePersisted,
