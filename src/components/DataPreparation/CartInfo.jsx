@@ -12,15 +12,29 @@ const resetCartAndOrderType = (dispatch, data) => {
 };
 
 export const fetchCartInfo = async (dispatch, outlet, cartInfo) => {
+  const urlQuery = window.location.search;
+  const queryParams = new URLSearchParams(urlQuery);
+  const queryStr = queryParams.get("input");
+  const decodeQueryStr = window.atob(queryStr);
+  const decodedParams = new URLSearchParams(decodeQueryStr);
+  const tableNo = decodedParams.get("tableNo");
+
   const lastCallTimestamp = localStorage.getItem("lastCallTimestamp");
   const currentDate = new Date().toDateString();
 
-  if (outlet.toLowerCase() !== cartInfo?.outletName?.toLowerCase() 
-      || lastCallTimestamp !== currentDate) {
-    await apiCart("DELETE", cartInfo?.uniqueID);
+  const shouldDeleteCart =
+    lastCallTimestamp !== currentDate ||
+    (cartInfo?.outletName &&
+      outlet.toLowerCase() !== cartInfo?.outletName?.toLowerCase()) ||
+    (tableNo && tableNo !== cartInfo?.tableNo);
+
+  if (shouldDeleteCart) {
+    if (cartInfo?.uniqueID) {
+      await apiCart("DELETE", cartInfo?.uniqueID);
+      console.log("DELETE SUCCESS");
+    }
     return dispatch(setCartInfo({}));
   }
-  else if(!cartInfo?.uniqueID) return;
 
   try {
     const result = await apiCart("GET", cartInfo.uniqueID, {});

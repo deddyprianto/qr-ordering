@@ -115,7 +115,7 @@ export default function Header() {
     } else {
       return (
         <div>
-          {(theme?.Image_Logo || theme?.Image_Item_Place_Holder) && (
+          {theme?.Image_Logo || theme?.Image_Item_Place_Holder ? (
             <ImageOptimization
               imageItems={theme?.Image_Logo}
               customStyle={{
@@ -123,6 +123,8 @@ export default function Header() {
               }}
               width={43}
             />
+          ) : (
+            <div style={{ visibility: "hidden" }}>.</div>
           )}
 
           <div
