@@ -51,8 +51,7 @@ const router = createBrowserRouter([
   },
 ]);
 
- function App({version}) {
-   // this console.log just only log the information about builderNumberVersion and version the qr-ordering
+ function App({ version }) {
    console.log({ builderNumberVersion: 1718160793, version });
    const dispatch = useDispatch();
    const { cartInfo, orderType, memberInfo, cartToListen } = useSelector(
