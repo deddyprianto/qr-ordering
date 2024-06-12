@@ -1,4 +1,8 @@
-import { setAccessToken, setCartInfo } from "../../app/dataSlicePersisted";
+import {
+  setAccessToken,
+  setCartInfo,
+  setOrderType,
+} from "../../app/dataSlicePersisted";
 import { callAPI } from "../../services/services";
 
 export const fetchAuthMember = async (dispatch, memberInfo) => {
@@ -6,9 +10,10 @@ export const fetchAuthMember = async (dispatch, memberInfo) => {
   const currentDate = new Date().toDateString();
   try {
     if (!lastCallTimestamp || lastCallTimestamp !== currentDate) {
+      dispatch(setOrderType(""));
       dispatch(setCartInfo({}));
       const responseAuth = await callAPI(
-        `${import.meta.env.VITE_API_URL}/auth`,
+        `${import.meta.env.VITE_API_URL}/auth,`,
         "GET",
       );
       localStorage.setItem("lastCallTimestamp", currentDate);

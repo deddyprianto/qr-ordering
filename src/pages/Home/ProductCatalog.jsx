@@ -65,7 +65,7 @@ export const ProductCatalog = () => {
             return (
               <RenderItemProduct
                 viewType={viewType}
-                cartId={item.productInfo.uniqueID}
+                cartId={item.productInfo?.uniqueID}
                 key={`${item.buttonType}_${item.refNo}`}
                 cartID={cartInfo?.uniqueID}
                 qtyInCart={item?.cartQuantity || 0}

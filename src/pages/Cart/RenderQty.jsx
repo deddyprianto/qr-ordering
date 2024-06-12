@@ -4,7 +4,7 @@ import { apiProduct } from "../../services/Product";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { apiCart } from "../../services/Cart";
-import { setCartInfo, setOrderType } from "../../app/dataSlicePersisted";
+import { setCartInfo } from "../../app/dataSlicePersisted";
 import { useEdgeSnack } from "../../components/EdgeSnack/utils/useEdgeSnack";
 
 const RenderQty = ({
@@ -65,7 +65,6 @@ const RenderQty = ({
           "error",
         );
         dispatch(setCartInfo(result.data));
-        dispatch(setOrderType(""));
       }
       setIsLoadingQty(false);
     } catch (error) {

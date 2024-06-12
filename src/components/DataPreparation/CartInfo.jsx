@@ -45,6 +45,7 @@ export const fetchCartInfo = async (dispatch, outlet, cartInfo) => {
       throw result.message;
     }
   } catch (error) {
+    dispatch(setOrderType(""));
     dispatch(setCartInfo({}));
     console.log(error);
   }
