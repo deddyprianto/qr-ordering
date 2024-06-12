@@ -4,7 +4,7 @@ import { apiProduct } from "../../services/Product";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { apiCart } from "../../services/Cart";
-import { setCartInfo } from "../../app/dataSlicePersisted";
+import { setCartInfo, setOrderType } from "../../app/dataSlicePersisted";
 import { useEdgeSnack } from "../../components/EdgeSnack/utils/useEdgeSnack";
 
 const RenderQty = ({
@@ -53,18 +53,25 @@ const RenderQty = ({
           `${idCart}/${body.uniqueID}/changeitemqty`,
           body,
         );
-        toast.open(`${item?.productInfo?.itemName} has been updated in cart`, 'success')
+        toast.open(
+          `${item?.productInfo?.itemName} has been updated in cart`,
+          "success",
+        );
         dispatch(setCartInfo(result.data));
       } else {
         const result = await apiCart("DELETE", `${idCart}/${item.uniqueID}`);
-        toast.open(`${item?.productInfo?.itemName} has been removed from cart`, 'error')
+        toast.open(
+          `${item?.productInfo?.itemName} has been removed from cart`,
+          "error",
+        );
         dispatch(setCartInfo(result.data));
+        dispatch(setOrderType(""));
       }
       setIsLoadingQty(false);
     } catch (error) {
-      toast.open(`Failed to modify item quantity`, 'error')
+      toast.open(`Failed to modify item quantity`, "error");
       setIsLoadingQty(false);
-      console.log(error)
+      console.log(error);
     }
   };
 
