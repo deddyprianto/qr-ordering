@@ -25,7 +25,7 @@ export const RenderButtonAddToCart = ({
   if ((listItemInCart || [])?.length<1)
     return (
       <RenderButtonAdd
-        id={item.itemNo}
+        id={item?.itemNo}
         isLoading={isLoading}
         handleClickButtonAdd={handleClickButtonAdd}
       />

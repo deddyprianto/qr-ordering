@@ -53,18 +53,24 @@ const RenderQty = ({
           `${idCart}/${body.uniqueID}/changeitemqty`,
           body,
         );
-        toast.open(`${item?.productInfo?.itemName} has been updated in cart`, 'success')
+        toast.open(
+          `${item?.productInfo?.itemName} has been updated in cart`,
+          "success",
+        );
         dispatch(setCartInfo(result.data));
       } else {
         const result = await apiCart("DELETE", `${idCart}/${item.uniqueID}`);
-        toast.open(`${item?.productInfo?.itemName} has been removed from cart`, 'error')
+        toast.open(
+          `${item?.productInfo?.itemName} has been removed from cart`,
+          "error",
+        );
         dispatch(setCartInfo(result.data));
       }
       setIsLoadingQty(false);
     } catch (error) {
-      toast.open(`Failed to modify item quantity`, 'error')
+      toast.open(`Failed to modify item quantity`, "error");
       setIsLoadingQty(false);
-      console.log(error)
+      console.log(error);
     }
   };
 

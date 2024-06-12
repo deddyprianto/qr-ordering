@@ -10,6 +10,7 @@ import {
   setCartIdToShow,
   setCartInfo,
   setIsDataOrder,
+  setOrderType,
   updateCartToListen,
 } from "../../app/dataSlicePersisted";
 import { startListeningInterval } from "../../helper/fetchOrderStatus";
@@ -35,6 +36,7 @@ export function Component() {
           status: "PENDING",
         }),
       );
+      dispatch(setOrderType(""));
       dispatch(setCartInfo({}));
       startListeningInterval(cartParamsIsExist, dispatch);
     }

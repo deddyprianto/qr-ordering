@@ -40,7 +40,7 @@ const RenderGridView = ({
       >
         <ImageOptimization
           altCustom={"itemImage"}
-          imageItems={item.defaultImageURL || theme.Image_Item_Place_Holder}
+          imageItems={item?.defaultImageURL || theme?.Image_Item_Place_Holder}
           classNaming="h-full w-full object-cover object-center"
           customStyle={{
             borderTopLeftRadius: "16px",
@@ -49,7 +49,7 @@ const RenderGridView = ({
         />
         {(item?.isDiscounted || false) && <RenderTagPromo />}
         <div className="flex gap-1 absolute bottom-0">
-          <RenderTagInsight insights={item.insight} />
+          <RenderTagInsight insights={item?.insight} />
         </div>
       </button>
 
