@@ -13,7 +13,7 @@ export const fetchAuthMember = async (dispatch, memberInfo) => {
       dispatch(setOrderType(""));
       dispatch(setCartInfo({}));
       const responseAuth = await callAPI(
-        `${import.meta.env.VITE_API_URL}/auth,`,
+        `${import.meta.env.VITE_API_URL}/auth`,
         "GET",
       );
       localStorage.setItem("lastCallTimestamp", currentDate);

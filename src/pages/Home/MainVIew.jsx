@@ -73,12 +73,10 @@ const MainView = () => {
   const fetchAllSubGroupItem = async (subGroup, isDataSubGroupExist) => {
     setIsLoading(true);
     const firstItems = subGroup[0]?.items || [];
-
     for (const sb of subGroup) {
       if (!sb.items) {
         sb.items = [...firstItems];
       }
-
       let dataLength = 1;
       while (sb.items.length < dataLength && isDataSubGroupExist) {
         let result = await getMenuItem(
@@ -96,6 +94,32 @@ const MainView = () => {
     dispatch(setMenuSubGroup([...subGroup]));
     setIsLoading(false); // Set loading to false after fetching data
   };
+
+  async function fetchMenuItemIsNotHaveSubGroup(type, refNo, setIsLoading) {
+    let tempSubGroup = [
+      {
+        items: [],
+        buttonType: type,
+        refNo: refNo,
+      },
+    ];
+    setIsLoading(true);
+    for (const sb of tempSubGroup) {
+      let dataLength = 1;
+      while (sb.items.length < dataLength) {
+        let result = await getMenuItem(type, refNo, sb.items.length);
+        dataLength = result.dataLength;
+        let addMenu = mapCartAndProduct(result.tempItem, cartInfo);
+        sb.items = sb.items.concat(addMenu);
+        if (result.tempItem.length === 0) {
+          break;
+        }
+      }
+    }
+    setIsLoading(false);
+    return tempSubGroup;
+  }
+
   const handleSelectGroup = async (type, refNo) => {
     dispatch(setSaveRefNoGroup(refNo));
     dispatch(setMenuSubGroup([]));
@@ -106,24 +130,13 @@ const MainView = () => {
       setSelectedSubGroup(data.tempSubGroup[0].refNo);
       fetchAllSubGroupItem(data.tempSubGroup, true);
     } else {
-      setIsLoading(true);
-      let tempSubGroup = [
-        {
-          items: data.tempItem,
-          buttonType: type,
-          refNo: refNo,
-        },
-      ];
-      dispatch(
-        setMenuSubGroup([
-          {
-            refNo: "",
-            items: data.tempItem,
-          },
-        ]),
-      );
-      fetchAllSubGroupItem(tempSubGroup);
-      setIsLoading(false);
+      fetchMenuItemIsNotHaveSubGroup(type, refNo, setIsLoading)
+        .then((tempSubGroup) => {
+          dispatch(setMenuSubGroup(tempSubGroup));
+        })
+        .catch((error) => {
+          console.error("Error fetching menu items:", error);
+        });
     }
   };
 
@@ -193,6 +206,7 @@ const MainView = () => {
                 marginTop: "16px",
                 color: theme.textColor,
               }}
+              id="labelHome"
             >
               <Trans i18nKey={"you_may_like_this"} />
             </p>
