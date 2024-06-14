@@ -26,7 +26,7 @@ export const fetchCartInfo = async (dispatch, outlet, cartInfo) => {
     lastCallTimestamp !== currentDate ||
     (cartInfo?.outletName &&
       outlet.toLowerCase() !== cartInfo?.outletName?.toLowerCase()) ||
-    (tableNo && tableNo !== cartInfo?.tableNo);
+    (cartInfo?.tableNo && tableNo !== cartInfo?.tableNo);
 
   if (shouldDeleteCart) {
     if (cartInfo?.uniqueID) {
