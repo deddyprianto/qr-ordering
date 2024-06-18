@@ -90,7 +90,6 @@ const MainView = () => {
         isDataSubGroupExist = calculateIsDataSubGroupExist(sb.items);
       }
     }
-
     dispatch(setMenuSubGroup([...subGroup]));
     setIsLoading(false); // Set loading to false after fetching data
   };
@@ -120,6 +119,30 @@ const MainView = () => {
     return tempSubGroup;
   }
 
+  async function fetchAllGroups(type, refNo, setIsLoading) {
+    let data = [
+      {
+        tempSubGroup: [],
+        buttonType: type,
+        refNo: refNo,
+      },
+    ];
+    setIsLoading(true);
+    for (const sb of data) {
+      let dataLength = 1;
+      while (sb.tempSubGroup.length < dataLength) {
+        let result = await getMenuItem(type, refNo, sb.tempSubGroup.length);
+        dataLength = result.dataLength;
+        sb.tempSubGroup = sb.tempSubGroup.concat(result.tempSubGroup);
+        if (result.tempSubGroup.length === 0) {
+          break;
+        }
+      }
+    }
+    setIsLoading(false);
+    return data;
+  }
+
   const handleSelectGroup = async (type, refNo) => {
     dispatch(setSaveRefNoGroup(refNo));
     dispatch(setMenuSubGroup([]));
@@ -128,7 +151,11 @@ const MainView = () => {
     dispatch(setHasSubGroup(data.tempSubGroup?.length > 0));
     if (data.tempSubGroup?.length > 0) {
       setSelectedSubGroup(data.tempSubGroup[0].refNo);
-      fetchAllSubGroupItem(data.tempSubGroup, true);
+      fetchAllGroups(type, refNo, setIsLoading)
+        .then((res) => {
+          fetchAllSubGroupItem(res[0].tempSubGroup, true);
+        })
+        .catch((e) => console.log("YOUR LOG =>", e));
     } else {
       fetchMenuItemIsNotHaveSubGroup(type, refNo, setIsLoading)
         .then((tempSubGroup) => {

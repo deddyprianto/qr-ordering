@@ -36,17 +36,17 @@ export const fetchCartInfo = async (dispatch, outlet, cartInfo) => {
     }
     return dispatch(setCartInfo({}));
   }
-
-  try {
-    const result = await apiCart("GET", cartInfo.uniqueID, {});
-    if (result.resultCode === 200) {
-      resetCartAndOrderType(dispatch, result.data);
-    } else {
-      throw result.message;
+  if (cartInfo?.uniqueID) {
+    try {
+      const result = await apiCart("GET", cartInfo.uniqueID, {});
+      if (result.resultCode === 200) {
+        resetCartAndOrderType(dispatch, result.data);
+      } else {
+        throw result.message;
+      }
+    } catch (error) {
+      dispatch(setCartInfo({}));
+      console.log(error);
     }
-  } catch (error) {
-    dispatch(setOrderType(""));
-    dispatch(setCartInfo({}));
-    console.log(error);
   }
 };
