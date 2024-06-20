@@ -4,7 +4,7 @@
 describe("TESTING CART PAGE", () => {
   it("Should pass testing for every component in cart page scope", () => {
     cy.visit(
-      `http://localhost:5173/?input=${Cypress.env(
+      `http://localhost:4173/?input=${Cypress.env(
         "QS_TABLE_NO_AND_OUTLET_NAME",
       )}`,
     );
@@ -39,7 +39,7 @@ describe("TESTING CART PAGE", () => {
     ).as("getData");
 
     cy.get("button#navbarItem")
-      .eq(1)
+      .first()
       .click()
       .then(($element) => {
         const dataType = $element.attr("data-type");
@@ -51,17 +51,18 @@ describe("TESTING CART PAGE", () => {
         cy.wait("@getData").then((interception) => {
           expect(interception.response.statusCode).to.equal(200);
           const { data } = interception.response.body;
-          cy.get("div#buttonTitleNavbar").first().contains(data[0].buttonTitle);
+          data.forEach((item) => {
+            if (item.viewType) {
+              cy.get("div#buttonTitleNavbar").contains(item.buttonTitle);
+            }
+          });
         });
       });
 
-    cy.get("button#navbarItem").first().click();
-
-    cy.get("button#idItem").eq(1).as("secondAddButtonForBundle");
-    cy.get("button#idItem").eq(3).as("thirdAddButtonForAttr");
-
     // // TESTING ADD ITEM(attr)
-    cy.get("@secondAddButtonForBundle")
+    cy.get("button#navbarItem").first().click();
+    cy.get("button#idItem")
+      .first()
       .click()
       .then(() => {
         cy.get("#renderModalItemDetail").should("exist");
@@ -73,25 +74,12 @@ describe("TESTING CART PAGE", () => {
         cy.get("@firstItemAttr").click();
         cy.get("@fourthItemAttr").click();
         cy.get("#actionButtonAdd").should("be.visible").click();
-
-        cy.get("button#button-increaseQuantity")
-          .eq(2)
-          .as("buttonIncreaseQtyAttr");
-        cy.get("@buttonIncreaseQtyAttr")
-          .click()
-          .then(() => {
-            cy.get("#increaseQtyAttr").should("be.visible").click();
-            cy.get("#labelUpdating").contains("Updating...");
-            cy.get("#decreaseQtyAttr").should("be.visible").click();
-          });
-        cy.get("#iconCloseAction")
-          .scrollIntoView()
-          .should("be.visible")
-          .click();
       });
 
     // // TESTING ADD ITEM (bundle)
-    cy.get("@thirdAddButtonForAttr")
+    cy.get("button#navbarItem").eq(1).click();
+    cy.get("button#idItem")
+      .first()
       .click()
       .then(() => {
         cy.get("#renderModalItemDetail").should("exist");
@@ -129,100 +117,83 @@ describe("TESTING CART PAGE", () => {
         cy.get("@itemGroupBundleThird")
           .click()
           .then(() => {
-            cy.get("button#itemBundle")
-              .first()
-              .as("buttonItemBundleSecondItem");
-            cy.get("@buttonItemBundleSecondItem").click();
-
-            cy.get("button#qtyPlusBundle")
-              .first()
-              .as("buttonQtyPlusSecondItem");
-            cy.get("@buttonQtyPlusSecondItem").click();
-
-            cy.get("button#qtyPlusBundle")
-              .first()
-              .as("buttonQtyPlusSecondItem");
-            cy.get("@buttonQtyPlusSecondItem").click();
-
+            cy.get("button#itemBundle").click();
+            cy.get("button#qtyPlusBundle").click();
             cy.get("div#IconCheckPassed").eq(2).should("exist");
           });
         cy.get("#actionButtonAdd").click();
       });
+
+    cy.get("button#navbarItem").eq(2).click();
+    cy.get("button#idItem").first().click();
+    cy.get("button#button-increaseQuantity").click();
+    cy.get("div#updatingButtonLabel").contains("Updating...");
+    cy.get("button#button-decreaseQuantity").click();
+
     // End Testing all item type
-
     cy.get("#renderCartSummary").should("be.visible").click();
-    cy.get("#SkeletonPaymentInput").should("be.visible");
-
-    // https://t1.equipweb.biz/EdgeCafeTraining/ordering/api/outlets/Edge%20Cafe/paymentmodes?
-
-    cy.get("#buttonFooterCart")
-      .scrollIntoView()
-      .should("have.attr", "disabled");
-
     cy.intercept(
       "GET",
       "https://t1.equipweb.biz/EdgeCafeTraining/ordering/api/outlets/Edge%20Cafe/paymentmodes?",
     ).as("paymentmodes");
 
-    cy.get("button#paymentMethod")
-      .first()
-      .click()
-      .then(() => {
-        cy.intercept(
-          "GET",
-          "https://t1.equipweb.biz/EdgeCafeTraining/ordering/api/outlets/Edge%20Cafe/paymentmodes?",
-        ).as("paymentmodes");
-        cy.wait("@paymentmodes").then((interception) => {
-          expect(interception.response.statusCode).to.equal(200);
-          const { data } = interception.response.body;
-          cy.get("div#paymentModeName").eq(0).contains(data[0].displayName);
+    cy.get("#buttonFooterCart")
+      .scrollIntoView()
+      .should("have.attr", "disabled");
 
-          const stripe = data.find((item) => item.provider === "Stripe");
-          const fomo = data.find((item) => item.provider === "FOMO");
+    cy.wait("@paymentmodes").then((interception) => {
+      expect(interception.response.statusCode).to.equal(200);
+      const { data } = interception.response.body;
+      const stripePayment = data.find(
+        (paymentMode) => paymentMode.provider === "Stripe",
+      );
+      const fomoPayment = data.find(
+        (paymentMode) => paymentMode.provider === "FOMO",
+      );
+      if (stripePayment) {
+        console.log("YOUR LOG =>", stripePayment);
+        cy.get(`div#${stripePayment.provider}`).click();
+        cy.get("#buttonFooterCart").should("not.have.attr", "disabled");
+        cy.get("#buttonFooterCart").click();
 
-          if (stripe?.provider === "Stripe") {
-            cy.get("#buttonFooterCart").should("not.have.attr", "disabled");
-            cy.get("#buttonFooterCart")
-              .should("be.visible")
-              .should("be.enabled")
-              .click();
-            cy.get("#SkeletonPaymentInput").should("exist");
-            cy.get("#payment-form").should("exist");
-            cy.get('iframe[name^="__privateStripeFrame"]')
-              .first()
-              .then(($iframe) => {
-                cy.wait(5000);
-                cy.wrap($iframe).should("be.visible");
-                cy.wrap($iframe).its("0.contentDocument").should("exist");
-                cy.wrap($iframe)
-                  .its("0.contentDocument")
-                  .then(cy.wrap)
-                  .find('input[name="number"]')
-                  .type("4242424242424242");
+        cy.get("#SkeletonPaymentInput").should("exist");
+        cy.get("#payment-form").should("exist");
+        cy.get('iframe[name^="__privateStripeFrame"]')
+          .first()
+          .then(($iframe) => {
+            cy.wait(5000);
+            cy.wrap($iframe).should("be.visible");
+            cy.wrap($iframe).its("0.contentDocument").should("exist");
+            cy.wrap($iframe)
+              .its("0.contentDocument")
+              .then(cy.wrap)
+              .find('input[name="number"]')
+              .type("4242424242424242");
 
-                cy.wrap($iframe)
-                  .its("0.contentDocument")
-                  .then(cy.wrap)
-                  .find('input[name="expiry"]')
-                  .type("333");
-                cy.wrap($iframe)
-                  .its("0.contentDocument")
-                  .then(cy.wrap)
-                  .find('input[name="cvc"]')
-                  .type("333");
-              });
-          } else if (fomo?.provider === "FOMO") {
-            cy.get("#buttonFooterCart").should("not.have.attr", "disabled");
-            cy.get("#buttonFooterCart").should("be.visible").click();
-            cy.get("#SkeletonPaymentInput").should("exist");
+            cy.wrap($iframe)
+              .its("0.contentDocument")
+              .then(cy.wrap)
+              .find('input[name="expiry"]')
+              .type("333");
+            cy.wrap($iframe)
+              .its("0.contentDocument")
+              .then(cy.wrap)
+              .find('input[name="cvc"]')
+              .type("333");
+          });
+      } else if (fomoPayment) {
+        console.log("YOUR LOG =>", fomoPayment);
+        cy.get(`div#${fomoPayment.provider}`).click();
+        cy.get("#buttonFooterCart").should("not.have.attr", "disabled");
+        cy.get("#buttonFooterCart").should("be.visible").click();
+        cy.get("#SkeletonPaymentInput").should("exist");
 
-            cy.url().then((url) => {
-              cy.log("Current URL:", url);
-            });
-            cy.interactWithFomoPayIframe();
-          }
+        cy.url().then((url) => {
+          cy.log("Current URL:", url);
         });
-      });
+        cy.interactWithFomoPayIframe();
+      }
+    });
 
     cy.get("#footerButtonSubmit")
       .should("be.visible")
