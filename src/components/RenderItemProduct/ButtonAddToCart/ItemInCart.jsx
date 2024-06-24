@@ -14,6 +14,7 @@ export const RenderButtonItemInCart = ({
   useEffect(() => {
     setQty(qtyInCart);
   }, [qtyInCart]);
+
   const { theme, outletDetail } = useSelector(
     (state) => state.dataSlicePersisted,
   );
@@ -58,10 +59,11 @@ export const RenderButtonItemInCart = ({
         <IconMinus width="16" />
       </button>
       <span
+        data-qty={qty}
         id="quantity"
         className="text-gray-700 text-center text-base font-bold leading-6 whitespace-nowrap justify-center items-stretch bg-zinc-300 py-1 rounded-lg"
       >
-        {qty}
+        {qtyInCart}
       </span>
       <button
         id="button-increaseQuantity"

@@ -61,6 +61,7 @@ function OrderingMode() {
         >
           {updatedOutletSetting.dine_in_option?.enable && (
             <button
+              data-cartid={cartInfo?.uniqueID}
               id="dineInButton"
               onClick={() => handleClickOrderingMode("DINEIN")}
               className="flex flex-col justify-center p-4  rounded-lg border border-solid"
@@ -85,6 +86,7 @@ function OrderingMode() {
           )}
           {updatedOutletSetting.cash_carry_option?.enable && (
             <button
+              data-cartid={cartInfo?.uniqueID}
               id="takeAwayButton"
               onClick={() => handleClickOrderingMode("CASH_CARRY")}
               className="flex flex-col justify-center p-4  rounded-lg border border-solid"

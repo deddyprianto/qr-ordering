@@ -12,14 +12,14 @@ export const SkeletonPaymentInput = ({ color }) => {
           <div className="flex items-center">
             <div
               style={{
-                backgroundColor: color.Color_Secondary,
+                backgroundColor: color?.Color_Secondary,
               }}
               className="rounded-lg h-[36px] w-[36px] "
             ></div>
             <div className="bg-gray-200 w-[54px] h-[36px] mx-[5px] rounded-lg"></div>
             <div
               style={{
-                backgroundColor: color.Color_Secondary,
+                backgroundColor: color?.Color_Secondary,
               }}
               className="h-[36px] w-[36px] rounded-lg "
             ></div>
@@ -57,7 +57,7 @@ export const SkeletonPaymentInput = ({ color }) => {
       >
         <button
           id="footerButtonSubmit"
-          style={{ backgroundColor: color.Color_Secondary }}
+          style={{ backgroundColor: color?.Color_Secondary }}
           className={`py-[10px] px-[20px]  text-white rounded-lg cursor-pointer text-[16px] w-full`}
         >
           Submit

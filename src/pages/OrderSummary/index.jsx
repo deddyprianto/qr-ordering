@@ -20,7 +20,7 @@ export function Component() {
 
   const { cartIdToShow } = useSelector((state) => state.dataSlicePersisted);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState({});
 
   const fetchData = useRef();
@@ -42,9 +42,7 @@ export function Component() {
     }
     const cartIDInfo = cartParamsIsExist || cartIdToShow;
     try {
-      setLoading(true);
       const result = await apiOrder("GET", cartIDInfo, {});
-      setLoading(false);
       if (result.resultCode === 200) {
         dispatch(setIsDataOrder(true));
         setOrder(result.data);
@@ -62,7 +60,6 @@ export function Component() {
           order.status == "CANCELLED"
         )
           return;
-        setLoading(true);
         fetchData.current();
       }, 5000);
     } catch (error) {

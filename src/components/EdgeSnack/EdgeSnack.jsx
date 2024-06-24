@@ -28,7 +28,9 @@ export const EdgeSnack = ({ type, className, close, content }) => {
     >
       {getIcon()}
       <div className="text-white text-sm font-medium leading-5 tracking-wide grow">
-        <span className="font-bold text-white">{content}</span>
+        <span className="font-bold text-white" id="showEdgeSnackNotifMessage">
+          {content}
+        </span>
       </div>
     </div>
   );

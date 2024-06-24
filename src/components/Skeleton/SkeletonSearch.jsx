@@ -13,7 +13,7 @@ export const SkeletonSearch = () => {
     );
   };
   return (
-    <div className="px-[16px]">
+    <div className="px-[16px]" id="SkeletonSearch">
       <div className="h-5 bg-gray-300 rounded-md w-4/5 mt-5 animate-pulse"></div>
       <div className="h-5 bg-gray-300 rounded-md w-1/2 mt-5 animate-pulse"></div>
       {renderSkeletonChild()}

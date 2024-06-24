@@ -1,6 +1,6 @@
 export const SkeletonTagInsight = () => {
   return (
-    <div>
+    <div id="SkeletonTagInsight">
       <div className="bg-white shadow-md rounded-lg p-2 space-y-2 animate-pulse w-full">
         <div className="rounded-lg h-5 bg-gray-300"></div>
         <div className="flex gap-2">

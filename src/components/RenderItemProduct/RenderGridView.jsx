@@ -82,6 +82,7 @@ const RenderGridView = ({
           <tbody>
             <tr>
               <td
+                id="nameProd"
                 style={{
                   textAlign: "left",
                   width: "85%",

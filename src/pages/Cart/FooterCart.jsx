@@ -6,7 +6,7 @@ import { useEdgeSnack } from "../../components/EdgeSnack/utils/useEdgeSnack";
 import { useUpdateURLWithQueryParams } from "../../../hooks/usePathCustom";
 import PropTypes from "prop-types"
 
-const FooterCart = ({ isItemExist }) => {
+const FooterCart = ({ isItemExist, isPOSOffline }) => {
   const updateURL = useUpdateURLWithQueryParams();
 
   const { cartInfo } = useSelector((state) => state.dataSlicePersisted);
@@ -31,7 +31,7 @@ const FooterCart = ({ isItemExist }) => {
 
     updateURL("/payment");
   };
-    
+
   return (
     <footer
       className={`fixed bottom-0 left-0 bg-white text-center rounded-t-2xl p-[16px] ${
@@ -43,11 +43,11 @@ const FooterCart = ({ isItemExist }) => {
     >
       <button
         id="buttonFooterCart"
-        disabled={!isPaymentMethodSelected() || !isItemExist}
+        disabled={isPOSOffline || !isPaymentMethodSelected() || !isItemExist}
         onClick={handlePayment}
         style={{ backgroundColor: theme.Color_Secondary }}
         className={`py-[10px] px-[20px]  text-white rounded-lg cursor-pointer text-[16px] w-full ${
-          !isPaymentMethodSelected() || !isItemExist
+          isPOSOffline || !isPaymentMethodSelected() || !isItemExist
             ? "opacity-50"
             : "cursor-pointer"
         }`}
@@ -60,6 +60,7 @@ const FooterCart = ({ isItemExist }) => {
 };
 
 FooterCart.propTypes = {
-  isItemExist: PropTypes.bool
-}
+  isItemExist: PropTypes.bool,
+  isPOSOffline: PropTypes.bool,
+};
 export default FooterCart;
