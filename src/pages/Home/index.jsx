@@ -1,7 +1,9 @@
-import { Suspense, lazy } from "react";
-import { useSelector } from "react-redux";
+import { Suspense, lazy, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import RenderCartSummary from "../../components/Home/RenderCartSummary";
 import { NotAvailable } from "./NotAvailable";
+import RenderPOSOffline from "../../components/RenderPOSOffline";
+import { setIsPOSOffline } from "../../app/dataSlice";
 
 const RenderOrderType = lazy(() => import("./OrderType"));
 const MainView = lazy(() => import("./MainVIew"));
@@ -11,18 +13,32 @@ const RenderValidityError = lazy(
 );
 
 export function Component() {
-  const { cartInfo, outletDetail, orderType } = useSelector(
+  const dispatch = useDispatch();
+
+  const { cartInfo, outletDetail, orderType, outletName } = useSelector(
     (state) => state.dataSlicePersisted,
   );
-  const { isValidUrl, isSplashScreenShow } = useSelector(
+  const { isValidUrl, isSplashScreenShow, isPOSOffline } = useSelector(
     (state) => state.dataSlice,
   );
 
+  useEffect(() => {
+    const isPOSOnlineData = outletDetail?.posTerminals?.find(
+      (item) => item.outletName === outletName,
+    );
+    if (!isPOSOnlineData?.isOnline) {
+      dispatch(setIsPOSOffline(true));
+    } else {
+      dispatch(setIsPOSOffline(false));
+    }
+  }, [dispatch, outletDetail.posTerminals, outletName]);
   const renderContent = () => {
     if (!isValidUrl) {
       return <RenderValidityError />;
     } else if (isSplashScreenShow) {
       return <RenderSplashScreen />;
+    } else if (isPOSOffline) {
+      return <RenderPOSOffline />;
     } else if (outletDetail?.qrOrderingAvailability === "InActive") {
       return <NotAvailable isOutsideOperational={false} />;
     } else if (

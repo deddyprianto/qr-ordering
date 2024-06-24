@@ -18,12 +18,16 @@ const initialState = {
   isValidUrl: false,
   groupCollecting: [],
   saveRefNoGroup: "",
+  isPOSOffline: false,
 };
 
 const dataSlice = createSlice({
   name: "dataSlice",
   initialState,
   reducers: {
+    setIsPOSOffline: (state, action) => {
+      state.isPOSOffline = action.payload;
+    },
     setGroupCollecting: (state, action) => {
       state.groupCollecting = action.payload;
     },
@@ -79,6 +83,7 @@ const dataSlice = createSlice({
 });
 
 export const {
+  setIsPOSOffline,
   setSaveRefNoGroup,
   setGroupCollecting,
   setShowSplashScreen,
