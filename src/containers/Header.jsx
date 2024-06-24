@@ -12,7 +12,9 @@ import { ImageOptimization } from "../components/ImageOptimization";
 import { useUpdateURLWithQueryParams } from "../../hooks/usePathCustom";
 
 export default function Header() {
-  const { isSearchItem, isValidUrl, tableNo } = useSelector((state) => state.dataSlice);
+  const { isPOSOffline, isSearchItem, isValidUrl, tableNo } = useSelector(
+    (state) => state.dataSlice,
+  );
   const {
     enableSearchUsingScroll,
     searchItemObj,
@@ -21,7 +23,7 @@ export default function Header() {
     outletName,
     outletDetail,
   } = useSelector((state) => state.dataSlicePersisted);
-  
+
   const updateURL = useUpdateURLWithQueryParams();
   let location = useLocation();
   const dispatch = useDispatch();
@@ -192,9 +194,10 @@ export default function Header() {
         );
     }
   };
-
+  console.log(isPOSOffline);
   const renderMain = () => {
     if (!isValidUrl) return <div></div>;
+    if (isPOSOffline) return <div></div>;
     else if (outletDetail?.qrOrderingAvailability === "InActive")
       return <div></div>;
     else if (
