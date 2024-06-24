@@ -16,7 +16,7 @@ export const Skeleton = () => {
     );
   };
   return (
-    <div className="grid grid-cols-2 gap-4 mt-1">
+    <div id="skeletonProduct" className="grid grid-cols-2 gap-4 mt-1">
       {renderSkeletonChild()}
       {renderSkeletonChild()}
     </div>

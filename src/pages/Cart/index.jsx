@@ -7,6 +7,7 @@ import { LazyLoadComponent } from "react-lazy-load-image-component";
 import { SkeletonList } from "../../components/Skeleton/SkeletonPaymentList";
 import { useUpdateURLWithQueryParams } from "../../../hooks/usePathCustom";
 import { SkeletonPaymentInput } from "../../components/Skeleton/SkeletonPaymentInput";
+import { useEdgeSnack } from "../../components/EdgeSnack/utils/useEdgeSnack";
 
 const PaymentMethod = lazy(() => import("./PaymentMethod"));
 const PriceSummary = lazy(() => import("./PriceSummary"));
@@ -15,6 +16,7 @@ const ItemCart = lazy(() => import("./ItemCart"));
 const OrderingMode = lazy(() => import("./OrderingMode"));
 
 export function Component() {
+  const toast = useEdgeSnack();
   const updateURL = useUpdateURLWithQueryParams();
 
   const { cartInfo, outletName } = useSelector(
@@ -25,8 +27,10 @@ export function Component() {
     (state) => state.dataSlicePersisted,
   );
   const [isOpenModalAuth, setIsOpenModalAuth] = useState(false);
+  const [isPOSOffline, setIsPOSOffline] = useState(false);
   const [authScreen, setAuthScreen] = useState("Login");
   const [isOpenModalOtp, setIsOpenModalOtp] = useState(false);
+
   const handleSuccessOTP = (isSuccess) => {
     // Replace this function with logic if member success login or register
     return isSuccess;
@@ -39,12 +43,21 @@ export function Component() {
     0,
   );
 
-
   useEffect(() => {
     if (totalQuantityCart === 0) {
       updateURL("/");
     }
   }, [totalQuantityCart, updateURL]);
+
+  useEffect(() => {
+    const isPOSOnline = outletDetail.posTerminals.find(
+      (item) => item.outletName === outletName,
+    );
+    if (!isPOSOnline?.isOnline) {
+      toast.open(`POS terminal on ${outletName} is Offline`, "error");
+      setIsPOSOffline(true);
+    }
+  }, [outletDetail.posTerminals, outletName, toast]);
 
   return (
     <Suspense fallback={<SkeletonPaymentInput color={theme} />}>
@@ -53,7 +66,7 @@ export function Component() {
           <Trans i18nKey={"you_order_from"} />
         </h1>
         <p
-          style={{ color: theme.Color_Secondary }}
+          style={{ color: theme?.Color_Secondary }}
         >{`${outletDetail.companyName} @ ${outletName}`}</p>
         <hr
           style={{
@@ -105,7 +118,10 @@ export function Component() {
           }}
         />
         <PriceSummary />
-        <FooterCart isItemExist={cartInfo?.details?.length > 0} />
+        <FooterCart
+          isItemExist={cartInfo?.details?.length > 0}
+          isPOSOffline={isPOSOffline}
+        />
         <ModalGeneral />
         <ModalAuth
           isOpenModal={isOpenModalAuth}
