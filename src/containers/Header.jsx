@@ -194,7 +194,6 @@ export default function Header() {
         );
     }
   };
-  console.log(isPOSOffline);
   const renderMain = () => {
     if (!isValidUrl) return <div></div>;
     if (isPOSOffline) return <div></div>;
