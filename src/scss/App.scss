@@ -17,7 +17,9 @@
     padding: 10px; /* Optional: add padding for better readability */
   }
 
-
+  .transparent-image-custom {
+    mix-blend-mode: multiply;
+  }
   .scroll-containerExpand::-webkit-scrollbar {
     display: none;
   }
