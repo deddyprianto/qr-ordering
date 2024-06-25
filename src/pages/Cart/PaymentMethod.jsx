@@ -65,14 +65,14 @@ function PaymentMethod() {
                         alt="IconPayments"
                         loading="lazy"
                         src={item.iconUrl}
-                        className="flex-shrink-0 h-full w-full"
+                        className="flex-shrink-0 h-full w-full transparent-image-custom"
                       />
                     </div>
                   ) : (
                     <IconMasterCard />
                   )}
 
-                  <div id={item.provider} className="flex-shrink-0">
+                  <div id="paymentModeName" className="flex-shrink-0">
                     <p>{item.displayName}</p>
                   </div>
                 </button>
