@@ -66,7 +66,6 @@ function PaymentMethod() {
                         loading="lazy"
                         src={item.iconUrl}
                         className="flex-shrink-0 h-full w-full transparent-image-custom"
-                        className="flex-shrink-0 h-full w-full transparent-image-custom"
                       />
                     </div>
                   ) : (
