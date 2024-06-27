@@ -52,7 +52,7 @@ const router = createBrowserRouter([
 ]);
 
  function App({ version }) {
-   console.log({ builderNumberVersion: 1718160793, version });
+   console.log({ builderNumberVersion: 1719478845, version });
    const dispatch = useDispatch();
    const { cartInfo, orderType, memberInfo, cartToListen } = useSelector(
      (state) => state.dataSlicePersisted,

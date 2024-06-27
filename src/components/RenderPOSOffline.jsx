@@ -6,7 +6,9 @@ const RenderPOSOffline = () => {
   return (
     <div>
       <img src={posIsOffline} alt="pos_offline" />
-      <h1 className="text-center">POS terminal on {outletName} is Offline</h1>
+      <h1 id="messagePOS" className="text-center">
+        POS terminal on {outletName} is Offline
+      </h1>
     </div>
   );
 };

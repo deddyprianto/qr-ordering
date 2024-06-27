@@ -51,7 +51,12 @@ function OrderingMode() {
 
   return (
     <div className="flex flex-col self-stretch text-gray-700 leading-[140%] max-w-[398px]">
-      <div className="w-full text-base font-bold">Choose Ordering Type</div>
+      <div className="w-full text-base font-bold">
+        {!updatedOutletSetting.dine_in_option?.enable &&
+        !updatedOutletSetting.cash_carry_option?.enable
+          ? "Ordering Type Default"
+          : "Choose Ordering Type"}
+      </div>
       {cartInfoLoading ? (
         <SkeletonList />
       ) : (
@@ -112,6 +117,34 @@ function OrderingMode() {
               </div>
             </button>
           )}
+          {!updatedOutletSetting.dine_in_option?.enable &&
+            !updatedOutletSetting.cash_carry_option?.enable && (
+              <button
+                data-cartid={cartInfo?.uniqueID}
+                id="dineInButton"
+                onClick={() => handleClickOrderingMode("DINEIN")}
+                className="flex flex-col justify-center p-4  rounded-lg border border-solid"
+                style={{
+                  backgroundColor:
+                    orderType ===
+                    updatedOutletSetting.dine_in_option.displayName
+                      ? theme?.Color_Accent
+                      : "white",
+                  borderColor:
+                    orderType ===
+                    updatedOutletSetting.dine_in_option.displayName
+                      ? theme?.Color_Primary
+                      : "rgb(212 212 216)",
+                }}
+              >
+                <div className="flex gap-4">
+                  <IconDineInCart />
+                  <div id="orderingModeDineIN" className="flex-1 my-auto">
+                    Dine In
+                  </div>
+                </div>
+              </button>
+            )}
         </div>
       )}
     </div>

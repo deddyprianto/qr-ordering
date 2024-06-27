@@ -31,7 +31,10 @@ export const RenderItem = ({item}) => {
         <div className="text-gray-700 text-sm font-medium leading-5 tracking-wide whitespace-nowrap self-start">
           {item.quantity}X
         </div>
-        <div className="text-gray-700 text-sm font-medium leading-5 tracking-wide grow shrink basis-auto">
+        <div
+          id="itemNameDetailSummary"
+          className="text-gray-700 text-sm font-medium leading-5 tracking-wide grow shrink basis-auto"
+        >
           {item.productInfo?.itemName}
         </div>
         <div className="text-gray-700 text-right text-sm font-bold leading-5 tracking-wide whitespace-nowrap self-start">
