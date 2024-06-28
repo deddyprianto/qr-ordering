@@ -13,14 +13,20 @@ export const RenderPricingSummary = ({ order }) => {
           $ {numberFormatter(order?.subtotalSummary?.GROSS)}
         </div>
       </div>
-      <div className="items-stretch flex justify-between gap-4 mt-1 px-4">
-        <div className="justify-center text-gray-700 text-sm font-medium leading-5 tracking-wide grow whitespace-nowrap">
-          <Trans i18nKey={"discount"} />
+      {numberFormatter(order?.subtotalSummary?.LINE_DISC) !== 0 && (
+        <div
+          id="discount"
+          className="items-stretch flex justify-between gap-4 mt-1 px-4"
+        >
+          <div className="justify-center text-gray-700 text-sm font-medium leading-5 tracking-wide grow whitespace-nowrap">
+            <Trans i18nKey={"discount"} />
+          </div>
+          <div className="text-[#CF3030] text-right text-base font-bold leading-6 whitespace-nowrap">
+            ($ {numberFormatter(order?.subtotalSummary?.LINE_DISC)})
+          </div>
         </div>
-        <div className="text-[#CF3030] text-right text-base font-bold leading-6 whitespace-nowrap">
-          ($ {numberFormatter(order?.subtotalSummary?.LINE_DISC)})
-        </div>
-      </div>
+      )}
+
       {order?.subtotals?.map((sc) => {
         return (
           <div
@@ -57,7 +63,10 @@ export const RenderPricingSummary = ({ order }) => {
         <div className="text-gray-700 text-sm font-medium leading-5 tracking-wide">
           <Trans i18nKey={"total_payment"} />
         </div>
-        <div className="text-emerald-800 text-base font-bold leading-6 self-stretch">
+        <div
+          id="subtotalSummaryNETT"
+          className="text-emerald-800 text-base font-bold leading-6 self-stretch"
+        >
           $ {numberFormatter(order?.subtotalSummary?.NETT)}
         </div>
       </div>

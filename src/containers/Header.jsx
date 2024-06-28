@@ -12,9 +12,8 @@ import { ImageOptimization } from "../components/ImageOptimization";
 import { useUpdateURLWithQueryParams } from "../../hooks/usePathCustom";
 
 export default function Header() {
-  const { isPOSOffline, isSearchItem, isValidUrl, tableNo } = useSelector(
-    (state) => state.dataSlice,
-  );
+  const { isPOSOffline, isSearchItem, isValidUrl, tableNo, outletSetting } =
+    useSelector((state) => state.dataSlice);
   const {
     enableSearchUsingScroll,
     searchItemObj,
@@ -194,9 +193,15 @@ export default function Header() {
         );
     }
   };
+
   const renderMain = () => {
     if (!isValidUrl) return <div></div>;
     if (isPOSOffline) return <div></div>;
+    if (
+      !outletSetting?.dine_in_option?.enable &&
+      !outletSetting?.cash_carry_option?.enable
+    )
+      return <div></div>;
     else if (outletDetail?.qrOrderingAvailability === "InActive")
       return <div></div>;
     else if (

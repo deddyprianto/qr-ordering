@@ -5,8 +5,8 @@ import screen from "../../../../hooks/useWindowSize";
 
 export const RenderButtonSubmit = ({handleSubmit, loading}) => {
   const { width } = screen();
-  const { theme } = useSelector((state) => state.dataSlicePersisted);
-  
+  const { theme, cartInfo } = useSelector((state) => state.dataSlicePersisted);
+
   return (
     <footer
       className={`fixed bottom-0 left-0 bg-white text-center rounded-t-2xl p-[16px] ${
@@ -17,6 +17,7 @@ export const RenderButtonSubmit = ({handleSubmit, loading}) => {
       }}
     >
       <button
+        data-idcart={cartInfo?.uniqueID}
         id="footerButtonSubmit"
         onClick={handleSubmit}
         style={{ backgroundColor: theme.Color_Secondary }}

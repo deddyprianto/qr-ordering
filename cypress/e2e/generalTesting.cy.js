@@ -8,6 +8,12 @@ describe("TESTING CART PAGE", () => {
         "QS_TABLE_NO_AND_OUTLET_NAME",
       )}`,
     );
+
+    cy.intercept(
+      "GET",
+      "https://t1.equipweb.biz/EdgeCafeTraining/ordering/api/outlets/Edge%20Cafe/settings?",
+    ).as("orderingType");
+
     cy.intercept(
       "GET",
       "https://t1.equipweb.biz/EdgeCafeTraining/ordering/api/outlets/Edge%20Cafe?",
@@ -17,10 +23,45 @@ describe("TESTING CART PAGE", () => {
       "https://t1.equipweb.biz/EdgeCafeTraining/ordering/api/Products/Edge%20Cafe/ALL?search=100&skip=0&take=10&sortBy=buttonTitle&isDescending=false",
     ).as("searchAPI");
 
+    cy.wait("@orderingType").then((interception) => {
+      expect(interception.response.statusCode).to.equal(200);
+      const data = interception.response.body;
+      let outletSetting = {
+        dine_in_option: {},
+        cash_carry_option: {},
+      };
+      for (const setting of data.data) {
+        switch (setting.settingKey) {
+          case "QR_DINEIN_Enable":
+            outletSetting["dine_in_option"]["enable"] =
+              setting.settingValue.toLowerCase() == "true";
+            break;
+          case "QR_DINEIN_DisplayAs":
+            outletSetting["dine_in_option"]["displayName"] =
+              setting.settingValue;
+            break;
+          case "QR_CASH_CARRY_Enable":
+            outletSetting["cash_carry_option"]["enable"] =
+              setting.settingValue.toLowerCase() == "true";
+            break;
+          case "QR_CASH_CARRY_DisplayAs":
+            outletSetting["cash_carry_option"]["displayName"] =
+              setting.settingValue;
+            break;
+          default:
+            break;
+        }
+      }
+      const isOrderTypeDisable =
+        !outletSetting?.dine_in_option?.enable &&
+        !outletSetting?.cash_carry_option?.enable;
+      if (isOrderTypeDisable) {
+        cy.get("div#orderTypeDisable").should("exist");
+      }
+    });
     cy.wait("@outletName").then((interception) => {
       expect(interception.response.statusCode).to.equal(200);
       const data = interception.response.body;
-      console.log(data);
       const isPOSOnline = data.data.posTerminals.find(
         (item) => item.outletName === data.data.outletName,
       );
@@ -32,7 +73,6 @@ describe("TESTING CART PAGE", () => {
         cy.get("h1#messagePOS").should("not.exist");
       }
     });
-
     cy.get("button#dinein").should("be.visible").should("be.enabled").click();
     cy.get("#buttonSearch").click();
     cy.get("#input-search")
@@ -86,76 +126,84 @@ describe("TESTING CART PAGE", () => {
           data.forEach((item) => {
             if (item.productInfo.bundles.length > 0) {
               cy.get(`[data-id=${item.productInfo.itemNo}]`).first().click();
-              cy.get("button#bundleItemGroups")
-                .first()
-                .as("itemGroupBundleFirst");
-              cy.get("button#bundleItemGroups")
-                .eq(1)
-                .as("itemGroupBundleSecond");
-              cy.get("button#bundleItemGroups")
-                .eq(2)
-                .as("itemGroupBundleThird");
-
-              cy.get("button#itemBundle")
-                .first()
-                .as("buttonItemBundleFirstItem");
-              cy.get("@buttonItemBundleFirstItem").click();
-
-              cy.get("button#qtyPlusBundle")
-                .first()
-                .as("buttonQtyPlusFirstItem");
-              cy.get("@buttonQtyPlusFirstItem").click();
-
-              cy.get("div#IconCheckPassed").first().as("iconCheckPassedFirst");
-              cy.get("@iconCheckPassedFirst").should("exist");
-
-              cy.get("@itemGroupBundleSecond")
-                .click()
-                .then(() => {
-                  cy.get("button#itemBundle")
-                    .first()
-                    .as("buttonItemBundleSecondItem");
-                  cy.get("@buttonItemBundleSecondItem").click();
-                  cy.get("button#qtyPlusBundle")
-                    .first()
-                    .as("buttonQtyPlusSecondItem");
-                  cy.get("@buttonQtyPlusSecondItem").click();
-
-                  cy.get("div#IconCheckPassed").eq(1).should("exist");
-                });
-
-              cy.get("@itemGroupBundleThird")
-                .click()
-                .then(() => {
-                  cy.get("button#itemBundle").click();
-                  cy.get("button#qtyPlusBundle").click();
-                  cy.get("div#IconCheckPassed").eq(2).should("exist");
-                });
-              cy.get("#actionButtonAdd").click();
-            }
-            if (item.productInfo.attributes.length > 0) {
-              cy.get(`[data-id=${item.productInfo.itemNo}]`)
+              cy.get("button#actionButtonAdd")
                 .should("be.visible")
-                .first()
+                .should("be.enabled")
                 .click();
+              item.productInfo.bundles.forEach((item) => {
+                cy.get("button#itemBundle").eq(0).click();
+                if (item.max > 1) {
+                  cy.get("button#qtyPlusBundle")
+                    .eq(0)
+                    .click()
+                    .wait(100)
+                    .click();
+                } else {
+                  cy.get("button#qtyPlusBundle").eq(0).click();
+                }
+                cy.get("div#IconCheckPassed").should("exist");
+                cy.get("button#bundleItemGroups").click({ multiple: true });
+              });
+              cy.get("button#actionButtonAdd").should("be.enabled").click();
+            }
+          });
+        });
+      });
+
+    cy.get("button#navbarItem")
+      .eq(1)
+      .click()
+      .then(($element) => {
+        const dataType = $element.attr("data-type");
+        const dataRefno = $element.attr("data-refno");
+        cy.intercept(
+          "GET",
+          `https://t1.equipweb.biz/EdgeCafeTraining/ordering/api/products/Edge%20Cafe/${dataType}/${dataRefno}?skip=0&take=5`,
+        ).as("getSubGroups");
+        cy.wait("@getSubGroups").then((interception) => {
+          expect(interception.response.statusCode).to.equal(200);
+          const { data } = interception.response.body;
+          data.forEach((item) => {
+            if (item.viewType) {
+              cy.get("div#buttonTitleNavbar").contains(item.buttonTitle);
+            }
+          });
+          data.forEach((item) => {
+            if (item.productInfo.attributes.length > 0) {
+              cy.get(`[data-id=${item.productInfo.itemNo}]`).first().click();
               cy.get("#renderModalItemDetail").should("exist");
               cy.get("#actionButtonAdd").should("be.enabled").click();
-              cy.get("#renderItemAttributes").should("exist");
-
-              cy.get("button#attributeItem").first().as("firstItemAttr");
-              cy.get("button#attributeItem").eq(3).as("fourthItemAttr");
-              cy.get("@firstItemAttr").click();
-              cy.get("@fourthItemAttr").click();
+              cy.get("button#attributeItem").first().click();
               cy.get("#actionButtonAdd").should("be.visible").click();
             }
+          });
+        });
+      });
+
+    cy.get("button#navbarItem")
+      .eq(2)
+      .click()
+      .then(($element) => {
+        const dataType = $element.attr("data-type");
+        const dataRefno = $element.attr("data-refno");
+        cy.intercept(
+          "GET",
+          `https://t1.equipweb.biz/EdgeCafeTraining/ordering/api/products/Edge%20Cafe/${dataType}/${dataRefno}?skip=0&take=5`,
+        ).as("getSubGroups");
+        cy.wait("@getSubGroups").then((interception) => {
+          expect(interception.response.statusCode).to.equal(200);
+          const { data } = interception.response.body;
+          data.forEach((item) => {
+            if (item.viewType) {
+              cy.get("div#buttonTitleNavbar").contains(item.buttonTitle);
+            }
+          });
+          data.forEach((item) => {
             if (
               item.productInfo.attributes.length === 0 &&
               item.productInfo.bundles.length === 0
             ) {
-              cy.get(`[data-id=${item.productInfo.itemNo}]`)
-                .first()
-                .should("be.visible")
-                .click();
+              cy.get(`[data-id=${item.productInfo.itemNo}]`).first().click();
             }
           });
         });
@@ -173,34 +221,97 @@ describe("TESTING CART PAGE", () => {
     ).as("paymentmodes");
 
     cy.get("#buttonFooterCart").should("have.attr", "disabled");
-    cy.get("button#takeAwayButton")
-      .click()
-      .then(($element) => {
-        const cartID = $element.attr("data-cartid");
-        cy.intercept(
-          "POST",
-          `https://t1.equipweb.biz/EdgeCafeTraining/ordering/api/carts/${cartID}/switchordertype`,
-          (req) => {
-            req.reply({
-              statusCode: 200,
-              body: {
-                orderType: "CASH_CARRY",
-              },
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
-          },
-        ).as("switchordertype");
 
-        cy.wait("@switchordertype").then((interception) => {
-          expect(interception.response.statusCode).to.equal(200);
-          const data = interception.response.body;
-          cy.get("button#buttonFooterCart")
-            .should("exist")
-            .and("have.text", `PAY - $ ${data.data.nettAmount}`);
-        });
-      });
+    cy.wait("@orderingType").then((interception) => {
+      expect(interception.response.statusCode).to.equal(200);
+      const { data } = interception.response.body;
+      let outletSetting = {
+        dine_in_option: {},
+        cash_carry_option: {},
+      };
+      for (const setting of data) {
+        switch (setting.settingKey) {
+          case "QR_DINEIN_Enable":
+            outletSetting["dine_in_option"]["enable"] =
+              setting.settingValue.toLowerCase() == "true";
+            break;
+          case "QR_DINEIN_DisplayAs":
+            outletSetting["dine_in_option"]["displayName"] =
+              setting.settingValue;
+            break;
+          case "QR_CASH_CARRY_Enable":
+            outletSetting["cash_carry_option"]["enable"] =
+              setting.settingValue.toLowerCase() == "true";
+            break;
+          case "QR_CASH_CARRY_DisplayAs":
+            outletSetting["cash_carry_option"]["displayName"] =
+              setting.settingValue;
+            break;
+          default:
+            break;
+        }
+      }
+      if (outletSetting.cash_carry_option?.enable) {
+        cy.get("button#takeAwayButton")
+          .click()
+          .then(($element) => {
+            const cartID = $element.attr("data-cartid");
+            cy.intercept(
+              "POST",
+              `https://t1.equipweb.biz/EdgeCafeTraining/ordering/api/carts/${cartID}/switchordertype`,
+              (req) => {
+                req.reply({
+                  statusCode: 200,
+                  body: {
+                    orderType: "CASH_CARRY",
+                  },
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                });
+              },
+            ).as("switchordertype");
+
+            cy.wait("@switchordertype").then((interception) => {
+              expect(interception.response.statusCode).to.equal(200);
+              const data = interception.response.body;
+              cy.get("button#buttonFooterCart")
+                .should("exist")
+                .and("have.text", `PAY - $ ${data.data.nettAmount}`);
+            });
+          });
+      } else if (outletSetting.dine_in_option?.enable) {
+        cy.get("button#dineInButton")
+          .click()
+          .then(($element) => {
+            const cartID = $element.attr("data-cartid");
+            cy.intercept(
+              "POST",
+              `https://t1.equipweb.biz/EdgeCafeTraining/ordering/api/carts/${cartID}/switchordertype`,
+              (req) => {
+                req.reply({
+                  statusCode: 200,
+                  body: {
+                    orderType: "CASH_CARRY",
+                  },
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                });
+              },
+            ).as("switchordertype");
+
+            cy.wait("@switchordertype").then((interception) => {
+              expect(interception.response.statusCode).to.equal(200);
+              const data = interception.response.body;
+              cy.get("button#buttonFooterCart")
+                .should("exist")
+                .and("have.text", `PAY - $ ${data.data.nettAmount}`);
+            });
+          });
+      }
+    });
+
     cy.wait("@paymentmodes").then((interception) => {
       expect(interception.response.statusCode).to.equal(200);
       const { data } = interception.response.body;
@@ -211,7 +322,7 @@ describe("TESTING CART PAGE", () => {
         (paymentMode) => paymentMode.provider === "FOMO",
       );
       if (stripePayment) {
-        cy.get(`div#${stripePayment.provider}`).click();
+        cy.get(`[data-provider=${stripePayment.provider}]`).click();
         cy.get("#buttonFooterCart").should("not.have.attr", "disabled");
         cy.get("#buttonFooterCart").click();
 
@@ -252,19 +363,38 @@ describe("TESTING CART PAGE", () => {
         cy.interactWithFomoPayIframe();
       }
     });
+    cy.intercept(
+      "GET",
+      "https://t1.equipweb.biz/EdgeCafeTraining/ordering/api/orders/*?",
+    ).as("getOrders");
 
-    cy.get("#footerButtonSubmit")
-      .should("be.visible")
+    cy.get("button#footerButtonSubmit")
+      .should("be.enabled")
       .click()
-      .then(() => {
-        cy.wait(5000);
-        cy.get("#orderTableNo").should("be.visible");
-        cy.get("#backButtonCart").should("be.visible").click();
-
-        cy.get("#detailOrderStatus").should("be.visible").click();
-        cy.get("#backButtonCart").click();
-        cy.get("#backButtonCart").click();
-        cy.get("#notificationOrder").should("exist");
+      .then(($element) => {
+        const idCartInfo = $element.attr("data-idcart");
+        cy.intercept(
+          "GET",
+          `https://t1.equipweb.biz/EdgeCafeTraining/ordering/api/orders/${idCartInfo}?`,
+        ).as("getOrders");
+        cy.wait("@getOrders").then((interception) => {
+          expect(interception.response.statusCode).to.equal(200);
+          const data = interception.response.body;
+          if (data.data.tableNo) {
+            cy.get("div#orderTableNo").contains(data.data.tableNo);
+          }
+          cy.get("div#subtotalSummaryNETT").contains(data.data.nettAmount);
+          if (!data.data.subtotalSummary?.LINE_DISC) {
+            cy.get("div#discount").should("not.exist");
+          } else {
+            cy.get("div#discount").should("exist");
+          }
+          data.data.details.forEach((item) => {
+            cy.get("div#itemNameDetailSummary").contains(
+              item.productInfo.itemName,
+            );
+          });
+        });
       });
   });
 });
